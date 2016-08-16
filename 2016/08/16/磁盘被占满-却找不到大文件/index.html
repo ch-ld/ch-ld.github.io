@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="故障处理," />
 
 
 
@@ -86,15 +86,18 @@
 
 
 
-<meta name="description" content="对自己要求高一点！">
-<meta property="og:type" content="website">
-<meta property="og:title" content="火柴的博客">
-<meta property="og:url" content="http://yoursite.com/categories/数据库/index.html">
+<meta name="description" content="事情发生在一日下午，研发突然告诉我某一台tomcat服务器特别卡，于是我们一起开始调查整件事情的来龙去脉。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="磁盘被占满,却找不到大文件">
+<meta property="og:url" content="http://yoursite.com/2016/08/16/磁盘被占满-却找不到大文件/index.html">
 <meta property="og:site_name" content="火柴的博客">
-<meta property="og:description" content="对自己要求高一点！">
+<meta property="og:description" content="事情发生在一日下午，研发突然告诉我某一台tomcat服务器特别卡，于是我们一起开始调查整件事情的来龙去脉。">
+<meta property="og:image" content="http://yoursite.com/uploads/guzhang.png">
+<meta property="og:updated_time" content="2016-08-16T07:54:12.124Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="火柴的博客">
-<meta name="twitter:description" content="对自己要求高一点！">
+<meta name="twitter:title" content="磁盘被占满,却找不到大文件">
+<meta name="twitter:description" content="事情发生在一日下午，研发突然告诉我某一台tomcat服务器特别卡，于是我们一起开始调查整件事情的来龙去脉。">
+<meta name="twitter:image" content="http://yoursite.com/uploads/guzhang.png">
 
 
 
@@ -115,9 +118,9 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/categories/数据库/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/08/16/磁盘被占满-却找不到大文件/"/>
 
-  <title> 分类: 数据库 | 火柴的博客 </title>
+  <title> 磁盘被占满,却找不到大文件 | 火柴的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -138,7 +141,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -269,54 +272,201 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        数据库
-        <small>分类</small>
-      </h2>
-    </div>
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                磁盘被占满,却找不到大文件
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-16T15:29:11+08:00" content="2016-08-16">
+              2016-08-16
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/16/磁盘被占满-却找不到大文件/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/16/磁盘被占满-却找不到大文件/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/08/16/磁盘被占满-却找不到大文件/" class="leancloud_visitors" data-flag-title="磁盘被占满,却找不到大文件">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv">本文总阅读量<i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
       
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <p>&#x4E8B;&#x60C5;&#x53D1;&#x751F;&#x5728;&#x4E00;&#x65E5;&#x4E0B;&#x5348;&#xFF0C;&#x7814;&#x53D1;&#x7A81;&#x7136;&#x544A;&#x8BC9;&#x6211;&#x67D0;&#x4E00;&#x53F0;tomcat&#x670D;&#x52A1;&#x5668;&#x7279;&#x522B;&#x5361;&#xFF0C;&#x4E8E;&#x662F;&#x6211;&#x4EEC;&#x4E00;&#x8D77;&#x5F00;&#x59CB;&#x8C03;&#x67E5;&#x6574;&#x4EF6;&#x4E8B;&#x60C5;&#x7684;&#x6765;&#x9F99;&#x53BB;&#x8109;&#x3002;<br><a id="more"></a></p>
+<p>&#x9996;&#x5148;&#x67E5;&#x770B;&#x7F51;&#x7EDC;&#x6545;&#x969C;&#xFF0C;&#x662F;&#x5426;&#x906D;&#x53D7;&#x653B;&#x51FB;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ss -tanl</div></pre></td></tr></table></figure></p>
+<p>&#x67E5;&#x770B;&#x7F51;&#x7EDC;&#x6D41;&#x91CF;&#x6CA1;&#x6709;&#x51FA;&#x73B0;&#x4EFB;&#x4F55;&#x6545;&#x969C;&#xFF0C;&#x6392;&#x9664;&#x4E86;&#x906D;&#x53D7;ddos&#x653B;&#x51FB;&#x7684;&#x53EF;&#x80FD;&#x3002;</p>
+<p>&#x5728;&#x5F00;&#x59CB;&#x68C0;&#x67E5;&#x662F;&#x5426;&#x78C1;&#x76D8;&#x51FA;&#x73B0;&#x6545;&#x969C;<br><img src="/uploads/guzhang.png" class="blockquote-center"><br>&#x6545;&#x969C;&#x5DF2;&#x7ECF;&#x5F88;&#x660E;&#x663E;&#x4E86;&#xFF0C;&#x78C1;&#x76D8;&#x5360;&#x6EE1;&#xFF0C;&#x5374;&#x627E;&#x4E0D;&#x5230;&#x5927;&#x6587;&#x4EF6;&#x3002;</p>
+<p>&#x8FD9;&#x662F;&#x5728;&#x7528;&#x68C0;&#x67E5;&#x53D1;&#x73B0;&#x6709;&#x6587;&#x4EF6;&#x88AB;&#x5220;&#x9664;,&#x800C;&#x8FDB;&#x7A0B;&#x8FD8;&#x6D3B;&#x7740;,&#x56E0;&#x800C;&#x9020;&#x6210;&#x8FD8;&#x5360;&#x7528;&#x7A7A;&#x95F4;&#x7684;&#x73B0;&#x8C61;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">lsof | grep delete</div></pre></td></tr></table></figure></p>
+<p>&#x67E5;&#x627E;&#x5230;&#x4E86;&#x4E00;&#x4E2A;&#x5F00;&#x53D1;&#x7528;&#x6765;&#x6D4B;&#x8BD5;&#x7684;&#x8FDB;&#x7A0B;&#xFF08;&#x4E0B;&#x9762;&#x4E00;&#x5927;&#x5806;&#x5B50;&#x8FDB;&#x7A0B;&#xFF09;&#xFF0C;kill&#x6389;&#x8FDB;&#x7A0B;&#x53F7;&#x3002;&#x518D;&#x7528;df&#x547D;&#x4EE4;&#x67E5;&#x770B;&#xFF0C;&#x78C1;&#x76D8;&#x7A7A;&#x95F4;&#x77AC;&#x95F4;&#x56DE;&#x5F52;&#x3002;</p>
 
-      <h1 class="post-title">
+      
+    </div>
+
+    <div>
+      
         
-            <a class="post-title-link" href="/2016/08/05/mongodb分片配置/" itemprop="url">
-              
-                <span itemprop="name">mongodb分片配置</span>
-              
-            </a>
+
+      
+    </div>
+
+    <div>
+      
         
-      </h1>
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/weixin.png" alt="CH WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-08-05T11:10:23+08:00"
-              content="2016-08-05" >
-          08-05
-        </time>
-      </div>
 
-    </header>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/故障处理/" rel="tag">#故障处理</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/16/Centos6系列安装Zabbix3-0/" rel="next" title="Centos6系列安装Zabbix3.0">
+                <i class="fa fa-chevron-left"></i> Centos6系列安装Zabbix3.0
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/08/16/磁盘被占满-却找不到大文件/"
+     data-title="磁盘被占满,却找不到大文件"
+     data-content=""
+     data-url="http://yoursite.com/2016/08/16/磁盘被占满-却找不到大文件/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
 
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
 
 
           </div>
           
 
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/16/磁盘被占满-却找不到大文件/"
+           data-title="磁盘被占满,却找不到大文件" data-url="http://yoursite.com/2016/08/16/磁盘被占满-却找不到大文件/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -336,8 +486,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/linux.jpg"
@@ -419,6 +578,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -531,6 +701,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 
