@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="zabbix," />
 
 
 
@@ -86,15 +86,16 @@
 
 
 
-<meta name="description" content="对自己要求高一点！">
-<meta property="og:type" content="website">
-<meta property="og:title" content="火柴的博客">
-<meta property="og:url" content="http://yoursite.com/tags/nginx/index.html">
+<meta name="description" content="刚开始接触zabbix踩了无数的坑，不知道centos6系列是安装不了zabbix3.0（yum安装），于是在github上找到了一个项目，大家可以参考一下https://github.com/zabbixcn/zabbix3.0-rpm.git本文主要说明如何通过CentOS6(64位)安装zabbix 3.0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Centos6系列安装Zabbix3.0">
+<meta property="og:url" content="http://yoursite.com/2016/08/16/Centos6系列安装Zabbix3-0/index.html">
 <meta property="og:site_name" content="火柴的博客">
-<meta property="og:description" content="对自己要求高一点！">
+<meta property="og:description" content="刚开始接触zabbix踩了无数的坑，不知道centos6系列是安装不了zabbix3.0（yum安装），于是在github上找到了一个项目，大家可以参考一下https://github.com/zabbixcn/zabbix3.0-rpm.git本文主要说明如何通过CentOS6(64位)安装zabbix 3.0">
+<meta property="og:updated_time" content="2016-08-16T05:33:35.149Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="火柴的博客">
-<meta name="twitter:description" content="对自己要求高一点！">
+<meta name="twitter:title" content="Centos6系列安装Zabbix3.0">
+<meta name="twitter:description" content="刚开始接触zabbix踩了无数的坑，不知道centos6系列是安装不了zabbix3.0（yum安装），于是在github上找到了一个项目，大家可以参考一下https://github.com/zabbixcn/zabbix3.0-rpm.git本文主要说明如何通过CentOS6(64位)安装zabbix 3.0">
 
 
 
@@ -115,9 +116,9 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/nginx/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/08/16/Centos6系列安装Zabbix3-0/"/>
 
-  <title> 标签: nginx | 火柴的博客 </title>
+  <title> Centos6系列安装Zabbix3.0 | 火柴的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -138,7 +139,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -246,53 +247,196 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        nginx
-        <small>标签</small>
-      </h2>
-    </div>
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Centos6系列安装Zabbix3.0
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-16T13:26:20+08:00" content="2016-08-16">
+              2016-08-16
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/16/Centos6系列安装Zabbix3-0/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/16/Centos6系列安装Zabbix3-0/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/08/16/Centos6系列安装Zabbix3-0/" class="leancloud_visitors" data-flag-title="Centos6系列安装Zabbix3.0">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
       
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <p>&#x521A;&#x5F00;&#x59CB;&#x63A5;&#x89E6;zabbix&#x8E29;&#x4E86;&#x65E0;&#x6570;&#x7684;&#x5751;&#xFF0C;&#x4E0D;&#x77E5;&#x9053;centos6&#x7CFB;&#x5217;&#x662F;&#x5B89;&#x88C5;&#x4E0D;&#x4E86;zabbix3.0&#xFF08;yum&#x5B89;&#x88C5;&#xFF09;&#xFF0C;&#x4E8E;&#x662F;&#x5728;github&#x4E0A;&#x627E;&#x5230;&#x4E86;&#x4E00;&#x4E2A;&#x9879;&#x76EE;&#xFF0C;&#x5927;&#x5BB6;&#x53EF;&#x4EE5;&#x53C2;&#x8003;&#x4E00;&#x4E0B;<a href="https://github.com/zabbixcn/zabbix3.0-rpm.git" target="_blank" rel="external">https://github.com/zabbixcn/zabbix3.0-rpm.git</a><br>&#x672C;&#x6587;&#x4E3B;&#x8981;&#x8BF4;&#x660E;&#x5982;&#x4F55;&#x901A;&#x8FC7;CentOS6(64&#x4F4D;)&#x5B89;&#x88C5;zabbix 3.0<br><a id="more"></a></p>
+<p></p><h2 id="&#x73AF;&#x5883;&#x8981;&#x6C42;">&#x73AF;&#x5883;&#x8981;&#x6C42;</h2><br>PHP &gt;= 5.4&#xFF08;&#x9ED8;&#x8BA4;CentOS6 &#x662F;5.3.3&#xFF0C;&#x9700;&#x81EA;&#x5DF1;&#x5B89;&#x88C5;&#xFF09; curl &gt;= 7.20 (&#x5982;&#x9700;&#x652F;&#x6301;SMTP&#x8BA4;&#x8BC1;)<br>git clone <a href="https://github.com/zabbixcn/zabbix3.0-rpm.git" target="_blank" rel="external">https://github.com/zabbixcn/zabbix3.0-rpm.git</a><br>cd  zabbix3.0-rpm/RPMS<p></p>
+<p></p><h2 id="&#x5B89;&#x88C5;mysql">&#x5B89;&#x88C5;mysql</h2><br>MySQL&#x5EFA;&#x8BAE;&#x4F7F;&#x7528;5.6&#x7248;&#x672C;&#xFF0C;CentOS6&#x9ED8;&#x8BA4;&#x4E3A;5.1&#xFF0C;&#x4E0D;&#x5EFA;&#x8BAE;&#x4F7F;&#x7528;&#xFF0C;&#x6027;&#x80FD;&#x504F;&#x4F4E;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">rpm -ivh http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm</div><div class="line">yum install mysql-server -y  <span class="comment">#&#x6B64;&#x8FC7;&#x7A0B;&#x4F1A;&#x56E0;&#x4E3A;&#x7F51;&#x8DEF;&#x95EE;&#x9898;&#x504F;&#x6162;&#xFF0C;&#x8BF7;&#x8010;&#x5FC3;&#x7B49;&#x5F85;</span></div><div class="line">vim /etc/my.cnf</div><div class="line">skip_name_resolve=on</div><div class="line">innodb_file_per_table=on</div><div class="line">mysql</div><div class="line">mysql&gt; CREATE DATABASE zabbix CHARACTER SET utf8 COLLATE utf8_bin;</div><div class="line">mysql&gt; GRANT ALL ON zabbix.* TO <span class="string">&apos;zabbix&apos;</span>@<span class="string">&apos;127.0.0.1&apos;</span> IDENTIFIED BY <span class="string">&apos;zabbix&apos;</span>;</div><div class="line">mysql&gt; FLUSH PRIVILEGES;</div></pre></td></tr></table></figure><p></p>
+<p></p><h2 id="&#x5B89;&#x88C5;apachephpzabbix-web">&#x5B89;&#x88C5;Apache&#xFF0C;PHP&#xFF0C;Zabbix-Web</h2><br>Zabbix 3.0&#x5BF9;PHP&#x7684;&#x8981;&#x6C42;&#x6700;&#x4F4E;&#x4E3A;5.4&#xFF0C;&#x800C;CentOS6&#x9ED8;&#x8BA4;&#x4E3A;5.3.3&#xFF0C;&#x5B8C;&#x5168;&#x4E0D;&#x6EE1;&#x8DB3;&#x8981;&#x6C42;&#xFF0C;&#x6545;&#x9700;&#x8981;&#x5229;&#x7528;&#x7B2C;&#x4E09;&#x65B9;&#x6E90;&#xFF0C;&#x5C06;PHP&#x5347;&#x7EA7;&#x5230;5.4&#x4EE5;&#x4E0A;&#xFF0C;&#x6CE8;&#x610F;&#xFF0C;&#x4E0D;&#x652F;&#x6301;PHP7<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">rpm -ivh http://repo.webtatic.com/yum/el6/latest.rpm</div><div class="line">yum install zabbix-web-mysql-3.0.0-1.el6.noarch.rpm</div><div class="line">zabbix-web-3.0.0-1.el6.noarch.rpm httpd php56w php56w-gd php56w-mysql</div><div class="line">php56w-bcmath php56w-mbstring php56w-xml php56w-ldap</div><div class="line"></div><div class="line">/etc/init.d/httpd restart</div><div class="line">/etc/init.d/php restart</div><div class="line">sed -i <span class="string">&quot;s@# php_value date.timezone Europe/Riga@php_value date.timezone</span></div><div class="line">Asia/Shanghai@g&quot; /etc/httpd/conf.d/zabbix.conf</div></pre></td></tr></table></figure><p></p>
+<p></p><h2 id="&#x5B89;&#x88C5;zabbix-server">&#x5B89;&#x88C5;zabbix-server</h2><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">yum  localinstall  zabbix-server-mysql-3.0.0-1.el6.x86_64.rpm</div><div class="line">vi /etc/zabbix/zabbix_server.conf</div><div class="line">DBHost=localhost</div><div class="line">DBName=zabbix</div><div class="line">DBUser=zabbix</div><div class="line">DBPassword=zabbix</div><div class="line"></div><div class="line"><span class="built_in">cd</span> /usr/share/zabbix-server-mysql-3.0.0</div><div class="line">zcat create.sql.gz | mysql -uzabbix -pzabbix zabbix</div><div class="line"></div><div class="line">/etc/init.d/zabbix-server restart</div></pre></td></tr></table></figure><p></p>
+<p></p><h2 id="zabbix-web&#x754C;&#x9762;&#x914D;&#x7F6E;">zabbix web&#x754C;&#x9762;&#x914D;&#x7F6E;</h2><br><a href="http://${IP}/zabbix" target="_blank" rel="external">http://${IP}/zabbix</a><br>&#x7528;&#x6237;&#xFF1A;Admin   &#x5BC6;&#x7801;:zabbix<p></p>
 
-      <h1 class="post-title">
+      
+    </div>
+
+    <div>
+      
         
-            <a class="post-title-link" href="/2016/05/30/关于http健康状态检测遗留下的大量日志问题/" itemprop="url">
-              
-                <span itemprop="name">关于http健康状态检测遗留下的大量日志问题</span>
-              
-            </a>
+
+      
+    </div>
+
+    <div>
+      
         
-      </h1>
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/weixin.png" alt="CH WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-05-30T17:00:05+08:00"
-              content="2016-05-30" >
-          05-30
-        </time>
-      </div>
 
-    </header>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/zabbix/" rel="tag">#zabbix</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/16/inotify-rsync实时目录同步/" rel="next" title="inotify+rsync实时目录同步">
+                <i class="fa fa-chevron-left"></i> inotify+rsync实时目录同步
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
-    
-  </div>
 
-  
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/08/16/Centos6系列安装Zabbix3-0/"
+     data-title="Centos6系列安装Zabbix3.0"
+     data-content=""
+     data-url="http://yoursite.com/2016/08/16/Centos6系列安装Zabbix3-0/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
 
 
           </div>
           
 
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/16/Centos6系列安装Zabbix3-0/"
+           data-title="Centos6系列安装Zabbix3.0" data-url="http://yoursite.com/2016/08/16/Centos6系列安装Zabbix3-0/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -312,8 +456,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/linux.jpg"
@@ -395,6 +548,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#环境要求"><span class="nav-number">1.</span> <span class="nav-text">环境要求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装mysql"><span class="nav-number">2.</span> <span class="nav-text">安装mysql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装apachephpzabbix-web"><span class="nav-number">3.</span> <span class="nav-text">安装Apache，PHP，Zabbix-Web</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装zabbix-server"><span class="nav-number">4.</span> <span class="nav-text">安装zabbix-server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zabbix-web界面配置"><span class="nav-number">5.</span> <span class="nav-text">zabbix web界面配置</span></a></li></ol></div>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -491,6 +655,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 
