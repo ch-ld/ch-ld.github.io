@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="nginx," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -86,16 +86,15 @@
 
 
 
-<meta name="description" content="相信小伙伴们在做keepalived、haproxy或者pacemaker的时候，给httpd做健康状态检测一定会给后端服务器带来大量的访问日志。访问日志对我们运维来说至关重要（后期我们可以通过日志来分析用户的各种行为），但是健康状态检测的日志我们可以不用记录日志。毕竟每两三秒记录一次，而且后期统计时对我们也没有什么用。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="关于http健康状态检测遗留下的大量日志问题">
-<meta property="og:url" content="http://yoursite.com/2016/05/30/关于http健康状态检测遗留下的大量日志问题/index.html">
+<meta name="description" content="对自己要求高一点！">
+<meta property="og:type" content="website">
+<meta property="og:title" content="火柴的博客">
+<meta property="og:url" content="http://yoursite.com/tags/shell/index.html">
 <meta property="og:site_name" content="火柴的博客">
-<meta property="og:description" content="相信小伙伴们在做keepalived、haproxy或者pacemaker的时候，给httpd做健康状态检测一定会给后端服务器带来大量的访问日志。访问日志对我们运维来说至关重要（后期我们可以通过日志来分析用户的各种行为），但是健康状态检测的日志我们可以不用记录日志。毕竟每两三秒记录一次，而且后期统计时对我们也没有什么用。">
-<meta property="og:updated_time" content="2016-08-05T07:06:36.093Z">
+<meta property="og:description" content="对自己要求高一点！">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于http健康状态检测遗留下的大量日志问题">
-<meta name="twitter:description" content="相信小伙伴们在做keepalived、haproxy或者pacemaker的时候，给httpd做健康状态检测一定会给后端服务器带来大量的访问日志。访问日志对我们运维来说至关重要（后期我们可以通过日志来分析用户的各种行为），但是健康状态检测的日志我们可以不用记录日志。毕竟每两三秒记录一次，而且后期统计时对我们也没有什么用。">
+<meta name="twitter:title" content="火柴的博客">
+<meta name="twitter:description" content="对自己要求高一点！">
 
 
 
@@ -116,9 +115,9 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/05/30/关于http健康状态检测遗留下的大量日志问题/"/>
+  <link rel="canonical" href="http://yoursite.com/tags/shell/"/>
 
-  <title> 关于http健康状态检测遗留下的大量日志问题 | 火柴的博客 </title>
+  <title> 标签: shell | 火柴的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -139,7 +138,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container one-collumn sidebar-position-left  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -247,222 +246,53 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <div id="posts" class="posts-collapse">
+    <div class="collection-title">
+      <h2 >
+        shell
+        <small>标签</small>
+      </h2>
+    </div>
 
     
-      <header class="post-header">
+      
 
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
         
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
+            <a class="post-title-link" href="/2016/08/23/网络分析shell脚本-实时流量-连接统计/" itemprop="url">
               
-                关于http健康状态检测遗留下的大量日志问题
+                <span itemprop="name">网络分析shell脚本(实时流量+连接统计)</span>
               
-            
-          </h1>
+            </a>
         
+      </h1>
 
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-30T17:00:05+08:00" content="2016-05-30">
-              2016-05-30
-            </time>
-          </span>
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2016-08-23T11:14:10+08:00"
+              content="2016-08-23" >
+          08-23
+        </time>
+      </div>
 
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/运维/" itemprop="url" rel="index">
-                    <span itemprop="name">运维</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/30/关于http健康状态检测遗留下的大量日志问题/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/30/关于http健康状态检测遗留下的大量日志问题/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/05/30/关于http健康状态检测遗留下的大量日志问题/" class="leancloud_visitors" data-flag-title="关于http健康状态检测遗留下的大量日志问题">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-              &nbsp; | &nbsp;
-              <span class="page-pv">本文总阅读量<i class="fa fa-file-o"></i>
-              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
-              </span>
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>&#x76F8;&#x4FE1;&#x5C0F;&#x4F19;&#x4F34;&#x4EEC;&#x5728;&#x505A;keepalived&#x3001;haproxy&#x6216;&#x8005;pacemaker&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x7ED9;httpd&#x505A;&#x5065;&#x5EB7;&#x72B6;&#x6001;&#x68C0;&#x6D4B;&#x4E00;&#x5B9A;&#x4F1A;&#x7ED9;&#x540E;&#x7AEF;&#x670D;&#x52A1;&#x5668;&#x5E26;&#x6765;&#x5927;&#x91CF;&#x7684;&#x8BBF;&#x95EE;&#x65E5;&#x5FD7;&#x3002;&#x8BBF;&#x95EE;&#x65E5;&#x5FD7;&#x5BF9;&#x6211;&#x4EEC;&#x8FD0;&#x7EF4;&#x6765;&#x8BF4;&#x81F3;&#x5173;&#x91CD;&#x8981;&#xFF08;&#x540E;&#x671F;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x65E5;&#x5FD7;&#x6765;&#x5206;&#x6790;&#x7528;&#x6237;&#x7684;&#x5404;&#x79CD;&#x884C;&#x4E3A;&#xFF09;&#xFF0C;&#x4F46;&#x662F;&#x5065;&#x5EB7;&#x72B6;&#x6001;&#x68C0;&#x6D4B;&#x7684;&#x65E5;&#x5FD7;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4E0D;&#x7528;&#x8BB0;&#x5F55;&#x65E5;&#x5FD7;&#x3002;&#x6BD5;&#x7ADF;&#x6BCF;&#x4E24;&#x4E09;&#x79D2;&#x8BB0;&#x5F55;&#x4E00;&#x6B21;&#xFF0C;&#x800C;&#x4E14;&#x540E;&#x671F;&#x7EDF;&#x8BA1;&#x65F6;&#x5BF9;&#x6211;&#x4EEC;&#x4E5F;&#x6CA1;&#x6709;&#x4EC0;&#x4E48;&#x7528;&#x3002;</p>
-<a id="more"></a>
-<p>&#x672C;&#x6587;&#x5C06;&#x5177;&#x4F53;&#x8BF4;&#x660E;&#x5982;&#x4F55;&#x5728;&#x540E;&#x7AEF;&#x4E3B;&#x673A;nginx &#x3001; apache &#x670D;&#x52A1;&#x5668;&#x4E0A;&#x914D;&#x7F6E;&#x4E0D;&#x8BB0;&#x5F55;&#x5065;&#x5EB7;&#x72B6;&#x6001;&#x68C0;&#x6D4B;&#x7684;&#x8BBF;&#x95EE;&#x65E5;&#x5FD7;&#x3002;</p>
-<p>nginx</p>
-<p>&#x4E00;&#x822C;&#x57FA;&#x4E8E;7&#x5C42;&#x7684;&#x5065;&#x5EB7;&#x72B6;&#x6001;&#x68C0;&#x6D4B;&#xFF0C;&#x90FD;&#x662F;&#x901A;&#x8FC7;&#x8BBF;&#x95EE;&#x540E;&#x7AEF;&#x4E3B;&#x673A;&#x7684;&#x7279;&#x5B9A;&#x7684;url&#xFF0C; &#x7279;&#x6027;&#x76EE;&#x5F55;&#x4E0B;&#x7684;&#x8D44;&#x6E90;&#xFF0C;&#x6765;&#x5224;&#x65AD;&#x540E;&#x7AEF;&#x4E3B;&#x673A;&#x662F;&#x5426;&#x51FA;&#x73B0;&#x6545;&#x969C;&#xFF0C;&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x8981;&#x5728;nginx&#x7684;server&#x6BB5;&#x4E0A;&#x52A0;&#x4E00;&#x4E2A;location&#x3002;&#x8BBF;&#x95EE;&#x6211;&#x4EEC;&#x7279;&#x6709;&#x7684;&#x5065;&#x5EB7;&#x72B6;&#x6001;&#x68C0;&#x6D4B;&#x7684;&#x8D44;&#x6E90;&#xFF0C;&#x4E0D;&#x4E88;&#x4EE5;&#x8BB0;&#x5F55;&#x65E5;&#x5FD7;&#x5373;&#x53EF;&#xFF0C;&#x5176;&#x4ED6;&#x7684;&#x7167;&#x5E38;&#x8BB0;&#x5F55;&#x65E5;&#x5FD7;&#x3002;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">location = /test.html {</div><div class="line">access_<span class="built_in">log</span> off;</div><div class="line">}</div></pre></td></tr></table></figure></p>
-<p>apache</p>
-<p>1.&#x6307;&#x5B9A;&#x8BB0;&#x5F55;&#x6CD5;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">SetEnvIfNoCase Request_URI <span class="string">&quot;(\.htm|\/|\.html|\.php)$&quot;</span> htm  </div><div class="line">CustomLog logs/9enjoy.com-access_<span class="built_in">log</span> combined env=htm</div></pre></td></tr></table></figure></p>
-<p>2.&#x6392;&#x9664;&#x6CD5;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;FilesMatch <span class="string">&quot;\.html&quot;</span>&gt;</div><div class="line">SetEnv IMAGE 1</div><div class="line">&lt;/FilesMatch&gt;</div><div class="line">CustomLog <span class="string">&quot;logs/access_log&quot;</span> combined env=!IMAGE</div></pre></td></tr></table></figure></p>
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
-    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-      <span>赏</span>
-    </button>
-    <div id="QR" style="display: none;">
-      
-        <div id="wechat" style="display: inline-block">
-          <img id="wechat_qr" src="/uploads/weixin.png" alt="CH WeChat Pay"/>
-          <p>微信打赏</p>
-        </div>
-      
-      
-    </div>
-  </div>
-
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/nginx/" rel="tag">#nginx</a>
-          
-        </div>
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/08/04/一次处理故障的记录/" rel="prev" title="一次处理故障的记录">
-                一次处理故障的记录 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
+    </header>
   </article>
 
 
-
-    <div class="post-spread">
-      
-        <div class="ds-share flat" data-thread-key="2016/05/30/关于http健康状态检测遗留下的大量日志问题/"
-     data-title="关于http健康状态检测遗留下的大量日志问题"
-     data-content=""
-     data-url="http://yoursite.com/2016/05/30/关于http健康状态检测遗留下的大量日志问题/">
-  <div class="ds-share-inline">
-    <ul  class="ds-share-icons-16">
-
-      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
-      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
-      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
-      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
-      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
-
-    </ul>
-    <div class="ds-share-icons-more">
-    </div>
+    
   </div>
-</div>
-      
-    </div>
-  </div>
+
+  
 
 
           </div>
           
 
-  <p>热评文章</p>
-  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
-
 
           
-  <div class="comments" id="comments">
-    
-      <div class="ds-thread" data-thread-key="2016/05/30/关于http健康状态检测遗留下的大量日志问题/"
-           data-title="关于http健康状态检测遗留下的大量日志问题" data-url="http://yoursite.com/2016/05/30/关于http健康状态检测遗留下的大量日志问题/">
-      </div>
-    
-  </div>
-
 
         </div>
         
@@ -482,17 +312,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel ">
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/linux.jpg"
@@ -586,17 +407,6 @@
 
       </section>
 
-      
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-            
-              
-            
-            
-              <p class="post-toc-empty">此文章未包含目录</p>
-            
-          </div>
-        </section>
       
 
     </div>
@@ -710,10 +520,6 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
-
-
 
   
 
