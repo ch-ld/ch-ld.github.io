@@ -1,0 +1,931 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="SSH," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="火柴的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="事情源于前两天开发一哥们向我要服务器之间登录无密码实现的命令，当时只知其命令，却不知其所以然。于是就决定好好的复习一下之前学过的基础了，正所谓基础不牢，地动山摇嘛。那么SSH是一种网络协议，主要用于计算机之间的加密登录。如果一个用户从本地计算机，使用SSH协议登录另一台远程计算机，我们就可以认为，这种登录是安全的，即使被中途截获，密码也不会泄露。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSH原理和应用">
+<meta property="og:url" content="http://yoursite.com/2016/08/24/SSH原理和应用/index.html">
+<meta property="og:site_name" content="火柴的博客">
+<meta property="og:description" content="事情源于前两天开发一哥们向我要服务器之间登录无密码实现的命令，当时只知其命令，却不知其所以然。于是就决定好好的复习一下之前学过的基础了，正所谓基础不牢，地动山摇嘛。那么SSH是一种网络协议，主要用于计算机之间的加密登录。如果一个用户从本地计算机，使用SSH协议登录另一台远程计算机，我们就可以认为，这种登录是安全的，即使被中途截获，密码也不会泄露。">
+<meta property="og:image" content="http://yoursite.com/uploads/公钥加密.png">
+<meta property="og:image" content="http://yoursite.com/uploads/私钥加密.png">
+<meta property="og:updated_time" content="2016-08-24T07:00:21.387Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SSH原理和应用">
+<meta name="twitter:description" content="事情源于前两天开发一哥们向我要服务器之间登录无密码实现的命令，当时只知其命令，却不知其所以然。于是就决定好好的复习一下之前学过的基础了，正所谓基础不牢，地动山摇嘛。那么SSH是一种网络协议，主要用于计算机之间的加密登录。如果一个用户从本地计算机，使用SSH协议登录另一台远程计算机，我们就可以认为，这种登录是安全的，即使被中途截获，密码也不会泄露。">
+<meta name="twitter:image" content="http://yoursite.com/uploads/公钥加密.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/08/24/SSH原理和应用/"/>
+
+  <title> SSH原理和应用 | 火柴的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">火柴的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                SSH原理和应用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-24T13:52:07+08:00" content="2016-08-24">
+              2016-08-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/基础/" itemprop="url" rel="index">
+                    <span itemprop="name">基础</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/24/SSH原理和应用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/24/SSH原理和应用/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/08/24/SSH原理和应用/" class="leancloud_visitors" data-flag-title="SSH原理和应用">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv">本文总阅读量<i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>&#x4E8B;&#x60C5;&#x6E90;&#x4E8E;&#x524D;&#x4E24;&#x5929;&#x5F00;&#x53D1;&#x4E00;&#x54E5;&#x4EEC;&#x5411;&#x6211;&#x8981;&#x670D;&#x52A1;&#x5668;&#x4E4B;&#x95F4;&#x767B;&#x5F55;&#x65E0;&#x5BC6;&#x7801;&#x5B9E;&#x73B0;&#x7684;&#x547D;&#x4EE4;&#xFF0C;&#x5F53;&#x65F6;&#x53EA;&#x77E5;&#x5176;&#x547D;&#x4EE4;&#xFF0C;&#x5374;&#x4E0D;&#x77E5;&#x5176;&#x6240;&#x4EE5;&#x7136;&#x3002;&#x4E8E;&#x662F;&#x5C31;&#x51B3;&#x5B9A;&#x597D;&#x597D;&#x7684;&#x590D;&#x4E60;&#x4E00;&#x4E0B;&#x4E4B;&#x524D;&#x5B66;&#x8FC7;&#x7684;&#x57FA;&#x7840;&#x4E86;&#xFF0C;&#x6B63;&#x6240;&#x8C13;&#x57FA;&#x7840;&#x4E0D;&#x7262;&#xFF0C;&#x5730;&#x52A8;&#x5C71;&#x6447;&#x561B;&#x3002;<br>&#x90A3;&#x4E48;SSH&#x662F;&#x4E00;&#x79CD;&#x7F51;&#x7EDC;&#x534F;&#x8BAE;&#xFF0C;&#x4E3B;&#x8981;&#x7528;&#x4E8E;&#x8BA1;&#x7B97;&#x673A;&#x4E4B;&#x95F4;&#x7684;&#x52A0;&#x5BC6;&#x767B;&#x5F55;&#x3002;<br>&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x7528;&#x6237;&#x4ECE;&#x672C;&#x5730;&#x8BA1;&#x7B97;&#x673A;&#xFF0C;&#x4F7F;&#x7528;SSH&#x534F;&#x8BAE;&#x767B;&#x5F55;&#x53E6;&#x4E00;&#x53F0;&#x8FDC;&#x7A0B;&#x8BA1;&#x7B97;&#x673A;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x8BA4;&#x4E3A;&#xFF0C;&#x8FD9;&#x79CD;&#x767B;&#x5F55;&#x662F;&#x5B89;&#x5168;&#x7684;&#xFF0C;&#x5373;&#x4F7F;&#x88AB;&#x4E2D;&#x9014;&#x622A;&#x83B7;&#xFF0C;&#x5BC6;&#x7801;&#x4E5F;&#x4E0D;&#x4F1A;&#x6CC4;&#x9732;&#x3002;<br><a id="more"></a></p>
+</blockquote>
+<p></p><h2 id="&#x4E2D;&#x95F4;&#x4EBA;&#x653B;&#x51FB;">&#x4E2D;&#x95F4;&#x4EBA;&#x653B;&#x51FB;</h2><br>SSH&#x4E4B;&#x6240;&#x4EE5;&#x80FD;&#x591F;&#x4FDD;&#x8BC1;&#x5B89;&#x5168;&#xFF0C;&#x539F;&#x56E0;&#x5728;&#x4E8E;&#x5B83;&#x91C7;&#x7528;&#x4E86;&#x516C;&#x94A5;&#x52A0;&#x5BC6;&#x3002;<br>&#x6574;&#x4E2A;&#x8FC7;&#x7A0B;&#x662F;&#x8FD9;&#x6837;&#x7684;&#xFF1A;<p></p>
+<pre><code>1. &#x8FDC;&#x7A0B;&#x4E3B;&#x673A;&#x6536;&#x5230;&#x7528;&#x6237;&#x7684;&#x767B;&#x5F55;&#x8BF7;&#x6C42;&#xFF0C;&#x628A;&#x81EA;&#x5DF1;&#x7684;&#x516C;&#x94A5;&#x53D1;&#x7ED9;&#x7528;&#x6237;&#x3002;
+2. &#x7528;&#x6237;&#x4F7F;&#x7528;&#x8FD9;&#x4E2A;&#x516C;&#x94A5;&#xFF0C;&#x5C06;&#x767B;&#x5F55;&#x5BC6;&#x7801;&#x52A0;&#x5BC6;&#x540E;&#xFF0C;&#x53D1;&#x9001;&#x56DE;&#x6765;&#x3002;
+3. &#x8FDC;&#x7A0B;&#x4E3B;&#x673A;&#x7528;&#x81EA;&#x5DF1;&#x7684;&#x79C1;&#x94A5;&#xFF0C;&#x89E3;&#x5BC6;&#x767B;&#x5F55;&#x5BC6;&#x7801;&#xFF0C;&#x5982;&#x679C;&#x5BC6;&#x7801;&#x6B63;&#x786E;&#xFF0C;&#x5C31;&#x540C;&#x610F;&#x7528;&#x6237;&#x767B;&#x5F55;&#x3002;
+</code></pre><p>&#x8FD9;&#x4E2A;&#x8FC7;&#x7A0B;&#x672C;&#x8EAB;&#x662F;&#x5B89;&#x5168;&#x7684;&#xFF0C;&#x4F46;&#x662F;&#x5B9E;&#x65BD;&#x7684;&#x65F6;&#x5019;&#x5B58;&#x5728;&#x4E00;&#x4E2A;&#x98CE;&#x9669;&#xFF1A;&#x5982;&#x679C;&#x6709;&#x4EBA;&#x622A;&#x83B7;&#x4E86;&#x767B;&#x5F55;&#x8BF7;&#x6C42;&#xFF0C;&#x7136;&#x540E;&#x5192;&#x5145;&#x8FDC;&#x7A0B;&#x4E3B;&#x673A;&#xFF0C;&#x5C06;&#x4F2A;&#x9020;&#x7684;&#x516C;&#x94A5;&#x53D1;&#x7ED9;&#x7528;&#x6237;&#xFF0C;&#x90A3;&#x4E48;&#x7528;&#x6237;&#x5F88;&#x96BE;&#x8FA8;&#x522B;&#x771F;&#x4F2A;&#x3002;&#x56E0;&#x4E3A;&#x4E0D;&#x50CF;https&#x534F;&#x8BAE;&#xFF0C;SSH&#x534F;&#x8BAE;&#x7684;&#x516C;&#x94A5;&#x662F;&#x6CA1;&#x6709;&#x8BC1;&#x4E66;&#x4E2D;&#x5FC3;&#xFF08;CA&#xFF09;&#x516C;&#x8BC1;&#x7684;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#xFF0C;&#x90FD;&#x662F;&#x81EA;&#x5DF1;&#x7B7E;&#x53D1;&#x7684;&#x3002;<br>&#x53EF;&#x4EE5;&#x8BBE;&#x60F3;&#xFF0C;&#x5982;&#x679C;&#x653B;&#x51FB;&#x8005;&#x63D2;&#x5728;&#x7528;&#x6237;&#x4E0E;&#x8FDC;&#x7A0B;&#x4E3B;&#x673A;&#x4E4B;&#x95F4;&#xFF08;&#x6BD4;&#x5982;&#x5728;&#x516C;&#x5171;&#x7684;wifi&#x533A;&#x57DF;&#xFF09;&#xFF0C;&#x7528;&#x4F2A;&#x9020;&#x7684;&#x516C;&#x94A5;&#xFF0C;&#x83B7;&#x53D6;&#x7528;&#x6237;&#x7684;&#x767B;&#x5F55;&#x5BC6;&#x7801;&#x3002;&#x518D;&#x7528;&#x8FD9;&#x4E2A;&#x5BC6;&#x7801;&#x767B;&#x5F55;&#x8FDC;&#x7A0B;&#x4E3B;&#x673A;&#xFF0C;&#x90A3;&#x4E48;SSH&#x7684;&#x5B89;&#x5168;&#x673A;&#x5236;&#x5C31;&#x8361;&#x7136;&#x65E0;&#x5B58;&#x4E86;&#x3002;&#x8FD9;&#x79CD;&#x98CE;&#x9669;&#x5C31;&#x662F;&#x8457;&#x540D;&#x7684;&#x201D;&#x4E2D;&#x95F4;&#x4EBA;&#x653B;&#x51FB;&#x201D;&#x3002;<br>&#x90A3;&#x4E48;&#xFF0C;SSH&#x534F;&#x8BAE;&#x662F;&#x5982;&#x4F55;&#x5E94;&#x5BF9;&#x7684;&#x5462;&#xFF1F;</p>
+<p></p><h2 id="&#x5BC6;&#x7801;&#x767B;&#x5F55;">&#x5BC6;&#x7801;&#x767B;&#x5F55;</h2><br>&#x5982;&#x679C;&#x4F60;&#x662F;&#x7B2C;&#x4E00;&#x6B21;&#x767B;&#x5F55;&#x5BF9;&#x65B9;&#x4E3B;&#x673A;&#xFF0C;&#x7CFB;&#x7EDF;&#x4F1A;&#x51FA;&#x73B0;&#x4E0B;&#x9762;&#x7684;&#x63D0;&#x793A;&#xFF1A;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># ssh root@192.168.16.11</span></div><div class="line">The authenticity of host <span class="string">&apos;192.168.16.11 (192.168.16.11)&apos;</span> can<span class="string">&apos;t be established.</span></div><div class="line">RSA key fingerprint is a8:e6:92:33:1d:ea:05:76:44:c9:82:e9:3b:50:0e:be.</div><div class="line">Are you sure you want to continue connecting (yes/no)?</div></pre></td></tr></table></figure><p></p>
+<p>&#x8FD9;&#x6BB5;&#x8BDD;&#x7684;&#x610F;&#x601D;&#x662F;&#xFF0C;&#x65E0;&#x6CD5;&#x786E;&#x8BA4;host&#x4E3B;&#x673A;&#x7684;&#x771F;&#x5B9E;&#x6027;&#xFF0C;&#x53EA;&#x77E5;&#x9053;&#x5B83;&#x7684;&#x516C;&#x94A5;&#x6307;&#x7EB9;&#xFF0C;&#x95EE;&#x4F60;&#x8FD8;&#x60F3;&#x7EE7;&#x7EED;&#x8FDE;&#x63A5;&#x5417;&#xFF1F;<br>&#x6240;&#x8C13;&#x201D;&#x516C;&#x94A5;&#x6307;&#x7EB9;&#x201D;&#xFF0C;&#x662F;&#x6307;&#x516C;&#x94A5;&#x957F;&#x5EA6;&#x8F83;&#x957F;&#xFF08;&#x8FD9;&#x91CC;&#x91C7;&#x7528;RSA&#x7B97;&#x6CD5;&#xFF0C;&#x957F;&#x8FBE;1024&#x4F4D;&#xFF09;&#xFF0C;&#x5F88;&#x96BE;&#x6BD4;&#x5BF9;&#xFF0C;&#x6240;&#x4EE5;&#x5BF9;&#x5176;&#x8FDB;&#x884C;MD5&#x8BA1;&#x7B97;&#xFF0C;&#x5C06;&#x5B83;&#x53D8;&#x6210;&#x4E00;&#x4E2A;128&#x4F4D;&#x7684;&#x6307;&#x7EB9;&#x3002;&#x4E0A;&#x4F8B;&#x4E2D;&#x662F;a8:e6:92:33:1d:ea:05:76:44:c9:82:e9:3b:50:0e:be&#xFF0C;&#x518D;&#x8FDB;&#x884C;&#x6BD4;&#x8F83;&#xFF0C;&#x5C31;&#x5BB9;&#x6613;&#x591A;&#x4E86;&#x3002;<br>&#x5F88;&#x81EA;&#x7136;&#x7684;&#x4E00;&#x4E2A;&#x95EE;&#x9898;&#x5C31;&#x662F;&#xFF0C;&#x7528;&#x6237;&#x600E;&#x4E48;&#x77E5;&#x9053;&#x8FDC;&#x7A0B;&#x4E3B;&#x673A;&#x7684;&#x516C;&#x94A5;&#x6307;&#x7EB9;&#x5E94;&#x8BE5;&#x662F;&#x591A;&#x5C11;&#xFF1F;&#x56DE;&#x7B54;&#x662F;&#x6CA1;&#x6709;&#x597D;&#x529E;&#x6CD5;&#xFF0C;&#x8FDC;&#x7A0B;&#x4E3B;&#x673A;&#x5FC5;&#x987B;&#x5728;&#x81EA;&#x5DF1;&#x7684;&#x7F51;&#x7AD9;&#x4E0A;&#x8D34;&#x51FA;&#x516C;&#x94A5;&#x6307;&#x7EB9;&#xFF0C;&#x4EE5;&#x4FBF;&#x7528;&#x6237;&#x81EA;&#x884C;&#x6838;&#x5BF9;&#x3002;<br>&#x5047;&#x5B9A;&#x7ECF;&#x8FC7;&#x98CE;&#x9669;&#x8861;&#x91CF;&#x4EE5;&#x540E;&#xFF0C;&#x7528;&#x6237;&#x51B3;&#x5B9A;&#x63A5;&#x53D7;&#x8FD9;&#x4E2A;&#x8FDC;&#x7A0B;&#x4E3B;&#x673A;&#x7684;&#x516C;&#x94A5;&#x3002;<br>&#x7CFB;&#x7EDF;&#x4F1A;&#x51FA;&#x73B0;&#x4E00;&#x53E5;&#x63D0;&#x793A;&#xFF0C;&#x8868;&#x793A;host&#x4E3B;&#x673A;&#x5DF2;&#x7ECF;&#x5F97;&#x5230;&#x8BA4;&#x53EF;&#x3002;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">root@192.168.16.12<span class="string">&apos;s password:</span></div></pre></td></tr></table></figure></p>
+<p>&#x5982;&#x679C;&#x5BC6;&#x7801;&#x6B63;&#x786E;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x767B;&#x5F55;&#x4E86;&#x3002;<br>&#x5F53;&#x8FDC;&#x7A0B;&#x4E3B;&#x673A;&#x7684;&#x516C;&#x94A5;&#x88AB;&#x63A5;&#x53D7;&#x4EE5;&#x540E;&#xFF0C;&#x5B83;&#x5C31;&#x4F1A;&#x88AB;&#x4FDD;&#x5B58;&#x5728;&#x6587;&#x4EF6;$HOME/.ssh/known_hosts&#x4E4B;&#x4E2D;&#x3002;&#x4E0B;&#x6B21;&#x518D;&#x8FDE;&#x63A5;&#x8FD9;&#x53F0;&#x4E3B;&#x673A;&#xFF0C;&#x7CFB;&#x7EDF;&#x5C31;&#x4F1A;&#x8BA4;&#x51FA;&#x5B83;&#x7684;&#x516C;&#x94A5;&#x5DF2;&#x7ECF;&#x4FDD;&#x5B58;&#x5728;&#x672C;&#x5730;&#x4E86;&#xFF0C;&#x4ECE;&#x800C;&#x8DF3;&#x8FC7;&#x8B66;&#x544A;&#x90E8;&#x5206;&#xFF0C;&#x76F4;&#x63A5;&#x63D0;&#x793A;&#x8F93;&#x5165;&#x5BC6;&#x7801;&#x3002;<br>&#x6BCF;&#x4E2A;SSH&#x7528;&#x6237;&#x90FD;&#x6709;&#x81EA;&#x5DF1;&#x7684;known_hosts&#x6587;&#x4EF6;&#xFF0C;&#x6B64;&#x5916;&#x7CFB;&#x7EDF;&#x4E5F;&#x6709;&#x4E00;&#x4E2A;&#x8FD9;&#x6837;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x901A;&#x5E38;&#x662F;/etc/ssh/ssh_known_hosts&#xFF0C;&#x4FDD;&#x5B58;&#x4E00;&#x4E9B;&#x5BF9;&#x6240;&#x6709;&#x7528;&#x6237;&#x90FD;&#x53EF;&#x4FE1;&#x8D56;&#x7684;&#x8FDC;&#x7A0B;&#x4E3B;&#x673A;&#x7684;&#x516C;&#x94A5;&#x3002;</p>
+<p></p><h2 id="&#x516C;&#x94A5;&#x767B;&#x5F55;">&#x516C;&#x94A5;&#x767B;&#x5F55;</h2><br>&#x4F7F;&#x7528;&#x5BC6;&#x7801;&#x767B;&#x5F55;&#xFF0C;&#x6BCF;&#x6B21;&#x90FD;&#x5FC5;&#x987B;&#x8F93;&#x5165;&#x5BC6;&#x7801;&#xFF0C;&#x975E;&#x5E38;&#x9EBB;&#x70E6;&#x3002;&#x597D;&#x5728;SSH&#x8FD8;&#x63D0;&#x4F9B;&#x4E86;&#x516C;&#x94A5;&#x767B;&#x5F55;&#xFF0C;&#x53EF;&#x4EE5;&#x7701;&#x53BB;&#x8F93;&#x5165;&#x5BC6;&#x7801;&#x7684;&#x6B65;&#x9AA4;&#x3002;<br>&#x6240;&#x8C13;&#x201D;&#x516C;&#x94A5;&#x767B;&#x5F55;&#x201D;&#xFF0C;&#x539F;&#x7406;&#x5F88;&#x7B80;&#x5355;&#xFF0C;&#x5C31;&#x662F;&#x7528;&#x6237;&#x5C06;&#x81EA;&#x5DF1;&#x7684;&#x516C;&#x94A5;&#x50A8;&#x5B58;&#x5728;&#x8FDC;&#x7A0B;&#x4E3B;&#x673A;&#x4E0A;&#x3002;&#x767B;&#x5F55;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x8FDC;&#x7A0B;&#x4E3B;&#x673A;&#x4F1A;&#x5411;&#x7528;&#x6237;&#x53D1;&#x9001;&#x4E00;&#x6BB5;&#x968F;&#x673A;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x7528;&#x6237;&#x7528;&#x81EA;&#x5DF1;&#x7684;&#x79C1;&#x94A5;&#x52A0;&#x5BC6;&#x540E;&#xFF0C;&#x518D;&#x53D1;&#x56DE;&#x6765;&#x3002;&#x8FDC;&#x7A0B;&#x4E3B;&#x673A;&#x7528;&#x4E8B;&#x5148;&#x50A8;&#x5B58;&#x7684;&#x516C;&#x94A5;&#x8FDB;&#x884C;&#x89E3;&#x5BC6;&#xFF0C;&#x5982;&#x679C;&#x6210;&#x529F;&#xFF0C;&#x5C31;&#x8BC1;&#x660E;&#x7528;&#x6237;&#x662F;&#x53EF;&#x4FE1;&#x7684;&#xFF0C;&#x76F4;&#x63A5;&#x5141;&#x8BB8;&#x767B;&#x5F55;shell&#xFF0C;&#x4E0D;&#x518D;&#x8981;&#x6C42;&#x5BC6;&#x7801;&#x3002;<br>&#x8FD9;&#x79CD;&#x65B9;&#x6CD5;&#x8981;&#x6C42;&#x7528;&#x6237;&#x5FC5;&#x987B;&#x63D0;&#x4F9B;&#x81EA;&#x5DF1;&#x7684;&#x516C;&#x94A5;&#x3002;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x73B0;&#x6210;&#x7684;&#xFF0C;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x7528;ssh-keygen&#x751F;&#x6210;&#x4E00;&#x4E2A;&#xFF1A;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa -P <span class="string">&apos;&apos;</span></div></pre></td></tr></table></figure><p></p>
+<p>&#x8FD0;&#x884C;&#x4E0A;&#x9762;&#x7684;&#x547D;&#x4EE4;&#x4EE5;&#x540E;&#xFF0C;&#x7CFB;&#x7EDF;&#x4F1A;&#x51FA;&#x73B0;&#x4E00;&#x7CFB;&#x5217;&#x63D0;&#x793A;&#xFF0C;&#x53EF;&#x4EE5;&#x4E00;&#x8DEF;&#x56DE;&#x8F66;&#x3002;<br>&#x8FD0;&#x884C;&#x7ED3;&#x675F;&#x4EE5;&#x540E;&#xFF0C;&#x5728;$HOME/.ssh/&#x76EE;&#x5F55;&#x4E0B;&#xFF0C;&#x4F1A;&#x65B0;&#x751F;&#x6210;&#x4E24;&#x4E2A;&#x6587;&#x4EF6;&#xFF1A;id_rsa.pub&#x548C;id_rsa&#x3002;&#x524D;&#x8005;&#x662F;&#x4F60;&#x7684;&#x516C;&#x94A5;&#xFF0C;&#x540E;&#x8005;&#x662F;&#x4F60;&#x7684;&#x79C1;&#x94A5;&#x3002;<br>&#x8FD9;&#x65F6;&#x518D;&#x8F93;&#x5165;&#x4E0B;&#x9762;&#x7684;&#x547D;&#x4EE4;&#xFF0C;&#x5C06;&#x516C;&#x94A5;&#x4F20;&#x9001;&#x5230;&#x8FDC;&#x7A0B;&#x4E3B;&#x673A;host&#x4E0A;&#x9762;&#xFF1A;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-copy-id -i /root/.ssh/ch_rsa.pub USER@IP</div></pre></td></tr></table></figure></p>
+<p>&#x597D;&#x4E86;&#xFF0C;&#x4ECE;&#x6B64;&#x4F60;&#x518D;&#x767B;&#x5F55;&#xFF0C;&#x5C31;&#x4E0D;&#x9700;&#x8981;&#x8F93;&#x5165;&#x5BC6;&#x7801;&#x4E86;&#x3002;<br>&#x8FDC;&#x7A0B;&#x4E3B;&#x673A;&#x5C06;&#x7528;&#x6237;&#x7684;&#x516C;&#x94A5;&#xFF0C;&#x4FDD;&#x5B58;&#x5728;&#x767B;&#x5F55;&#x540E;&#x7684;&#x7528;&#x6237;&#x4E3B;&#x76EE;&#x5F55;&#x7684;$HOME/.ssh/authorized_keys&#x6587;&#x4EF6;&#x4E2D;&#x3002;&#x516C;&#x94A5;&#x5176;&#x5B9E;&#x5C31;&#x662F;&#x4E00;&#x6BB5;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x53EA;&#x8981;&#x628A;&#x5B83;&#x8FFD;&#x52A0;&#x5728;authorized_keys&#x6587;&#x4EF6;&#x7684;&#x672B;&#x5C3E;&#x5C31;&#x884C;&#x4E86;&#x3002;<br>&#x5982;&#x679C;&#x8FD8;&#x662F;&#x4E0D;&#x884C;&#xFF0C;&#x5C31;&#x6253;&#x5F00;&#x8FDC;&#x7A0B;&#x4E3B;&#x673A;&#x7684;/etc/ssh/sshd_config&#x8FD9;&#x4E2A;&#x6587;&#x4EF6;&#xFF0C;&#x68C0;&#x67E5;&#x4E0B;&#x9762;&#x51E0;&#x884C;&#x524D;&#x9762;&#x201D;#&#x201D;&#x6CE8;&#x91CA;&#x662F;&#x5426;&#x53D6;&#x6389;&#x3002;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#x3000;&#x3000;RSAAuthentication yes</div><div class="line">&#x3000;&#x3000;PubkeyAuthentication yes</div><div class="line">&#x3000;&#x3000;AuthorizedKeysFile .ssh/authorized_keys</div></pre></td></tr></table></figure></p>
+<p>&#x7136;&#x540E;&#x91CD;&#x542F;sshd&#x670D;&#x52A1;&#x5373;&#x53EF;&#x3002;</p>
+<p></p><h2 id="&#x9644;">&#x9644;</h2><p></p>
+<p></p><h3 id="&#x516C;&#x94A5;&#x8BA4;&#x8BC1;&#x539F;&#x7406;">&#x516C;&#x94A5;&#x8BA4;&#x8BC1;&#x539F;&#x7406;</h3><br>&#x6240;&#x8C13;&#x7684;&#x516C;&#x94A5;&#x8BA4;&#x8BC1;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x4F7F;&#x7528;&#x4E00;&#x5BF9;&#x52A0;&#x5BC6;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x4E00;&#x4E2A;&#x79F0;&#x4E3A;&#x516C;&#x94A5;(public key)&#xFF0C;&#x4EFB;&#x4F55;&#x4EBA;&#x90FD;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5176;&#x5185;&#x5BB9;&#xFF0C;&#x7528;&#x4E8E;&#x52A0;&#x5BC6;&#xFF1B;&#x53E6;&#x4E00;&#x4E2A;&#x79F0;&#x4E3A;&#x5BC6;&#x94A5;(private key)&#xFF0C;&#x53EA;&#x6709;&#x62E5;&#x6709;&#x8005;&#x624D;&#x80FD;&#x770B;&#x5230;&#xFF0C;&#x7528;&#x4E8E;&#x89E3;&#x5BC6;&#x3002;&#x901A;&#x8FC7;&#x516C;&#x94A5;&#x52A0;&#x5BC6;&#x8FC7;&#x7684;&#x5BC6;&#x6587;&#x4F7F;&#x7528;&#x5BC6;&#x94A5;&#x53EF;&#x4EE5;&#x8F7B;&#x677E;&#x89E3;&#x5BC6;&#xFF0C;&#x4F46;&#x6839;&#x636E;&#x516C;&#x94A5;&#x6765;&#x731C;&#x6D4B;&#x5BC6;&#x94A5;&#x5374;&#x5341;&#x5206;&#x56F0;&#x96BE;&#x3002;<br>ssh &#x7684;&#x516C;&#x94A5;&#x8BA4;&#x8BC1;&#x5C31;&#x662F;&#x4F7F;&#x7528;&#x4E86;&#x8FD9;&#x4E00;&#x7279;&#x6027;&#x3002;&#x670D;&#x52A1;&#x5668;&#x548C;&#x5BA2;&#x6237;&#x7AEF;&#x90FD;&#x5404;&#x81EA;&#x62E5;&#x6709;&#x81EA;&#x5DF1;&#x7684;&#x516C;&#x94A5;&#x548C;&#x5BC6;&#x94A5;&#x3002;&#x4E3A;&#x4E86;&#x8BF4;&#x660E;&#x65B9;&#x4FBF;&#xFF0C;&#x4EE5;&#x4E0B;&#x5C06;&#x4F7F;&#x7528;&#x8FD9;&#x4E9B;&#x7B26;&#x53F7;&#x3002;<p></p>
+<ul>
+<li>Ac    &#x5BA2;&#x6237;&#x7AEF;&#x516C;&#x94A5;</li>
+<li>Bc    &#x5BA2;&#x6237;&#x7AEF;&#x5BC6;&#x94A5;</li>
+<li>As    &#x670D;&#x52A1;&#x5668;&#x516C;&#x94A5;</li>
+<li>Bs    &#x670D;&#x52A1;&#x5668;&#x5BC6;&#x94A5;</li>
+</ul>
+<p>&#x5728;&#x8BA4;&#x8BC1;&#x4E4B;&#x524D;&#xFF0C;&#x5BA2;&#x6237;&#x7AEF;&#x9700;&#x8981;&#x901A;&#x8FC7;&#x67D0;&#x79CD;&#x65B9;&#x6CD5;&#x5C06;&#x516C;&#x94A5; Ac &#x767B;&#x5F55;&#x5230;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x3002;<br>&#x8BA4;&#x8BC1;&#x8FC7;&#x7A0B;&#x5206;&#x4E3A;&#x4E24;&#x4E2A;&#x6B65;&#x9AA4;&#x3002;<br>&#x4E00;&#x3001;&#x4F1A;&#x8BDD;&#x5BC6;&#x94A5;(session key)&#x751F;&#x6210;</p>
+<pre><code>1. &#x5BA2;&#x6237;&#x7AEF;&#x8BF7;&#x6C42;&#x8FDE;&#x63A5;&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x670D;&#x52A1;&#x5668;&#x5C06; As &#x53D1;&#x9001;&#x7ED9;&#x5BA2;&#x6237;&#x7AEF;&#x3002;
+2. &#x670D;&#x52A1;&#x5668;&#x751F;&#x6210;&#x4F1A;&#x8BDD;ID(session id)&#xFF0C;&#x8BBE;&#x4E3A; p&#xFF0C;&#x53D1;&#x9001;&#x7ED9;&#x5BA2;&#x6237;&#x7AEF;&#x3002;
+3. &#x5BA2;&#x6237;&#x7AEF;&#x751F;&#x6210;&#x4F1A;&#x8BDD;&#x5BC6;&#x94A5;(session key)&#xFF0C;&#x8BBE;&#x4E3A; q&#xFF0C;&#x5E76;&#x8BA1;&#x7B97; r = p xor q&#x3002;
+4. &#x5BA2;&#x6237;&#x7AEF;&#x5C06; r &#x7528; As &#x8FDB;&#x884C;&#x52A0;&#x5BC6;&#xFF0C;&#x7ED3;&#x679C;&#x53D1;&#x9001;&#x7ED9;&#x670D;&#x52A1;&#x5668;&#x3002;
+5. &#x670D;&#x52A1;&#x5668;&#x7528; Bs &#x8FDB;&#x884C;&#x89E3;&#x5BC6;&#xFF0C;&#x83B7;&#x5F97; r&#x3002;
+6. &#x670D;&#x52A1;&#x5668;&#x8FDB;&#x884C; r xor p &#x7684;&#x8FD0;&#x7B97;&#xFF0C;&#x83B7;&#x5F97; q&#x3002;
+7. &#x81F3;&#x6B64;&#x670D;&#x52A1;&#x5668;&#x548C;&#x5BA2;&#x6237;&#x7AEF;&#x90FD;&#x77E5;&#x9053;&#x4E86;&#x4F1A;&#x8BDD;&#x5BC6;&#x94A5;q&#xFF0C;&#x4EE5;&#x540E;&#x7684;&#x4F20;&#x8F93;&#x90FD;&#x5C06;&#x88AB; q &#x52A0;&#x5BC6;&#x3002;
+</code></pre><p>&#x4E8C;&#x3001;&#x8BA4;&#x8BC1;</p>
+<pre><code>1. &#x670D;&#x52A1;&#x5668;&#x751F;&#x6210;&#x968F;&#x673A;&#x6570; x&#xFF0C;&#x5E76;&#x7528; Ac &#x52A0;&#x5BC6;&#x540E;&#x751F;&#x6210;&#x7ED3;&#x679C; S(x)&#xFF0C;&#x53D1;&#x9001;&#x7ED9;&#x5BA2;&#x6237;&#x7AEF;
+2. &#x5BA2;&#x6237;&#x7AEF;&#x4F7F;&#x7528; Bc &#x89E3;&#x5BC6; S(x) &#x5F97;&#x5230; x
+3. &#x5BA2;&#x6237;&#x7AEF;&#x8BA1;&#x7B97; q + x &#x7684; md5 &#x503C; n(q+x)&#xFF0C;q&#x4E3A;&#x4E0A;&#x4E00;&#x6B65;&#x5F97;&#x5230;&#x7684;&#x4F1A;&#x8BDD;&#x5BC6;&#x94A5;
+4. &#x670D;&#x52A1;&#x5668;&#x8BA1;&#x7B97; q + x &#x7684; md5 &#x503C; m(q+x)
+5. &#x5BA2;&#x6237;&#x7AEF;&#x5C06; n(q+x) &#x53D1;&#x9001;&#x7ED9;&#x670D;&#x52A1;&#x5668;
+6. &#x670D;&#x52A1;&#x5668;&#x6BD4;&#x8F83; m(q+x) &#x548C; n(q+x)&#xFF0C;&#x4E24;&#x8005;&#x76F8;&#x540C;&#x5219;&#x8BA4;&#x8BC1;&#x6210;&#x529F;
+</code></pre><p></p><h3 id="&#x516C;&#x94A5;&#x52A0;&#x5BC6;">&#x516C;&#x94A5;&#x52A0;&#x5BC6;</h3><br><img src="/uploads/&#x516C;&#x94A5;&#x52A0;&#x5BC6;.png" class="blockquote-center"><p></p>
+<p></p><h3 id="&#x6570;&#x5B57;&#x7B7E;&#x540D;">&#x6570;&#x5B57;&#x7B7E;&#x540D;</h3><br><img src="/uploads/&#x79C1;&#x94A5;&#x52A0;&#x5BC6;.png" class="blockquote-center"><p></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/weixin.png" alt="CH WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SSH/" rel="tag">#SSH</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/23/git命令用法/" rel="next" title="git命令用法">
+                <i class="fa fa-chevron-left"></i> git命令用法
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/08/24/SSH原理和应用/"
+     data-title="SSH原理和应用"
+     data-content=""
+     data-url="http://yoursite.com/2016/08/24/SSH原理和应用/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/24/SSH原理和应用/"
+           data-title="SSH原理和应用" data-url="http://yoursite.com/2016/08/24/SSH原理和应用/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/linux.jpg"
+               alt="CH" />
+          <p class="site-author-name" itemprop="name">CH</p>
+          <p class="site-description motion-element" itemprop="description">对自己要求高一点！</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ch-ld/ch-ld.github.io" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.magedu.com/" title="马哥教育" target="_blank">马哥教育</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://zantony.top/" title="Antony" target="_blank">Antony</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://geass.link/" title="Jin Lei" target="_blank">Jin Lei</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://mrchen.org/" title="Mrchen" target="_blank">Mrchen</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.psiphon3.net/zh/download.html" title="科学上网" target="_blank">科学上网</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#中间人攻击"><span class="nav-number">1.</span> <span class="nav-text">中间人攻击</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#密码登录"><span class="nav-number">2.</span> <span class="nav-text">密码登录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#公钥登录"><span class="nav-number">3.</span> <span class="nav-text">公钥登录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附"><span class="nav-number">4.</span> <span class="nav-text">附</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#公钥认证原理"><span class="nav-number">4.1.</span> <span class="nav-text">公钥认证原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#公钥加密"><span class="nav-number">4.2.</span> <span class="nav-text">公钥加密</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数字签名"><span class="nav-number">4.3.</span> <span class="nav-text">数字签名</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">CH</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+</a><br />本网站采用<a rel="license" href="http://creativecommons.org/licenses/by/2.5/cn/">知识共享署名 2.5 中国大陆许可协议</a>进行许可。
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">本站访客数<i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span>人次</span>
+  
+
+  
+    <span class="site-pv">本站总访问量<i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chenhao123"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("A8bl8bnNfRNjhOq3Dp7i5nF6-gzGzoHsz", "pnVmIflnOX5YpTT0rXBSBCXJ");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
