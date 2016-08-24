@@ -86,16 +86,22 @@
 
 
 
-<meta name="description" content="inotifyLinux内核从2.6.13开始，引入了inotify机制。通过intofity机制，能够对文件系统的变化进行监控，如对文件进行创建、删除、修改等操作，可以及时通知应用程序进行相关事件的处理。这种响应处理机制，避免了频繁的文件轮询任务，提高了任务的处理效率。">
+<meta name="description" content="inotify
+
+Linux内核从2.6.13开始，引入了inotify机制。通过intofity机制，能够对文件系统的变化进行监控，如对文件进行创建、删除、修改等操作，可以及时通知应用程序进行相关事件的处理。这种响应处理机制，避免了频繁的文件轮询任务，提高了任务的处理效率。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="inotify+rsync实时目录同步">
 <meta property="og:url" content="http://yoursite.com/2016/08/16/inotify-rsync实时目录同步/index.html">
 <meta property="og:site_name" content="火柴的博客">
-<meta property="og:description" content="inotifyLinux内核从2.6.13开始，引入了inotify机制。通过intofity机制，能够对文件系统的变化进行监控，如对文件进行创建、删除、修改等操作，可以及时通知应用程序进行相关事件的处理。这种响应处理机制，避免了频繁的文件轮询任务，提高了任务的处理效率。">
-<meta property="og:updated_time" content="2016-08-16T02:15:26.231Z">
+<meta property="og:description" content="inotify
+
+Linux内核从2.6.13开始，引入了inotify机制。通过intofity机制，能够对文件系统的变化进行监控，如对文件进行创建、删除、修改等操作，可以及时通知应用程序进行相关事件的处理。这种响应处理机制，避免了频繁的文件轮询任务，提高了任务的处理效率。">
+<meta property="og:updated_time" content="2016-08-24T07:10:26.720Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="inotify+rsync实时目录同步">
-<meta name="twitter:description" content="inotifyLinux内核从2.6.13开始，引入了inotify机制。通过intofity机制，能够对文件系统的变化进行监控，如对文件进行创建、删除、修改等操作，可以及时通知应用程序进行相关事件的处理。这种响应处理机制，避免了频繁的文件轮询任务，提高了任务的处理效率。">
+<meta name="twitter:description" content="inotify
+
+Linux内核从2.6.13开始，引入了inotify机制。通过intofity机制，能够对文件系统的变化进行监控，如对文件进行创建、删除、修改等操作，可以及时通知应用程序进行相关事件的处理。这种响应处理机制，避免了频繁的文件轮询任务，提高了任务的处理效率。">
 
 
 
@@ -350,7 +356,10 @@
       
         <!-- toc -->
 <!-- tocstop -->
-<p></p><h2 id="inotify">inotify</h2><br>Linux&#x5185;&#x6838;&#x4ECE;2.6.13&#x5F00;&#x59CB;&#xFF0C;&#x5F15;&#x5165;&#x4E86;inotify&#x673A;&#x5236;&#x3002;&#x901A;&#x8FC7;intofity&#x673A;&#x5236;&#xFF0C;&#x80FD;&#x591F;&#x5BF9;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x7684;&#x53D8;&#x5316;&#x8FDB;&#x884C;&#x76D1;&#x63A7;&#xFF0C;&#x5982;&#x5BF9;&#x6587;&#x4EF6;&#x8FDB;&#x884C;&#x521B;&#x5EFA;&#x3001;&#x5220;&#x9664;&#x3001;&#x4FEE;&#x6539;&#x7B49;&#x64CD;&#x4F5C;&#xFF0C;&#x53EF;&#x4EE5;&#x53CA;&#x65F6;&#x901A;&#x77E5;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x8FDB;&#x884C;&#x76F8;&#x5173;&#x4E8B;&#x4EF6;&#x7684;&#x5904;&#x7406;&#x3002;&#x8FD9;&#x79CD;&#x54CD;&#x5E94;&#x5904;&#x7406;&#x673A;&#x5236;&#xFF0C;&#x907F;&#x514D;&#x4E86;&#x9891;&#x7E41;&#x7684;&#x6587;&#x4EF6;&#x8F6E;&#x8BE2;&#x4EFB;&#x52A1;&#xFF0C;&#x63D0;&#x9AD8;&#x4E86;&#x4EFB;&#x52A1;&#x7684;&#x5904;&#x7406;&#x6548;&#x7387;&#x3002;<br><a id="more"></a><p></p>
+<p></p><h2 id="inotify">inotify</h2><p></p>
+<blockquote>
+<p>Linux&#x5185;&#x6838;&#x4ECE;2.6.13&#x5F00;&#x59CB;&#xFF0C;&#x5F15;&#x5165;&#x4E86;inotify&#x673A;&#x5236;&#x3002;&#x901A;&#x8FC7;intofity&#x673A;&#x5236;&#xFF0C;&#x80FD;&#x591F;&#x5BF9;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x7684;&#x53D8;&#x5316;&#x8FDB;&#x884C;&#x76D1;&#x63A7;&#xFF0C;&#x5982;&#x5BF9;&#x6587;&#x4EF6;&#x8FDB;&#x884C;&#x521B;&#x5EFA;&#x3001;&#x5220;&#x9664;&#x3001;&#x4FEE;&#x6539;&#x7B49;&#x64CD;&#x4F5C;&#xFF0C;&#x53EF;&#x4EE5;&#x53CA;&#x65F6;&#x901A;&#x77E5;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x8FDB;&#x884C;&#x76F8;&#x5173;&#x4E8B;&#x4EF6;&#x7684;&#x5904;&#x7406;&#x3002;&#x8FD9;&#x79CD;&#x54CD;&#x5E94;&#x5904;&#x7406;&#x673A;&#x5236;&#xFF0C;&#x907F;&#x514D;&#x4E86;&#x9891;&#x7E41;&#x7684;&#x6587;&#x4EF6;&#x8F6E;&#x8BE2;&#x4EFB;&#x52A1;&#xFF0C;&#x63D0;&#x9AD8;&#x4E86;&#x4EFB;&#x52A1;&#x7684;&#x5904;&#x7406;&#x6548;&#x7387;&#x3002;<br><a id="more"></a></p>
+</blockquote>
 <p></p><h2 id="rsync">rsync</h2><br>Rsync &#x662F;&#x4E00;&#x4E2A;&#x8FDC;&#x7A0B;&#x6570;&#x636E;&#x540C;&#x6B65;&#x5DE5;&#x5177;&#xFF0C;&#x53EF;&#x901A;&#x8FC7; LAN/WAN &#x5FEB;&#x901F;&#x540C;&#x6B65;&#x591A;&#x53F0;&#x4E3B;&#x673A;&#x95F4;&#x7684;&#x6587;&#x4EF6;&#x3002;Rsync &#x672C;&#x6765;&#x662F;&#x7528;&#x4EE5;&#x53D6;&#x4EE3;rcp &#x7684;&#x4E00;&#x4E2A;&#x5DE5;&#x5177;&#xFF0C;&#x5B83;&#x5F53;&#x524D;&#x7531; Rsync.samba.org &#x7EF4;&#x62A4;&#x3002;Rsync &#x4F7F;&#x7528;&#x6240;&#x8C13;&#x7684;&#x201C;Rsync &#x6F14;&#x7B97;&#x6CD5;&#x201D;&#x6765;&#x4F7F;&#x672C;&#x5730;&#x548C;&#x8FDC;&#x7A0B;&#x4E24;&#x4E2A;&#x4E3B;&#x673A;&#x4E4B;&#x95F4;&#x7684;&#x6587;&#x4EF6;&#x8FBE;&#x5230;&#x540C;&#x6B65;&#xFF0C;&#x8FD9;&#x4E2A;&#x7B97;&#x6CD5;&#x53EA;&#x4F20;&#x9001;&#x4E24;&#x4E2A;&#x6587;&#x4EF6;&#x7684;&#x4E0D;&#x540C;&#x90E8;&#x5206;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x6BCF;&#x6B21;&#x90FD;&#x6574;&#x4EFD;&#x4F20;&#x9001;&#xFF0C;&#x56E0;&#x6B64;&#x901F;&#x5EA6;&#x76F8;&#x5F53;&#x5FEB;&#x3002;&#x8FD0;&#x884C; Rsync server &#x7684;&#x673A;&#x5668;&#x4E5F;&#x53EB; backup server&#xFF0C;&#x4E00;&#x4E2A; Rsync server &#x53EF;&#x540C;&#x65F6;&#x5907;&#x4EFD;&#x591A;&#x4E2A; client &#x7684;&#x6570;&#x636E;&#xFF1B;&#x4E5F;&#x53EF;&#x4EE5;&#x591A;&#x4E2A;Rsync server &#x5907;&#x4EFD;&#x4E00;&#x4E2A; client &#x7684;&#x6570;&#x636E;&#x3002;<p></p>
 <p>rsync+inotify&#x5219;&#x4F1A;&#x5F25;&#x8865;&#x524D;&#x8005;&#x5148;&#x626B;&#x63CF;&#x540E;&#x540C;&#x6B65;&#x7684;&#x6548;&#x7387;&#x95EE;&#x9898;&#xFF0C;&#x91C7;&#x7528;&#x7CFB;&#x7EDF;&#x7EA7;&#x522B;&#x76D1;&#x63A7;&#x5404;&#x79CD;&#x53D8;&#x5316;&#xFF0C;&#x5F53;&#x6587;&#x4EF6;&#x53D1;&#x751F;&#x4EFB;&#x4F55;&#x53D8;&#x5316;&#xFF0C;&#x5C31;&#x4F1A;&#x89E6;&#x53D1;rsync&#x540C;&#x6B65;&#xFF0C;&#x89E3;&#x51B3;&#x6548;&#x7387;&#x4E0E;&#x5B9E;&#x65F6;&#x6027;&#x95EE;&#x9898;&#x3002;</p>
 <p></p><h2 id="&#x914D;&#x7F6E;&#x5B89;&#x88C5;&#x73AF;&#x5883;">&#x914D;&#x7F6E;&#x5B89;&#x88C5;&#x73AF;&#x5883;</h2><br>&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#xFF1A; CentOS 6.7&#xFF08;&#x6700;&#x5C0F;&#x5316;&#x5B89;&#x88C5;&#xFF09;<br>&#x8F6F;&#x4EF6;&#x73AF;&#x5883;&#xFF1A; &#x5DF2;&#x5173;&#x95ED;iptables/selinux<br>rsync&#xFF1A;       rsync-3.1.2.tar.gz(wget <a href="https://download.samba.org/pub/rsync/src/rsync-3.1.2.tar.gz" target="_blank" rel="external">https://download.samba.org/pub/rsync/src/rsync-3.1.2.tar.gz</a>)<br>inotify&#xFF1A;  inotify-tools-3.14.tar.gz(wget <a href="https://cloud.github.com/downloads/rvoicilas/inotify-tools/inotify-tools-3.14.tar.gz" target="_blank" rel="external">https://cloud.github.com/downloads/rvoicilas/inotify-tools/inotify-tools-3.14.tar.gz</a>)<br>rsync-server: 192.168.16.199<br>rsync-client: 192.168.16.119<br>server&#x7AEF;&#x540C;&#x6B65;&#x76EE;&#x5F55;&#xFF1A; /home/data/server (&#x53D1;&#x5E03;&#x6587;&#x4EF6;&#x670D;&#x52A1;&#x5668;)<br>client&#x7AEF;&#x540C;&#x6B65;&#x76EE;&#x5F55;:  /home/data/client (&#x540C;&#x6B65;&#x955C;&#x50CF;&#x6587;&#x4EF6;&#x670D;&#x52A1;&#x5668;)<p></p>

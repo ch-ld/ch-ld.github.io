@@ -92,7 +92,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/08/05/mongodb分片配置/index.html">
 <meta property="og:site_name" content="火柴的博客">
 <meta property="og:description" content="MongoDB 是由C++语言编写的，是一个基于分布式文件存储的开源数据库系统。在高负载的情况下，添加更多的节点，可以保证服务器性能。MongoDB 旨在为WEB应用提供可扩展的高性能数据存储解决方案。这里废话不多说，直接开始配置mongodb分片">
-<meta property="og:updated_time" content="2016-08-05T03:35:04.955Z">
+<meta property="og:updated_time" content="2016-08-24T07:10:42.649Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mongodb分片配置">
 <meta name="twitter:description" content="MongoDB 是由C++语言编写的，是一个基于分布式文件存储的开源数据库系统。在高负载的情况下，添加更多的节点，可以保证服务器性能。MongoDB 旨在为WEB应用提供可扩展的高性能数据存储解决方案。这里废话不多说，直接开始配置mongodb分片">
@@ -348,9 +348,9 @@
       
 
       
-        <p>MongoDB &#x662F;&#x7531;C++&#x8BED;&#x8A00;&#x7F16;&#x5199;&#x7684;&#xFF0C;&#x662F;&#x4E00;&#x4E2A;&#x57FA;&#x4E8E;&#x5206;&#x5E03;&#x5F0F;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x7684;&#x5F00;&#x6E90;&#x6570;&#x636E;&#x5E93;&#x7CFB;&#x7EDF;&#x3002;<br>&#x5728;&#x9AD8;&#x8D1F;&#x8F7D;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x6DFB;&#x52A0;&#x66F4;&#x591A;&#x7684;&#x8282;&#x70B9;&#xFF0C;&#x53EF;&#x4EE5;&#x4FDD;&#x8BC1;&#x670D;&#x52A1;&#x5668;&#x6027;&#x80FD;&#x3002;<br>MongoDB &#x65E8;&#x5728;&#x4E3A;WEB&#x5E94;&#x7528;&#x63D0;&#x4F9B;&#x53EF;&#x6269;&#x5C55;&#x7684;&#x9AD8;&#x6027;&#x80FD;&#x6570;&#x636E;&#x5B58;&#x50A8;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#x3002;<br>&#x8FD9;&#x91CC;&#x5E9F;&#x8BDD;&#x4E0D;&#x591A;&#x8BF4;&#xFF0C;&#x76F4;&#x63A5;&#x5F00;&#x59CB;&#x914D;&#x7F6E;mongodb&#x5206;&#x7247;<br> <a id="more"></a></p>
-<!-- toc -->
-<!-- tocstop -->
+        <blockquote>
+<p>MongoDB &#x662F;&#x7531;C++&#x8BED;&#x8A00;&#x7F16;&#x5199;&#x7684;&#xFF0C;&#x662F;&#x4E00;&#x4E2A;&#x57FA;&#x4E8E;&#x5206;&#x5E03;&#x5F0F;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x7684;&#x5F00;&#x6E90;&#x6570;&#x636E;&#x5E93;&#x7CFB;&#x7EDF;&#x3002;&#x5728;&#x9AD8;&#x8D1F;&#x8F7D;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x6DFB;&#x52A0;&#x66F4;&#x591A;&#x7684;&#x8282;&#x70B9;&#xFF0C;&#x53EF;&#x4EE5;&#x4FDD;&#x8BC1;&#x670D;&#x52A1;&#x5668;&#x6027;&#x80FD;&#x3002;MongoDB &#x65E8;&#x5728;&#x4E3A;WEB&#x5E94;&#x7528;&#x63D0;&#x4F9B;&#x53EF;&#x6269;&#x5C55;&#x7684;&#x9AD8;&#x6027;&#x80FD;&#x6570;&#x636E;&#x5B58;&#x50A8;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#x3002;&#x8FD9;&#x91CC;&#x5E9F;&#x8BDD;&#x4E0D;&#x591A;&#x8BF4;&#xFF0C;&#x76F4;&#x63A5;&#x5F00;&#x59CB;&#x914D;&#x7F6E;mongodb&#x5206;&#x7247;<br> <a id="more"></a></p>
+</blockquote>
 <p></p><h2 id="yum&#x5B89;&#x88C5;mongodb&#x914D;&#x7F6E;&#x597D;yum&#x6E90;">yum&#x5B89;&#x88C5;mongodb(&#x914D;&#x7F6E;&#x597D;yum&#x6E90;)</h2><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># yum -y install mongodb-server mongodb</span></div></pre></td></tr></table></figure><p></p>
 <p></p><h2 id="&#x521B;&#x5EFA;&#x6240;&#x9700;&#x8981;&#x7684;&#x76EE;&#x5F55;">&#x521B;&#x5EFA;&#x6240;&#x9700;&#x8981;&#x7684;&#x76EE;&#x5F55;</h2><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># mkdir /home/mongdb/config/{log,data} -pv</span></div><div class="line"><span class="comment"># mkdir /home/mongdb/shard{1,2,3}/{data,log} -pv</span></div></pre></td></tr></table></figure><p></p>
 <p></p><h2 id="&#x5206;&#x522B;&#x542F;&#x52A8;config&#x670D;&#x52A1;&#x5668;">&#x5206;&#x522B;&#x542F;&#x52A8;config&#x670D;&#x52A1;&#x5668;</h2><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># mongod --configsvr --dbpath=/home/mongdb/config/data/ --port 27100 --logpath=/home/mongdb/config/log/confdb.log --fork --directoryperdb</span></div></pre></td></tr></table></figure><p></p>

@@ -92,7 +92,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/08/22/KVM迁移时遇到的一些问题/index.html">
 <meta property="og:site_name" content="火柴的博客">
 <meta property="og:description" content="KVM迁移有两种方式，一种是动态迁移，一种为静态迁移。kvm静态迁移就是虚拟机在关机状态下，拷贝虚拟机虚拟磁盘文件与配置文件到目标虚拟主机中，实现的迁移。kvm动态迁移无需拷贝虚拟磁盘文件，需要目的主机和源主机有相同的目录结构虚拟机磁盘文件（依赖共享存储）。">
-<meta property="og:updated_time" content="2016-08-22T06:30:56.652Z">
+<meta property="og:updated_time" content="2016-08-24T07:10:33.294Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="KVM迁移时遇到的一些问题">
 <meta name="twitter:description" content="KVM迁移有两种方式，一种是动态迁移，一种为静态迁移。kvm静态迁移就是虚拟机在关机状态下，拷贝虚拟机虚拟磁盘文件与配置文件到目标虚拟主机中，实现的迁移。kvm动态迁移无需拷贝虚拟磁盘文件，需要目的主机和源主机有相同的目录结构虚拟机磁盘文件（依赖共享存储）。">
@@ -329,7 +329,10 @@
       
 
       
-        <p>KVM&#x8FC1;&#x79FB;&#x6709;&#x4E24;&#x79CD;&#x65B9;&#x5F0F;&#xFF0C;&#x4E00;&#x79CD;&#x662F;&#x52A8;&#x6001;&#x8FC1;&#x79FB;&#xFF0C;&#x4E00;&#x79CD;&#x4E3A;&#x9759;&#x6001;&#x8FC1;&#x79FB;&#x3002;<br>kvm&#x9759;&#x6001;&#x8FC1;&#x79FB;&#x5C31;&#x662F;&#x865A;&#x62DF;&#x673A;&#x5728;&#x5173;&#x673A;&#x72B6;&#x6001;&#x4E0B;&#xFF0C;&#x62F7;&#x8D1D;&#x865A;&#x62DF;&#x673A;&#x865A;&#x62DF;&#x78C1;&#x76D8;&#x6587;&#x4EF6;&#x4E0E;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x5230;&#x76EE;&#x6807;&#x865A;&#x62DF;&#x4E3B;&#x673A;&#x4E2D;&#xFF0C;&#x5B9E;&#x73B0;&#x7684;&#x8FC1;&#x79FB;&#x3002;<br>kvm&#x52A8;&#x6001;&#x8FC1;&#x79FB;&#x65E0;&#x9700;&#x62F7;&#x8D1D;&#x865A;&#x62DF;&#x78C1;&#x76D8;&#x6587;&#x4EF6;&#xFF0C;&#x9700;&#x8981;&#x76EE;&#x7684;&#x4E3B;&#x673A;&#x548C;&#x6E90;&#x4E3B;&#x673A;&#x6709;&#x76F8;&#x540C;&#x7684;&#x76EE;&#x5F55;&#x7ED3;&#x6784;&#x865A;&#x62DF;&#x673A;&#x78C1;&#x76D8;&#x6587;&#x4EF6;&#xFF08;&#x4F9D;&#x8D56;&#x5171;&#x4EAB;&#x5B58;&#x50A8;&#xFF09;&#x3002;<br><a id="more"></a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">error:no hypervisor options were found ofr this connection</div><div class="line">this usually means that qemu or kvm is not installed on your machine,or the kvm kernel modules     are not loaded.</div></pre></td></tr></table></figure></p>
+        <blockquote>
+<p>KVM&#x8FC1;&#x79FB;&#x6709;&#x4E24;&#x79CD;&#x65B9;&#x5F0F;&#xFF0C;&#x4E00;&#x79CD;&#x662F;&#x52A8;&#x6001;&#x8FC1;&#x79FB;&#xFF0C;&#x4E00;&#x79CD;&#x4E3A;&#x9759;&#x6001;&#x8FC1;&#x79FB;&#x3002;<br>kvm&#x9759;&#x6001;&#x8FC1;&#x79FB;&#x5C31;&#x662F;&#x865A;&#x62DF;&#x673A;&#x5728;&#x5173;&#x673A;&#x72B6;&#x6001;&#x4E0B;&#xFF0C;&#x62F7;&#x8D1D;&#x865A;&#x62DF;&#x673A;&#x865A;&#x62DF;&#x78C1;&#x76D8;&#x6587;&#x4EF6;&#x4E0E;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x5230;&#x76EE;&#x6807;&#x865A;&#x62DF;&#x4E3B;&#x673A;&#x4E2D;&#xFF0C;&#x5B9E;&#x73B0;&#x7684;&#x8FC1;&#x79FB;&#x3002;<br>kvm&#x52A8;&#x6001;&#x8FC1;&#x79FB;&#x65E0;&#x9700;&#x62F7;&#x8D1D;&#x865A;&#x62DF;&#x78C1;&#x76D8;&#x6587;&#x4EF6;&#xFF0C;&#x9700;&#x8981;&#x76EE;&#x7684;&#x4E3B;&#x673A;&#x548C;&#x6E90;&#x4E3B;&#x673A;&#x6709;&#x76F8;&#x540C;&#x7684;&#x76EE;&#x5F55;&#x7ED3;&#x6784;&#x865A;&#x62DF;&#x673A;&#x78C1;&#x76D8;&#x6587;&#x4EF6;&#xFF08;&#x4F9D;&#x8D56;&#x5171;&#x4EAB;&#x5B58;&#x50A8;&#xFF09;&#x3002;<br><a id="more"></a></p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">error:no hypervisor options were found ofr this connection</div><div class="line">this usually means that qemu or kvm is not installed on your machine,or the kvm kernel modules     are not loaded.</div></pre></td></tr></table></figure>
 <p>  &#x89E3;&#x51B3;&#x65B9;&#x6CD5;&#xFF1A;&#x5F00;&#x542F;bios&#x865A;&#x62DF;&#x5316;&#x5E76;&#x52A0;&#x8F7D;modprobe kvm&#x4EE5;&#x53CA;kvm_intel.</p>
 <pre><code class="bash">Unable to migrate guest: unsupported configuration: Domain requires KVM, but it is not  available. Check that virtualization is enabled <span class="keyword">in</span> the host BIOS, and host configuration is setup  to load the kvm modules.
 </code></pre>
