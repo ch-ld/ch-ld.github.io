@@ -288,6 +288,235 @@
             
               
                 
+                <a class="post-title-link" href="/2016/09/20/获取系统信息命令汇总/" itemprop="url">
+                  获取系统信息命令汇总
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-20T14:02:14+08:00" content="2016-09-20">
+              2016-09-20
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/20/获取系统信息命令汇总/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/20/获取系统信息命令汇总/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/09/20/获取系统信息命令汇总/" class="leancloud_visitors" data-flag-title="获取系统信息命令汇总">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>&#x8FD9;&#x91CC;&#x4EC5;&#x4EC5;&#x53EA;&#x662F;&#x8BB0;&#x5F55;&#x4E00;&#x4E9B;&#x5E38;&#x7528;&#x7684;&#x83B7;&#x53D6;&#x7CFB;&#x7EDF;&#x4FE1;&#x606F;&#x7684;&#x547D;&#x4EE4;&#xFF0C;&#x5176;&#x4ED6;&#x66F4;&#x591A;&#x547D;&#x4EE4;&#x8BF7;&#x53C2;&#x8003;&#x5B98;&#x65B9;&#x6587;&#x6863;&#x3002;</p>
+</blockquote>
+<p></p><h2 id="&#x7CFB;&#x7EDF;">&#x7CFB;&#x7EDF;</h2><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">uname <span class="_">-a</span>                <span class="comment"># &#x67E5;&#x770B;&#x5185;&#x6838;/&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;/CPU&#x4FE1;&#x606F;</span></div><div class="line">head -n 1 /etc/issue    <span class="comment"># &#x67E5;&#x770B;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x7248;&#x672C;</span></div><div class="line">cat /proc/cpuinfo       <span class="comment"># &#x67E5;&#x770B;CPU&#x4FE1;&#x606F;</span></div><div class="line">hostname                <span class="comment"># &#x67E5;&#x770B;&#x8BA1;&#x7B97;&#x673A;&#x540D;</span></div><div class="line">lspci -tv               <span class="comment"># &#x5217;&#x51FA;&#x6240;&#x6709;PCI&#x8BBE;&#x5907;</span></div><div class="line">lsusb -tv               <span class="comment"># &#x5217;&#x51FA;&#x6240;&#x6709;USB&#x8BBE;&#x5907;</span></div><div class="line">lsmod                   <span class="comment"># &#x5217;&#x51FA;&#x52A0;&#x8F7D;&#x7684;&#x5185;&#x6838;&#x6A21;&#x5757;</span></div><div class="line">env &#x6216; <span class="built_in">set</span>              <span class="comment"># &#x67E5;&#x770B;&#x73AF;&#x5883;&#x53D8;&#x91CF;</span></div></pre></td></tr></table></figure><p></p>
+<p></p><h2 id="&#x8D44;&#x6E90;">&#x8D44;&#x6E90;</h2><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">free -m                 <span class="comment"># &#x67E5;&#x770B;&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x91CF;&#x548C;&#x4EA4;&#x6362;&#x533A;&#x4F7F;&#x7528;&#x91CF;</span></div><div class="line">df -h                   <span class="comment"># &#x67E5;&#x770B;&#x5404;&#x5206;&#x533A;&#x4F7F;&#x7528;&#x60C5;&#x51B5;</span></div><div class="line">du -sh &lt;&#x76EE;&#x5F55;&#x540D;&gt;         <span class="comment"># &#x67E5;&#x770B;&#x6307;&#x5B9A;&#x76EE;&#x5F55;&#x7684;&#x5927;&#x5C0F;</span></div><div class="line">grep MemTotal /proc/meminfo   <span class="comment"># &#x67E5;&#x770B;&#x5185;&#x5B58;&#x603B;&#x91CF;</span></div><div class="line">grep MemFree /proc/meminfo    <span class="comment"># &#x67E5;&#x770B;&#x7A7A;&#x95F2;&#x5185;&#x5B58;&#x91CF;</span></div><div class="line">uptime                  <span class="comment"># &#x67E5;&#x770B;&#x7CFB;&#x7EDF;&#x8FD0;&#x884C;&#x65F6;&#x95F4;&#x3001;&#x7528;&#x6237;&#x6570;&#x3001;&#x8D1F;&#x8F7D;</span></div><div class="line">cat /proc/loadavg       <span class="comment"># &#x67E5;&#x770B;&#x7CFB;&#x7EDF;&#x8D1F;&#x8F7D;</span></div></pre></td></tr></table></figure><p></p>
+<p></p><h2 id="&#x78C1;&#x76D8;&#x548C;&#x5206;&#x533A;">&#x78C1;&#x76D8;&#x548C;&#x5206;&#x533A;</h2><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">mount | column -t       <span class="comment"># &#x67E5;&#x770B;&#x6302;&#x63A5;&#x7684;&#x5206;&#x533A;&#x72B6;&#x6001;</span></div><div class="line">fdisk <span class="_">-l</span>                <span class="comment"># &#x67E5;&#x770B;&#x6240;&#x6709;&#x5206;&#x533A;</span></div><div class="line">swapon <span class="_">-s</span>               <span class="comment"># &#x67E5;&#x770B;&#x6240;&#x6709;&#x4EA4;&#x6362;&#x5206;&#x533A;</span></div><div class="line">hdparm -i /dev/hda      <span class="comment"># &#x67E5;&#x770B;&#x78C1;&#x76D8;&#x53C2;&#x6570;(&#x4EC5;&#x9002;&#x7528;&#x4E8E;IDE&#x8BBE;&#x5907;)</span></div><div class="line">dmesg | grep IDE        <span class="comment"># &#x67E5;&#x770B;&#x542F;&#x52A8;&#x65F6;IDE&#x8BBE;&#x5907;&#x68C0;&#x6D4B;&#x72B6;&#x51B5;</span></div></pre></td></tr></table></figure><p></p>
+<p></p><h2 id="&#x7F51;&#x7EDC;">&#x7F51;&#x7EDC;</h2><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ifconfig                <span class="comment"># &#x67E5;&#x770B;&#x6240;&#x6709;&#x7F51;&#x7EDC;&#x63A5;&#x53E3;&#x7684;&#x5C5E;&#x6027;</span></div><div class="line">iptables -nvL           <span class="comment"># &#x67E5;&#x770B;&#x9632;&#x706B;&#x5899;&#x8BBE;&#x7F6E;</span></div><div class="line">route -n                <span class="comment"># &#x67E5;&#x770B;&#x8DEF;&#x7531;&#x8868;</span></div><div class="line">netstat -lntp           <span class="comment"># &#x67E5;&#x770B;&#x6240;&#x6709;&#x76D1;&#x542C;&#x7AEF;&#x53E3;</span></div><div class="line">netstat -antp           <span class="comment"># &#x67E5;&#x770B;&#x6240;&#x6709;&#x5DF2;&#x7ECF;&#x5EFA;&#x7ACB;&#x7684;&#x8FDE;&#x63A5;</span></div><div class="line">netstat <span class="_">-s</span>              <span class="comment"># &#x67E5;&#x770B;&#x7F51;&#x7EDC;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;</span></div></pre></td></tr></table></figure><p></p>
+<p></p><h2 id="&#x8FDB;&#x7A0B;">&#x8FDB;&#x7A0B;</h2><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ps -ef                  <span class="comment"># &#x67E5;&#x770B;&#x6240;&#x6709;&#x8FDB;&#x7A0B;</span></div><div class="line">ps aux                  <span class="comment"># &#x67E5;&#x770B;&#x6240;&#x6709;&#x8FDB;&#x7A0B;</span></div><div class="line">lsof                    <span class="comment"># &#x67E5;&#x770B;&#x6240;&#x6709;&#x8FDB;&#x7A0B;&#x6253;&#x5F00;&#x7684;&#x6587;&#x4EF6;</span></div><div class="line">top                     <span class="comment"># &#x5B9E;&#x65F6;&#x663E;&#x793A;&#x8FDB;&#x7A0B;&#x72B6;&#x6001;</span></div></pre></td></tr></table></figure><p></p>
+<p></p><h2 id="&#x7528;&#x6237;">&#x7528;&#x6237;</h2><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">w                       <span class="comment"># &#x67E5;&#x770B;&#x6D3B;&#x52A8;&#x7528;&#x6237;</span></div><div class="line">whoami                  <span class="comment"># &#x67E5;&#x770B;&#x5F53;&#x524D;&#x767B;&#x5F55;&#x7528;&#x6237;</span></div><div class="line">id &lt;&#x7528;&#x6237;&#x540D;&gt;             <span class="comment"># &#x67E5;&#x770B;&#x6307;&#x5B9A;&#x7528;&#x6237;&#x4FE1;&#x606F;</span></div><div class="line">last                    <span class="comment"># &#x67E5;&#x770B;&#x7528;&#x6237;&#x767B;&#x5F55;&#x65E5;&#x5FD7;</span></div><div class="line">cut <span class="_">-d</span>: <span class="_">-f</span>1 /etc/passwd <span class="comment"># &#x67E5;&#x770B;&#x7CFB;&#x7EDF;&#x6240;&#x6709;&#x7528;&#x6237;</span></div><div class="line">cut <span class="_">-d</span>: <span class="_">-f</span>1 /etc/group  <span class="comment"># &#x67E5;&#x770B;&#x7CFB;&#x7EDF;&#x6240;&#x6709;&#x7EC4;</span></div><div class="line">crontab <span class="_">-l</span>              <span class="comment"># &#x67E5;&#x770B;&#x5F53;&#x524D;&#x7528;&#x6237;&#x7684;&#x8BA1;&#x5212;&#x4EFB;&#x52A1;</span></div></pre></td></tr></table></figure><p></p>
+<p></p><h2 id="&#x670D;&#x52A1;">&#x670D;&#x52A1;</h2><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">chkconfig --list            <span class="comment"># &#x5217;&#x51FA;&#x6240;&#x6709;&#x7CFB;&#x7EDF;&#x670D;&#x52A1;</span></div><div class="line">chkconfig --list | grep on  <span class="comment"># &#x5217;&#x51FA;&#x6240;&#x6709;&#x542F;&#x52A8;&#x7684;&#x7CFB;&#x7EDF;&#x670D;&#x52A1;</span></div></pre></td></tr></table></figure><p></p>
+<p></p><h2 id="rpm&#x7A0B;&#x5E8F;&#x5305;">RPM&#x7A0B;&#x5E8F;&#x5305;</h2><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">rpm -qa                <span class="comment"># &#x67E5;&#x770B;&#x6240;&#x6709;&#x5B89;&#x88C5;&#x7684;&#x8F6F;&#x4EF6;&#x5305;</span></div><div class="line">rpm -qi &lt;&#x5305;&#x540D;&gt;         <span class="comment"># &#x67E5;&#x770B;&#x5DF2;&#x5B89;&#x88C5;&#x8F6F;&#x4EF6;&#x5305;&#x76F8;&#x5173;&#x4FE1;&#x606F;</span></div><div class="line">rpm -qpi &lt;&#x5305;&#x540D;&gt;        <span class="comment"># &#x67E5;&#x770B;&#x672A;&#x5B89;&#x88C5;&#x8F6F;&#x4EF6;&#x5305;&#x76F8;&#x5173;&#x4FE1;&#x606F;</span></div></pre></td></tr></table></figure><p></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/09/19/CentOS6结合Busybox完成自制Linux系统/" itemprop="url">
+                  CentOS6结合Busybox完成自制Linux系统
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-19T11:58:02+08:00" content="2016-09-19">
+              2016-09-19
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/19/CentOS6结合Busybox完成自制Linux系统/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/19/CentOS6结合Busybox完成自制Linux系统/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/09/19/CentOS6结合Busybox完成自制Linux系统/" class="leancloud_visitors" data-flag-title="CentOS6结合Busybox完成自制Linux系统">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/09/05/一键安装cobbler脚本/" itemprop="url">
                   一键安装cobbler脚本
                 </a>
@@ -1323,275 +1552,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/25/CAT点评监控系统安装部署/" itemprop="url">
-                  CAT点评监控系统安装部署
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-25T10:48:12+08:00" content="2016-08-25">
-              2016-08-25
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/监控/" itemprop="url" rel="index">
-                    <span itemprop="name">监控</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/25/CAT点评监控系统安装部署/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/25/CAT点评监控系统安装部署/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/08/25/CAT点评监控系统安装部署/" class="leancloud_visitors" data-flag-title="CAT点评监控系统安装部署">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>  CAT 是大众点评开源的一套基于java的实时应用监控平台，主要应用于服务中间件框架（MVC 框架、RPC 框架、持久层框架、分布式缓存框架）的监控，为开发和运维提供各项性能指标、健康检查、自动报警等可视化服务。相对于zabbix，cat是一款应用级的监控系统。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/08/25/CAT点评监控系统安装部署/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/24/SSH原理和应用/" itemprop="url">
-                  SSH原理和应用
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-24T13:52:07+08:00" content="2016-08-24">
-              2016-08-24
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/基础/" itemprop="url" rel="index">
-                    <span itemprop="name">基础</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/24/SSH原理和应用/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/24/SSH原理和应用/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/08/24/SSH原理和应用/" class="leancloud_visitors" data-flag-title="SSH原理和应用">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>事情源于前两天开发一哥们向我要服务器之间登录无密码实现的命令，当时只知其命令，却不知其所以然。于是就决定好好的复习一下之前学过的基础了，正所谓基础不牢，地动山摇嘛。<br>那么SSH是一种网络协议，主要用于计算机之间的加密登录。<br>如果一个用户从本地计算机，使用SSH协议登录另一台远程计算机，我们就可以认为，这种登录是安全的，即使被中途截获，密码也不会泄露。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/08/24/SSH原理和应用/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1632,7 +1597,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-count">22</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1640,7 +1605,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1715,6 +1680,10 @@
               
                 <li class="links-of-blogroll-item">
                   <a href="http://book.open-falcon.org/zh/intro/index.html" title="小米监控" target="_blank">小米监控</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://wizardforcel.gitbooks.io/nginx-doc/content/index.html" title="Nginx中文文档" target="_blank">Nginx中文文档</a>
                 </li>
               
             </ul>
