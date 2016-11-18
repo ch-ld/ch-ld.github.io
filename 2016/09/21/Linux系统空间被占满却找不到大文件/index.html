@@ -110,7 +110,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/09/21/Linux系统空间被占满却找不到大文件/index.html">
 <meta property="og:site_name" content="火柴的博客">
 <meta property="og:description" content="最近遇到服务器上的日志文件太大导致磁盘满了，但是这个时候我找到并删除了，过了一段时间空间又被占满，这个时候再找大文件却找不到了。">
-<meta property="og:updated_time" content="2016-09-22T02:33:59.403Z">
+<meta property="og:updated_time" content="2016-11-14T09:17:19.172Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux系统空间被占满却找不到大文件">
 <meta name="twitter:description" content="最近遇到服务器上的日志文件太大导致磁盘满了，但是这个时候我找到并删除了，过了一段时间空间又被占满，这个时候再找大文件却找不到了。">
@@ -375,7 +375,8 @@
 <p>&#x8FD9;&#x65F6;&#x5019;&#x5728;&#x4F7F;&#x7528;df&#x547D;&#x4EE4;&#x786E;&#x8BA4;&#x4E00;&#x6B21;&#xFF0C;&#x53D1;&#x73B0;&#x78C1;&#x76D8;&#x7A7A;&#x95F4;&#x53EF;&#x4EE5;&#x7528;&#x4E86;&#x3002;&#x5C06;&#x8FD1;&#x8FC7;&#x4E86;&#x4E00;&#x4E2A;&#x5C0F;&#x65F6;&#xFF0C;&#x7528;ftp&#x4E0A;&#x4F20;&#x5230;&#x8FD9;&#x53F0;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x4F20;&#x5931;&#x8D25;&#xFF0C;&#x518D;df&#x770B;&#x770B;&#x3002;&#x78C1;&#x76D8;&#x5C45;&#x7136;&#x53C8;&#x6EE1;&#x4E86;&#xFF0C;&#x4F46;&#x662F;&#x5B9E;&#x9645;&#x7528;&#x5230;&#x7684;&#x7A7A;&#x95F4;&#x624D;10G&#x4E0D;&#x5230;&#x3002;<br>&#x4EE5;&#x4E3A;&#x662F;&#x670D;&#x52A1;&#x5668;&#x4E2D;&#x75C5;&#x6BD2;&#x4E86;&#xFF0C;ps -ef &#x67E5;&#x770B;&#x6709;&#x6CA1;&#x6709;&#x4EC0;&#x4E48;&#x5F02;&#x5E38;&#x7684;&#x8FDB;&#x7A0B;&#xFF0C;&#x6700;&#x540E;&#x4E07;&#x822C;&#x6392;&#x67E5;&#x5747;&#x6CA1;&#x6709;&#x53D1;&#x73B0;&#x95EE;&#x9898;&#x3002;&#x65E0;&#x5948;&#x4E4B;&#x4E0B;&#x53EA;&#x597D;&#x4F7F;&#x7528;&#x7F51;&#x7BA1;&#x5927;&#x62DB;&#x2013;&#x91CD;&#x542F;&#x6765;&#x8BD5;&#x8BD5;&#x770B;&#xFF0C;&#x91CD;&#x542F;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#xFF0C;&#x670D;&#x52A1;&#x5668;&#x78C1;&#x76D8;&#x7A7A;&#x95F4;&#x6062;&#x590D;&#x6B63;&#x5E38;&#x4E86;&#x3002;</p>
 <p></p><h2 id="&#x7406;&#x8BBA;&#x77E5;&#x8BC6;">&#x7406;&#x8BBA;&#x77E5;&#x8BC6;</h2><br>&#x5728;Linux&#x6216;&#x8005;Unix&#x7CFB;&#x7EDF;&#x4E2D;&#xFF0C;&#x901A;&#x8FC7;rm&#x6216;&#x8005;&#x6587;&#x4EF6;&#x7BA1;&#x7406;&#x5668;&#x5220;&#x9664;&#x6587;&#x4EF6;&#x5C06;&#x4F1A;&#x4ECE;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x7684;&#x76EE;&#x5F55;&#x7ED3;&#x6784;&#x4E0A;&#x89E3;&#x9664;&#x94FE;&#x63A5;(unlink)&#x3002;&#x5982;&#x679C;&#x6587;&#x4EF6;&#x662F;&#x88AB;&#x6253;&#x5F00;&#x7684;&#xFF08;&#x6709;&#x4E00;&#x4E2A;&#x8FDB;&#x7A0B;&#x6B63;&#x5728;&#x4F7F;&#x7528;&#xFF09;&#xFF0C;&#x90A3;&#x4E48;&#x8FDB;&#x7A0B;&#x5C06;&#x4ECD;&#x7136;&#x53EF;&#x4EE5;&#x8BFB;&#x53D6;&#x8BE5;&#x6587;&#x4EF6;&#xFF0C;&#x78C1;&#x76D8;&#x7A7A;&#x95F4;&#x4E5F;&#x4E00;&#x76F4;&#x88AB;&#x5360;&#x7528;<p></p>
 <p></p><h3 id="&#x89E3;&#x51B3;&#x65B9;&#x6CD5;">&#x89E3;&#x51B3;&#x65B9;&#x6CD5;</h3><br>&#x4F7F;&#x7528; lsof &#x627E;&#x5230;&#x88AB;&#x5220;&#x9664;&#x4F46;&#x662F;fd&#x6CA1;&#x91CA;&#x653E;&#x7684;&#x6587;&#x4EF6;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">lsof | grep deleted</div></pre></td></tr></table></figure><p></p>
-<p>&#x627E;&#x5230;&#x5360;&#x7528;&#x5220;&#x9664;&#x6587;&#x4EF6;&#x7684;&#x8FDB;&#x7A0B;&#x5217;&#x8868;&#x4E86;, &#x7136;&#x540E;&#x6740;&#x6B7B;( kill -9 )&#x5BF9;&#x5E94;&#x7684;&#x8FDB;&#x7A0B;&#x6216;&#x8005;&#x91CD;&#x542F;&#x5BF9;&#x5E94;&#x7684;&#x670D;&#x52A1;&#x5373;&#x53EF;&#x3002;&#x4E0D;&#x8FC7;&#x8FD9;&#x6B21;&#x6B63;&#x597D;&#x6B6A;&#x6253;&#x6B63;&#x7740;&#x91CD;&#x542F;&#x89E3;&#x51B3;&#x95EE;&#x9898;&#x4E86;&#xFF0C;&#x8FD8;&#x662F;&#x4E0D;&#x63A8;&#x8350;&#x91CD;&#x542F;&#x89E3;&#x51B3;&#x6B64;&#x7C7B;&#x95EE;&#x9898;&#xFF0C;&#x6BD5;&#x7ADF;&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x4E2D;&#x5206;&#x5206;&#x949F;&#x591A;&#x5C11;&#x94B1;&#x6765;&#x7740;&#x3002;&#x7528;&#x635F;&#x5931;&#x6700;&#x5C0F;&#x7684;&#x65B9;&#x6CD5;&#x89E3;&#x51B3;&#x95EE;&#x9898;&#x624D;&#x662F;&#x6B63;&#x89E3;&#xFF01;</p>
+<p>&#x627E;&#x5230;&#x5360;&#x7528;&#x5220;&#x9664;&#x6587;&#x4EF6;&#x7684;&#x8FDB;&#x7A0B;&#x5217;&#x8868;&#x4E86;, &#x7136;&#x540E;&#x6740;&#x6B7B;( kill -9 )&#x5BF9;&#x5E94;&#x7684;&#x8FDB;&#x7A0B;&#x6216;&#x8005;&#x91CD;&#x542F;&#x5BF9;&#x5E94;&#x7684;&#x670D;&#x52A1;&#x5373;&#x53EF;&#x3002;&#x4E0D;&#x8FC7;&#x8FD9;&#x6B21;&#x6B63;&#x597D;&#x6B6A;&#x6253;&#x6B63;&#x7740;&#x91CD;&#x542F;&#x89E3;&#x51B3;&#x95EE;&#x9898;&#x4E86;&#xFF0C;&#x8FD8;&#x662F;&#x4E0D;&#x63A8;&#x8350;&#x91CD;&#x542F;&#x89E3;&#x51B3;&#x6B64;&#x7C7B;&#x95EE;&#x9898;&#x3002;<br>&#x4EE5;&#x540E;&#x5982;&#x679C;&#x9047;&#x5230;&#x78C1;&#x76D8;&#x7A7A;&#x95F4;&#x5360;&#x6EE1;&#xFF0C;&#x5207;&#x52FF;&#x76F4;&#x63A5;&#x5220;&#x9664;&#x6587;&#x4EF6;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5728;&#x7EBF;&#x6E05;&#x7A7A;&#x7684;&#x65B9;&#x5F0F;&#x89E3;&#x51B3;&#x6B64;&#x7C7B;&#x95EE;&#x9898;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; /var/<span class="built_in">log</span>/httpd/acess.log</div></pre></td></tr></table></figure></p>
+<p>&#x901A;&#x8FC7;&#x8FD9;&#x79CD;&#x65B9;&#x6CD5;&#xFF0C;&#x78C1;&#x76D8;&#x7A7A;&#x95F4;&#x4E0D;&#x4F46;&#x53EF;&#x4EE5;&#x9A6C;&#x4E0A;&#x91CA;&#x653E;&#xFF0C;&#x4E5F;&#x53EF;&#x4FDD;&#x969C;&#x8FDB;&#x7A0B;&#x7EE7;&#x7EED;&#x5411;&#x6587;&#x4EF6;&#x5199;&#x5165;&#x65E5;&#x5FD7;&#xFF0C;&#x8FD9;&#x79CD;&#x65B9;&#x6CD5;&#x7ECF;&#x5E38;&#x7528;&#x4E8E;&#x5728;&#x7EBF;&#x6E05;&#x7406;&#x5404;&#x79CD;&#x670D;&#x52A1;&#x6240;&#x4EA7;&#x751F;&#x7684;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;</p>
 
       
     </div>
@@ -430,6 +431,10 @@
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/22/TCP三次握手，四次断开/" rel="prev" title="TCP三次握手，四次断开">
+                TCP三次握手，四次断开 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -515,7 +520,7 @@
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="/uploads/linux.jpg"
+               src="/uploads/linux5.gif"
                alt="CH" />
           <p class="site-author-name" itemprop="name">CH</p>
           <p class="site-description motion-element" itemprop="description">对自己要求高一点！</p>
@@ -523,7 +528,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-count">32</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -531,7 +536,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -540,7 +545,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
