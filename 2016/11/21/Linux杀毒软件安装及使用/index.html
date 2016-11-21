@@ -86,7 +86,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="KVM," />
+  <meta name="keywords" content="ClamAV," />
 
 
 
@@ -104,16 +104,16 @@
 
 
 
-<meta name="description" content="KVM迁移有两种方式，一种是动态迁移，一种为静态迁移。kvm静态迁移就是虚拟机在关机状态下，拷贝虚拟机虚拟磁盘文件与配置文件到目标虚拟主机中，实现的迁移。kvm动态迁移无需拷贝虚拟磁盘文件，需要目的主机和源主机有相同的目录结构虚拟机磁盘文件（依赖共享存储）。">
+<meta name="description" content="ClamAV 是Linux平台最受欢迎的杀毒软件，ClamAV 属于免费开源产品，支持多种平台。ClamAV是基于病毒扫描的命令行工具，但同时也有支持图形界面的ClamTK工具。ClamAV 主要用于邮件服务器扫描邮件。它有多种接口从邮件服务器扫描邮件。ClamAV 有自动的数据库更新器，还可以从共享库中运行。命令行的界面让 ClamAV运行流畅。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="KVM迁移时遇到的一些问题">
-<meta property="og:url" content="http://chen-hao.com.cn/2016/08/22/KVM迁移时遇到的一些问题/index.html">
+<meta property="og:title" content="Linux杀毒软件安装及使用">
+<meta property="og:url" content="http://chen-hao.com.cn/2016/11/21/Linux杀毒软件安装及使用/index.html">
 <meta property="og:site_name" content="火柴的博客">
-<meta property="og:description" content="KVM迁移有两种方式，一种是动态迁移，一种为静态迁移。kvm静态迁移就是虚拟机在关机状态下，拷贝虚拟机虚拟磁盘文件与配置文件到目标虚拟主机中，实现的迁移。kvm动态迁移无需拷贝虚拟磁盘文件，需要目的主机和源主机有相同的目录结构虚拟机磁盘文件（依赖共享存储）。">
-<meta property="og:updated_time" content="2016-08-24T07:10:33.294Z">
+<meta property="og:description" content="ClamAV 是Linux平台最受欢迎的杀毒软件，ClamAV 属于免费开源产品，支持多种平台。ClamAV是基于病毒扫描的命令行工具，但同时也有支持图形界面的ClamTK工具。ClamAV 主要用于邮件服务器扫描邮件。它有多种接口从邮件服务器扫描邮件。ClamAV 有自动的数据库更新器，还可以从共享库中运行。命令行的界面让 ClamAV运行流畅。">
+<meta property="og:updated_time" content="2016-11-21T03:43:28.126Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="KVM迁移时遇到的一些问题">
-<meta name="twitter:description" content="KVM迁移有两种方式，一种是动态迁移，一种为静态迁移。kvm静态迁移就是虚拟机在关机状态下，拷贝虚拟机虚拟磁盘文件与配置文件到目标虚拟主机中，实现的迁移。kvm动态迁移无需拷贝虚拟磁盘文件，需要目的主机和源主机有相同的目录结构虚拟机磁盘文件（依赖共享存储）。">
+<meta name="twitter:title" content="Linux杀毒软件安装及使用">
+<meta name="twitter:description" content="ClamAV 是Linux平台最受欢迎的杀毒软件，ClamAV 属于免费开源产品，支持多种平台。ClamAV是基于病毒扫描的命令行工具，但同时也有支持图形界面的ClamTK工具。ClamAV 主要用于邮件服务器扫描邮件。它有多种接口从邮件服务器扫描邮件。ClamAV 有自动的数据库更新器，还可以从共享库中运行。命令行的界面让 ClamAV运行流畅。">
 
 
 
@@ -134,9 +134,9 @@
 
 
 
-  <link rel="canonical" href="http://chen-hao.com.cn/2016/08/22/KVM迁移时遇到的一些问题/"/>
+  <link rel="canonical" href="http://chen-hao.com.cn/2016/11/21/Linux杀毒软件安装及使用/"/>
 
-  <title> KVM迁移时遇到的一些问题 | 火柴的博客 </title>
+  <title> Linux杀毒软件安装及使用 | 火柴的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -286,7 +286,7 @@
             
             
               
-                KVM迁移时遇到的一些问题
+                Linux杀毒软件安装及使用
               
             
           </h1>
@@ -298,19 +298,38 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-22T13:00:35+08:00" content="2016-08-22">
-              2016-08-22
+            <time itemprop="dateCreated" datetime="2016-11-21T10:07:21+08:00" content="2016-11-21">
+              2016-11-21
             </time>
           </span>
 
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/工具/" itemprop="url" rel="index">
+                    <span itemprop="name">工具</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
           
 
           
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/08/22/KVM迁移时遇到的一些问题/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/KVM迁移时遇到的一些问题/" itemprop="commentsCount"></span>
+                <a href="/2016/11/21/Linux杀毒软件安装及使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/21/Linux杀毒软件安装及使用/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -320,7 +339,7 @@
 
           
           
-             <span id="/2016/08/22/KVM迁移时遇到的一些问题/" class="leancloud_visitors" data-flag-title="KVM迁移时遇到的一些问题">
+             <span id="/2016/11/21/Linux杀毒软件安装及使用/" class="leancloud_visitors" data-flag-title="Linux杀毒软件安装及使用">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -348,28 +367,94 @@
 
       
         <blockquote>
-<p>KVM&#x8FC1;&#x79FB;&#x6709;&#x4E24;&#x79CD;&#x65B9;&#x5F0F;&#xFF0C;&#x4E00;&#x79CD;&#x662F;&#x52A8;&#x6001;&#x8FC1;&#x79FB;&#xFF0C;&#x4E00;&#x79CD;&#x4E3A;&#x9759;&#x6001;&#x8FC1;&#x79FB;&#x3002;<br>kvm&#x9759;&#x6001;&#x8FC1;&#x79FB;&#x5C31;&#x662F;&#x865A;&#x62DF;&#x673A;&#x5728;&#x5173;&#x673A;&#x72B6;&#x6001;&#x4E0B;&#xFF0C;&#x62F7;&#x8D1D;&#x865A;&#x62DF;&#x673A;&#x865A;&#x62DF;&#x78C1;&#x76D8;&#x6587;&#x4EF6;&#x4E0E;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x5230;&#x76EE;&#x6807;&#x865A;&#x62DF;&#x4E3B;&#x673A;&#x4E2D;&#xFF0C;&#x5B9E;&#x73B0;&#x7684;&#x8FC1;&#x79FB;&#x3002;<br>kvm&#x52A8;&#x6001;&#x8FC1;&#x79FB;&#x65E0;&#x9700;&#x62F7;&#x8D1D;&#x865A;&#x62DF;&#x78C1;&#x76D8;&#x6587;&#x4EF6;&#xFF0C;&#x9700;&#x8981;&#x76EE;&#x7684;&#x4E3B;&#x673A;&#x548C;&#x6E90;&#x4E3B;&#x673A;&#x6709;&#x76F8;&#x540C;&#x7684;&#x76EE;&#x5F55;&#x7ED3;&#x6784;&#x865A;&#x62DF;&#x673A;&#x78C1;&#x76D8;&#x6587;&#x4EF6;&#xFF08;&#x4F9D;&#x8D56;&#x5171;&#x4EAB;&#x5B58;&#x50A8;&#xFF09;&#x3002;<br><a id="more"></a></p>
+<p>ClamAV &#x662F;Linux&#x5E73;&#x53F0;&#x6700;&#x53D7;&#x6B22;&#x8FCE;&#x7684;&#x6740;&#x6BD2;&#x8F6F;&#x4EF6;&#xFF0C;ClamAV &#x5C5E;&#x4E8E;&#x514D;&#x8D39;&#x5F00;&#x6E90;&#x4EA7;&#x54C1;&#xFF0C;&#x652F;&#x6301;&#x591A;&#x79CD;&#x5E73;&#x53F0;&#x3002;ClamAV&#x662F;&#x57FA;&#x4E8E;&#x75C5;&#x6BD2;&#x626B;&#x63CF;&#x7684;&#x547D;&#x4EE4;&#x884C;&#x5DE5;&#x5177;&#xFF0C;&#x4F46;&#x540C;&#x65F6;&#x4E5F;&#x6709;&#x652F;&#x6301;&#x56FE;&#x5F62;&#x754C;&#x9762;&#x7684;ClamTK&#x5DE5;&#x5177;&#x3002;ClamAV &#x4E3B;&#x8981;&#x7528;&#x4E8E;&#x90AE;&#x4EF6;&#x670D;&#x52A1;&#x5668;&#x626B;&#x63CF;&#x90AE;&#x4EF6;&#x3002;&#x5B83;&#x6709;&#x591A;&#x79CD;&#x63A5;&#x53E3;&#x4ECE;&#x90AE;&#x4EF6;&#x670D;&#x52A1;&#x5668;&#x626B;&#x63CF;&#x90AE;&#x4EF6;&#x3002;ClamAV &#x6709;&#x81EA;&#x52A8;&#x7684;&#x6570;&#x636E;&#x5E93;&#x66F4;&#x65B0;&#x5668;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x4ECE;&#x5171;&#x4EAB;&#x5E93;&#x4E2D;&#x8FD0;&#x884C;&#x3002;&#x547D;&#x4EE4;&#x884C;&#x7684;&#x754C;&#x9762;&#x8BA9; ClamAV&#x8FD0;&#x884C;&#x6D41;&#x7545;&#x3002;<br> <a id="more"></a></p>
 </blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">error:no hypervisor options were found ofr this connection</div><div class="line">this usually means that qemu or kvm is not installed on your machine,or the kvm kernel modules     are not loaded.</div></pre></td></tr></table></figure>
-<p>  &#x89E3;&#x51B3;&#x65B9;&#x6CD5;&#xFF1A;&#x5F00;&#x542F;bios&#x865A;&#x62DF;&#x5316;&#x5E76;&#x52A0;&#x8F7D;modprobe kvm&#x4EE5;&#x53CA;kvm_intel.</p>
-<pre><code class="bash">Unable to migrate guest: unsupported configuration: Domain requires KVM, but it is not  available. Check that virtualization is enabled <span class="keyword">in</span> the host BIOS, and host configuration is setup  to load the kvm modules.
-</code></pre>
-<p>  &#x89E3;&#x51B3;&#x65B9;&#x6CD5;:&#x65B9;&#x6CD5;&#x540C;&#x4E0A;.</p>
-<pre><code class="bash">Unable to migrate guest: Unable to allow access <span class="keyword">for</span> disk path /img/musf-clone1-2-clone.img: No such file or directory
-</code></pre>
-<p>  &#x89E3;&#x51B3;&#x65B9;&#x6CD5;:&#x8FC1;&#x79FB;&#x4E0E;&#x88AB;&#x8FC1;&#x79FB;&#x4E3B;&#x673A;&#x7684;&#x9700;&#x8981;&#x76F8;&#x540C;&#x540D;&#x79F0;&#x7684;&#x78C1;&#x76D8;&#x6620;&#x50CF;&#x6587;&#x4EF6;<br>  qemu-img create -f raw(&#x78C1;&#x76D8;&#x786C;&#x4EF6;&#x6587;&#x4EF6;&#x683C;&#x5F0F;) /home/kvm-disk/test.img(&#x8DEF;&#x5F84;) 100G(&#x5927;&#x5C0F;)</p>
-<pre><code class="bash">Unable to migrate guest: unable to connect to server at <span class="string">&apos;kvm3:49153&apos;</span>: Connection refused
-</code></pre>
-<p>  &#x89E3;&#x51B3;&#x65B9;&#x6CD5;:1.&#x5F00;&#x542F;&#x9632;&#x706B;&#x5899;&#x4E0A;&#x7AEF;&#x53E3;&#x6216;&#x5173;&#x95ED;&#x9632;&#x706B;&#x5899;.<br>           2.&#x5728;virt-manager&#x7684;&#x8FC1;&#x79FB;&#x4E2D;&#x6DFB;&#x52A0;&#x8FC1;&#x79FB;&#x7AEF;&#x53E3;.</p>
-<p>&#x5728;ovirt-engine&#x4E2D;&#x6DFB;&#x52A0;data/nfs&#x4F5C;&#x4E3A;&#x5B58;&#x50A8;&#x57DF;&#x65F6;&#x5E76;&#x4E0D;&#x80FD;&#x6210;&#x529F;&#x3002;<br>  &#x89E3;&#x51B3;&#x65B9;&#x6CD5;&#xFF1A;&#x91CD;&#x70B9;&#x67E5;&#x770B;&#x4E00;&#x4E0B;&#x5C06;&#x8981;&#x5171;&#x4EAB;&#x7684;&#x6587;&#x4EF6;&#x5939;&#x6743;&#x9650;&#x662F;&#x5426;&#x662F;vdsm&#xFF1A;kvm&#x3002;&#x82E5;&#x4E0D;&#x662F;&#x4F7F;&#x7528;chown -R&#x547D;&#x4EE4;&#x5373;&#x53EF;&#x3002;  </p>
-<p>&#x90E8;&#x5206;&#x4E3B;&#x673A;&#x521B;&#x5EFA;&#x865A;&#x62DF;&#x673A;&#x6210;&#x529F;,&#x5F00;&#x542F;&#x865A;&#x62DF;&#x673A;&#x65F6;&#x51FA;&#x73B0;error&#x2026;</p>
-<pre><code class="bash">VM CentOS6.3T is down. Exit message: internal error Process exited <span class="keyword">while</span> reading console <span class="built_in">log</span>      output: <span class="built_in">bind</span>(unix:/var/lib/libvirt/qemu/channels/CentOS6.3T.com.redhat.rhevm.vdsm): Permission    denied chardev: opening backend <span class="string">&quot;socket&quot;</span> failed
-</code></pre>
-<p>   &#x7531;&#x4E8E;../channels&#x8FD9;&#x4E2A;&#x6587;&#x4EF6;&#x5939;&#x7684;&#x6743;&#x9650;&#x662F;vdsm qemu&#x3002;root&#x7528;&#x6237;&#x53EF;&#x80FD;&#x4E0D;&#x80FD;&#x8BFB;&#x53D6;&#x5E76;&#x521B;&#x5EFA;&#x5176;&#x4E2D;&#x7684;&#x6587;&#x4EF6;&#x3002;&#x6211;&#x91C7;&#x7528;&#x7684;&#x65B9;&#x6CD5;&#x662F;&#x624B;&#x52A8;&#x5728;qemu.conf&#x4E2D;&#x6CE8;&#x91CA;&#x6389;.user = root &#x4EE5;&#x53CA; group = root&#x5E76;&#x91CD;&#x542F;libvirtd&#x3002;<br>   &#x4E4B;&#x540E;&#x51FA;&#x73B0;&#x9519;&#x8BEF;&#xFF1A;</p>
-<pre><code class="bash">VM CentOS6.3T is down. Exit message: internal error client socket is closed.
-VM <span class="built_in">test</span> is down. Exit message: cannot open file <span class="string">&apos;/rhev/data-center/78e07dee-36bc-439b-b71e-72cfd87a2bb3/f84e3679-281e-41d4-9ea9-b8221085fa7b/images/2e93290e-f1b5-42b2-bdf6-fad695de2ccb/ef334a97-e01b-4d7c-afb0-814ffbe537f0&apos;</span>: Permission denied.
-</code></pre>
-<p>   &#x8FD9;&#x4E24;&#x4E2A;&#x9519;&#x8BEF;&#x90FD;&#x662F;&#x7531;&#x4E8E;libvirt&#x8BBE;&#x7F6E;&#x95EE;&#x9898;&#x624D;&#x62A5;&#x9519;&#x7684;&#xFF0C;&#x6211;&#x8FD9;&#x91CC;&#x76F4;&#x63A5;&#x8986;&#x76D6;libvirtd.conf qemu.conf&#x4EE5;&#x53CA;vdsm.conf&#x6587;&#x4EF6;</p>
+<p></p><h3 id="yum&#x6E90;&#x5B89;&#x88C5;">YUM&#x6E90;&#x5B89;&#x88C5;</h3><br>&#x8FD9;&#x91CC;&#x76F4;&#x63A5;&#x914D;&#x7F6E;&#x597D;&#x963F;&#x91CC;&#x4E91;&#x7684;epel&#x6E90;&#x5373;&#x53EF;yum&#x4E00;&#x952E;&#x5B89;&#x88C5;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum -y install clamav</div></pre></td></tr></table></figure><p></p>
+<p></p><h3 id="&#x7F16;&#x8BD1;&#x5B89;&#x88C5;">&#x7F16;&#x8BD1;&#x5B89;&#x88C5;</h3><p></p>
+<h4 id="&#x83B7;&#x53D6;&#x8F6F;&#x4EF6;&#x5305;">&#x83B7;&#x53D6;&#x8F6F;&#x4EF6;&#x5305;</h4><br>&#x63A8;&#x8350;&#x4E0A;&#x5B98;&#x7F51;&#x4E0B;&#x8F7D;&#x8F6F;&#x4EF6;&#x5305;&#xFF0C;&#x5B98;&#x7F51; <a href="http://www.clamav.net" target="_blank" rel="external">http://www.clamav.net</a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget http://www.clamav.net/downloads/production/clamav-0.99.2.tar.gz</div></pre></td></tr></table></figure><br><br><h4 id="&#x51C6;&#x5907;&#x7F16;&#x8BD1;&#x73AF;&#x5883;&#x73AF;&#x5883;">&#x51C6;&#x5907;&#x7F16;&#x8BD1;&#x73AF;&#x5883;&#x73AF;&#x5883;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># &#x5B89;&#x88C5;&#x4F9D;&#x8D56;&#x5305;</span></div><div class="line">yum -y insatll gcc openssl openssl-devel</div><div class="line"><span class="comment"># &#x521B;&#x5EFA;clamav&#x7528;&#x6237;&#x548C;&#x7EC4;</span></div><div class="line">groupadd clamav</div><div class="line">useradd -g clamav <span class="_">-s</span> /sbin/nologin clamav</div></pre></td></tr></table></figure><br><br><h4 id="&#x7F16;&#x8BD1;&#x5B89;&#x88C5;clamav">&#x7F16;&#x8BD1;&#x5B89;&#x88C5;clamav</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">tar -zxf clamav-0.99.2.tar.gz</div><div class="line"><span class="built_in">cd</span> clamav-0.99.2</div><div class="line">./configure --sysconfdir=/etc</div><div class="line">make &amp;&amp; make install</div></pre></td></tr></table></figure><br><br><h4 id="&#x7A0B;&#x5E8F;&#x8BF4;&#x660E;">&#x7A0B;&#x5E8F;&#x8BF4;&#x660E;</h4><br>&#x7F16;&#x8BD1;&#x5B89;&#x88C5;&#x5B8C;&#x6210;&#x540E;&#xFF0C;&#x9ED8;&#x8BA4;&#x7A0B;&#x5E8F;&#x5B89;&#x88C5;&#x8DEF;&#x5F84;&#x4E3A;/usr/local/bin<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/bin/</div><div class="line">ls</div><div class="line">clamav-config  clambc  clamconf  clamdscan  clamscan  freshclam  sigtool</div></pre></td></tr></table></figure><br><br>| &#x7A0B;&#x5E8F;&#x540D;&#x79F0; | &#x8BE6;&#x7EC6;&#x8BF4;&#x660E; |<br>| &#x2014;&#x2013; | &#x2014;&#x2013; |<br>| clamscan | &#x626B;&#x63CF;&#x7A0B;&#x5E8F;&#xFF0C;&#x6700;&#x4E3B;&#x8981;&#x7684;&#x4E00;&#x4E2A;&#x7A0B;&#x5E8F; |<br>| clamd | daemon&#x7A0B;&#x5E8F;&#xFF0C;&#x914D;&#x5408;clamscan&#xFF0C;&#x56E0;&#x4E3A;&#x662F;&#x9884;&#x8F7D;&#xFF0C;&#x53EF;&#x4EE5;&#x66F4;&#x5FEB;&#x7684;&#x626B;&#x63CF; |<br>| clamdscan | &#x5FC5;&#x987B;&#x914D;&#x5408;clamd&#x4F7F;&#x7528; |<br>| clamuko | &#x662F;&#x914D;&#x7F6E;&#x53CA;&#x65F6;&#x626B;&#x63CF;&#x7684;&#x4E2D;&#x4ECB;&#x7A0B;&#x5E8F;&#xFF0C;&#x9700;&#x914D;&#x5408;dazuko |<br>| freshclam | &#x75C5;&#x6BD2;&#x7801;&#x66F4;&#x65B0;&#x7A0B;&#x5E8F;&#xFF0C;&#x9996;&#x6B21;&#x5B89;&#x88C5;&#x9700;&#x8FD0;&#x884C;&#x6B64;&#x7A0B;&#x5E8F;&#x66F4;&#x65B0;&#x75C5;&#x6BD2;&#x5E93; |<br>| sigtool | &#x6CA1;&#x6709;&#x88AB;clamav&#x626B;&#x63CF;&#x5230;&#x7684;&#x75C5;&#x6BD2;&#xFF0C;&#x53EF;&#x4EE5;&#x7528;&#x6B64;&#x7A0B;&#x5E8F;&#x65B0;&#x589E; |<br><br><h3 id="&#x4F7F;&#x7528;clamav&#x6740;&#x6BD2;">&#x4F7F;&#x7528;clamav&#x6740;&#x6BD2;</h3><br><h4 id="&#x4FEE;&#x6539;&#x914D;&#x7F6E;&#x6587;&#x4EF6;">&#x4FEE;&#x6539;&#x914D;&#x7F6E;&#x6587;&#x4EF6;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">cp /etc/clamd.conf.sample /etc/clamd.conf</div><div class="line">vim /etc/clamd.conf</div><div class="line">&#x5728;Example &#x524D;&#x9762;&#x52A0;<span class="comment">#</span></div><div class="line">cp /etc/freshclam.conf.sample /etc/freshclam.conf</div><div class="line">vim /etc/freshclam.conf</div><div class="line">&#x5728;Example &#x524D;&#x9762;&#x52A0;<span class="comment">#</span></div><div class="line">&#x5728; DatabaseMirror database.clamav.net &#x884C;&#x4E0B;&#x9762;&#x589E;&#x52A0;&#x51E0;&#x4E2A;&#x5730;&#x5740;</div><div class="line">DatabaseMirror clamav.inet6.fr</div><div class="line">DatabaseMirror clamav.netopia.pt</div><div class="line">DatabaseMirror clamav.sonic.net</div></pre></td></tr></table></figure><br><br><h4 id="&#x66F4;&#x65B0;&#x75C5;&#x6BD2;&#x5E93;">&#x66F4;&#x65B0;&#x75C5;&#x6BD2;&#x5E93;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># &#x65B0;&#x5EFA;&#x6240;&#x9700;&#x8981;&#x76EE;&#x5F55;</span></div><div class="line">mkdir /usr/<span class="built_in">local</span>/share/clamav</div><div class="line"><span class="comment"># &#x4FEE;&#x6539;&#x5C5E;&#x4E3B;&#x5C5E;&#x7EC4;</span></div><div class="line">chown clamav.clamav -R /usr/<span class="built_in">local</span>/share/clamav/</div><div class="line"><span class="comment"># &#x66F4;&#x65B0;&#x75C5;&#x6BD2;&#x5E93;</span></div><div class="line">/usr/<span class="built_in">local</span>/bin/freshclam</div></pre></td></tr></table></figure><br><br><h4 id="clamav&#x547D;&#x4EE4;&#x8BE6;&#x89E3;">clamav&#x547D;&#x4EE4;&#x8BE6;&#x89E3;</h4><br><h5 id="&#x547D;&#x4EE4;&#x53C2;&#x6570;">&#x547D;&#x4EE4;&#x53C2;&#x6570;</h5><br>-l [&#x8DEF;&#x5F84;] [&#x6587;&#x4EF6;&#x540D;] &#x589E;&#x52A0;&#x626B;&#x63CF;&#x62A5;&#x544A;<br>-q &#x5B89;&#x9759;&#x65B9;&#x5F0F;&#xFF0C;&#x4E0D;&#x53D1;&#x51FA;&#x4EFB;&#x4F55;&#x6D88;&#x606F;&#xFF0C;&#x53EA;&#x6709;&#x51FA;&#x73B0;&#x75C5;&#x6BD2;&#x624D;&#x4F1A;&#x63D0;&#x793A;<br>&#x2013;move [&#x8DEF;&#x5F84;] &#x79FB;&#x52A8;&#x75C5;&#x6BD2;&#x6587;&#x4EF6;&#x81F3;&#x2026;<br>&#x2013;remove [&#x8DEF;&#x5F84;] &#x5220;&#x9664;&#x75C5;&#x6BD2;&#x6587;&#x4EF6;<br>&#x2013;unzip(unrar) &#x89E3;&#x538B;&#x538B;&#x7F29;&#x6587;&#x4EF6;&#x626B;&#x63CF;<br><br><h5 id="&#x547D;&#x4EE4;&#x5E38;&#x7528;&#x793A;&#x4F8B;">&#x547D;&#x4EE4;&#x5E38;&#x7528;&#x793A;&#x4F8B;</h5><br>1. &#x626B;&#x63CF;&#x6307;&#x5B9A;&#x7684;&#x6587;&#x4EF6;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">clamscan file</div></pre></td></tr></table></figure><br><br>2. &#x626B;&#x63CF;/home&#x76EE;&#x5F55;&#x4E2D;&#x6240;&#x6709;&#x6587;&#x4EF6; (&#x5305;&#x62EC;&#x5B50;&#x76EE;&#x5F55;)<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">clamscan -r /home</div></pre></td></tr></table></figure><br><br>3. &#x5C06;&#x626B;&#x63CF;&#x7ED3;&#x679C;&#x5B58;&#x653E;&#x5230;log&#x4E2D;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">clamscan -r /home/<span class="built_in">test</span> <span class="_">-l</span> /tmp/clamav.log</div></pre></td></tr></table></figure><br><br>4. &#x626B;&#x63CF;&#x5230;&#x6709;&#x95EE;&#x9898;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x76F4;&#x63A5;&#x5220;&#x9664;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">clamscan -r --remove /home/<span class="built_in">test</span></div><div class="line"><span class="comment"># &#x8FD9;&#x4E00;&#x6B65;&#x8981;&#x5C0F;&#x5FC3;&#xFF0C;&#x6700;&#x597D;&#x4E0D;&#x8981;&#x8FD9;&#x6837;&#x64CD;&#x4F5C;&#xFF0C;&#x5982;&#x679C;&#x5220;&#x9664;&#x4E86;&#x7CFB;&#x7EDF;&#x6587;&#x4EF6;&#x5C31;&#x9EBB;&#x70E6;&#x4E86;&#x3002;&#x53EF;&#x80FD;&#x5BFC;&#x81F4;&#x7CFB;&#x7EDF;&#x5D29;&#x6E83;</span></div></pre></td></tr></table></figure><br><br><h4 id="&#x626B;&#x63CF;&#x8FD4;&#x56DE;&#x503C;">&#x626B;&#x63CF;&#x8FD4;&#x56DE;&#x503C;</h4>
+
+<table>
+<thead>
+<tr>
+<th>&#x8FD4;&#x56DE;&#x503C;</th>
+<th>&#x8BE6;&#x7EC6;&#x8BF4;&#x660E;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>&#x65E0;&#x75C5;&#x6BD2;</td>
+</tr>
+<tr>
+<td>1</td>
+<td>&#x53D1;&#x73B0;&#x75C5;&#x6BD2;</td>
+</tr>
+<tr>
+<td>40</td>
+<td>&#x5DF2;&#x7ECF;&#x901A;&#x8FC7;&#x7684;&#x672A;&#x77E5;&#x9009;&#x9879;</td>
+</tr>
+<tr>
+<td>50</td>
+<td>&#x6570;&#x636E;&#x5E93;&#x521D;&#x59CB;&#x5316;&#x9519;&#x8BEF;</td>
+</tr>
+<tr>
+<td>52</td>
+<td>&#x4E0D;&#x652F;&#x6301;&#x7684;&#x6587;&#x4EF6;&#x683C;&#x5F0F;</td>
+</tr>
+<tr>
+<td>53</td>
+<td>&#x65E0;&#x6CD5;&#x6253;&#x5F00;&#x76EE;&#x5F55;</td>
+</tr>
+<tr>
+<td>54</td>
+<td>&#x4E0D;&#x80FD;&#x6253;&#x5F00;&#x6587;&#x4EF6;(ofm)</td>
+</tr>
+<tr>
+<td>55</td>
+<td>&#x8BFB;&#x6587;&#x4EF6;&#x9519;&#x8BEF;(ofm)</td>
+</tr>
+<tr>
+<td>56</td>
+<td>Can&#x2019;t stat input file / directory.</td>
+</tr>
+<tr>
+<td>57</td>
+<td>Can&#x2019;t get absolute path name of current working directory</td>
+</tr>
+<tr>
+<td>58</td>
+<td>I/O &#x9519;&#x8BEF;, &#x8BF7;&#x68C0;&#x67E5;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;</td>
+</tr>
+<tr>
+<td>59</td>
+<td>&#x65E0;&#x6CD5;&#x5728;/etc/passwd&#x83B7;&#x5F97;&#x5F53;&#x524D;&#x7528;&#x6237;&#x7684;&#x4FE1;&#x606F;</td>
+</tr>
+<tr>
+<td>60</td>
+<td>&#x65E0;&#x6CD5;&#x5728;/etc/passwd&#x83B7;&#x5F97;&#x2019;clamav&#x2019;&#xFF08;&#x9ED8;&#x8BA4;&#x540D;&#xFF09;&#x7528;&#x6237;&#x7684;&#x4FE1;&#x606F;</td>
+</tr>
+<tr>
+<td>61</td>
+<td>Can&#x2019;t fork.</td>
+</tr>
+<tr>
+<td>63</td>
+<td>&#x4E0D;&#x80FD;&#x521B;&#x5EFA;&#x4E34;&#x65F6;&#x6587;&#x4EF6;/&#x76EE;&#x5F55;(&#x68C0;&#x67E5;&#x6743;&#x9650;).</td>
+</tr>
+<tr>
+<td>64</td>
+<td>&#x65E0;&#x6CD5;&#x5BF9;&#x4E34;&#x65F6;&#x76EE;&#x5F55;&#x8FDB;&#x884C;&#x5199;&#x64CD;&#x4F5C; (&#x8BF7;&#x6307;&#x5B9A;&#x53E6;&#x4E00;&#x4E2A;&#x76EE;&#x5F55;).</td>
+</tr>
+<tr>
+<td>70</td>
+<td>&#x65E0;&#x6CD5;&#x5206;&#x914D;&#x6216;&#x91CA;&#x653E;&#x5185;&#x5B58; (calloc).</td>
+</tr>
+<tr>
+<td>71</td>
+<td>&#x65E0;&#x6CD5;&#x5206;&#x914D;&#x5185;&#x5B58; (malloc).</td>
+</tr>
+</tbody>
+</table>
 
       
     </div>
@@ -408,7 +493,7 @@ VM <span class="built_in">test</span> is down. Exit message: cannot open file <s
       
         <div class="post-tags">
           
-            <a href="/tags/KVM/" rel="tag">#KVM</a>
+            <a href="/tags/ClamAV/" rel="tag">#ClamAV</a>
           
         </div>
       
@@ -417,17 +502,13 @@ VM <span class="built_in">test</span> is down. Exit message: cannot open file <s
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/08/16/Centos6系列安装Zabbix3-0/" rel="next" title="Centos6系列安装Zabbix3.0">
-                <i class="fa fa-chevron-left"></i> Centos6系列安装Zabbix3.0
+              <a href="/2016/11/14/Linux命令小技巧/" rel="next" title="Linux命令小技巧">
+                <i class="fa fa-chevron-left"></i> Linux命令小技巧
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/08/22/科学上网工具shadowsocks/" rel="prev" title="科学上网工具shadowsocks">
-                科学上网工具shadowsocks <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -442,10 +523,10 @@ VM <span class="built_in">test</span> is down. Exit message: cannot open file <s
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/08/22/KVM迁移时遇到的一些问题/"
-     data-title="KVM迁移时遇到的一些问题"
+        <div class="ds-share flat" data-thread-key="2016/11/21/Linux杀毒软件安装及使用/"
+     data-title="Linux杀毒软件安装及使用"
      data-content=""
-     data-url="http://chen-hao.com.cn/2016/08/22/KVM迁移时遇到的一些问题/">
+     data-url="http://chen-hao.com.cn/2016/11/21/Linux杀毒软件安装及使用/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -472,8 +553,8 @@ VM <span class="built_in">test</span> is down. Exit message: cannot open file <s
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/08/22/KVM迁移时遇到的一些问题/"
-           data-title="KVM迁移时遇到的一些问题" data-url="http://chen-hao.com.cn/2016/08/22/KVM迁移时遇到的一些问题/">
+      <div class="ds-thread" data-thread-key="2016/11/21/Linux杀毒软件安装及使用/"
+           data-title="Linux杀毒软件安装及使用" data-url="http://chen-hao.com.cn/2016/11/21/Linux杀毒软件安装及使用/">
       </div>
     
   </div>
@@ -620,7 +701,7 @@ VM <span class="built_in">test</span> is down. Exit message: cannot open file <s
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#yum源安装"><span class="nav-number">1.</span> <span class="nav-text">YUM源安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译安装"><span class="nav-number">2.</span> <span class="nav-text">编译安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#获取软件包"><span class="nav-number">2.1.</span> <span class="nav-text">获取软件包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#准备编译环境环境"><span class="nav-number">2.2.</span> <span class="nav-text">准备编译环境环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编译安装clamav"><span class="nav-number">2.3.</span> <span class="nav-text">编译安装clamav</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#程序说明"><span class="nav-number">2.4.</span> <span class="nav-text">程序说明</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用clamav杀毒"><span class="nav-number">3.</span> <span class="nav-text">使用clamav杀毒</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#修改配置文件"><span class="nav-number">3.1.</span> <span class="nav-text">修改配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新病毒库"><span class="nav-number">3.2.</span> <span class="nav-text">更新病毒库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#clamav命令详解"><span class="nav-number">3.3.</span> <span class="nav-text">clamav命令详解</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#命令参数"><span class="nav-number">3.3.1.</span> <span class="nav-text">命令参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#命令常用示例"><span class="nav-number">3.3.2.</span> <span class="nav-text">命令常用示例</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#扫描返回值"><span class="nav-number">3.4.</span> <span class="nav-text">扫描返回值</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
