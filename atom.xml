@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://chen-hao.com.cn/"/>
-  <updated>2016-11-21T05:02:32.148Z</updated>
+  <updated>2016-11-21T05:05:41.548Z</updated>
   <id>http://chen-hao.com.cn/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://chen-hao.com.cn/2016/11/21/Linux%E6%9D%80%E6%AF%92%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/"/>
     <id>http://chen-hao.com.cn/2016/11/21/Linux杀毒软件安装及使用/</id>
     <published>2016-11-21T02:07:21.000Z</published>
-    <updated>2016-11-21T05:02:32.148Z</updated>
+    <updated>2016-11-21T05:05:41.548Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>ClamAV &#x662F;Linux&#x5E73;&#x53F0;&#x6700;&#x53D7;&#x6B22;&#x8FCE;&#x7684;&#x6740;&#x6BD2;&#x8F6F;&#x4EF6;&#xFF0C;ClamAV &#x5C5E;&#x4E8E;&#x514D;&#x8D39;&#x5F00;&#x6E90;&#x4EA7;&#x54C1;&#xFF0C;&#x652F;&#x6301;&#x591A;&#x79CD;&#x5E73;&#x53F0;&#x3002;ClamAV&#x662F;&#x57FA;&#x4E8E;&#x75C5;&#x6BD2;&#x626B;&#x63CF;&#x7684;&#x547D;&#x4EE4;&#x884C;&#x5DE5;&#x5177;&#xFF0C;&#x4F46;&#x540C;&#x65F6;&#x4E5F;&#x6709;&#x652F;&#x6301;&#x56FE;&#x5F62;&#x754C;&#x9762;&#x7684;ClamTK&#x5DE5;&#x5177;&#x3002;ClamAV &#x4E3B;&#x8981;&#x7528;&#x4E8E;&#x90AE;&#x4EF6;&#x670D;&#x52A1;&#x5668;&#x626B;&#x63CF;&#x90AE;&#x4EF6;&#x3002;&#x5B83;&#x6709;&#x591A;&#x79CD;&#x63A5;&#x53E3;&#x4ECE;&#x90AE;&#x4EF6;&#x670D;&#x52A1;&#x5668;&#x626B;&#x63CF;&#x90AE;&#x4EF6;&#x3002;ClamAV &#x6709;&#x81EA;&#x52A8;&#x7684;&#x6570;&#x636E;&#x5E93;&#x66F4;&#x65B0;&#x5668;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x4ECE;&#x5171;&#x4EAB;&#x5E93;&#x4E2D;&#x8FD0;&#x884C;&#x3002;&#x547D;&#x4EE4;&#x884C;&#x7684;&#x754C;&#x9762;&#x8BA9; ClamAV&#x8FD0;&#x884C;&#x6D41;&#x7545;&#x3002;<br> <a id="more"></a></p>
@@ -69,7 +69,14 @@
 <p></p><h4 id="&#x4FEE;&#x6539;&#x914D;&#x7F6E;&#x6587;&#x4EF6;">&#x4FEE;&#x6539;&#x914D;&#x7F6E;&#x6587;&#x4EF6;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">cp /etc/clamd.conf.sample /etc/clamd.conf</div><div class="line">vim /etc/clamd.conf</div><div class="line">&#x5728;Example &#x524D;&#x9762;&#x52A0;<span class="comment">#</span></div><div class="line">cp /etc/freshclam.conf.sample /etc/freshclam.conf</div><div class="line">vim /etc/freshclam.conf</div><div class="line">&#x5728;Example &#x524D;&#x9762;&#x52A0;<span class="comment">#</span></div><div class="line">&#x5728; DatabaseMirror database.clamav.net &#x884C;&#x4E0B;&#x9762;&#x589E;&#x52A0;&#x51E0;&#x4E2A;&#x5730;&#x5740;</div><div class="line">DatabaseMirror clamav.inet6.fr</div><div class="line">DatabaseMirror clamav.netopia.pt</div><div class="line">DatabaseMirror clamav.sonic.net</div></pre></td></tr></table></figure><p></p>
 <p></p><h4 id="&#x66F4;&#x65B0;&#x75C5;&#x6BD2;&#x5E93;">&#x66F4;&#x65B0;&#x75C5;&#x6BD2;&#x5E93;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># &#x65B0;&#x5EFA;&#x6240;&#x9700;&#x8981;&#x76EE;&#x5F55;</span></div><div class="line">mkdir /usr/<span class="built_in">local</span>/share/clamav</div><div class="line"><span class="comment"># &#x4FEE;&#x6539;&#x5C5E;&#x4E3B;&#x5C5E;&#x7EC4;</span></div><div class="line">chown clamav.clamav -R /usr/<span class="built_in">local</span>/share/clamav/</div><div class="line"><span class="comment"># &#x66F4;&#x65B0;&#x75C5;&#x6BD2;&#x5E93;</span></div><div class="line">/usr/<span class="built_in">local</span>/bin/freshclam</div></pre></td></tr></table></figure><p></p>
 <p></p><h4 id="clamav&#x547D;&#x4EE4;&#x8BE6;&#x89E3;">clamav&#x547D;&#x4EE4;&#x8BE6;&#x89E3;</h4><p></p>
-<p></p><h5 id="&#x547D;&#x4EE4;&#x53C2;&#x6570;">&#x547D;&#x4EE4;&#x53C2;&#x6570;</h5><br>-l [&#x8DEF;&#x5F84;] [&#x6587;&#x4EF6;&#x540D;] &#x589E;&#x52A0;&#x626B;&#x63CF;&#x62A5;&#x544A;<br>&#x2013;quiet &#x5B89;&#x9759;&#x65B9;&#x5F0F;&#xFF0C;&#x4E0D;&#x53D1;&#x51FA;&#x4EFB;&#x4F55;&#x6D88;&#x606F;&#xFF0C;&#x53EA;&#x6709;&#x51FA;&#x73B0;&#x75C5;&#x6BD2;&#x624D;&#x4F1A;&#x63D0;&#x793A;<br>&#x2013;move [&#x8DEF;&#x5F84;] &#x79FB;&#x52A8;&#x75C5;&#x6BD2;&#x6587;&#x4EF6;&#x81F3;&#x2026;<br>&#x2013;remove [&#x8DEF;&#x5F84;] &#x5220;&#x9664;&#x75C5;&#x6BD2;&#x6587;&#x4EF6;<br>&#x2013;unzip(unrar) &#x89E3;&#x538B;&#x538B;&#x7F29;&#x6587;&#x4EF6;&#x626B;&#x63CF;<p></p>
+<p></p><h5 id="&#x547D;&#x4EE4;&#x53C2;&#x6570;">&#x547D;&#x4EE4;&#x53C2;&#x6570;</h5><p></p>
+<ul>
+<li>-l [&#x8DEF;&#x5F84;] [&#x6587;&#x4EF6;&#x540D;] &#x589E;&#x52A0;&#x626B;&#x63CF;&#x62A5;&#x544A;</li>
+<li>&#x2013;quiet &#x5B89;&#x9759;&#x65B9;&#x5F0F;&#xFF0C;&#x4E0D;&#x53D1;&#x51FA;&#x4EFB;&#x4F55;&#x6D88;&#x606F;&#xFF0C;&#x53EA;&#x6709;&#x51FA;&#x73B0;&#x75C5;&#x6BD2;&#x624D;&#x4F1A;&#x63D0;&#x793A;</li>
+<li>&#x2013;move [&#x8DEF;&#x5F84;] &#x79FB;&#x52A8;&#x75C5;&#x6BD2;&#x6587;&#x4EF6;&#x81F3;&#x2026;</li>
+<li>&#x2013;remove [&#x8DEF;&#x5F84;] &#x5220;&#x9664;&#x75C5;&#x6BD2;&#x6587;&#x4EF6;</li>
+<li>&#x2013;unzip(unrar) &#x89E3;&#x538B;&#x538B;&#x7F29;&#x6587;&#x4EF6;&#x626B;&#x63CF;</li>
+</ul>
 <p></p><h5 id="&#x547D;&#x4EE4;&#x5E38;&#x7528;&#x793A;&#x4F8B;">&#x547D;&#x4EE4;&#x5E38;&#x7528;&#x793A;&#x4F8B;</h5><p></p>
 <ol>
 <li><p>&#x626B;&#x63CF;&#x6307;&#x5B9A;&#x7684;&#x6587;&#x4EF6;</p>
@@ -85,7 +92,27 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">clamscan -r --remove /home/<span class="built_in">test</span></div><div class="line"><span class="comment"># &#x8FD9;&#x4E00;&#x6B65;&#x8981;&#x5C0F;&#x5FC3;&#xFF0C;&#x6700;&#x597D;&#x4E0D;&#x8981;&#x8FD9;&#x6837;&#x64CD;&#x4F5C;&#xFF0C;&#x5982;&#x679C;&#x5220;&#x9664;&#x4E86;&#x7CFB;&#x7EDF;&#x6587;&#x4EF6;&#x5C31;&#x9EBB;&#x70E6;&#x4E86;&#x3002;&#x53EF;&#x80FD;&#x5BFC;&#x81F4;&#x7CFB;&#x7EDF;&#x5D29;&#x6E83;</span></div></pre></td></tr></table></figure>
 </li>
 </ol>
-<p></p><h4 id="&#x626B;&#x63CF;&#x8FD4;&#x56DE;&#x503C;">&#x626B;&#x63CF;&#x8FD4;&#x56DE;&#x503C;</h4><br> 0 : &#x65E0;&#x75C5;&#x6BD2;<br> 1 : &#x53D1;&#x73B0;&#x75C5;&#x6BD2;<br> 40 : &#x5DF2;&#x7ECF;&#x901A;&#x8FC7;&#x7684;&#x672A;&#x77E5;&#x9009;&#x9879;<br> 50 : &#x6570;&#x636E;&#x5E93;&#x521D;&#x59CB;&#x5316;&#x9519;&#x8BEF;<br> 52 : &#x4E0D;&#x652F;&#x6301;&#x7684;&#x6587;&#x4EF6;&#x683C;&#x5F0F;<br> 53 : &#x65E0;&#x6CD5;&#x6253;&#x5F00;&#x76EE;&#x5F55;<br> 54 : &#x4E0D;&#x80FD;&#x6253;&#x5F00;&#x6587;&#x4EF6;(ofm)<br> 55 : &#x8BFB;&#x6587;&#x4EF6;&#x9519;&#x8BEF;(ofm)<br> 56 : Can&#x2019;t stat input file / directory.<br> 57 : Can&#x2019;t get absolute path name of current working directory<br> 58 : I/O &#x9519;&#x8BEF;, &#x8BF7;&#x68C0;&#x67E5;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;<br> 59 : &#x65E0;&#x6CD5;&#x5728;/etc/passwd&#x83B7;&#x5F97;&#x5F53;&#x524D;&#x7528;&#x6237;&#x7684;&#x4FE1;&#x606F;<br> 60 : &#x65E0;&#x6CD5;&#x5728;/etc/passwd&#x83B7;&#x5F97;&#x2019;clamav&#x2019;&#xFF08;&#x9ED8;&#x8BA4;&#x540D;&#xFF09;&#x7528;&#x6237;&#x7684;&#x4FE1;&#x606F;<br> 61 : Can&#x2019;t fork.<br> 63 : &#x4E0D;&#x80FD;&#x521B;&#x5EFA;&#x4E34;&#x65F6;&#x6587;&#x4EF6;/&#x76EE;&#x5F55;(&#x68C0;&#x67E5;&#x6743;&#x9650;). |<br> 64 : &#x65E0;&#x6CD5;&#x5BF9;&#x4E34;&#x65F6;&#x76EE;&#x5F55;&#x8FDB;&#x884C;&#x5199;&#x64CD;&#x4F5C; (&#x8BF7;&#x6307;&#x5B9A;&#x53E6;&#x4E00;&#x4E2A;&#x76EE;&#x5F55;).<br> 70 : &#x65E0;&#x6CD5;&#x5206;&#x914D;&#x6216;&#x91CA;&#x653E;&#x5185;&#x5B58; (calloc).<br> 71 : &#x65E0;&#x6CD5;&#x5206;&#x914D;&#x5185;&#x5B58; (malloc).<p></p>
+<p></p><h4 id="&#x626B;&#x63CF;&#x8FD4;&#x56DE;&#x503C;">&#x626B;&#x63CF;&#x8FD4;&#x56DE;&#x503C;</h4><p></p>
+<ul>
+<li>0 : &#x65E0;&#x75C5;&#x6BD2; </li>
+<li>1 : &#x53D1;&#x73B0;&#x75C5;&#x6BD2; </li>
+<li>40 : &#x5DF2;&#x7ECF;&#x901A;&#x8FC7;&#x7684;&#x672A;&#x77E5;&#x9009;&#x9879; </li>
+<li>50 : &#x6570;&#x636E;&#x5E93;&#x521D;&#x59CB;&#x5316;&#x9519;&#x8BEF; </li>
+<li>52 : &#x4E0D;&#x652F;&#x6301;&#x7684;&#x6587;&#x4EF6;&#x683C;&#x5F0F; </li>
+<li>53 : &#x65E0;&#x6CD5;&#x6253;&#x5F00;&#x76EE;&#x5F55; </li>
+<li>54 : &#x4E0D;&#x80FD;&#x6253;&#x5F00;&#x6587;&#x4EF6;(ofm) </li>
+<li>55 : &#x8BFB;&#x6587;&#x4EF6;&#x9519;&#x8BEF;(ofm) </li>
+<li>56 : Can&#x2019;t stat input file / directory. </li>
+<li>57 : Can&#x2019;t get absolute path name of current working directory </li>
+<li>58 : I/O &#x9519;&#x8BEF;, &#x8BF7;&#x68C0;&#x67E5;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF; </li>
+<li>59 : &#x65E0;&#x6CD5;&#x5728;/etc/passwd&#x83B7;&#x5F97;&#x5F53;&#x524D;&#x7528;&#x6237;&#x7684;&#x4FE1;&#x606F; </li>
+<li>60 : &#x65E0;&#x6CD5;&#x5728;/etc/passwd&#x83B7;&#x5F97;&#x2019;clamav&#x2019;&#xFF08;&#x9ED8;&#x8BA4;&#x540D;&#xFF09;&#x7528;&#x6237;&#x7684;&#x4FE1;&#x606F; </li>
+<li>61 : Can&#x2019;t fork. </li>
+<li>63 : &#x4E0D;&#x80FD;&#x521B;&#x5EFA;&#x4E34;&#x65F6;&#x6587;&#x4EF6;/&#x76EE;&#x5F55;(&#x68C0;&#x67E5;&#x6743;&#x9650;). |</li>
+<li>64 : &#x65E0;&#x6CD5;&#x5BF9;&#x4E34;&#x65F6;&#x76EE;&#x5F55;&#x8FDB;&#x884C;&#x5199;&#x64CD;&#x4F5C; (&#x8BF7;&#x6307;&#x5B9A;&#x53E6;&#x4E00;&#x4E2A;&#x76EE;&#x5F55;). </li>
+<li>70 : &#x65E0;&#x6CD5;&#x5206;&#x914D;&#x6216;&#x91CA;&#x653E;&#x5185;&#x5B58; (calloc). </li>
+<li>71 : &#x65E0;&#x6CD5;&#x5206;&#x914D;&#x5185;&#x5B58; (malloc).</li>
+</ul>
 ]]></content>
     
     <summary type="html">
