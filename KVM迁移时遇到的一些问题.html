@@ -1,0 +1,913 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="KVM," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="火柴的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="KVM迁移有两种方式，一种是动态迁移，一种为静态迁移。kvm静态迁移就是虚拟机在关机状态下，拷贝虚拟机虚拟磁盘文件与配置文件到目标虚拟主机中，实现的迁移。kvm动态迁移无需拷贝虚拟磁盘文件，需要目的主机和源主机有相同的目录结构虚拟机磁盘文件（依赖共享存储）。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="KVM迁移时遇到的一些问题">
+<meta property="og:url" content="http://chen-hao.com.cn/KVM迁移时遇到的一些问题.html">
+<meta property="og:site_name" content="火柴的博客">
+<meta property="og:description" content="KVM迁移有两种方式，一种是动态迁移，一种为静态迁移。kvm静态迁移就是虚拟机在关机状态下，拷贝虚拟机虚拟磁盘文件与配置文件到目标虚拟主机中，实现的迁移。kvm动态迁移无需拷贝虚拟磁盘文件，需要目的主机和源主机有相同的目录结构虚拟机磁盘文件（依赖共享存储）。">
+<meta property="og:updated_time" content="2016-08-24T07:10:33.294Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="KVM迁移时遇到的一些问题">
+<meta name="twitter:description" content="KVM迁移有两种方式，一种是动态迁移，一种为静态迁移。kvm静态迁移就是虚拟机在关机状态下，拷贝虚拟机虚拟磁盘文件与配置文件到目标虚拟主机中，实现的迁移。kvm动态迁移无需拷贝虚拟磁盘文件，需要目的主机和源主机有相同的目录结构虚拟机磁盘文件（依赖共享存储）。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://chen-hao.com.cn/KVM迁移时遇到的一些问题.html"/>
+
+  <title> KVM迁移时遇到的一些问题 | 火柴的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">火柴的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                KVM迁移时遇到的一些问题
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-22T13:00:35+08:00" content="2016-08-22">
+              2016-08-22
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/KVM迁移时遇到的一些问题.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="KVM迁移时遇到的一些问题.html" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/KVM迁移时遇到的一些问题.html" class="leancloud_visitors" data-flag-title="KVM迁移时遇到的一些问题">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv">总阅读量<i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>KVM&#x8FC1;&#x79FB;&#x6709;&#x4E24;&#x79CD;&#x65B9;&#x5F0F;&#xFF0C;&#x4E00;&#x79CD;&#x662F;&#x52A8;&#x6001;&#x8FC1;&#x79FB;&#xFF0C;&#x4E00;&#x79CD;&#x4E3A;&#x9759;&#x6001;&#x8FC1;&#x79FB;&#x3002;<br>kvm&#x9759;&#x6001;&#x8FC1;&#x79FB;&#x5C31;&#x662F;&#x865A;&#x62DF;&#x673A;&#x5728;&#x5173;&#x673A;&#x72B6;&#x6001;&#x4E0B;&#xFF0C;&#x62F7;&#x8D1D;&#x865A;&#x62DF;&#x673A;&#x865A;&#x62DF;&#x78C1;&#x76D8;&#x6587;&#x4EF6;&#x4E0E;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x5230;&#x76EE;&#x6807;&#x865A;&#x62DF;&#x4E3B;&#x673A;&#x4E2D;&#xFF0C;&#x5B9E;&#x73B0;&#x7684;&#x8FC1;&#x79FB;&#x3002;<br>kvm&#x52A8;&#x6001;&#x8FC1;&#x79FB;&#x65E0;&#x9700;&#x62F7;&#x8D1D;&#x865A;&#x62DF;&#x78C1;&#x76D8;&#x6587;&#x4EF6;&#xFF0C;&#x9700;&#x8981;&#x76EE;&#x7684;&#x4E3B;&#x673A;&#x548C;&#x6E90;&#x4E3B;&#x673A;&#x6709;&#x76F8;&#x540C;&#x7684;&#x76EE;&#x5F55;&#x7ED3;&#x6784;&#x865A;&#x62DF;&#x673A;&#x78C1;&#x76D8;&#x6587;&#x4EF6;&#xFF08;&#x4F9D;&#x8D56;&#x5171;&#x4EAB;&#x5B58;&#x50A8;&#xFF09;&#x3002;<br><a id="more"></a></p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">error:no hypervisor options were found ofr this connection</div><div class="line">this usually means that qemu or kvm is not installed on your machine,or the kvm kernel modules     are not loaded.</div></pre></td></tr></table></figure>
+<p>  &#x89E3;&#x51B3;&#x65B9;&#x6CD5;&#xFF1A;&#x5F00;&#x542F;bios&#x865A;&#x62DF;&#x5316;&#x5E76;&#x52A0;&#x8F7D;modprobe kvm&#x4EE5;&#x53CA;kvm_intel.</p>
+<pre><code class="bash">Unable to migrate guest: unsupported configuration: Domain requires KVM, but it is not  available. Check that virtualization is enabled <span class="keyword">in</span> the host BIOS, and host configuration is setup  to load the kvm modules.
+</code></pre>
+<p>  &#x89E3;&#x51B3;&#x65B9;&#x6CD5;:&#x65B9;&#x6CD5;&#x540C;&#x4E0A;.</p>
+<pre><code class="bash">Unable to migrate guest: Unable to allow access <span class="keyword">for</span> disk path /img/musf-clone1-2-clone.img: No such file or directory
+</code></pre>
+<p>  &#x89E3;&#x51B3;&#x65B9;&#x6CD5;:&#x8FC1;&#x79FB;&#x4E0E;&#x88AB;&#x8FC1;&#x79FB;&#x4E3B;&#x673A;&#x7684;&#x9700;&#x8981;&#x76F8;&#x540C;&#x540D;&#x79F0;&#x7684;&#x78C1;&#x76D8;&#x6620;&#x50CF;&#x6587;&#x4EF6;<br>  qemu-img create -f raw(&#x78C1;&#x76D8;&#x786C;&#x4EF6;&#x6587;&#x4EF6;&#x683C;&#x5F0F;) /home/kvm-disk/test.img(&#x8DEF;&#x5F84;) 100G(&#x5927;&#x5C0F;)</p>
+<pre><code class="bash">Unable to migrate guest: unable to connect to server at <span class="string">&apos;kvm3:49153&apos;</span>: Connection refused
+</code></pre>
+<p>  &#x89E3;&#x51B3;&#x65B9;&#x6CD5;:1.&#x5F00;&#x542F;&#x9632;&#x706B;&#x5899;&#x4E0A;&#x7AEF;&#x53E3;&#x6216;&#x5173;&#x95ED;&#x9632;&#x706B;&#x5899;.<br>           2.&#x5728;virt-manager&#x7684;&#x8FC1;&#x79FB;&#x4E2D;&#x6DFB;&#x52A0;&#x8FC1;&#x79FB;&#x7AEF;&#x53E3;.</p>
+<p>&#x5728;ovirt-engine&#x4E2D;&#x6DFB;&#x52A0;data/nfs&#x4F5C;&#x4E3A;&#x5B58;&#x50A8;&#x57DF;&#x65F6;&#x5E76;&#x4E0D;&#x80FD;&#x6210;&#x529F;&#x3002;<br>  &#x89E3;&#x51B3;&#x65B9;&#x6CD5;&#xFF1A;&#x91CD;&#x70B9;&#x67E5;&#x770B;&#x4E00;&#x4E0B;&#x5C06;&#x8981;&#x5171;&#x4EAB;&#x7684;&#x6587;&#x4EF6;&#x5939;&#x6743;&#x9650;&#x662F;&#x5426;&#x662F;vdsm&#xFF1A;kvm&#x3002;&#x82E5;&#x4E0D;&#x662F;&#x4F7F;&#x7528;chown -R&#x547D;&#x4EE4;&#x5373;&#x53EF;&#x3002;  </p>
+<p>&#x90E8;&#x5206;&#x4E3B;&#x673A;&#x521B;&#x5EFA;&#x865A;&#x62DF;&#x673A;&#x6210;&#x529F;,&#x5F00;&#x542F;&#x865A;&#x62DF;&#x673A;&#x65F6;&#x51FA;&#x73B0;error&#x2026;</p>
+<pre><code class="bash">VM CentOS6.3T is down. Exit message: internal error Process exited <span class="keyword">while</span> reading console <span class="built_in">log</span>      output: <span class="built_in">bind</span>(unix:/var/lib/libvirt/qemu/channels/CentOS6.3T.com.redhat.rhevm.vdsm): Permission    denied chardev: opening backend <span class="string">&quot;socket&quot;</span> failed
+</code></pre>
+<p>   &#x7531;&#x4E8E;../channels&#x8FD9;&#x4E2A;&#x6587;&#x4EF6;&#x5939;&#x7684;&#x6743;&#x9650;&#x662F;vdsm qemu&#x3002;root&#x7528;&#x6237;&#x53EF;&#x80FD;&#x4E0D;&#x80FD;&#x8BFB;&#x53D6;&#x5E76;&#x521B;&#x5EFA;&#x5176;&#x4E2D;&#x7684;&#x6587;&#x4EF6;&#x3002;&#x6211;&#x91C7;&#x7528;&#x7684;&#x65B9;&#x6CD5;&#x662F;&#x624B;&#x52A8;&#x5728;qemu.conf&#x4E2D;&#x6CE8;&#x91CA;&#x6389;.user = root &#x4EE5;&#x53CA; group = root&#x5E76;&#x91CD;&#x542F;libvirtd&#x3002;<br>   &#x4E4B;&#x540E;&#x51FA;&#x73B0;&#x9519;&#x8BEF;&#xFF1A;</p>
+<pre><code class="bash">VM CentOS6.3T is down. Exit message: internal error client socket is closed.
+VM <span class="built_in">test</span> is down. Exit message: cannot open file <span class="string">&apos;/rhev/data-center/78e07dee-36bc-439b-b71e-72cfd87a2bb3/f84e3679-281e-41d4-9ea9-b8221085fa7b/images/2e93290e-f1b5-42b2-bdf6-fad695de2ccb/ef334a97-e01b-4d7c-afb0-814ffbe537f0&apos;</span>: Permission denied.
+</code></pre>
+<p>   &#x8FD9;&#x4E24;&#x4E2A;&#x9519;&#x8BEF;&#x90FD;&#x662F;&#x7531;&#x4E8E;libvirt&#x8BBE;&#x7F6E;&#x95EE;&#x9898;&#x624D;&#x62A5;&#x9519;&#x7684;&#xFF0C;&#x6211;&#x8FD9;&#x91CC;&#x76F4;&#x63A5;&#x8986;&#x76D6;libvirtd.conf qemu.conf&#x4EE5;&#x53CA;vdsm.conf&#x6587;&#x4EF6;</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/weixin.png" alt="CH WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/KVM/" rel="tag">#KVM</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Centos6系列安装Zabbix3-0.html" rel="next" title="Centos6系列安装Zabbix3.0">
+                <i class="fa fa-chevron-left"></i> Centos6系列安装Zabbix3.0
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/科学上网工具shadowsocks.html" rel="prev" title="科学上网工具shadowsocks">
+                科学上网工具shadowsocks <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="KVM迁移时遇到的一些问题.html"
+     data-title="KVM迁移时遇到的一些问题"
+     data-content=""
+     data-url="http://chen-hao.com.cn/KVM迁移时遇到的一些问题.html">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="KVM迁移时遇到的一些问题.html"
+           data-title="KVM迁移时遇到的一些问题" data-url="http://chen-hao.com.cn/KVM迁移时遇到的一些问题.html">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/linux5.gif"
+               alt="CH" />
+          <p class="site-author-name" itemprop="name">CH</p>
+          <p class="site-description motion-element" itemprop="description">对自己要求高一点！</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">32</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ch-ld/ch-ld.github.io" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.magedu.com/" title="马哥教育" target="_blank">马哥教育</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://geass.link/" title="Jin Lei" target="_blank">Jin Lei</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://book.open-falcon.org/zh/intro/index.html" title="小米监控" target="_blank">小米监控</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/dianping/cat" title="点评监控" target="_blank">点评监控</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/CodisLabs/codis" title="Codis" target="_blank">Codis</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">CH</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">访客数<i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span>人次</span>
+  
+
+  
+    <span class="site-pv">总访问量<i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chenhao123"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("A8bl8bnNfRNjhOq3Dp7i5nF6-gzGzoHsz", "pnVmIflnOX5YpTT0rXBSBCXJ");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

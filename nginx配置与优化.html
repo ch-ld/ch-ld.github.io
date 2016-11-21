@@ -1,0 +1,933 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="nginx," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="火柴的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Nginx作为一个非常流行和成熟的Web Server和Reserve Proxy Server，网上有大量的性能优化教程，但是不同的业务场景千差万别，什么配置是最适合自己的，还是只有基于自己的业务才能配置出适合自己的参数。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nginx配置与优化">
+<meta property="og:url" content="http://chen-hao.com.cn/nginx配置与优化.html">
+<meta property="og:site_name" content="火柴的博客">
+<meta property="og:description" content="Nginx作为一个非常流行和成熟的Web Server和Reserve Proxy Server，网上有大量的性能优化教程，但是不同的业务场景千差万别，什么配置是最适合自己的，还是只有基于自己的业务才能配置出适合自己的参数。">
+<meta property="og:updated_time" content="2016-10-10T05:54:17.463Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="nginx配置与优化">
+<meta name="twitter:description" content="Nginx作为一个非常流行和成熟的Web Server和Reserve Proxy Server，网上有大量的性能优化教程，但是不同的业务场景千差万别，什么配置是最适合自己的，还是只有基于自己的业务才能配置出适合自己的参数。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://chen-hao.com.cn/nginx配置与优化.html"/>
+
+  <title> nginx配置与优化 | 火柴的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">火柴的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                nginx配置与优化
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-10T11:40:52+08:00" content="2016-10-10">
+              2016-10-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/性能优化/" itemprop="url" rel="index">
+                    <span itemprop="name">性能优化</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/nginx配置与优化.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="nginx配置与优化.html" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/nginx配置与优化.html" class="leancloud_visitors" data-flag-title="nginx配置与优化">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv">总阅读量<i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>Nginx&#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x975E;&#x5E38;&#x6D41;&#x884C;&#x548C;&#x6210;&#x719F;&#x7684;Web Server&#x548C;Reserve Proxy Server&#xFF0C;&#x7F51;&#x4E0A;&#x6709;&#x5927;&#x91CF;&#x7684;&#x6027;&#x80FD;&#x4F18;&#x5316;&#x6559;&#x7A0B;&#xFF0C;&#x4F46;&#x662F;&#x4E0D;&#x540C;&#x7684;&#x4E1A;&#x52A1;&#x573A;&#x666F;&#x5343;&#x5DEE;&#x4E07;&#x522B;&#xFF0C;&#x4EC0;&#x4E48;&#x914D;&#x7F6E;&#x662F;&#x6700;&#x9002;&#x5408;&#x81EA;&#x5DF1;&#x7684;&#xFF0C;&#x8FD8;&#x662F;&#x53EA;&#x6709;&#x57FA;&#x4E8E;&#x81EA;&#x5DF1;&#x7684;&#x4E1A;&#x52A1;&#x624D;&#x80FD;&#x914D;&#x7F6E;&#x51FA;&#x9002;&#x5408;&#x81EA;&#x5DF1;&#x7684;&#x53C2;&#x6570;&#x3002;<br> <a id="more"></a></p>
+</blockquote>
+<p></p><h2 id="nginx&#x7684;&#x5B89;&#x88C5;">nginx&#x7684;&#x5B89;&#x88C5;</h2><p></p>
+<p></p><h3 id="&#x81EA;&#x52A8;&#x5B89;&#x88C5;">&#x81EA;&#x52A8;&#x5B89;&#x88C5;</h3><br>&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x914D;&#x7F6E;&#x597D;&#x5B98;&#x65B9;yum&#x6E90;&#xFF0C;&#x76F4;&#x63A5;yum&#x5B89;&#x88C5;&#x5373;&#x53EF;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">vim /etc/yum.repos.d/nginx.repo</div><div class="line">[nginx]</div><div class="line">name=nginx repo</div><div class="line">baseurl=http://nginx.org/packages/centos/6/<span class="variable">$basearch</span>/</div><div class="line">gpgcheck=0</div><div class="line">enabled=1</div><div class="line"><span class="comment"># &#x786E;&#x8BA4;yum&#x6E90;&#x65E0;&#x8BEF;&#x540E;&#x76F4;&#x63A5;yum&#x5B89;&#x88C5;&#x5373;&#x53EF;</span></div><div class="line">yum -y install nginx</div></pre></td></tr></table></figure><p></p>
+<p></p><h3 id="&#x7F16;&#x8BD1;&#x5B89;&#x88C5;">&#x7F16;&#x8BD1;&#x5B89;&#x88C5;</h3><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># &#x68C0;&#x67E5;&#x548C;&#x5B89;&#x88C5;&#x4F9D;&#x8D56;&#x9879;&#xFF08;gcc&#x3001;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x5DE5;&#x5177;&#x3001;&#x4F20;&#x9001;&#x5185;&#x5BB9;&#x538B;&#x7F29;&#x7684;zlib&#x5E93;&#x3001;openssl&#x5F00;&#x542F;https&#x652F;&#x6301;&#xFF09;&#xFF0C;-y&#x8868;&#x793A;&#x9759;&#x9ED8;&#x5B89;&#x88C5;</span></div><div class="line">yum -y install gcc pcre pcre-devel zlib zlib-devel openssl openssl-devel</div><div class="line"></div><div class="line"><span class="comment"># &#x4E0B;&#x8F7D;&#x6E90;&#x7801;&#x5305;</span></div><div class="line">wget http://nginx.org/download/nginx-1.8.0.tar.gz</div><div class="line"></div><div class="line"><span class="comment"># &#x89E3;&#x538B;&#x6E90;&#x7801;&#x5305;</span></div><div class="line">tar zxvf nginx-1.8.0.tar.gz</div><div class="line"></div><div class="line"><span class="comment"># &#x8FDB;&#x5165;&#x89E3;&#x538B;&#x7684;&#x76EE;&#x5F55;&#x914D;&#x7F6E;&#x76F8;&#x5173;&#x53C2;&#x6570;&#xFF08;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;--help&#x67E5;&#x770B;&#x53EF;&#x9009;&#x9879;&#xFF09;</span></div><div class="line"><span class="built_in">cd</span> nginx-1.8.0/</div><div class="line">./configure \</div><div class="line">	--prefix=/usr/<span class="built_in">local</span>    							<span class="comment">#&#x5B89;&#x88C5;&#x8DEF;&#x5F84;</span></div><div class="line">	--sbin-path=/usr/sbin/nginx      				<span class="comment">#&#x7A0B;&#x5E8F;&#x6587;&#x4EF6;&#x5B89;&#x88C5;&#x8DEF;&#x5F84;</span></div><div class="line">	--conf-path=/etc/nginx/nginx.conf      			<span class="comment">#&#x4E3B;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x5B89;&#x88C5;&#x8DEF;&#x5F84;</span></div><div class="line">	--error-log-path=/var/<span class="built_in">log</span>/nginx/error.log    	<span class="comment">#&#x9519;&#x8BEF;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x7684;&#x8DEF;&#x5F84;</span></div><div class="line">	--http-log-path=/var/<span class="built_in">log</span>/nginx/access.log    	<span class="comment">#&#x8BBF;&#x95EE;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x7684;&#x8DEF;&#x5F84;</span></div><div class="line">	--pid-path=/var/run/nginx.pid   				<span class="comment">#pid&#x6587;&#x4EF6;&#x7684;&#x8DEF;&#x5F84;</span></div><div class="line">	--lock-path=/var/run/nginx.lock  				<span class="comment">#&#x9501;&#x6587;&#x4EF6;&#x7684;&#x8DEF;&#x5F84;</span></div><div class="line">	--http-client-body-temp-path=/var/cache/nginx/client_temp   <span class="comment">#&#x5BA2;&#x6237;&#x7AEF;body&#x90E8;&#x5206;&#x4E34;&#x65F6;&#x6587;&#x4EF6;&#x5B58;&#x653E;&#x8DEF;&#x5F84;</span></div><div class="line">	--http-proxy-temp-path=/var/cache/nginx/proxy_temp       </div><div class="line">	--http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp</div><div class="line">	--http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp</div><div class="line">	--http-scgi-temp-path=/var/cache/nginx/scgi_temp</div><div class="line">	--user=nginx     								<span class="comment">#&#x4EE5;nginx&#x5C5E;&#x4E3B;&#x8FD0;&#x884C;worker&#x8FDB;&#x7A0B;</span></div><div class="line">	--group=nginx    								<span class="comment">#&#x4EE5;nginx&#x5C5E;&#x7EC4;&#x8FD0;&#x884C;worker&#x8FDB;&#x7A0B;</span></div><div class="line">	--with-http_ssl_module      					<span class="comment">#SSL&#x6A21;&#x5757;&#xFF0C;&#x9700;&#x5B89;&#x88C5;OPENSSL</span></div><div class="line">	--with-http_realip_module</div><div class="line">	--with-http_addition_module</div><div class="line">	--with-http_sub_module</div><div class="line">	--with-http_dav_module</div><div class="line">	--with-http_flv_module      					<span class="comment">#&#x542F;&#x7528;ngx_http_flv&#x6A21;&#x5757;</span></div><div class="line">	--with-http_mp4_module</div><div class="line">	--with-http_gunzip_module</div><div class="line">	--with-http_gzip_static_module    				<span class="comment">#&#x542F;&#x7528;&#x9700;&#x8981;&#x4F9D;&#x8D56;zlib</span></div><div class="line">	--with-http_random_index_module</div><div class="line">	--with-http_secure_link_module</div><div class="line">	--with-http_stub_status_module      			<span class="comment">#&#x542F;&#x7528;server status&#x9875;&#x9762;</span></div><div class="line">	--with-http_auth_request_module</div><div class="line">	--with-threads</div><div class="line">	--with-stream</div><div class="line">	--with-stream_ssl_module</div><div class="line">	--with-http_slice_module</div><div class="line">	--with-file-aio</div><div class="line">	--with-http_v2_module</div><div class="line">	--with-debug       								<span class="comment">#&#x6253;&#x5F00;&#x8C03;&#x8BD5;&#x673A;&#x5236;</span></div><div class="line"></div><div class="line"><span class="comment"># &#x5B89;&#x88C5;</span></div><div class="line">make &amp;&amp; make install</div><div class="line"></div><div class="line"><span class="comment"># &#x542F;&#x52A8;&#x548C;&#x5173;&#x95ED;nginx</span></div><div class="line"><span class="built_in">cd</span> /opt/nginx/sbin/</div><div class="line">./nginx</div><div class="line"></div><div class="line">ps -aux|grep nginx <span class="comment"># &#x67E5;&#x770B;&#x8FDB;&#x7A0B;&#xFF08;&#x6B63;&#x5E38;&#x5DE5;&#x4F5C;&#x7684;&#x65F6;&#x5019;&#x6709;&#x5B88;&#x62A4;&#x8FDB;&#x7A0B;&#x548C;&#x5DE5;&#x4F5C;&#x8FDB;&#x7A0B;&#xFF09;</span></div><div class="line"></div><div class="line">./nginx -h <span class="comment"># &#x67E5;&#x770B;&#x5E2E;&#x52A9;</span></div></pre></td></tr></table></figure><p></p>
+<p></p><h2 id="nginx&#x7684;&#x914D;&#x7F6E;">nginx&#x7684;&#x914D;&#x7F6E;</h2><br>nginx&#x7684;&#x4E3B;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4F4D;&#x4E8E;&#x5B89;&#x88C5;&#x76EE;&#x5F55;&#x4E0B;&#x7684;<strong>conf/nginx.conf</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># &#x6307;&#x660E;worker&#x7684;&#x8FDB;&#x7A0B;&#x6570;&#xFF1B;&#x901A;&#x5E38;&#x5E94;&#x8BE5;&#x4E3A;CPU&#x7684;&#x6838;&#x5FC3;&#x6570;&#x51CF;1</span></div><div class="line">worker_processes  7;</div><div class="line"></div><div class="line"><span class="comment"># event&#x6307;&#x4EE4;&#x4E0E;&#x4E8B;&#x4EF6;&#x6A21;&#x578B;&#x6709;&#x5173;&#xFF0C;&#x914D;&#x7F6E;&#x5904;&#x7406;&#x8FDE;&#x63A5;&#x6709;&#x5173;&#x4FE1;&#x606F;</span></div><div class="line">events {</div><div class="line"><span class="comment"># &#x5355;&#x4E2A;worker&#x8FDB;&#x7A0B;&#x6240;&#x80FD;&#x591F;&#x5E76;&#x53D1;&#x6253;&#x5F00;&#x7684;&#x6700;&#x5927;&#x8FDE;&#x63A5;&#x6570;&#xFF1B;&#x9ED8;&#x8BA4;&#x4E3A;1024</span></div><div class="line"><span class="comment"># &#x5F53;&#x524D;&#x4E3B;&#x673A;&#x80FD;&#x54CD;&#x5E94;&#x6700;&#x5927;&#x5E76;&#x53D1;&#x8FDE;&#x63A5;&#x6570;&#xFF1A;worker_processes * worker_connections</span></div><div class="line">    worker_connections  1024;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment"># http&#x6307;&#x4EE4;&#x5904;&#x7406;http&#x8BF7;&#x6C42;</span></div><div class="line">http {</div><div class="line">    <span class="comment"># mime type&#x6620;&#x5C04;</span></div><div class="line">    include       mime.types;</div><div class="line">    default_<span class="built_in">type</span>  application/octet-stream;</div><div class="line">    sendfile        on;</div><div class="line">    <span class="comment">#tcp_nopush     on;</span></div><div class="line">    <span class="comment">#keepalive_timeout  0;</span></div><div class="line">    keepalive_timeout  65;</div><div class="line">    <span class="comment">#gzip  on;</span></div><div class="line">    <span class="comment"># server &#x8868;&#x793A;&#x4E00;&#x4E2A;&#x865A;&#x62DF;&#x4E3B;&#x673A;&#xFF0C;&#x4E00;&#x53F0;&#x670D;&#x52A1;&#x5668;&#x53EF;&#x914D;&#x7F6E;&#x591A;&#x4E2A;&#x865A;&#x62DF;&#x4E3B;&#x673A;</span></div><div class="line">    server {</div><div class="line">        <span class="comment"># &#x76D1;&#x542C;&#x7AEF;&#x53E3;</span></div><div class="line">        listen       80;</div><div class="line">        <span class="comment"># &#x8BC6;&#x522B;&#x7684;&#x57DF;&#x540D;</span></div><div class="line">        server_name  localhost;</div><div class="line">        <span class="comment"># &#x4E00;&#x4E2A;&#x5173;&#x952E;&#x8BBE;&#x7F6E;&#xFF0C;&#x4E0E;url&#x53C2;&#x6570;&#x4E71;&#x7801;&#x95EE;&#x9898;&#x6709;&#x5173;</span></div><div class="line">        charset utf-8;</div><div class="line">        <span class="comment">#access_log  logs/host.access.log  main;</span></div><div class="line">        <span class="comment">#location&#x8868;&#x8FBE;&#x5F0F;&#xFF1A;</span></div><div class="line">        <span class="comment">#syntax: location [=|~|~*|^~|@] /uri/ { &#x2026; }</span></div><div class="line">        <span class="comment">#&#x5206;&#x4E3A;&#x4E24;&#x79CD;&#x5339;&#x914D;&#x6A21;&#x5F0F;&#xFF0C;&#x666E;&#x901A;&#x5B57;&#x7B26;&#x4E32;&#x5339;&#x914D;&#xFF0C;&#x6B63;&#x5219;&#x5339;&#x914D;</span></div><div class="line">        <span class="comment">#&#x65E0;&#x5F00;&#x5934;&#x5F15;&#x5BFC;&#x5B57;&#x7B26;&#x6216;&#x4EE5;=&#x5F00;&#x5934;&#x8868;&#x793A;&#x666E;&#x901A;&#x5B57;&#x7B26;&#x4E32;&#x5339;&#x914D;</span></div><div class="line">        <span class="comment">#&#x4EE5;~&#x6216;~* &#x5F00;&#x5934;&#x8868;&#x793A;&#x6B63;&#x5219;&#x5339;&#x914D;&#xFF0C;~*&#x8868;&#x793A;&#x4E0D;&#x533A;&#x5206;&#x5927;&#x5C0F;&#x5199;</span></div><div class="line">        <span class="comment">#&#x591A;&#x4E2A;location&#x65F6;&#x5339;&#x914D;&#x89C4;&#x5219;</span></div><div class="line">        <span class="comment">#&#x603B;&#x4F53;&#x662F;&#x5148;&#x666E;&#x901A;&#x540E;&#x6B63;&#x5219;&#x539F;&#x5219;&#xFF0C;&#x53EA;&#x8BC6;&#x522B;URI&#x90E8;&#x5206;&#xFF0C;&#x4F8B;&#x5982;&#x8BF7;&#x6C42;&#x4E3A;/test/1/abc.do?arg=xxx</span></div><div class="line">        <span class="comment">#1. &#x5148;&#x67E5;&#x627E;&#x662F;&#x5426;&#x6709;=&#x5F00;&#x5934;&#x7684;&#x7CBE;&#x786E;&#x5339;&#x914D;&#xFF0C;&#x5373;location = /test/1/abc.do {...}</span></div><div class="line">        <span class="comment">#2. &#x518D;&#x67E5;&#x627E;&#x666E;&#x901A;&#x5339;&#x914D;&#xFF0C;&#x4EE5; &#x6700;&#x5927;&#x524D;&#x7F00; &#x4E3A;&#x89C4;&#x5219;&#xFF0C;&#x5982;&#x6709;&#x4EE5;&#x4E0B;&#x4E24;&#x4E2A;location</span></div><div class="line">        <span class="comment">#   location /test/ {...}</span></div><div class="line">        <span class="comment">#   location /test/1/ {...}</span></div><div class="line">        <span class="comment">#   &#x5219;&#x5339;&#x914D;&#x540E;&#x4E00;&#x9879;</span></div><div class="line">        <span class="comment">#3. &#x5339;&#x914D;&#x5230;&#x4E00;&#x4E2A;&#x666E;&#x901A;&#x683C;&#x5F0F;&#x540E;&#xFF0C;&#x641C;&#x7D22;&#x5E76;&#x672A;&#x7ED3;&#x675F;&#xFF0C;&#x800C;&#x662F;&#x6682;&#x5B58;&#x5F53;&#x524D;&#x7ED3;&#x679C;&#xFF0C;&#x5E76;&#x7EE7;&#x7EED;&#x518D;&#x641C;&#x7D22;&#x6B63;&#x5219;&#x6A21;&#x5F0F;</span></div><div class="line">        <span class="comment">#4. &#x5728;&#x6240;&#x6709;&#x6B63;&#x5219;&#x6A21;&#x5F0F;location&#x4E2D;&#x627E;&#x5230;&#x7B2C;&#x4E00;&#x4E2A;&#x5339;&#x914D;&#x9879;&#x540E;&#xFF0C;&#x4EE5;&#x6B64;&#x5339;&#x914D;&#x9879;&#x4E3A;&#x6700;&#x7EC8;&#x7ED3;&#x679C;</span></div><div class="line">        <span class="comment">#   &#x6240;&#x4EE5;&#x6B63;&#x5219;&#x5339;&#x914D;&#x9879;&#x5339;&#x914D;&#x89C4;&#x5219;&#x53D7;&#x5B9A;&#x4E49;&#x524D;&#x540E;&#x987A;&#x5E8F;&#x5F71;&#x54CD;&#xFF0C;&#x4F46;&#x666E;&#x901A;&#x5339;&#x914D;&#x4E0D;&#x4F1A;</span></div><div class="line">        <span class="comment">#5. &#x5982;&#x679C;&#x672A;&#x627E;&#x5230;&#x6B63;&#x5219;&#x5339;&#x914D;&#x9879;&#xFF0C;&#x5219;&#x4EE5;3&#x4E2D;&#x7F13;&#x5B58;&#x7684;&#x7ED3;&#x679C;&#x4E3A;&#x6700;&#x7EC8;&#x7ED3;&#x679C;</span></div><div class="line">        <span class="comment">#6. &#x5982;&#x679C;&#x4E00;&#x4E2A;&#x5339;&#x914D;&#x90FD;&#x6CA1;&#x6709;&#xFF0C;&#x8FD4;&#x56DE;404</span></div><div class="line">        <span class="comment">#location =/ {...} &#x4E0E; location / {...} &#x7684;&#x5DEE;&#x522B;</span></div><div class="line">        <span class="comment">#&#x524D;&#x4E00;&#x4E2A;&#x662F;&#x7CBE;&#x786E;&#x5339;&#x914D;&#xFF0C;&#x53EA;&#x54CD;&#x5E94;/&#x8BF7;&#x6C42;&#xFF0C;&#x6240;&#x6709;/xxx&#x7C7B;&#x8BF7;&#x6C42;&#x4E0D;&#x4F1A;&#x4EE5;&#x524D;&#x7F00;&#x5339;&#x914D;&#x5F62;&#x5F0F;&#x5339;&#x914D;&#x5230;&#x5B83;</span></div><div class="line">        <span class="comment">#&#x800C;&#x540E;&#x4E00;&#x4E2A;&#x6B63;&#x76F8;&#x53CD;&#xFF0C;&#x6240;&#x6709;&#x8BF7;&#x6C42;&#x5FC5;&#x7136;&#x90FD;&#x662F;&#x4EE5;/&#x5F00;&#x5934;&#xFF0C;&#x6240;&#x4EE5;&#x6CA1;&#x6709;&#x5176;&#x5B83;&#x5339;&#x914D;&#x7ED3;&#x679C;&#x65F6;&#x4E00;&#x5B9A;&#x4F1A;&#x6267;&#x884C;&#x5230;&#x5B83;</span></div><div class="line">        <span class="comment">#location ^~ / {...} ^~&#x610F;&#x601D;&#x662F;&#x975E;&#x6B63;&#x5219;&#xFF0C;&#x8868;&#x793A;&#x5339;&#x914D;&#x5230;&#x6B64;&#x6A21;&#x5F0F;&#x540E;&#x4E0D;&#x518D;&#x7EE7;&#x7EED;&#x6B63;&#x5219;&#x641C;&#x7D22;</span></div><div class="line">        <span class="comment">#&#x6240;&#x6709;&#x5982;&#x679C;&#x8FD9;&#x6837;&#x914D;&#x7F6E;&#xFF0C;&#x76F8;&#x5F53;&#x4E8E;&#x5173;&#x95ED;&#x4E86;&#x6B63;&#x5219;&#x5339;&#x914D;&#x529F;&#x80FD;</span></div><div class="line">        <span class="comment">#&#x56E0;&#x4E3A;&#x4E00;&#x4E2A;&#x8BF7;&#x6C42;&#x5728;&#x666E;&#x901A;&#x5339;&#x914D;&#x89C4;&#x5219;&#x4E0B;&#x6CA1;&#x5F97;&#x5230;&#x5176;&#x5B83;&#x666E;&#x901A;&#x5339;&#x914D;&#x7ED3;&#x679C;&#x65F6;&#xFF0C;&#x6700;&#x7EC8;&#x5339;&#x914D;&#x5230;&#x8FD9;&#x91CC;</span></div><div class="line">        <span class="comment">#&#x800C;&#x8FD9;&#x4E2A;^~&#x6307;&#x4EE4;&#x53C8;&#x76F8;&#x5F53;&#x4E8E;&#x4E0D;&#x5141;&#x8BB8;&#x6B63;&#x5219;&#xFF0C;&#x76F8;&#x5F53;&#x4E8E;&#x5339;&#x914D;&#x5230;&#x6B64;&#x4E3A;&#x6B62;</span></div><div class="line">        location / {</div><div class="line">            root   html; <span class="comment"># &#x7F51;&#x7AD9;&#x6839;&#x76EE;&#x5F55;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F;&#x5B89;&#x88C5;&#x76EE;&#x5F55;&#x4E0B;&#x7684;html&#x76EE;&#x5F55;&#xFF08;&#x53EF;&#x4EE5;&#x6307;&#x5B9A;&#x7EDD;&#x5BF9;&#x8DEF;&#x5F84;&#xFF09;</span></div><div class="line">            index  index.html index.htm;</div><div class="line">            <span class="comment"># deny all; &#x62D2;&#x7EDD;&#x8BF7;&#x6C42;&#xFF0C;&#x8FD4;&#x56DE;403</span></div><div class="line">            <span class="comment"># allow all; &#x5141;&#x8BB8;&#x8BF7;&#x6C42;</span></div><div class="line">        }</div><div class="line">        location /<span class="built_in">test</span>/ {</div><div class="line">            deny all;</div><div class="line">        }</div><div class="line">        location ~ /<span class="built_in">test</span>/.+\.jsp$ {</div><div class="line">           <span class="comment"># proxy_pass&#x8868;&#x793A;&#x4EE3;&#x7406;</span></div><div class="line">           proxy_pass  http://192.168.132.144:8080;</div><div class="line">        }</div><div class="line">        location ~ \.jsp$ {</div><div class="line">           proxy_pass  http://192.168.132.144:8080;</div><div class="line">        }</div><div class="line">        <span class="comment"># &#x5B9A;&#x4E49;&#x5404;&#x7C7B;&#x9519;&#x8BEF;&#x9875;</span></div><div class="line">        error_page  404              /404.html;</div><div class="line">        <span class="comment"># redirect server error pages to the static page /50x.html</span></div><div class="line">        <span class="comment">#</span></div><div class="line">        error_page   500 502 503 504  /50x.html;</div><div class="line">        location = /50x.html {</div><div class="line">            root   html;</div><div class="line">        }</div><div class="line">        <span class="comment"># @&#x7C7B;&#x4F3C;&#x4E8E;&#x53D8;&#x91CF;&#x5B9A;&#x4E49;</span></div><div class="line">        <span class="comment"># error_page 403 http://www.jikexueyuan.com&#x8FD9;&#x79CD;&#x5B9A;&#x4E49;&#x4E0D;&#x5141;&#x8BB8;&#xFF0C;&#x6240;&#x4EE5;&#x5229;&#x7528;@&#x5B9E;&#x73B0;</span></div><div class="line">        error_page 403 @page403;</div><div class="line">        location @page403 {</div><div class="line">            proxy_pass http://http://www.jikexueyuan.com;</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="comment"># another virtual host using mix of IP-, name-, and port-based configuration</span></div><div class="line">    server {</div><div class="line">        listen       80;</div><div class="line">        <span class="comment">#listen 9090</span></div><div class="line">        server_name  www.test.com test.com other.cc;</div><div class="line">        location / {</div><div class="line">            <span class="comment"># root d:\\test; &#x6CE8;&#x610F;&#xFF0C;win&#x4E0B;d:\test&#x56E0;&#x8F6C;&#x4E49;&#x7B26;&#x95EE;&#x9898;&#x4E0D;&#x5141;&#x8BB8;</span></div><div class="line">            root d:/<span class="built_in">test</span></div><div class="line">            index  index.html index.htm;</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure><p></p>
+<p></p><h2 id="nginx&#x7684;&#x4F18;&#x5316;">nginx&#x7684;&#x4F18;&#x5316;</h2><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># nginx&#x4E0D;&#x540C;&#x4E8E;apache&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x5F53;&#x8FDB;&#x884C;&#x4E86;&#x5927;&#x91CF;&#x4F18;&#x5316;&#x8BBE;&#x7F6E;&#x540E;&#x4F1A;&#x9B54;&#x672F;&#x822C;&#x7684;&#x660E;&#x663E;&#x6027;&#x80FD;&#x63D0;&#x5347;&#x6548;&#x679C;</span></div><div class="line"><span class="comment"># nginx&#x5728;&#x5B89;&#x88C5;&#x5B8C;&#x6210;&#x540E;&#xFF0C;&#x5927;&#x90E8;&#x5206;&#x53C2;&#x6570;&#x5C31;&#x5DF2;&#x7ECF;&#x662F;&#x6700;&#x4F18;&#x5316;&#x4E86;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x7BA1;&#x7406;&#x7684;&#x4E1C;&#x897F;&#x5E76;&#x4E0D;&#x591A;</span></div><div class="line"><span class="comment">#user  nginx;</span></div><div class="line"></div><div class="line"><span class="comment"># &#x963B;&#x585E;&#x548C;&#x975E;&#x963B;&#x585E;&#x7F51;&#x7EDC;&#x6A21;&#x578B;&#xFF1A;</span></div><div class="line"><span class="comment"># &#x540C;&#x6B65;&#x963B;&#x585E;&#x6A21;&#x578B;&#xFF0C;&#x4E00;&#x8BF7;&#x6C42;&#x4E00;&#x8FDB;&#xFF08;&#x7EBF;&#xFF09;&#x7A0B;&#xFF0C;&#x5F53;&#x8FDB;&#xFF08;&#x7EBF;&#xFF09;&#x7A0B;&#x589E;&#x52A0;&#x5230;&#x4E00;&#x5B9A;&#x7A0B;&#x5EA6;&#x540E;</span></div><div class="line"><span class="comment"># &#x66F4;&#x591A;CPU&#x65F6;&#x95F4;&#x6D6A;&#x8D39;&#x5230;&#x5207;&#x6362;&#x4E00;&#xFF0C;&#x6027;&#x80FD;&#x6025;&#x5267;&#x4E0B;&#x964D;&#xFF0C;&#x6240;&#x4EE5;&#x8D1F;&#x8F7D;&#x7387;&#x4E0D;&#x9AD8;</span></div><div class="line"><span class="comment"># Nginx&#x57FA;&#x4E8E;&#x4E8B;&#x4EF6;&#x7684;&#x975E;&#x963B;&#x585E;&#x591A;&#x8DEF;&#x590D;&#x7528;(epoll&#x6216;kquene)&#x6A21;&#x578B;</span></div><div class="line"><span class="comment"># &#x4E00;&#x4E2A;&#x8FDB;&#x7A0B;&#x5728;&#x77ED;&#x65F6;&#x95F4;&#x5185;&#x53EF;&#x4EE5;&#x54CD;&#x5E94;&#x5927;&#x91CF;&#x7684;&#x8BF7;&#x6C42;</span></div><div class="line"><span class="comment"># &#x5EFA;&#x8BAE;&#x503C; &lt;= cpu&#x6838;&#x5FC3;&#x6570;&#x91CF;&#xFF0C;&#x4E00;&#x822C;&#x9AD8;&#x4E8E;cpu&#x6570;&#x91CF;&#x4E0D;&#x4F1A;&#x5E26;&#x597D;&#x5904;&#xFF0C;&#x4E5F;&#x8BB8;&#x8FD8;&#x6709;&#x8FDB;&#x7A0B;&#x5207;&#x6362;&#x5F00;&#x9500;&#x7684;&#x8D1F;&#x9762;&#x5F71;&#x54CD;</span></div><div class="line">worker_processes 4;</div><div class="line"></div><div class="line"><span class="comment"># &#x5C06;work process&#x7ED1;&#x5B9A;&#x5230;&#x7279;&#x5B9A;cpu&#x4E0A;&#xFF08;&#x6838;&#x5FC3;&#x6570;&#x91CF;&#x4E0E;&#x6570;&#x5B57;&#x4F4D;&#x6570;&#x5BF9;&#x5E94;&#xFF0C;&#x8FDB;&#x7A0B;&#x6570;&#x91CF;&#x4E0E;&#x6570;&#x5B57;&#x7684;&#x7EC4;&#x6570;&#x5BF9;&#x5E94;&#xFF09;&#xFF0C;&#x907F;&#x514D;&#x8FDB;&#x7A0B;&#x5728;cpu&#x95F4;&#x5207;&#x6362;&#x7684;&#x5F00;&#x9500;</span></div><div class="line">worker_cpu_affinity 0001 0010 0100 1000 </div><div class="line"><span class="comment"># 8&#x5185;&#x6838;4&#x8FDB;&#x7A0B;&#x65F6;&#x7684;&#x8BBE;&#x7F6E;&#x65B9;&#x6CD5; worker_cpu_affinity 00000001 00000010 00000100 10000000</span></div><div class="line"></div><div class="line"><span class="comment"># &#x6BCF;&#x8FDB;&#x7A0B;&#x6700;&#x5927;&#x53EF;&#x6253;&#x5F00;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x6570;&#x91CF;(linux&#x4E0A;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x6BD4;&#x8F83;&#x5E7F;&#x4E49;&#xFF0C;&#x7F51;&#x7EDC;&#x7AEF;&#x53E3;&#x3001;&#x8BBE;&#x5907;&#x3001;&#x78C1;&#x76D8;&#x6587;&#x4EF6;&#x90FD;&#x662F;)</span></div><div class="line"><span class="comment"># &#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x7528;&#x5B8C;&#x4E86;&#xFF0C;&#x65B0;&#x7684;&#x8FDE;&#x63A5;&#x4F1A;&#x88AB;&#x62D2;&#x7EDD;&#xFF0C;&#x4EA7;&#x751F;502&#x7C7B;&#x9519;&#x8BEF;</span></div><div class="line"><span class="comment"># linux&#x6700;&#x5927;&#x53EF;&#x6253;&#x5F00;&#x6587;&#x4EF6;&#x6570;&#x53EF;&#x901A;&#x8FC7;ulimit -n FILECNT&#x6216; /etc/security/limits.conf&#x914D;&#x7F6E;</span></div><div class="line"><span class="comment"># &#x7406;&#x8BBA;&#x503C; &#x7CFB;&#x7EDF;&#x6700;&#x5927;&#x6570;&#x91CF; / &#x8FDB;&#x7A0B;&#x6570;&#x3002;&#x4F46;&#x8FDB;&#x7A0B;&#x95F4;&#x5DE5;&#x4F5C;&#x91CF;&#x5E76;&#x4E0D;&#x662F;&#x5E73;&#x5747;&#x5206;&#x914D;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x8BBE;&#x7F6E;&#x7684;&#x5927;&#x4E00;&#x4E9B;</span></div><div class="line">worker_rlimit_nofile 655350 </div><div class="line"></div><div class="line"><span class="comment">#error_log  logs/error.log;</span></div><div class="line"><span class="comment">#error_log  logs/error.log  notice;</span></div><div class="line"><span class="comment">#error_log  logs/error.log  info;</span></div><div class="line"><span class="comment">#pid        logs/nginx.pid;</span></div><div class="line">events {</div><div class="line">    <span class="comment"># &#x5E76;&#x53D1;&#x54CD;&#x5E94;&#x80FD;&#x529B;&#x7684;&#x5173;&#x952E;&#x914D;&#x7F6E;&#x503C;</span></div><div class="line">    <span class="comment"># &#x6BCF;&#x4E2A;&#x8FDB;&#x7A0B;&#x5141;&#x8BB8;&#x7684;&#x6700;&#x5927;&#x540C;&#x65F6;&#x8FDE;&#x63A5;&#x6570;&#xFF0C;work_connectins * worker_processes = maxConnection;</span></div><div class="line">    <span class="comment"># &#x8981;&#x6CE8;&#x610F;maxConnections&#x4E0D;&#x7B49;&#x540C;&#x4E8E;&#x53EF;&#x54CD;&#x5E94;&#x7684;&#x7528;&#x6237;&#x6570;&#x91CF;&#xFF0C;</span></div><div class="line">    <span class="comment"># &#x56E0;&#x4E3A;&#x4E00;&#x822C;&#x4E00;&#x4E2A;&#x6D4F;&#x89C8;&#x5668;&#x4F1A;&#x540C;&#x65F6;&#x5F00;&#x4E24;&#x6761;&#x8FDE;&#x63A5;&#xFF0C;&#x5982;&#x679C;&#x53CD;&#x5411;&#x4EE3;&#x7406;&#xFF0C;nginx&#x5230;&#x540E;&#x7AEF;&#x670D;&#x52A1;&#x5668;&#x7684;&#x8FDE;&#x63A5;&#x4E5F;&#x8981;&#x5360;&#x7528;&#x8FDE;&#x63A5;&#x6570;</span></div><div class="line">    <span class="comment"># &#x6240;&#x4EE5;&#xFF0C;&#x505A;&#x9759;&#x6001;&#x670D;&#x52A1;&#x5668;&#x65F6;&#xFF0C;&#x4E00;&#x822C; maxClient = work_connectins * worker_processes / 2</span></div><div class="line">    <span class="comment"># &#x505A;&#x53CD;&#x5411;&#x4EE3;&#x7406;&#x670D;&#x52A1;&#x5668;&#x65F6; maxClient = work_connectins * worker_processes / 4</span></div><div class="line">    <span class="comment"># &#x8FD9;&#x4E2A;&#x503C;&#x7406;&#x8BBA;&#x4E0A;&#x8D8A;&#x5927;&#x8D8A;&#x597D;&#xFF0C;&#x4F46;&#x6700;&#x591A;&#x53EF;&#x627F;&#x53D7;&#x591A;&#x5C11;&#x8BF7;&#x6C42;&#x4E0E;&#x914D;&#x4EF6;&#x548C;&#x7F51;&#x7EDC;&#x76F8;&#x5173;,&#x4E5F;&#x53EF;&#x6700;&#x5927;&#x53EF;&#x6253;&#x5F00;&#x6587;&#x4EF6;&#xFF0C;&#x6700;&#x5927;&#x53EF;&#x7528;sockets&#x6570;&#x91CF;&#xFF08;&#x7EA6;64K&#xFF09;&#x6709;&#x5173;</span></div><div class="line">    worker_connections  500;</div><div class="line">	</div><div class="line">    <span class="comment"># &#x6307;&#x660E;&#x4F7F;&#x7528;epoll &#x6216; kquene (*BSD)</span></div><div class="line">    use epoll</div><div class="line">    <span class="comment"># &#x5907;&#x6CE8;&#xFF1A;&#x8981;&#x8FBE;&#x5230;&#x8D85;&#x9AD8;&#x8D1F;&#x8F7D;&#x4E0B;&#x6700;&#x597D;&#x7684;&#x7F51;&#x7EDC;&#x54CD;&#x5E94;&#x80FD;&#x529B;&#xFF0C;&#x8FD8;&#x6709;&#x5FC5;&#x8981;&#x4F18;&#x5316;&#x4E0E;&#x7F51;&#x7EDC;&#x76F8;&#x5173;&#x7684;linux&#x5185;&#x6838;&#x53C2;&#x6570;</span></div><div class="line">}</div><div class="line">http {</div><div class="line">    include       mime.types;</div><div class="line">    default_<span class="built_in">type</span>  application/octet-stream;</div><div class="line">    <span class="comment">#log_format  main  &apos;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &apos;</span></div><div class="line">    <span class="comment">#                  &apos;$status $body_bytes_sent &quot;$http_referer&quot; &apos;</span></div><div class="line">    <span class="comment">#                  &apos;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&apos;;</span></div><div class="line">    <span class="comment"># &#x5173;&#x95ED;&#x6B64;&#x9879;&#x53EF;&#x51CF;&#x5C11;IO&#x5F00;&#x9500;&#xFF0C;&#x4F46;&#x4E5F;&#x65E0;&#x6CD5;&#x8BB0;&#x5F55;&#x8BBF;&#x95EE;&#x4FE1;&#x606F;&#xFF0C;&#x4E0D;&#x5229;&#x7528;&#x4E1A;&#x52A1;&#x5206;&#x6790;&#xFF0C;&#x4E00;&#x822C;&#x8FD0;&#x7EF4;&#x60C5;&#x51B5;&#x4E0D;&#x5EFA;&#x8BAE;&#x4F7F;&#x7528;</span></div><div class="line">    access_<span class="built_in">log</span> off</div><div class="line">	</div><div class="line">    <span class="comment"># &#x53EA;&#x8BB0;&#x5F55;&#x66F4;&#x4E3A;&#x4E25;&#x91CD;&#x7684;&#x9519;&#x8BEF;&#x65E5;&#x5FD7;&#xFF0C;&#x53EF;&#x51CF;&#x5C11;IO&#x538B;&#x529B;</span></div><div class="line">    error_<span class="built_in">log</span> logs/error.log crit;</div><div class="line">    <span class="comment">#access_log  logs/access.log  main;</span></div><div class="line">	</div><div class="line">    <span class="comment"># &#x542F;&#x7528;&#x5185;&#x6838;&#x590D;&#x5236;&#x6A21;&#x5F0F;&#xFF0C;&#x5E94;&#x8BE5;&#x4FDD;&#x6301;&#x5F00;&#x542F;&#x8FBE;&#x5230;&#x6700;&#x5FEB;IO&#x6548;&#x7387;</span></div><div class="line">    sendfile        on;</div><div class="line">	</div><div class="line">    <span class="comment"># &#x7B80;&#x5355;&#x8BF4;&#xFF0C;&#x542F;&#x52A8;&#x5982;&#x4E0B;&#x4E24;&#x9879;&#x914D;&#x7F6E;&#xFF0C;&#x4F1A;&#x5728;&#x6570;&#x636E;&#x5305;&#x8FBE;&#x5230;&#x4E00;&#x5B9A;&#x5927;&#x5C0F;&#x540E;&#x518D;&#x53D1;&#x9001;&#x6570;&#x636E;</span></div><div class="line">    <span class="comment"># &#x8FD9;&#x6837;&#x4F1A;&#x51CF;&#x5C11;&#x7F51;&#x7EDC;&#x901A;&#x4FE1;&#x6B21;&#x6570;&#xFF0C;&#x964D;&#x4F4E;&#x963B;&#x585E;&#x6982;&#x7387;&#xFF0C;&#x4F46;&#x4E5F;&#x4F1A;&#x5F71;&#x54CD;&#x54CD;&#x5E94;&#x53CA;&#x65F6;&#x6027;</span></div><div class="line">    <span class="comment"># &#x6BD4;&#x8F83;&#x9002;&#x5408;&#x4E8E;&#x6587;&#x4EF6;&#x4E0B;&#x8F7D;&#x8FD9;&#x7C7B;&#x7684;&#x5927;&#x6570;&#x636E;&#x5305;&#x901A;&#x4FE1;&#x573A;&#x666F;</span></div><div class="line">    <span class="comment">#tcp_nopush     on; &#x5728; </span></div><div class="line">    <span class="comment">#tcp_nodelay on|off on&#x7981;&#x7528;Nagle&#x7B97;&#x6CD5; </span></div><div class="line">	</div><div class="line">    <span class="comment">#keepalive_timeout  0;</span></div><div class="line">    <span class="comment"># HTTP1.1&#x652F;&#x6301;&#x6301;&#x4E45;&#x8FDE;&#x63A5;alive</span></div><div class="line">    <span class="comment"># &#x964D;&#x4F4E;&#x6BCF;&#x4E2A;&#x8FDE;&#x63A5;&#x7684;alive&#x65F6;&#x95F4;&#x53EF;&#x5728;&#x4E00;&#x5B9A;&#x7A0B;&#x5EA6;&#x4E0A;&#x63D0;&#x9AD8;&#x53EF;&#x54CD;&#x5E94;&#x8FDE;&#x63A5;&#x6570;&#x91CF;&#xFF0C;&#x6240;&#x4EE5;&#x4E00;&#x822C;&#x53EF;&#x9002;&#x5F53;&#x964D;&#x4F4E;&#x6B64;&#x503C;</span></div><div class="line">    keepalive_timeout  30s;</div><div class="line">	</div><div class="line">	<span class="comment">#&#x9690;&#x85CF;nginx&#x7248;&#x672C;&#x53F7;</span></div><div class="line">	server_tokens off;</div><div class="line">	</div><div class="line">    <span class="comment"># &#x542F;&#x52A8;&#x5185;&#x5BB9;&#x538B;&#x7F29;&#xFF0C;&#x6709;&#x6548;&#x964D;&#x4F4E;&#x7F51;&#x7EDC;&#x6D41;&#x91CF;</span></div><div class="line">    gzip on;    </div><div class="line">	</div><div class="line">    <span class="comment"># &#x8FC7;&#x77ED;&#x7684;&#x5185;&#x5BB9;&#x538B;&#x7F29;&#x6548;&#x679C;&#x4E0D;&#x4F73;&#xFF0C;&#x538B;&#x7F29;&#x8FC7;&#x7A0B;&#x8FD8;&#x4F1A;&#x6D6A;&#x8D39;&#x7CFB;&#x7EDF;&#x8D44;&#x6E90;</span></div><div class="line">    gzip_min_length 1000;</div><div class="line">	</div><div class="line">    <span class="comment"># &#x53EF;&#x9009;&#x503C;1~9,&#x538B;&#x7F29;&#x7EA7;&#x522B;&#x8D8A;&#x9AD8;&#x538B;&#x7F29;&#x7387;&#x8D8A;&#x9AD8;&#xFF0C;&#x4F46;&#x5BF9;&#x7CFB;&#x7EDF;&#x6027;&#x80FD;&#x8981;&#x6C42;&#x8D8A;&#x9AD8;</span></div><div class="line">    gzip_comp_level 4;</div><div class="line">	</div><div class="line">    <span class="comment"># &#x538B;&#x7F29;&#x7684;&#x5185;&#x5BB9;&#x7C7B;&#x522B;</span></div><div class="line">    gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;</div><div class="line">    </div><div class="line">	<span class="comment"># &#x9759;&#x6001;&#x6587;&#x4EF6;&#x7F13;&#x5B58;</span></div><div class="line">    <span class="comment"># &#x6700;&#x5927;&#x7F13;&#x5B58;&#x6570;&#x91CF;&#xFF0C;&#x6587;&#x4EF6;&#x672A;&#x4F7F;&#x7528;&#x5B58;&#x6D3B;&#x671F;</span></div><div class="line">    open_file_cache max=655350 inactive=20s;</div><div class="line">	</div><div class="line">    <span class="comment"># &#x9A8C;&#x8BC1;&#x7F13;&#x5B58;&#x6709;&#x6548;&#x671F;&#x65F6;&#x95F4;&#x95F4;&#x9694;</span></div><div class="line">    open_file_cache_valid 30s;</div><div class="line">	</div><div class="line">    <span class="comment"># &#x6709;&#x6548;&#x671F;&#x5185;&#x6587;&#x4EF6;&#x6700;&#x5C11;&#x4F7F;&#x7528;&#x6B21;&#x6570;</span></div><div class="line">    open_file_cache_min_uses 2;</div><div class="line">	</div><div class="line">    server {</div><div class="line">        listen       80;</div><div class="line">        server_name  localhost;</div><div class="line">        <span class="comment">#charset koi8-r;</span></div><div class="line">        <span class="comment">#access_log  logs/host.access.log  main;</span></div><div class="line">        location / {</div><div class="line">            root   html;</div><div class="line">            index  index.html index.htm;</div><div class="line">        }</div><div class="line">        <span class="comment">#error_page  404              /404.html;</span></div><div class="line">        <span class="comment"># redirect server error pages to the static page /50x.html</span></div><div class="line">        <span class="comment">#</span></div><div class="line">        error_page   500 502 503 504  /50x.html;</div><div class="line">        location = /50x.html {</div><div class="line">            root   html;</div><div class="line">        }</div><div class="line">        <span class="comment"># proxy the PHP scripts to Apache listening on 127.0.0.1:80</span></div><div class="line">        <span class="comment">#</span></div><div class="line">        <span class="comment">#location ~ \.php$ {</span></div><div class="line">        <span class="comment">#    proxy_pass   http://127.0.0.1;</span></div><div class="line">        <span class="comment">#}</span></div><div class="line">        <span class="comment"># pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000</span></div><div class="line">        <span class="comment">#</span></div><div class="line">        <span class="comment">#location ~ \.php$ {</span></div><div class="line">        <span class="comment">#    root           html;</span></div><div class="line">        <span class="comment">#    fastcgi_pass   127.0.0.1:9000;</span></div><div class="line">        <span class="comment">#    fastcgi_index  index.php;</span></div><div class="line">        <span class="comment">#    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;</span></div><div class="line">        <span class="comment">#    include        fastcgi_params;</span></div><div class="line">        <span class="comment">#}</span></div><div class="line">        <span class="comment"># deny access to .htaccess files, if Apache&apos;s document root</span></div><div class="line">        <span class="comment"># concurs with nginx&apos;s one</span></div><div class="line">        <span class="comment">#</span></div><div class="line">        <span class="comment">#location ~ /\.ht {</span></div><div class="line">        <span class="comment">#    deny  all;</span></div><div class="line">        <span class="comment">#}</span></div><div class="line">    }</div><div class="line">    <span class="comment"># another virtual host using mix of IP-, name-, and port-based configuration</span></div><div class="line">    <span class="comment">#</span></div><div class="line">    <span class="comment">#server {</span></div><div class="line">    <span class="comment">#    listen       8000;</span></div><div class="line">    <span class="comment">#    listen       somename:8080;</span></div><div class="line">    <span class="comment">#    server_name  somename  alias  another.alias;</span></div><div class="line">    <span class="comment">#    location / {</span></div><div class="line">    <span class="comment">#        root   html;</span></div><div class="line">    <span class="comment">#        index  index.html index.htm;</span></div><div class="line">    <span class="comment">#    }</span></div><div class="line">    <span class="comment">#}</span></div><div class="line">    <span class="comment"># HTTPS server</span></div><div class="line">    <span class="comment">#</span></div><div class="line">    <span class="comment">#server {</span></div><div class="line">    <span class="comment">#    listen       443 ssl;</span></div><div class="line">    <span class="comment">#    server_name  localhost;</span></div><div class="line">    <span class="comment">#    ssl_certificate      cert.pem;</span></div><div class="line">    <span class="comment">#    ssl_certificate_key  cert.key;</span></div><div class="line">    <span class="comment">#    ssl_session_cache    shared:SSL:1m;</span></div><div class="line">    <span class="comment">#    ssl_session_timeout  5m;</span></div><div class="line">    <span class="comment">#    ssl_ciphers  HIGH:!aNULL:!MD5;</span></div><div class="line">    <span class="comment">#    ssl_prefer_server_ciphers  on;</span></div><div class="line">    <span class="comment">#    location / {</span></div><div class="line">    <span class="comment">#        root   html;</span></div><div class="line">    <span class="comment">#        index  index.html index.htm;</span></div><div class="line">    <span class="comment">#    }</span></div><div class="line">    <span class="comment">#}</span></div><div class="line">}</div></pre></td></tr></table></figure><p></p>
+<p></p><h2 id="nginx&#x7684;&#x5E38;&#x7528;&#x6A21;&#x5757;">nginx&#x7684;&#x5E38;&#x7528;&#x6A21;&#x5757;</h2><p></p>
+<p></p><h3 id="ngx_http_stub_status_module&#x6A21;&#x5757;">ngx_http_stub_status_module&#x6A21;&#x5757;</h3><br>&#x6B64;&#x6A21;&#x5757;&#x7528;&#x6765;&#x663E;&#x793A;nginx&#x8BBF;&#x95EE;&#x7684;&#x4E00;&#x4E9B;&#x91CD;&#x8981;&#x4FE1;&#x606F;<br>&#x57FA;&#x672C;&#x914D;&#x7F6E;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">location /nginx_status {</div><div class="line">stub_status on;</div><div class="line">access_<span class="built_in">log</span>   off;</div><div class="line">allow SOME.IP.ADD.RESS;</div><div class="line">deny all;</div><div class="line">}</div></pre></td></tr></table></figure><p></p>
+<p>&#x91CD;&#x542F;nginx&#x4E4B;&#x540E;&#x76F4;&#x63A5;&#x5728;&#x7F51;&#x9875;&#x8F93;&#x5165;<a href="http://IP/nginx_status" target="_blank" rel="external">http://IP/nginx_status</a> &#x5373;&#x53EF;<br>&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#x7C7B;&#x4F3C;&#x4E8E;&#xFF1A;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Active connections: 1 </div><div class="line">server accepts handled requests</div><div class="line">155 155 298 </div><div class="line">Reading: 0 Writing: 1 Waiting: 0</div></pre></td></tr></table></figure></p>
+<p>Active connections:  &#x5904;&#x4E8E;&#x6D3B;&#x52A8;&#x72B6;&#x6001;&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#x8FDE;&#x63A5;&#x7684;&#x6570;&#x91CF;&#xFF1B;<br>accepts&#xFF1A;&#x5DF2;&#x7ECF;&#x63A5;&#x53D7;&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#x8FDE;&#x63A5;&#x7684;&#x603B;&#x6570;&#xFF1B;<br>handled&#xFF1A;&#x5DF2;&#x7ECF;&#x5904;&#x7406;&#x5B8C;&#x6210;&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#x8BF7;&#x6C42;&#x7684;&#x603B;&#x6570;&#xFF1B;<br>requests&#xFF1A;&#x5BA2;&#x6237;&#x7AEF;&#x53D1;&#x6765;&#x7684;&#x603B;&#x7684;&#x8BF7;&#x6C42;&#x6570;&#xFF1B;<br>Reading&#xFF1A;&#x5904;&#x4E8E;&#x8BFB;&#x53D6;&#x5BA2;&#x6237;&#x7AEF;&#x8BF7;&#x6C42;&#x62A5;&#x6587;&#x9996;&#x90E8;&#x7684;&#x8FDE;&#x63A5;&#x6570;&#xFF1B;<br>Writing&#xFF1A;&#x5904;&#x4E8E;&#x5411;&#x5BA2;&#x6237;&#x7AEF;&#x53D1;&#x9001;&#x54CD;&#x5E94;&#x62A5;&#x6587;&#x8FC7;&#x7A0B;&#x4E2D;&#x7684;&#x8FDE;&#x63A5;&#x6570;&#xFF1B;<br>Waiting&#xFF1A;&#x5904;&#x4E8E;&#x7B49;&#x5F85;&#x5BA2;&#x6237;&#x7AEF;&#x53D1;&#x51FA;&#x8BF7;&#x6C42;&#x7684;&#x7A7A;&#x95F2;&#x8FDE;&#x63A5;&#x6570;&#xFF1B;</p>
+<p></p><h3 id="ngx_http_gzip_module&#x6A21;&#x5757;">ngx_http_gzip_module&#x6A21;&#x5757;</h3><br>&#x6B64;&#x6A21;&#x5757;&#x7528;&#x6765;&#x538B;&#x7F29;&#x9875;&#x9762;&#x8D44;&#x6E90;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">gzip on|off;</div><div class="line"><span class="comment">#&#x542F;&#x7528;&#x6216;&#x7981;&#x7528;&#x538B;&#x7F29;gzip&#x54CD;&#x5E94;&#x62A5;&#x6587;</span></div><div class="line"></div><div class="line">gzip_comp_level level;</div><div class="line"><span class="comment">#&#x6307;&#x5B9A;&#x538B;&#x7F29;&#x6BD4;&#xFF08;1-&gt;9&#xFF09;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;1</span></div><div class="line"></div><div class="line">gzip_<span class="built_in">disable</span> regex...;</div><div class="line"><span class="comment">#regex&#x662F;&#x5339;&#x914D;&#x5BA2;&#x6237;&#x7AEF;&#x6D4F;&#x89C8;&#x5668;&#x7C7B;&#x578B;&#x7684;&#x6A21;&#x5F0F;&#xFF0C;&#x8868;&#x793A;&#x5BF9;&#x6240;&#x6709;&#x5339;&#x914D;&#x5230;&#x7684;&#x6D4F;&#x89C8;&#x5668;&#x4E0D;&#x6267;&#x884C;&#x538B;&#x7F29;</span></div><div class="line"></div><div class="line">gzip_min_length length;</div><div class="line"><span class="comment">#&#x89E6;&#x53D1;&#x542F;&#x7528;&#x538B;&#x7F29;&#x529F;&#x80FD;&#x7684;&#x54CD;&#x5E94;&#x62A5;&#x6587;&#x7684;&#x6700;&#x5C0F;&#x957F;&#x5EA6;&#xFF08;&#x542F;&#x7528;&#x538B;&#x7F29;&#x7684;&#x4E0B;&#x9650;&#xFF09;</span></div><div class="line"></div><div class="line">gzip_http_version 1.0|1.1 ;</div><div class="line"><span class="comment">#&#x8BBE;&#x5B9A;&#x542F;&#x7528;&#x538B;&#x7F29;&#x54CD;&#x5E94;&#x529F;&#x80FD;&#x65F6;&#xFF0C;&#x534F;&#x8BAE;&#x7684;&#x6700;&#x5C0F;&#x7248;&#x672C;</span></div><div class="line"></div><div class="line">gzip_types mime-type;</div><div class="line"><span class="comment">#&#x6307;&#x5B9A;&#x4EC5;&#x6267;&#x884C;&#x538B;&#x7F29;&#x7684;&#x8D44;&#x6E90;&#x5185;&#x5BB9;&#x7C7B;&#x578B;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;text/html;</span></div><div class="line"></div><div class="line">gzip proxied off|expired|no-cache|no-store|private|no_last_modified|no_etag|auth|ant...;</div><div class="line"><span class="comment">#&#x5BF9;&#x4EE3;&#x7406;&#x7684;&#x8BF7;&#x6C42;&#x57FA;&#x4E8E;&#x4F55;&#x79CD;&#x5C5E;&#x6027;&#x5224;&#x65AD;&#x5176;&#x662F;&#x5426;&#x5E94;&#x8BE5;&#x542F;&#x7528;&#x538B;&#x7F29;&#x529F;&#x80FD;</span></div></pre></td></tr></table></figure><p></p>
+<p>&#x914D;&#x7F6E;&#x793A;&#x4F8B;&#xFF1A;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">gzip on;</div><div class="line">gzip_http_version 1.0;</div><div class="line">gzip_comp_level 6;</div><div class="line">gzip_<span class="built_in">disable</span> msie6;</div><div class="line">gzip_min_length 2;</div><div class="line">gzip_types text/plain text/css text/xml application/x-javascript  application/xml  application/json application/java-script;</div></pre></td></tr></table></figure></p>
+<p></p><h3 id="ngx_http_ssl_module&#x6A21;&#x5757;">ngx_http_ssl_module&#x6A21;&#x5757;</h3><br>&#x6B64;&#x6A21;&#x5757;&#x4E3B;&#x8981;&#x7528;&#x6765;&#x914D;&#x7F6E;https<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">ssl on|off&#xFF1B; </div><div class="line"><span class="comment">#&#x662F;&#x5426;&#x542F;&#x7528;ssl&#x5E94;&#x7528;</span></div><div class="line"></div><div class="line">ssl_certificate file;  </div><div class="line"><span class="comment">#&#x5F53;&#x524D;&#x865A;&#x62DF;&#x4E3B;&#x673A;&#x4F7F;&#x7528;&#x7684;PEM&#x683C;&#x5F0F;&#x7684;&#x8BC1;&#x4E66;&#x6587;&#x4EF6;</span></div><div class="line"></div><div class="line">ssk_certificate_key file;   </div><div class="line"><span class="comment">#&#x5F53;&#x524D;&#x865A;&#x62DF;&#x4E3B;&#x673A;&#x4F7F;&#x7528;&#x8BC1;&#x4E66;&#x6587;&#x4EF6;&#x7684;&#x79C1;&#x94A5;&#x6587;&#x4EF6;</span></div><div class="line"></div><div class="line">ssl_protocols [SSLv3][TLSv1][TLSv1.1][TLSv1.2]</div><div class="line"><span class="comment">#&#x5F53;&#x524D;ssl&#x7684;&#x534F;&#x8BAE;&#x7248;&#x672C;</span></div><div class="line"></div><div class="line">ssl_session_cache off|none|[<span class="built_in">builtin</span>[:size]][shared:name:size];</div><div class="line"><span class="comment">#&#x6307;&#x660E;ssl&#x4F1A;&#x8BDD;&#x7684;&#x7F13;&#x5B58;&#x673A;&#x5236;</span></div><div class="line">	off    &#x575A;&#x51B3;&#x88AB;&#x7981;&#x6B62;&#x4F7F;&#x7528;&#x4F1A;&#x8BDD;</div><div class="line">	none   &#x6709;&#x53EF;&#x80FD;&#x4F1A;&#x7981;&#x6B62;</div><div class="line">	<span class="built_in">builtin</span> &#x4F7F;&#x7528;openssl&#x5185;&#x5EFA;&#x7684;&#x5E93;&#x7F13;&#x5B58;&#x673A;&#x5236;&#xFF0C;&#x6B64;&#x4E3A;&#x5404;worker&#x72EC;&#x6709;&#x7684;</div><div class="line">		&#x7F3A;&#x9677;&#xFF1A;&#x540C;&#x4E00;&#x4E2A;&#x7528;&#x6237;&#x8BF7;&#x6C42;&#x7B2C;&#x4E00;&#x6B21;&#x53EF;&#x80FD;&#x4F1A;&#x88AB;&#x8C03;&#x5EA6;&#x5230;&#x7B2C;&#x4E00;&#x4E2A;worker&#xFF0C;&#x7B2C;&#x4E8C;&#x6B21;&#x53EF;&#x80FD;&#x4F1A;&#x88AB;&#x8C03;&#x5EA6;&#x5230;&#x7B2C;&#x4E8C;&#x4E2A;worker&#xFF0C;&#x53EF;&#x80FD;&#x4F1A;&#x5BFC;&#x81F4;&#x7F13;&#x5B58;&#x65E0;&#x6CD5;&#x547D;&#x4E2D;</div><div class="line">	shared  &#x7531;&#x5404;worker&#x5171;&#x4EAB;&#x7684;&#x7F13;&#x5B58; </div><div class="line">	name	&#x7F13;&#x5B58;&#x7A7A;&#x95F4;&#x7684;&#x540D;&#x79F0;</div><div class="line">	size	&#x5B57;&#x8282;&#x4E3A;&#x5355;&#x4F4D;&#x7684;&#x7F13;&#x5B58;&#x7A7A;&#x95F4;&#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x6BCF;1MB&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x53EF;&#x7F13;&#x5B58;4000&#x4E2A;&#x4F1A;&#x8BDD;</div><div class="line">ssl_clphers clphers;</div><div class="line"><span class="comment">#&#x6307;&#x660E;ssl&#x7684;&#x52A0;&#x5BC6;&#x7B97;&#x6CD5;</span></div><div class="line"></div><div class="line">ssl_session_timeout time;</div><div class="line"><span class="comment">#ssl&#x4F1A;&#x8BDD;&#x8D85;&#x65F6;&#x65F6;&#x957F;&#xFF0C;&#x81F3;ssl session cache&#x4E2D;&#x7F13;&#x5B58;&#x6761;&#x76EE;&#x7684;&#x8D85;&#x65F6;&#x65F6;&#x957F;</span></div></pre></td></tr></table></figure><p></p>
+<p>&#x914D;&#x7F6E;&#x793A;&#x4F8B;&#xFF1A;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">server {</div><div class="line">    listen 443;</div><div class="line">    ssl on;</div><div class="line">    ssl_certificate  /usr/<span class="built_in">local</span>/nginx/conf/server.crt;</div><div class="line">    ssl_certificate_key  /usr/<span class="built_in">local</span>/nginx/conf/server_nopwd.key;</div><div class="line">}</div></pre></td></tr></table></figure></p>
+<p></p><h3 id="ngx_http_referer_module&#x6A21;&#x5757;">ngx_http_referer_module&#x6A21;&#x5757;</h3><br>&#x6B64;&#x6A21;&#x5757;&#x7528;&#x4E8E;&#x5C4F;&#x853D;&#x7684;&#x7F51;&#x7AD9;&#x8BF7;&#x6C42;&#x65E0;&#x6548;&#x503C;&#x7684;&#x5B57;&#x6BB5;,&#x53EF;&#x4EE5;&#x7528;&#x6765;&#x9632;&#x76D7;&#x94FE;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">valid_referers none | blocked | server_names | string ...;</div><div class="line"><span class="comment">#&#x5B9A;&#x4E49;&#x5408;&#x6CD5;&#x7684;referer&#x6570;&#x636E;&#xFF1B;</span></div><div class="line">	none&#xFF1A;&#x8BF7;&#x6C42;&#x62A5;&#x6587;&#x9996;&#x90E8;&#x6CA1;&#x6709;refe rer&#x9996;&#x90E8;&#xFF1B;</div><div class="line">	blocked&#xFF1A;&#x8BF7;&#x6C42;&#x62A5;&#x6587;&#x7684;referer&#x9996;&#x90E8;&#x6CA1;&#x6709;&#x503C;&#xFF1B;</div><div class="line">	server_names&#xFF1A;&#x5176;&#x503C;&#x662F;&#x4E3B;&#x673A;&#x540D;&#xFF1B;</div><div class="line">	arbitrary string&#xFF1A;&#x76F4;&#x63A5;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;*&#x4F5C;&#x4E3A;&#x901A;&#x914D;&#x7B26;&#xFF1B;</div><div class="line">	regular expression&#xFF1A;&#x88AB;&#x6307;&#x5B9A;&#x7684;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x6A21;&#x5F0F;&#x5339;&#x914D;&#x5230;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#xFF1B;&#x8981;&#x4F7F;&#x7528;~&#x8D77;&#x59CB;&#xFF1B;</div><div class="line">	</div><div class="line"><span class="variable">$invalid_referer</span>&#x53D8;&#x91CF;&#x662F;&#x7531;ngx_http_referer_module&#x6A21;&#x5757;&#x81EA;&#x52A8;&#x5F15;&#x5165;&#x7684;</div><div class="line"><span class="comment">#&#x53EA;&#x8981;&#x4E0D;&#x80FD;&#x88AB;valid_referers none blocked...&#x5339;&#x914D;&#x5230;&#x7684;&#xFF0C;&#x7EDF;&#x7EDF;&#x88AB;&#x5F52;&#x7C7B;&#x5230;&#x53D8;&#x91CF;$invalid_referer&#x4E2D;</span></div></pre></td></tr></table></figure><p></p>
+<p>&#x914D;&#x7F6E;&#x793A;&#x4F8B;&#xFF1A;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">valid_referers none blocked server_names *.magedu.com magedu.* ~\.magedu\.;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (<span class="variable">$invalid_referer</span>) {</div><div class="line">	<span class="built_in">return</span> 403;</div><div class="line">}</div></pre></td></tr></table></figure></p>
+<p></p><h3 id="ngx_http_rewrite_module&#x6A21;&#x5757;">ngx_http_rewrite_module&#x6A21;&#x5757;</h3><br>&#x6B64;&#x6A21;&#x5757;&#x4E3B;&#x8981;&#x7528;&#x4E8E;url&#x91CD;&#x5199;&#x64CD;&#x4F5C;<br>last:&#x91CD;&#x5199;&#x5B8C;&#x6210;&#x540E;&#x505C;&#x6B62;&#x5BF9;&#x5F53;&#x524D;uri&#x5728;&#x5F53;&#x524D;locatuion&#x4E2D;&#x7684;&#x540E;&#x7EED;&#x64CD;&#x4F5C;,&#x6539;&#x4E3A;&#x5BF9;&#x65B0;uri&#x7684;&#x65B0;&#x4E00;&#x8F6E;&#x5904;&#x7406;<br>break&#xFF1A;&#x91CD;&#x5199;&#x5B8C;&#x6210;&#x540E;&#x505C;&#x6B62;&#x5BF9;&#x5F53;&#x524D;uri&#x5728;&#x5F53;&#x524D;location&#x4E2D;&#x7684;&#x540E;&#x7EED;&#x5176;&#x4ED6;&#x91CD;&#x5199;&#x64CD;&#x4F5C;<br>redirect: &#x91CD;&#x5199;&#x5B8C;&#x6210;&#x540E;&#x4EE5;&#x6C38;&#x4E45;&#x91CD;&#x5B9A;&#x5411;&#x65B9;&#x5F0F;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;&#x91CD;&#x5199;&#x540E;&#x751F;&#x6210;&#x7684;&#x65B0;URL&#x7ED9;&#x5BA2;&#x6237;&#x7AEF;&#xFF0C;&#x7531;&#x5BA2;&#x6237;&#x5BF9;&#x65B0;URL&#x8FDB;&#x884C;&#x8BF7;&#x6C42;&#xFF08;302&#xFF09;<br>permanent:&#x91CD;&#x5199;&#x5B8C;&#x6210;&#x540E;&#x4EE5;&#x6C38;&#x4E45;&#x91CD;&#x5B9A;&#x5411;&#x65B9;&#x5F0F;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;&#x91CD;&#x5199;&#x540E;&#x751F;&#x6210;&#x7684;&#x65B0;URL&#x7ED9;&#x5BA2;&#x6237;&#x7AEF;&#xFF0C;&#x7531;&#x5BA2;&#x6237;&#x5BF9;&#x65B0;URL&#x8FDB;&#x884C;&#x8BF7;&#x6C42;&#xFF08;301&#xFF09;<br>&#x914D;&#x7F6E;&#x793A;&#x4F8B;&#xFF1A;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (<span class="variable">$http_user_agent</span> ~ MSIE) {</div><div class="line">    rewrite ^(.*)$ /msie/<span class="variable">$1</span> <span class="built_in">break</span>;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">if</span> (<span class="variable">$http_cookie</span> ~* <span class="string">&quot;id=([^;]+)(?:;|$)&quot;</span>) {</div><div class="line">    <span class="built_in">set</span> <span class="variable">$id</span> <span class="variable">$1</span>;</div><div class="line">}</div><div class="line"> </div><div class="line"><span class="keyword">if</span> (<span class="variable">$request_method</span> = POST) {</div><div class="line">    <span class="built_in">return</span> 405;</div><div class="line">}</div><div class="line"> </div><div class="line"><span class="keyword">if</span> (<span class="variable">$slow</span>) {</div><div class="line">    <span class="built_in">limit</span>_rate 10k;</div><div class="line">}</div><div class="line"> </div><div class="line"><span class="keyword">if</span> (<span class="variable">$invalid_referer</span>) {</div><div class="line">    <span class="built_in">return</span> 403;</div><div class="line">}</div></pre></td></tr></table></figure><p></p>
+<p></p><h3 id="ngx_http_fastcgi_module&#x6A21;&#x5757;">ngx_http_fastcgi_module&#x6A21;&#x5757;</h3><br>&#x6B64;&#x6A21;&#x5757;&#x4E3B;&#x8981;&#x7528;&#x4E8E;&#x57FA;&#x4E8E;fastcgi&#x901A;&#x4FE1;<p></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">fastcgi_connect_timeout 300;</div><div class="line"><span class="comment">#&#x6307;&#x5B9A;&#x94FE;&#x63A5;&#x5230;&#x540E;&#x7AEF;FastCGI&#x7684;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#x3002;</span></div><div class="line"></div><div class="line">fastcgi_send_timeout 300;</div><div class="line"><span class="comment">#&#x5411;FastCGI&#x4F20;&#x9001;&#x8BF7;&#x6C42;&#x7684;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#xFF0C;&#x8FD9;&#x4E2A;&#x503C;&#x662F;&#x6307;&#x5DF2;&#x7ECF;&#x5B8C;&#x6210;&#x4E24;&#x6B21;&#x63E1;&#x624B;&#x540E;&#x5411;FastCGI&#x4F20;&#x9001;&#x8BF7;&#x6C42;&#x7684;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#x3002;</span></div><div class="line"></div><div class="line">fastcgi_<span class="built_in">read</span>_timeout 300;</div><div class="line"><span class="comment">#&#x6307;&#x5B9A;&#x63A5;&#x6536;FastCGI&#x5E94;&#x7B54;&#x7684;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#xFF0C;&#x8FD9;&#x4E2A;&#x503C;&#x662F;&#x6307;&#x5DF2;&#x7ECF;&#x5B8C;&#x6210;&#x4E24;&#x6B21;&#x63E1;&#x624B;&#x540E;&#x63A5;&#x6536;FastCGI&#x5E94;&#x7B54;&#x7684;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#x3002;</span></div><div class="line"></div><div class="line">fastcgi_buffer_size 64k;</div><div class="line"><span class="comment">#&#x6307;&#x5B9A;&#x8BFB;&#x53D6;FastCGI&#x5E94;&#x7B54;&#x7B2C;&#x4E00;&#x90E8;&#x5206;&#x9700;&#x8981;&#x7528;&#x591A;&#x5927;&#x7684;&#x7F13;&#x51B2;&#x533A;&#xFF0C;&#x8FD9;&#x4E2A;&#x503C;&#x8868;&#x793A;&#x5C06;&#x4F7F;&#x7528;1&#x4E2A;64KB&#x7684;&#x7F13;&#x51B2;&#x533A;&#x8BFB;&#x53D6;&#x5E94;&#x7B54;&#x7684;&#x7B2C;&#x4E00;&#x90E8;&#x5206;&#xFF08;&#x5E94;&#x7B54;&#x5934;&#xFF09;&#xFF0C;&#x53EF;&#x4EE5;&#x8BBE;&#x7F6E;&#x4E3A;gastcgi_buffers&#x9009;&#x9879;&#x6307;&#x5B9A;&#x7684;&#x7F13;&#x51B2;&#x533A;&#x5927;&#x5C0F;&#x3002;</span></div><div class="line"></div><div class="line">fastcgi_buffers 4 64k;</div><div class="line"><span class="comment">#&#x6307;&#x5B9A;&#x672C;&#x5730;&#x9700;&#x8981;&#x7528;&#x591A;&#x5C11;&#x548C;&#x591A;&#x5927;&#x7684;&#x7F13;&#x51B2;&#x533A;&#x6765;&#x7F13;&#x51B2;FastCGI&#x7684;&#x5E94;&#x7B54;&#x8BF7;&#x6C42;&#xFF0C;&#x5982;&#x679C;&#x4E00;&#x4E2A;php&#x811A;&#x672C;&#x6240;&#x4EA7;&#x751F;&#x7684;&#x9875;&#x9762;&#x5927;&#x5C0F;&#x4E3A;256KB&#xFF0C;&#x90A3;&#x4E48;&#x4F1A;&#x5206;&#x914D;4&#x4E2A;64KB&#x7684;&#x7F13;&#x51B2;&#x533A;&#x6765;&#x7F13;&#x5B58;&#xFF0C;&#x5982;&#x679C;&#x9875;&#x9762;&#x5927;&#x5C0F;&#x5927;&#x4E8E;256KB&#xFF0C;&#x90A3;&#x4E48;&#x5927;&#x4E8E;256KB&#x7684;&#x90E8;&#x5206;&#x4F1A;&#x7F13;&#x5B58;&#x5230;fastcgi_temp&#x6307;&#x5B9A;&#x7684;&#x8DEF;&#x5F84;&#x4E2D;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x5E76;&#x4E0D;&#x662F;&#x597D;&#x65B9;&#x6CD5;&#xFF0C;&#x56E0;&#x4E3A;&#x5185;&#x5B58;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x5904;&#x7406;&#x901F;&#x5EA6;&#x8981;&#x5FEB;&#x4E8E;&#x78C1;&#x76D8;&#x3002;&#x4E00;&#x822C;&#x8FD9;&#x4E2A;&#x503C;&#x5E94;&#x8BE5;&#x4E3A;&#x7AD9;&#x70B9;&#x4E2D;php&#x811A;&#x672C;&#x6240;&#x4EA7;&#x751F;&#x7684;&#x9875;&#x9762;&#x5927;&#x5C0F;&#x7684;&#x4E2D;&#x95F4;&#x503C;&#xFF0C;&#x5982;&#x679C;&#x7AD9;&#x70B9;&#x5927;&#x90E8;&#x5206;&#x811A;&#x672C;&#x6240;&#x4EA7;&#x751F;&#x7684;&#x9875;&#x9762;&#x5927;&#x5C0F;&#x4E3A;256KB&#xFF0C;&#x90A3;&#x4E48;&#x53EF;&#x4EE5;&#x628A;&#x8FD9;&#x4E2A;&#x503C;&#x8BBE;&#x7F6E;&#x4E3A;&#x201C;8 16K&#x201D;&#x3001;&#x201C;4 64k&#x201D;&#x7B49;&#x3002;</span></div><div class="line"></div><div class="line">fastcgi_busy_buffers_size 128k;</div><div class="line"><span class="comment">#&#x5EFA;&#x8BAE;&#x8BBE;&#x7F6E;&#x4E3A;fastcgi_buffer&#x7684;&#x4E24;&#x500D;&#xFF0C;&#x7E41;&#x5FD9;&#x65F6;&#x5019;&#x7684;buffer</span></div><div class="line"></div><div class="line">fastcgi_temp_file_write_size 128k;</div><div class="line"><span class="comment">#&#x5728;&#x5199;&#x5165;fastcgi_temp_path&#x65F6;&#x5C06;&#x7528;&#x591A;&#x5927;&#x7684;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x9ED8;&#x8BA4;&#x503C;&#x662F;fastcgi_buffers&#x7684;&#x4E24;&#x500D;&#xFF0C;&#x8BBE;&#x7F6E;&#x4E0A;&#x8FF0;&#x6570;&#x503C;&#x8BBE;&#x7F6E;&#x5C0F;&#x65F6;&#x82E5;&#x8D1F;&#x8F7D;&#x4E0A;&#x6765;&#x65F6;&#x53EF;&#x80FD;&#x62A5;502 Bad Gateway</span></div><div class="line"></div><div class="line">fastcgi_cache oldboy_ngnix;</div><div class="line"><span class="comment">#&#x8868;&#x793A;&#x5F00;&#x542F;FastCGI&#x7F13;&#x5B58;&#x5E76;&#x4E3A;&#x5176;&#x6307;&#x5B9A;&#x4E00;&#x4E2A;&#x540D;&#x79F0;&#x3002;&#x5F00;&#x542F;&#x7F13;&#x5B58;&#x975E;&#x5E38;&#x6709;&#x7528;&#xFF0C;&#x53EF;&#x4EE5;&#x6709;&#x6548;&#x964D;&#x4F4E;CPU&#x7684;&#x8D1F;&#x8F7D;&#xFF0C;&#x5E76;&#x4E14;&#x9632;&#x6B62;502&#x7684;&#x9519;&#x8BEF;&#x653E;&#x751F;&#xFF0C;&#x4F46;&#x662F;&#x5F00;&#x542F;&#x7F13;&#x5B58;&#x4E5F;&#x53EF;&#x80FD;&#x4F1A;&#x5F15;&#x8D77;&#x5176;&#x4ED6;&#x95EE;&#x9898;&#xFF0C;&#x8981;&#x5F88;&#x636E;&#x5177;&#x4F53;&#x60C5;&#x51B5;&#x9009;&#x62E9;</span></div><div class="line"></div><div class="line">fastcgi_cache_valid 200 302 1h;</div><div class="line"><span class="comment">#&#x7528;&#x6765;&#x6307;&#x5B9A;&#x5E94;&#x7B54;&#x4EE3;&#x7801;&#x7684;&#x7F13;&#x5B58;&#x65F6;&#x95F4;&#xFF0C;&#x5B9E;&#x4F8B;&#x4E2D;&#x7684;&#x503C;&#x8868;&#x793A;&#x5C06;2000&#x548C;302&#x5E94;&#x7B54;&#x7F13;&#x5B58;&#x4E00;&#x5C0F;&#x65F6;&#xFF0C;&#x8981;&#x548C;fastcgi_cache&#x914D;&#x5408;&#x4F7F;&#x7528;</span></div><div class="line"></div><div class="line">fastcgi_cache_valid 301 1d;</div><div class="line"><span class="comment">#&#x5C06;301&#x5E94;&#x7B54;&#x7F13;&#x5B58;&#x4E00;&#x5929;</span></div><div class="line"></div><div class="line">fastcgi_cache_valid any 1m;</div><div class="line"><span class="comment">#&#x5C06;&#x5176;&#x4ED6;&#x5E94;&#x7B54;&#x7F13;&#x5B58;&#x4E3A;1&#x5206;&#x949F;</span></div><div class="line"></div><div class="line">fastcgi_cache_min_uses 1;</div><div class="line"><span class="comment">#&#x8BF7;&#x6C42;&#x7684;&#x6570;&#x91CF;</span></div><div class="line"></div><div class="line">fastcgi_cache_path /data/ngx_fcgi_cache levels=2:2 keys_zone=ngx_fcgi_cache:512m;</div><div class="line"><span class="comment">#&#x5B9A;&#x4E49;&#x7F13;&#x5B58;&#x7684;&#x8DEF;&#x5F84;</span></div></pre></td></tr></table></figure>
+<p>&#x914D;&#x7F6E;&#x793A;&#x4F8B;&#xFF1A;</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">location ~ \.php$ {</div><div class="line">	root           html;</div><div class="line">	fastcgi_pass   127.0.0.1:9000;</div><div class="line">	fastcgi_index  index.php;</div><div class="line">	fastcgi_param  SCRIPT_FILENAME  /www/html/<span class="variable">$fastcgi_script_name</span>;</div><div class="line">	include        fastcgi_params;</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x81F3;&#x4E8E;&#x5176;&#x4ED6;&#x7684;&#x4E00;&#x4E9B;&#x6A21;&#x5757;&#xFF08;&#x4F8B;&#x5982;ngx_http_proxy_module&#x3001;ngx_http_upstream_module&#xFF09;&#x8FD8;&#x542C;&#x4E0B;&#x56DE;&#x5206;&#x89E3;&#x3002;</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/weixin.png" alt="CH WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/nginx/" rel="tag">#nginx</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Linux常见配置文件汇总.html" rel="next" title="Linux常见配置文件汇总">
+                <i class="fa fa-chevron-left"></i> Linux常见配置文件汇总
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/ELK-Kafka日志收集平台部署.html" rel="prev" title="ELK + Kafka日志收集平台部署">
+                ELK + Kafka日志收集平台部署 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="nginx配置与优化.html"
+     data-title="nginx配置与优化"
+     data-content=""
+     data-url="http://chen-hao.com.cn/nginx配置与优化.html">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="nginx配置与优化.html"
+           data-title="nginx配置与优化" data-url="http://chen-hao.com.cn/nginx配置与优化.html">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/linux5.gif"
+               alt="CH" />
+          <p class="site-author-name" itemprop="name">CH</p>
+          <p class="site-description motion-element" itemprop="description">对自己要求高一点！</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">32</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ch-ld/ch-ld.github.io" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.magedu.com/" title="马哥教育" target="_blank">马哥教育</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://geass.link/" title="Jin Lei" target="_blank">Jin Lei</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://book.open-falcon.org/zh/intro/index.html" title="小米监控" target="_blank">小米监控</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/dianping/cat" title="点评监控" target="_blank">点评监控</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/CodisLabs/codis" title="Codis" target="_blank">Codis</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#nginx的安装"><span class="nav-number">1.</span> <span class="nav-text">nginx的安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自动安装"><span class="nav-number">1.1.</span> <span class="nav-text">自动安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译安装"><span class="nav-number">1.2.</span> <span class="nav-text">编译安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nginx的配置"><span class="nav-number">2.</span> <span class="nav-text">nginx的配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nginx的优化"><span class="nav-number">3.</span> <span class="nav-text">nginx的优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nginx的常用模块"><span class="nav-number">4.</span> <span class="nav-text">nginx的常用模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ngx_http_stub_status_module模块"><span class="nav-number">4.1.</span> <span class="nav-text">ngx_http_stub_status_module模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ngx_http_gzip_module模块"><span class="nav-number">4.2.</span> <span class="nav-text">ngx_http_gzip_module模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ngx_http_ssl_module模块"><span class="nav-number">4.3.</span> <span class="nav-text">ngx_http_ssl_module模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ngx_http_referer_module模块"><span class="nav-number">4.4.</span> <span class="nav-text">ngx_http_referer_module模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ngx_http_rewrite_module模块"><span class="nav-number">4.5.</span> <span class="nav-text">ngx_http_rewrite_module模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ngx_http_fastcgi_module模块"><span class="nav-number">4.6.</span> <span class="nav-text">ngx_http_fastcgi_module模块</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">CH</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">访客数<i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span>人次</span>
+  
+
+  
+    <span class="site-pv">总访问量<i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chenhao123"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("A8bl8bnNfRNjhOq3Dp7i5nF6-gzGzoHsz", "pnVmIflnOX5YpTT0rXBSBCXJ");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,913 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="xtrabackup," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="火柴的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="需要一个MySQL的自动备份脚本，于是google了一下，发现不是自己看不懂就是运行有问题。那么迫于无赖，不能偷懒了，只能写一个比较适合自己的脚本。脚本较烂，还望轻喷。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql使用xtrabackup的全量和增量脚本">
+<meta property="og:url" content="http://chen-hao.com.cn/mysql使用xtrabackup的全量和增量脚本.html">
+<meta property="og:site_name" content="火柴的博客">
+<meta property="og:description" content="需要一个MySQL的自动备份脚本，于是google了一下，发现不是自己看不懂就是运行有问题。那么迫于无赖，不能偷懒了，只能写一个比较适合自己的脚本。脚本较烂，还望轻喷。">
+<meta property="og:updated_time" content="2016-08-30T06:16:27.779Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mysql使用xtrabackup的全量和增量脚本">
+<meta name="twitter:description" content="需要一个MySQL的自动备份脚本，于是google了一下，发现不是自己看不懂就是运行有问题。那么迫于无赖，不能偷懒了，只能写一个比较适合自己的脚本。脚本较烂，还望轻喷。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://chen-hao.com.cn/mysql使用xtrabackup的全量和增量脚本.html"/>
+
+  <title> mysql使用xtrabackup的全量和增量脚本 | 火柴的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">火柴的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                mysql使用xtrabackup的全量和增量脚本
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-30T13:16:27+08:00" content="2016-08-30">
+              2016-08-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/mysql使用xtrabackup的全量和增量脚本.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="mysql使用xtrabackup的全量和增量脚本.html" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/mysql使用xtrabackup的全量和增量脚本.html" class="leancloud_visitors" data-flag-title="mysql使用xtrabackup的全量和增量脚本">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv">总阅读量<i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>&#x9700;&#x8981;&#x4E00;&#x4E2A;MySQL&#x7684;&#x81EA;&#x52A8;&#x5907;&#x4EFD;&#x811A;&#x672C;&#xFF0C;&#x4E8E;&#x662F;google&#x4E86;&#x4E00;&#x4E0B;&#xFF0C;&#x53D1;&#x73B0;&#x4E0D;&#x662F;&#x81EA;&#x5DF1;&#x770B;&#x4E0D;&#x61C2;&#x5C31;&#x662F;&#x8FD0;&#x884C;&#x6709;&#x95EE;&#x9898;&#x3002;&#x90A3;&#x4E48;&#x8FEB;&#x4E8E;&#x65E0;&#x8D56;&#xFF0C;&#x4E0D;&#x80FD;&#x5077;&#x61D2;&#x4E86;&#xFF0C;&#x53EA;&#x80FD;&#x5199;&#x4E00;&#x4E2A;&#x6BD4;&#x8F83;&#x9002;&#x5408;&#x81EA;&#x5DF1;&#x7684;&#x811A;&#x672C;&#x3002;&#x811A;&#x672C;&#x8F83;&#x70C2;&#xFF0C;&#x8FD8;&#x671B;&#x8F7B;&#x55B7;&#x3002;<br> <a id="more"></a></p>
+</blockquote>
+<p>&#x4E0A;&#x6B63;&#x9898;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"><span class="comment"># MySQL&#x5168;&#x91CF;&#x548C;&#x589E;&#x91CF;&#x5907;&#x4EFD;</span></div><div class="line"><span class="comment"># ch</span></div><div class="line"><span class="comment"># www.chen-hao.com.cn</span></div><div class="line"><span class="comment"># 2016-8-29 </span></div><div class="line"></div><div class="line"><span class="comment"># &#x521D;&#x59CB;&#x53D8;&#x91CF;&#x914D;&#x7F6E;</span></div><div class="line">Innobackupex_Path=/usr/bin/innobackupex                      <span class="comment">#innobackupex&#x8F6F;&#x4EF6;&#x6587;&#x4EF6;</span></div><div class="line">Mysql_Client=/usr/bin/mysql                                  <span class="comment">#mysql&#x5BA2;&#x6237;&#x7AEF;</span></div><div class="line">Mysql_Conf=/etc/my.cnf                                       <span class="comment">#mysql&#x914D;&#x7F6E;&#x6587;&#x4EF6;</span></div><div class="line">MYSQL_OPS=<span class="string">&apos;--host=localhost --user=root --password=123456&apos;</span>   <span class="comment">#mysql&#x7684;&#x8FDE;&#x63A5;&#x914D;&#x7F6E;&#xFF0C;&#x6309;&#x9700;&#x4FEE;&#x6539;</span></div><div class="line">BACKUP_FULL=/home/backup/mysql/full                          <span class="comment">#&#x5168;&#x91CF;&#x5907;&#x4EFD;&#x76EE;&#x5F55;</span></div><div class="line">BACKUP_INC=/home/backup/mysql/inc                            <span class="comment">#&#x589E;&#x91CF;&#x5907;&#x4EFD;&#x76EE;&#x5F55;</span></div><div class="line">LOG_DIR=/home/backup/mysql/backup.log                        <span class="comment">#&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x8DEF;&#x5F84;</span></div><div class="line">COMPLETE=$(tail -1 <span class="variable">$LOG_DIR</span> | cut <span class="_">-d</span>\<span class="string">&apos; -f2)                  #&#x4E34;&#x65F6;&#x622A;&#x53D6;&#x4E0A;&#x4E00;&#x4E2A;&#x589E;&#x91CF;&#x5907;&#x4EFD;&#x7684;&#x4FE1;&#x606F;</span></div><div class="line">DATE=`date +%Y%m%d_%H%M%S`                                </div><div class="line">XINQI=`date +%w`											 #&#x6B64;&#x9879;&#x4E3B;&#x8981;&#x7ED3;&#x5408;&#x589E;&#x91CF;&#x6062;&#x590D;&#x811A;&#x672C;&#x4F7F;&#x7528;</div><div class="line"></div><div class="line">#&#x73AF;&#x5883;&#x548C;&#x914D;&#x7F6E;&#x68C0;&#x67E5;</div><div class="line">check()</div><div class="line">  {</div><div class="line">    #&#x68C0;&#x67E5;&#x76EE;&#x5F55;&#x548C;&#x521B;&#x5EFA;&#x76EE;&#x5F55;</div><div class="line">    if [[ ! -d $BACKUP_FULL ]];then</div><div class="line">        mkdir -p $BACKUP_FULL</div><div class="line">    fi</div><div class="line"></div><div class="line">    if [[ ! -d $BACKUP_INC ]];then</div><div class="line">        mkdir -p $BACKUP_INC</div><div class="line">    fi</div><div class="line"></div><div class="line">    #&#x5B89;&#x88C5;&#x8F6F;&#x4EF6;2.4&#xFF0C;&#x9700;&#x8981;&#x5176;&#x4ED6;&#x7248;&#x672C;&#x8BF7;&#x81EA;&#x884C;&#x5B98;&#x7F51;&#x4E0B;&#x8F7D;</div><div class="line">    if [[ ! `rpm -q percona-xtrabackup-24-2.4.4-1.el6.x86_64` ]];then</div><div class="line">        wget https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-2.4.4/binary/redhat/6/x86_64/percona-xtrabackup-24-2.4.4-1.el6.x86_64.rpm &amp;&gt; /dev/null</div><div class="line">        yum -y install percona-xtrabackup-24-2.4.4-1.el6.x86_64.rpm &amp;&gt; /dev/null</div><div class="line">    fi</div><div class="line"></div><div class="line">    if [[ ! -f $Mysql_Client ]];then</div><div class="line">        Error &quot;&#x672A;&#x5B89;&#x88C5;mysql&#x5BA2;&#x6237;&#x7AEF;&quot;</div><div class="line">    fi</div><div class="line"></div><div class="line">    if [[ ! -f $Mysql_Conf ]];then</div><div class="line">        Error &quot;mysql&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x8DEF;&#x5F84;&#x4E0D;&#x6B63;&#x786E;&quot;</div><div class="line">    fi</div><div class="line"></div><div class="line">    #&#x68C0;&#x67E5;mysql&#x7684;&#x8FD0;&#x884C;&#x72B6;&#x6001;</div><div class="line">    if [[ `netstat -tlnp |grep mysqld |wc -l` = 0 ]];then</div><div class="line">        Error &quot;MySQL&#x6CA1;&#x6709;&#x8FD0;&#x884C;&quot;</div><div class="line">    fi</div><div class="line"></div><div class="line">    #&#x9A8C;&#x8BC1;mysql&#x7684;&#x7528;&#x6237;&#x548C;&#x5BC6;&#x7801;&#x662F;&#x5426;&#x6B63;&#x786E;</div><div class="line">    if  ! `echo &apos;<span class="built_in">exit</span><span class="string">&apos; | $Mysql_Client -s  $MYSQL_OPS &gt;/dev/null 2&gt;&amp;1` ; then</span></div><div class="line">        Error &quot;&#x63D0;&#x4F9B;&#x7684;&#x6570;&#x636E;&#x5E93;&#x8FDE;&#x63A5;&#x914D;&#x7F6E;&#x4E0D;&#x6B63;&#x786E;!&quot;</div><div class="line">    fi</div><div class="line">  }</div><div class="line"></div><div class="line"></div><div class="line"># &#x5168;&#x91CF;&#x5907;&#x4EFD;</div><div class="line">full()</div><div class="line">{</div><div class="line">	$Innobackupex_Path $MYSQL_OPS $BACKUP_FULL &amp;&gt; /tmp/&quot;$DATE&quot;.txt</div><div class="line">	echo &quot;&#x661F;&#x671F;$XINQI&quot; &gt;&gt; $LOG_DIR</div><div class="line">	grep &quot;Backup created in directory&quot; /tmp/&quot;$DATE&quot;.txt &gt;&gt; $LOG_DIR</div><div class="line">	rm -rf /tmp/&quot;$DATE&quot;.txt</div><div class="line">}</div><div class="line"></div><div class="line"># &#x589E;&#x91CF;&#x5907;&#x4EFD;</div><div class="line"># &#x6CE8;&#x610F;,&#x6B64;&#x589E;&#x91CF;&#x4F1A;&#x6839;&#x636E; $LOG_DIR &#x6587;&#x4EF6;&#x4E2D;&#x7684;&#x6700;&#x540E;&#x4E00;&#x6B21;&#x7684;&#x6587;&#x4EF6;&#x6765;&#x505A;&#x589E;&#x91CF;</div><div class="line">inc()</div><div class="line">{</div><div class="line">	if [[ ! -s $LOG_DIR ]];then</div><div class="line">		full</div><div class="line">		exit 0</div><div class="line">	fi</div><div class="line">	$Innobackupex_Path $MYSQL_OPS --incremental &quot;$BACKUP_INC&quot; --incremental-basedir=$COMPLETE &amp;&gt; /tmp/&quot;$DATE&quot;.txt</div><div class="line">	echo &quot;&#x661F;&#x671F;$XINQI&quot; &gt;&gt; $LOG_DIR</div><div class="line">	grep &quot;Backup created in directory&quot; /tmp/&quot;$DATE&quot;.txt &gt;&gt; $LOG_DIR</div><div class="line">	rm -rf /tmp/&quot;$DATE&quot;.txt</div><div class="line">}</div><div class="line"></div><div class="line"># &#x5220;&#x9664;&#x4E00;&#x6708;&#x524D;&#x7684;&#x5168;&#x5907;&#x548C;&#x5897;&#x5907;</div><div class="line">del()</div><div class="line">{</div><div class="line">	for old_file in $(find $BACKUP_FULL $BACKUP_INC -mtime +30)</div><div class="line">	do</div><div class="line">		rm -rf &quot;${old_file}&quot;</div><div class="line">	done</div><div class="line">}</div><div class="line"></div><div class="line">case $1 in</div><div class="line">	full)</div><div class="line">        check</div><div class="line">		del</div><div class="line">        full</div><div class="line">        ;;</div><div class="line">	inc)</div><div class="line">    	check</div><div class="line">	    del</div><div class="line">        inc</div><div class="line">        ;;</div><div class="line">	 *)</div><div class="line">cat &lt;&lt; EOF</div><div class="line">+----------------+</div><div class="line">+ Use:           +</div><div class="line">+ full  &#x5168;&#x91CF;&#x6062;&#x590D; +</div><div class="line">+ inc   &#x589E;&#x91CF;&#x6062;&#x590D; +</div><div class="line">+----------------+</div><div class="line">EOF</div><div class="line">      	;;</div><div class="line">esac</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/weixin.png" alt="CH WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/xtrabackup/" rel="tag">#xtrabackup</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/KVM启动故障.html" rel="next" title="KVM启动故障">
+                <i class="fa fa-chevron-left"></i> KVM启动故障
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/xtrabackup自动恢复脚本.html" rel="prev" title="xtrabackup自动恢复脚本">
+                xtrabackup自动恢复脚本 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="mysql使用xtrabackup的全量和增量脚本.html"
+     data-title="mysql使用xtrabackup的全量和增量脚本"
+     data-content=""
+     data-url="http://chen-hao.com.cn/mysql使用xtrabackup的全量和增量脚本.html">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="mysql使用xtrabackup的全量和增量脚本.html"
+           data-title="mysql使用xtrabackup的全量和增量脚本" data-url="http://chen-hao.com.cn/mysql使用xtrabackup的全量和增量脚本.html">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/linux5.gif"
+               alt="CH" />
+          <p class="site-author-name" itemprop="name">CH</p>
+          <p class="site-description motion-element" itemprop="description">对自己要求高一点！</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">32</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ch-ld/ch-ld.github.io" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.magedu.com/" title="马哥教育" target="_blank">马哥教育</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://geass.link/" title="Jin Lei" target="_blank">Jin Lei</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://book.open-falcon.org/zh/intro/index.html" title="小米监控" target="_blank">小米监控</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/dianping/cat" title="点评监控" target="_blank">点评监控</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/CodisLabs/codis" title="Codis" target="_blank">Codis</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">CH</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">访客数<i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span>人次</span>
+  
+
+  
+    <span class="site-pv">总访问量<i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chenhao123"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("A8bl8bnNfRNjhOq3Dp7i5nF6-gzGzoHsz", "pnVmIflnOX5YpTT0rXBSBCXJ");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>
