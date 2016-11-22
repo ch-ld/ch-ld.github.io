@@ -350,11 +350,6 @@
           
 
           
-              &nbsp; | &nbsp;
-              <span class="page-pv">总阅读量<i class="fa fa-file-o"></i>
-              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
-              </span>
-          
         </div>
       </header>
     
@@ -367,14 +362,14 @@
 
       
         <blockquote>
-<p>相信小伙伴们在做keepalived、haproxy或者pacemaker的时候，给httpd做健康状态检测一定会给后端服务器带来大量的访问日志。访问日志对我们运维来说至关重要（后期我们可以通过日志来分析用户的各种行为），但是健康状态检测的日志我们可以不用记录日志。毕竟每两三秒记录一次，而且后期统计时对我们也没有什么用。<br><a id="more"></a></p>
+<p>&#x76F8;&#x4FE1;&#x5C0F;&#x4F19;&#x4F34;&#x4EEC;&#x5728;&#x505A;keepalived&#x3001;haproxy&#x6216;&#x8005;pacemaker&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x7ED9;httpd&#x505A;&#x5065;&#x5EB7;&#x72B6;&#x6001;&#x68C0;&#x6D4B;&#x4E00;&#x5B9A;&#x4F1A;&#x7ED9;&#x540E;&#x7AEF;&#x670D;&#x52A1;&#x5668;&#x5E26;&#x6765;&#x5927;&#x91CF;&#x7684;&#x8BBF;&#x95EE;&#x65E5;&#x5FD7;&#x3002;&#x8BBF;&#x95EE;&#x65E5;&#x5FD7;&#x5BF9;&#x6211;&#x4EEC;&#x8FD0;&#x7EF4;&#x6765;&#x8BF4;&#x81F3;&#x5173;&#x91CD;&#x8981;&#xFF08;&#x540E;&#x671F;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x65E5;&#x5FD7;&#x6765;&#x5206;&#x6790;&#x7528;&#x6237;&#x7684;&#x5404;&#x79CD;&#x884C;&#x4E3A;&#xFF09;&#xFF0C;&#x4F46;&#x662F;&#x5065;&#x5EB7;&#x72B6;&#x6001;&#x68C0;&#x6D4B;&#x7684;&#x65E5;&#x5FD7;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4E0D;&#x7528;&#x8BB0;&#x5F55;&#x65E5;&#x5FD7;&#x3002;&#x6BD5;&#x7ADF;&#x6BCF;&#x4E24;&#x4E09;&#x79D2;&#x8BB0;&#x5F55;&#x4E00;&#x6B21;&#xFF0C;&#x800C;&#x4E14;&#x540E;&#x671F;&#x7EDF;&#x8BA1;&#x65F6;&#x5BF9;&#x6211;&#x4EEC;&#x4E5F;&#x6CA1;&#x6709;&#x4EC0;&#x4E48;&#x7528;&#x3002;<br><a id="more"></a></p>
 </blockquote>
-<p>本文将具体说明如何在后端主机nginx 、 apache 服务器上配置不记录健康状态检测的访问日志。</p>
+<p>&#x672C;&#x6587;&#x5C06;&#x5177;&#x4F53;&#x8BF4;&#x660E;&#x5982;&#x4F55;&#x5728;&#x540E;&#x7AEF;&#x4E3B;&#x673A;nginx &#x3001; apache &#x670D;&#x52A1;&#x5668;&#x4E0A;&#x914D;&#x7F6E;&#x4E0D;&#x8BB0;&#x5F55;&#x5065;&#x5EB7;&#x72B6;&#x6001;&#x68C0;&#x6D4B;&#x7684;&#x8BBF;&#x95EE;&#x65E5;&#x5FD7;&#x3002;</p>
 <p>nginx</p>
-<p>一般基于7层的健康状态检测，都是通过访问后端主机的特定的url， 特性目录下的资源，来判断后端主机是否出现故障，那么我们只需要在nginx的server段上加一个location。访问我们特有的健康状态检测的资源，不予以记录日志即可，其他的照常记录日志。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">location = /test.html &#123;</div><div class="line">access_<span class="built_in">log</span> off;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>&#x4E00;&#x822C;&#x57FA;&#x4E8E;7&#x5C42;&#x7684;&#x5065;&#x5EB7;&#x72B6;&#x6001;&#x68C0;&#x6D4B;&#xFF0C;&#x90FD;&#x662F;&#x901A;&#x8FC7;&#x8BBF;&#x95EE;&#x540E;&#x7AEF;&#x4E3B;&#x673A;&#x7684;&#x7279;&#x5B9A;&#x7684;url&#xFF0C; &#x7279;&#x6027;&#x76EE;&#x5F55;&#x4E0B;&#x7684;&#x8D44;&#x6E90;&#xFF0C;&#x6765;&#x5224;&#x65AD;&#x540E;&#x7AEF;&#x4E3B;&#x673A;&#x662F;&#x5426;&#x51FA;&#x73B0;&#x6545;&#x969C;&#xFF0C;&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x8981;&#x5728;nginx&#x7684;server&#x6BB5;&#x4E0A;&#x52A0;&#x4E00;&#x4E2A;location&#x3002;&#x8BBF;&#x95EE;&#x6211;&#x4EEC;&#x7279;&#x6709;&#x7684;&#x5065;&#x5EB7;&#x72B6;&#x6001;&#x68C0;&#x6D4B;&#x7684;&#x8D44;&#x6E90;&#xFF0C;&#x4E0D;&#x4E88;&#x4EE5;&#x8BB0;&#x5F55;&#x65E5;&#x5FD7;&#x5373;&#x53EF;&#xFF0C;&#x5176;&#x4ED6;&#x7684;&#x7167;&#x5E38;&#x8BB0;&#x5F55;&#x65E5;&#x5FD7;&#x3002;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">location = /test.html {</div><div class="line">access_<span class="built_in">log</span> off;</div><div class="line">}</div></pre></td></tr></table></figure></p>
 <p>apache</p>
-<p>1.指定记录法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">SetEnvIfNoCase Request_URI <span class="string">"(\.htm|\/|\.html|\.php)$"</span> htm  </div><div class="line">CustomLog logs/9enjoy.com-access_<span class="built_in">log</span> combined env=htm</div></pre></td></tr></table></figure></p>
-<p>2.排除法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;FilesMatch <span class="string">"\.html"</span>&gt;</div><div class="line">SetEnv IMAGE 1</div><div class="line">&lt;/FilesMatch&gt;</div><div class="line">CustomLog <span class="string">"logs/access_log"</span> combined env=!IMAGE</div></pre></td></tr></table></figure></p>
+<p>1.&#x6307;&#x5B9A;&#x8BB0;&#x5F55;&#x6CD5;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">SetEnvIfNoCase Request_URI <span class="string">&quot;(\.htm|\/|\.html|\.php)$&quot;</span> htm  </div><div class="line">CustomLog logs/9enjoy.com-access_<span class="built_in">log</span> combined env=htm</div></pre></td></tr></table></figure></p>
+<p>2.&#x6392;&#x9664;&#x6CD5;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;FilesMatch <span class="string">&quot;\.html&quot;</span>&gt;</div><div class="line">SetEnv IMAGE 1</div><div class="line">&lt;/FilesMatch&gt;</div><div class="line">CustomLog <span class="string">&quot;logs/access_log&quot;</span> combined env=!IMAGE</div></pre></td></tr></table></figure></p>
 
       
     </div>

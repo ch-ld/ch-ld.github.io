@@ -350,11 +350,6 @@
           
 
           
-              &nbsp; | &nbsp;
-              <span class="page-pv">总阅读量<i class="fa fa-file-o"></i>
-              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
-              </span>
-          
         </div>
       </header>
     
@@ -367,224 +362,224 @@
 
       
         <blockquote>
-<p>当浏览器从 web 服务器请求服务时，可能会发生错误。返回下面的一系列状态消息，从状态码的类型我们可以定位故障，从而解决线上环境的各种问题。<br><a id="more"></a></p>
+<p>&#x5F53;&#x6D4F;&#x89C8;&#x5668;&#x4ECE; web &#x670D;&#x52A1;&#x5668;&#x8BF7;&#x6C42;&#x670D;&#x52A1;&#x65F6;&#xFF0C;&#x53EF;&#x80FD;&#x4F1A;&#x53D1;&#x751F;&#x9519;&#x8BEF;&#x3002;&#x8FD4;&#x56DE;&#x4E0B;&#x9762;&#x7684;&#x4E00;&#x7CFB;&#x5217;&#x72B6;&#x6001;&#x6D88;&#x606F;&#xFF0C;&#x4ECE;&#x72B6;&#x6001;&#x7801;&#x7684;&#x7C7B;&#x578B;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5B9A;&#x4F4D;&#x6545;&#x969C;&#xFF0C;&#x4ECE;&#x800C;&#x89E3;&#x51B3;&#x7EBF;&#x4E0A;&#x73AF;&#x5883;&#x7684;&#x5404;&#x79CD;&#x95EE;&#x9898;&#x3002;<br><a id="more"></a></p>
 </blockquote>
-<h3>1xx: 信息</h3>
+<h3 id="1xx-&#x4FE1;&#x606F;">1xx: &#x4FE1;&#x606F;</h3>
 
 <table>
 <thead>
 <tr>
-<th>消息</th>
-<th>描述</th>
+<th>&#x6D88;&#x606F;</th>
+<th>&#x63CF;&#x8FF0;</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>100 Continue</td>
-<td>服务器仅接收到部分请求，但是一旦服务器并没有拒绝该请求，客户端应该继续发送其余的请求</td>
+<td>&#x670D;&#x52A1;&#x5668;&#x4EC5;&#x63A5;&#x6536;&#x5230;&#x90E8;&#x5206;&#x8BF7;&#x6C42;&#xFF0C;&#x4F46;&#x662F;&#x4E00;&#x65E6;&#x670D;&#x52A1;&#x5668;&#x5E76;&#x6CA1;&#x6709;&#x62D2;&#x7EDD;&#x8BE5;&#x8BF7;&#x6C42;&#xFF0C;&#x5BA2;&#x6237;&#x7AEF;&#x5E94;&#x8BE5;&#x7EE7;&#x7EED;&#x53D1;&#x9001;&#x5176;&#x4F59;&#x7684;&#x8BF7;&#x6C42;</td>
 </tr>
 <tr>
 <td>101 Switching Protocols</td>
-<td>服务器转换协议：服务器将遵从客户的请求转换到另外一种协议</td>
+<td>&#x670D;&#x52A1;&#x5668;&#x8F6C;&#x6362;&#x534F;&#x8BAE;&#xFF1A;&#x670D;&#x52A1;&#x5668;&#x5C06;&#x9075;&#x4ECE;&#x5BA2;&#x6237;&#x7684;&#x8BF7;&#x6C42;&#x8F6C;&#x6362;&#x5230;&#x53E6;&#x5916;&#x4E00;&#x79CD;&#x534F;&#x8BAE;</td>
 </tr>
 </tbody>
 </table>
-<h3>2xx: 成功</h3>
+<h3 id="2xx-&#x6210;&#x529F;">2xx: &#x6210;&#x529F;</h3>
 
 <table>
 <thead>
 <tr>
-<th>消息</th>
-<th>描述</th>
+<th>&#x6D88;&#x606F;</th>
+<th>&#x63CF;&#x8FF0;</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>200 OK</td>
-<td>请求成功（其后是对GET和POST请求的应答文档）</td>
+<td>&#x8BF7;&#x6C42;&#x6210;&#x529F;&#xFF08;&#x5176;&#x540E;&#x662F;&#x5BF9;GET&#x548C;POST&#x8BF7;&#x6C42;&#x7684;&#x5E94;&#x7B54;&#x6587;&#x6863;&#xFF09;</td>
 </tr>
 <tr>
 <td>201 Created</td>
-<td>请求被创建完成，同时新的资源被创建</td>
+<td>&#x8BF7;&#x6C42;&#x88AB;&#x521B;&#x5EFA;&#x5B8C;&#x6210;&#xFF0C;&#x540C;&#x65F6;&#x65B0;&#x7684;&#x8D44;&#x6E90;&#x88AB;&#x521B;&#x5EFA;</td>
 </tr>
 <tr>
 <td>202 Accepted</td>
-<td>供处理的请求已被接受，但是处理未完成</td>
+<td>&#x4F9B;&#x5904;&#x7406;&#x7684;&#x8BF7;&#x6C42;&#x5DF2;&#x88AB;&#x63A5;&#x53D7;&#xFF0C;&#x4F46;&#x662F;&#x5904;&#x7406;&#x672A;&#x5B8C;&#x6210;</td>
 </tr>
 <tr>
 <td>203 Non-authoritative Information</td>
-<td>文档已经正常地返回，但一些应答头可能不正确，因为使用的是文档的拷贝</td>
+<td>&#x6587;&#x6863;&#x5DF2;&#x7ECF;&#x6B63;&#x5E38;&#x5730;&#x8FD4;&#x56DE;&#xFF0C;&#x4F46;&#x4E00;&#x4E9B;&#x5E94;&#x7B54;&#x5934;&#x53EF;&#x80FD;&#x4E0D;&#x6B63;&#x786E;&#xFF0C;&#x56E0;&#x4E3A;&#x4F7F;&#x7528;&#x7684;&#x662F;&#x6587;&#x6863;&#x7684;&#x62F7;&#x8D1D;</td>
 </tr>
 <tr>
 <td>204 No Content</td>
-<td>没有新文档。浏览器应该继续显示原来的文档。如果用户定期地刷新页面，而Servlet可以确定用户文档足够新，这个状态代码是很有用的</td>
+<td>&#x6CA1;&#x6709;&#x65B0;&#x6587;&#x6863;&#x3002;&#x6D4F;&#x89C8;&#x5668;&#x5E94;&#x8BE5;&#x7EE7;&#x7EED;&#x663E;&#x793A;&#x539F;&#x6765;&#x7684;&#x6587;&#x6863;&#x3002;&#x5982;&#x679C;&#x7528;&#x6237;&#x5B9A;&#x671F;&#x5730;&#x5237;&#x65B0;&#x9875;&#x9762;&#xFF0C;&#x800C;Servlet&#x53EF;&#x4EE5;&#x786E;&#x5B9A;&#x7528;&#x6237;&#x6587;&#x6863;&#x8DB3;&#x591F;&#x65B0;&#xFF0C;&#x8FD9;&#x4E2A;&#x72B6;&#x6001;&#x4EE3;&#x7801;&#x662F;&#x5F88;&#x6709;&#x7528;&#x7684;</td>
 </tr>
 <tr>
 <td>205 Reset Content</td>
-<td>没有新文档。但浏览器应该重置它所显示的内容。用来强制浏览器清除表单输入内容</td>
+<td>&#x6CA1;&#x6709;&#x65B0;&#x6587;&#x6863;&#x3002;&#x4F46;&#x6D4F;&#x89C8;&#x5668;&#x5E94;&#x8BE5;&#x91CD;&#x7F6E;&#x5B83;&#x6240;&#x663E;&#x793A;&#x7684;&#x5185;&#x5BB9;&#x3002;&#x7528;&#x6765;&#x5F3A;&#x5236;&#x6D4F;&#x89C8;&#x5668;&#x6E05;&#x9664;&#x8868;&#x5355;&#x8F93;&#x5165;&#x5185;&#x5BB9;</td>
 </tr>
 <tr>
 <td>206 Partial Content</td>
-<td>客户发送了一个带有Range头的GET请求，服务器完成了它</td>
+<td>&#x5BA2;&#x6237;&#x53D1;&#x9001;&#x4E86;&#x4E00;&#x4E2A;&#x5E26;&#x6709;Range&#x5934;&#x7684;GET&#x8BF7;&#x6C42;&#xFF0C;&#x670D;&#x52A1;&#x5668;&#x5B8C;&#x6210;&#x4E86;&#x5B83;</td>
 </tr>
 </tbody>
 </table>
-<h3>3xx: 重定向</h3>
+<h3 id="3xx-&#x91CD;&#x5B9A;&#x5411;">3xx: &#x91CD;&#x5B9A;&#x5411;</h3>
 
 <table>
 <thead>
 <tr>
-<th>消息</th>
-<th>描述</th>
+<th>&#x6D88;&#x606F;</th>
+<th>&#x63CF;&#x8FF0;</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>300 Multiple Choices</td>
-<td>多重选择。链接列表。用户可以选择某链接到达目的地。最多允许五个地址</td>
+<td>&#x591A;&#x91CD;&#x9009;&#x62E9;&#x3002;&#x94FE;&#x63A5;&#x5217;&#x8868;&#x3002;&#x7528;&#x6237;&#x53EF;&#x4EE5;&#x9009;&#x62E9;&#x67D0;&#x94FE;&#x63A5;&#x5230;&#x8FBE;&#x76EE;&#x7684;&#x5730;&#x3002;&#x6700;&#x591A;&#x5141;&#x8BB8;&#x4E94;&#x4E2A;&#x5730;&#x5740;</td>
 </tr>
 <tr>
 <td>301 Moved Permanently</td>
-<td>所请求的页面已经转移至新的url</td>
+<td>&#x6240;&#x8BF7;&#x6C42;&#x7684;&#x9875;&#x9762;&#x5DF2;&#x7ECF;&#x8F6C;&#x79FB;&#x81F3;&#x65B0;&#x7684;url</td>
 </tr>
 <tr>
 <td>302 Found</td>
-<td>所请求的页面已经临时转移至新的url</td>
+<td>&#x6240;&#x8BF7;&#x6C42;&#x7684;&#x9875;&#x9762;&#x5DF2;&#x7ECF;&#x4E34;&#x65F6;&#x8F6C;&#x79FB;&#x81F3;&#x65B0;&#x7684;url</td>
 </tr>
 <tr>
 <td>303 See Other</td>
-<td>所请求的页面可在别的url下被找到</td>
+<td>&#x6240;&#x8BF7;&#x6C42;&#x7684;&#x9875;&#x9762;&#x53EF;&#x5728;&#x522B;&#x7684;url&#x4E0B;&#x88AB;&#x627E;&#x5230;</td>
 </tr>
 <tr>
 <td>304 Not Modified</td>
-<td>未按预期修改文档。客户端有缓冲的文档并发出了一个条件性的请求（一般是提供If-Modified-Since头表示客户只想比指定日期更新的文档）。服务器告诉客户，原来缓冲的文档还可以继续使用</td>
+<td>&#x672A;&#x6309;&#x9884;&#x671F;&#x4FEE;&#x6539;&#x6587;&#x6863;&#x3002;&#x5BA2;&#x6237;&#x7AEF;&#x6709;&#x7F13;&#x51B2;&#x7684;&#x6587;&#x6863;&#x5E76;&#x53D1;&#x51FA;&#x4E86;&#x4E00;&#x4E2A;&#x6761;&#x4EF6;&#x6027;&#x7684;&#x8BF7;&#x6C42;&#xFF08;&#x4E00;&#x822C;&#x662F;&#x63D0;&#x4F9B;If-Modified-Since&#x5934;&#x8868;&#x793A;&#x5BA2;&#x6237;&#x53EA;&#x60F3;&#x6BD4;&#x6307;&#x5B9A;&#x65E5;&#x671F;&#x66F4;&#x65B0;&#x7684;&#x6587;&#x6863;&#xFF09;&#x3002;&#x670D;&#x52A1;&#x5668;&#x544A;&#x8BC9;&#x5BA2;&#x6237;&#xFF0C;&#x539F;&#x6765;&#x7F13;&#x51B2;&#x7684;&#x6587;&#x6863;&#x8FD8;&#x53EF;&#x4EE5;&#x7EE7;&#x7EED;&#x4F7F;&#x7528;</td>
 </tr>
 <tr>
 <td>305 Use Proxy</td>
-<td>客户请求的文档应该通过Location头所指明的代理服务器提取</td>
+<td>&#x5BA2;&#x6237;&#x8BF7;&#x6C42;&#x7684;&#x6587;&#x6863;&#x5E94;&#x8BE5;&#x901A;&#x8FC7;Location&#x5934;&#x6240;&#x6307;&#x660E;&#x7684;&#x4EE3;&#x7406;&#x670D;&#x52A1;&#x5668;&#x63D0;&#x53D6;</td>
 </tr>
 <tr>
 <td>306 Unused</td>
-<td>此代码被用于前一版本。目前已不再使用，但是代码依然被保留</td>
+<td>&#x6B64;&#x4EE3;&#x7801;&#x88AB;&#x7528;&#x4E8E;&#x524D;&#x4E00;&#x7248;&#x672C;&#x3002;&#x76EE;&#x524D;&#x5DF2;&#x4E0D;&#x518D;&#x4F7F;&#x7528;&#xFF0C;&#x4F46;&#x662F;&#x4EE3;&#x7801;&#x4F9D;&#x7136;&#x88AB;&#x4FDD;&#x7559;</td>
 </tr>
 <tr>
 <td>307 Temporary Redirect</td>
-<td>被请求的页面已经临时移至新的url</td>
+<td>&#x88AB;&#x8BF7;&#x6C42;&#x7684;&#x9875;&#x9762;&#x5DF2;&#x7ECF;&#x4E34;&#x65F6;&#x79FB;&#x81F3;&#x65B0;&#x7684;url</td>
 </tr>
 </tbody>
 </table>
-<h3>4xx: 客户端错误</h3>
+<h3 id="4xx-&#x5BA2;&#x6237;&#x7AEF;&#x9519;&#x8BEF;">4xx: &#x5BA2;&#x6237;&#x7AEF;&#x9519;&#x8BEF;</h3>
 
 <table>
 <thead>
 <tr>
-<th>消息</th>
-<th>描述</th>
+<th>&#x6D88;&#x606F;</th>
+<th>&#x63CF;&#x8FF0;</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>400 Bad Request</td>
-<td>服务器未能理解请求</td>
+<td>&#x670D;&#x52A1;&#x5668;&#x672A;&#x80FD;&#x7406;&#x89E3;&#x8BF7;&#x6C42;</td>
 </tr>
 <tr>
 <td>401 Unauthorized</td>
-<td>被请求的页面需要用户名和密码</td>
+<td>&#x88AB;&#x8BF7;&#x6C42;&#x7684;&#x9875;&#x9762;&#x9700;&#x8981;&#x7528;&#x6237;&#x540D;&#x548C;&#x5BC6;&#x7801;</td>
 </tr>
 <tr>
-<td>402 Payment Required    此代码尚无法使用</td>
+<td>402 Payment Required    &#x6B64;&#x4EE3;&#x7801;&#x5C1A;&#x65E0;&#x6CD5;&#x4F7F;&#x7528;</td>
 </tr>
 <tr>
 <td>403 Forbidden</td>
-<td>对被请求页面的访问被禁止</td>
+<td>&#x5BF9;&#x88AB;&#x8BF7;&#x6C42;&#x9875;&#x9762;&#x7684;&#x8BBF;&#x95EE;&#x88AB;&#x7981;&#x6B62;</td>
 </tr>
 <tr>
 <td>404 Not Found</td>
-<td>服务器无法找到被请求的页面</td>
+<td>&#x670D;&#x52A1;&#x5668;&#x65E0;&#x6CD5;&#x627E;&#x5230;&#x88AB;&#x8BF7;&#x6C42;&#x7684;&#x9875;&#x9762;</td>
 </tr>
 <tr>
 <td>405 Method Not Allowed</td>
-<td>请求中指定的方法不被允许</td>
+<td>&#x8BF7;&#x6C42;&#x4E2D;&#x6307;&#x5B9A;&#x7684;&#x65B9;&#x6CD5;&#x4E0D;&#x88AB;&#x5141;&#x8BB8;</td>
 </tr>
 <tr>
 <td>406 Not Acceptable</td>
-<td>服务器生成的响应无法被客户端所接受</td>
+<td>&#x670D;&#x52A1;&#x5668;&#x751F;&#x6210;&#x7684;&#x54CD;&#x5E94;&#x65E0;&#x6CD5;&#x88AB;&#x5BA2;&#x6237;&#x7AEF;&#x6240;&#x63A5;&#x53D7;</td>
 </tr>
 <tr>
 <td>407 Proxy Authentication Required</td>
-<td>用户必须首先使用代理服务器进行验证，这样请求才会被处理</td>
+<td>&#x7528;&#x6237;&#x5FC5;&#x987B;&#x9996;&#x5148;&#x4F7F;&#x7528;&#x4EE3;&#x7406;&#x670D;&#x52A1;&#x5668;&#x8FDB;&#x884C;&#x9A8C;&#x8BC1;&#xFF0C;&#x8FD9;&#x6837;&#x8BF7;&#x6C42;&#x624D;&#x4F1A;&#x88AB;&#x5904;&#x7406;</td>
 </tr>
 <tr>
 <td>408 Request Timeout</td>
-<td>请求超出了服务器的等待时间</td>
+<td>&#x8BF7;&#x6C42;&#x8D85;&#x51FA;&#x4E86;&#x670D;&#x52A1;&#x5668;&#x7684;&#x7B49;&#x5F85;&#x65F6;&#x95F4;</td>
 </tr>
 <tr>
 <td>409 Conflict</td>
-<td>由于冲突，请求无法被完成</td>
+<td>&#x7531;&#x4E8E;&#x51B2;&#x7A81;&#xFF0C;&#x8BF7;&#x6C42;&#x65E0;&#x6CD5;&#x88AB;&#x5B8C;&#x6210;</td>
 </tr>
 <tr>
 <td>410 Gone</td>
-<td>被请求的页面不可用</td>
+<td>&#x88AB;&#x8BF7;&#x6C42;&#x7684;&#x9875;&#x9762;&#x4E0D;&#x53EF;&#x7528;</td>
 </tr>
 <tr>
-<td>411 Length Required “Content-Length”</td>
-<td>未被定义。如果无此内容，服务器不会接受请求</td>
+<td>411 Length Required &#x201C;Content-Length&#x201D;</td>
+<td>&#x672A;&#x88AB;&#x5B9A;&#x4E49;&#x3002;&#x5982;&#x679C;&#x65E0;&#x6B64;&#x5185;&#x5BB9;&#xFF0C;&#x670D;&#x52A1;&#x5668;&#x4E0D;&#x4F1A;&#x63A5;&#x53D7;&#x8BF7;&#x6C42;</td>
 </tr>
 <tr>
 <td>412 Precondition Failed</td>
-<td>请求中的前提条件被服务器评估为失败</td>
+<td>&#x8BF7;&#x6C42;&#x4E2D;&#x7684;&#x524D;&#x63D0;&#x6761;&#x4EF6;&#x88AB;&#x670D;&#x52A1;&#x5668;&#x8BC4;&#x4F30;&#x4E3A;&#x5931;&#x8D25;</td>
 </tr>
 <tr>
 <td>413 Request Entity Too Large</td>
-<td>由于所请求的实体的太大，服务器不会接受请求</td>
+<td>&#x7531;&#x4E8E;&#x6240;&#x8BF7;&#x6C42;&#x7684;&#x5B9E;&#x4F53;&#x7684;&#x592A;&#x5927;&#xFF0C;&#x670D;&#x52A1;&#x5668;&#x4E0D;&#x4F1A;&#x63A5;&#x53D7;&#x8BF7;&#x6C42;</td>
 </tr>
 <tr>
 <td>414 Request-url Too Long</td>
-<td>由于url太长，服务器不会接受请求。当post请求被转换为带有很长的查询信息的get请求时，就会发生这种情况</td>
+<td>&#x7531;&#x4E8E;url&#x592A;&#x957F;&#xFF0C;&#x670D;&#x52A1;&#x5668;&#x4E0D;&#x4F1A;&#x63A5;&#x53D7;&#x8BF7;&#x6C42;&#x3002;&#x5F53;post&#x8BF7;&#x6C42;&#x88AB;&#x8F6C;&#x6362;&#x4E3A;&#x5E26;&#x6709;&#x5F88;&#x957F;&#x7684;&#x67E5;&#x8BE2;&#x4FE1;&#x606F;&#x7684;get&#x8BF7;&#x6C42;&#x65F6;&#xFF0C;&#x5C31;&#x4F1A;&#x53D1;&#x751F;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;</td>
 </tr>
 <tr>
 <td>415 Unsupported Media Type</td>
-<td>由于媒介类型不被支持，服务器不会接受请求</td>
+<td>&#x7531;&#x4E8E;&#x5A92;&#x4ECB;&#x7C7B;&#x578B;&#x4E0D;&#x88AB;&#x652F;&#x6301;&#xFF0C;&#x670D;&#x52A1;&#x5668;&#x4E0D;&#x4F1A;&#x63A5;&#x53D7;&#x8BF7;&#x6C42;</td>
 </tr>
 <tr>
 <td>416</td>
-<td>服务器不能满足客户在请求中指定的Range头</td>
+<td>&#x670D;&#x52A1;&#x5668;&#x4E0D;&#x80FD;&#x6EE1;&#x8DB3;&#x5BA2;&#x6237;&#x5728;&#x8BF7;&#x6C42;&#x4E2D;&#x6307;&#x5B9A;&#x7684;Range&#x5934;</td>
 </tr>
 </tbody>
 </table>
-<h3>5xx: 服务器错误</h3>
+<h3 id="5xx-&#x670D;&#x52A1;&#x5668;&#x9519;&#x8BEF;">5xx: &#x670D;&#x52A1;&#x5668;&#x9519;&#x8BEF;</h3>
 
 <table>
 <thead>
 <tr>
-<th>消息</th>
-<th>描述</th>
+<th>&#x6D88;&#x606F;</th>
+<th>&#x63CF;&#x8FF0;</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>500 Internal Server Error</td>
-<td>请求未完成。服务器遇到不可预知的情况</td>
+<td>&#x8BF7;&#x6C42;&#x672A;&#x5B8C;&#x6210;&#x3002;&#x670D;&#x52A1;&#x5668;&#x9047;&#x5230;&#x4E0D;&#x53EF;&#x9884;&#x77E5;&#x7684;&#x60C5;&#x51B5;</td>
 </tr>
 <tr>
 <td>501 Not Implemented</td>
-<td>请求未完成。服务器不支持所请求的功能</td>
+<td>&#x8BF7;&#x6C42;&#x672A;&#x5B8C;&#x6210;&#x3002;&#x670D;&#x52A1;&#x5668;&#x4E0D;&#x652F;&#x6301;&#x6240;&#x8BF7;&#x6C42;&#x7684;&#x529F;&#x80FD;</td>
 </tr>
 <tr>
 <td>502 Bad Gateway</td>
-<td>请求未完成。服务器从上游服务器收到一个无效的响应</td>
+<td>&#x8BF7;&#x6C42;&#x672A;&#x5B8C;&#x6210;&#x3002;&#x670D;&#x52A1;&#x5668;&#x4ECE;&#x4E0A;&#x6E38;&#x670D;&#x52A1;&#x5668;&#x6536;&#x5230;&#x4E00;&#x4E2A;&#x65E0;&#x6548;&#x7684;&#x54CD;&#x5E94;</td>
 </tr>
 <tr>
 <td>503 Service Unavailable</td>
-<td>请求未完成。服务器临时过载或当机</td>
+<td>&#x8BF7;&#x6C42;&#x672A;&#x5B8C;&#x6210;&#x3002;&#x670D;&#x52A1;&#x5668;&#x4E34;&#x65F6;&#x8FC7;&#x8F7D;&#x6216;&#x5F53;&#x673A;</td>
 </tr>
 <tr>
 <td>504 Gateway Timeout</td>
-<td>网关超时</td>
+<td>&#x7F51;&#x5173;&#x8D85;&#x65F6;</td>
 </tr>
 <tr>
 <td>505 HTTP Version Not Supported</td>
-<td>服务器不支持请求中指明的HTTP协议版本</td>
+<td>&#x670D;&#x52A1;&#x5668;&#x4E0D;&#x652F;&#x6301;&#x8BF7;&#x6C42;&#x4E2D;&#x6307;&#x660E;&#x7684;HTTP&#x534F;&#x8BAE;&#x7248;&#x672C;</td>
 </tr>
 </tbody>
 </table>
@@ -834,7 +829,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">1xx: 信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">2xx: 成功</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">3xx: 重定向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">4xx: 客户端错误</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">5.</span> <span class="nav-text">5xx: 服务器错误</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1xx-信息"><span class="nav-number">1.</span> <span class="nav-text">1xx: 信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2xx-成功"><span class="nav-number">2.</span> <span class="nav-text">2xx: 成功</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3xx-重定向"><span class="nav-number">3.</span> <span class="nav-text">3xx: 重定向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4xx-客户端错误"><span class="nav-number">4.</span> <span class="nav-text">4xx: 客户端错误</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5xx-服务器错误"><span class="nav-number">5.</span> <span class="nav-text">5xx: 服务器错误</span></a></li></ol></div>
             
           </div>
         </section>
