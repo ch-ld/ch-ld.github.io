@@ -371,111 +371,111 @@
 
       
         <blockquote>
-<p>&#x4E4B;&#x524D;&#x9762;&#x8BD5;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x603B;&#x662F;&#x56E0;&#x4E3A;&#x4E00;&#x4E9B;&#x57FA;&#x7840;&#x77E5;&#x8BC6;&#x800C;&#x88AB;PASS&#x6389;&#xFF0C;&#x540C;&#x6837;&#x4E07;&#x4E08;&#x9AD8;&#x697C;&#x5E73;&#x5730;&#x8D77;&#xFF0C;&#x4EFB;&#x4F55;&#x9AD8;&#x5927;&#x4E0A;&#x7684;&#x4E1C;&#x897F;&#x90FD;&#x79BB;&#x4E0D;&#x5F00;&#x57FA;&#x7840;&#x77E5;&#x8BC6;&#x3002;&#x6240;&#x4EE5;&#x628A;&#x57FA;&#x7840;&#x6253;&#x7262;&#x540E;&#x9762;&#x7684;&#x77E5;&#x8BC6;&#x5B66;&#x4E60;&#x8D77;&#x6765;&#x5E94;&#x8BE5;&#x4F1A;&#x4E00;&#x65E5;&#x5343;&#x91CC;&#xFF0C;&#x8FD9;&#x91CC;&#x5E9F;&#x8BDD;&#x4E0D;&#x591A;&#x8BF4;&#xFF0C;&#x5F00;&#x59CB;&#x8FDB;&#x5165;&#x4E3B;&#x9898;&#x3002;<br><a id="more"></a></p>
+<p>之前面试的过程中，总是因为一些基础知识而被PASS掉，同样万丈高楼平地起，任何高大上的东西都离不开基础知识。所以把基础打牢后面的知识学习起来应该会一日千里，这里废话不多说，开始进入主题。<br><a id="more"></a></p>
 </blockquote>
-<p></p><h2 id="osi-&#x4E03;&#x5C42;&#x7F51;&#x7EDC;&#x6A21;&#x578B;">OSI &#x4E03;&#x5C42;&#x7F51;&#x7EDC;&#x6A21;&#x578B;</h2><p></p>
+<p></p><h2>OSI 七层网络模型</h2><p></p>
 <blockquote>
-<p>&#x5F00;&#x653E;&#x5F0F;&#x7CFB;&#x7EDF;&#x4E92;&#x8054;&#x901A;&#x4FE1;&#x53C2;&#x8003;&#x6A21;&#x578B;&#xFF08;&#x82F1;&#x8BED;&#xFF1A;Open System Interconnection Reference Model&#xFF0C;ISO/IEC 7498-1&#xFF09;&#xFF0C;&#x7B80;&#x79F0;&#x4E3A;OSI&#x6A21;&#x578B;&#xFF08;OSI model&#xFF09;&#xFF0C;&#x4E00;&#x79CD;&#x6982;&#x5FF5;&#x6A21;&#x578B;&#xFF0C;&#x7531;&#x56FD;&#x9645;&#x6807;&#x51C6;&#x5316;&#x7EC4;&#x7EC7;&#xFF08;ISO&#xFF09;&#x63D0;&#x51FA;&#xFF0C;&#x4E00;&#x4E2A;&#x8BD5;&#x56FE;&#x4F7F;&#x5404;&#x79CD;&#x8BA1;&#x7B97;&#x673A;&#x5728;&#x4E16;&#x754C;&#x8303;&#x56F4;&#x5185;&#x4E92;&#x8FDE;&#x4E3A;&#x7F51;&#x7EDC;&#x7684;&#x6807;&#x51C6;&#x6846;&#x67B6;&#x3002; &#x2014; &#x7EF4;&#x57FA;&#x767E;&#x79D1;</p>
+<p>开放式系统互联通信参考模型（英语：Open System Interconnection Reference Model，ISO/IEC 7498-1），简称为OSI模型（OSI model），一种概念模型，由国际标准化组织（ISO）提出，一个试图使各种计算机在世界范围内互连为网络的标准框架。 — 维基百科</p>
 </blockquote>
 <p><img src="/uploads/OSI7model.png" class="blockquote-center"></p>
 <ul>
-<li><p><strong>&#x7B2C;7&#x5C42; &#x5E94;&#x7528;&#x5C42;(Application Layer)</strong><br>&#x63D0;&#x4F9B;&#x4E3A;&#x5E94;&#x7528;&#x8F6F;&#x4EF6;&#x800C;&#x8BBE;&#x7684;&#x754C;&#x9762;&#xFF0C;&#x4EE5;&#x8BBE;&#x7F6E;&#x4E0E;&#x53E6;&#x4E00;&#x5E94;&#x7528;&#x8F6F;&#x4EF6;&#x4E4B;&#x95F4;&#x7684;&#x901A;&#x4FE1;&#x3002;&#x4F8B;&#x5982;: HTTP&#xFF0C;HTTPS&#xFF0C;FTP&#xFF0C;TELNET&#xFF0C;SSH&#xFF0C;SMTP&#xFF0C;POP3&#x7B49;&#x3002;</p>
+<li><p><strong>第7层 应用层(Application Layer)</strong><br>提供为应用软件而设的界面，以设置与另一应用软件之间的通信。例如: HTTP，HTTPS，FTP，TELNET，SSH，SMTP，POP3等。</p>
 </li>
-<li><p><strong>&#x7B2C;6&#x5C42; &#x8868;&#x793A;&#x5C42;(Presentation Layer)</strong><br>&#x628A;&#x6570;&#x636E;&#x8F6C;&#x6362;&#x4E3A;&#x80FD;&#x4E0E;&#x63A5;&#x6536;&#x8005;&#x7684;&#x7CFB;&#x7EDF;&#x683C;&#x5F0F;&#x517C;&#x5BB9;&#x5E76;&#x9002;&#x5408;&#x4F20;&#x8F93;&#x7684;&#x683C;&#x5F0F;&#x3002;</p>
+<li><p><strong>第6层 表示层(Presentation Layer)</strong><br>把数据转换为能与接收者的系统格式兼容并适合传输的格式。</p>
 </li>
-<li><p><strong>&#x7B2C;5&#x5C42; &#x4F1A;&#x8BDD;&#x5C42;(Session Layer)</strong><br>&#x8D1F;&#x8D23;&#x5728;&#x6570;&#x636E;&#x4F20;&#x8F93;&#x4E2D;&#x8BBE;&#x7F6E;&#x548C;&#x7EF4;&#x62A4;&#x7535;&#x8111;&#x7F51;&#x7EDC;&#x4E2D;&#x4E24;&#x53F0;&#x7535;&#x8111;&#x4E4B;&#x95F4;&#x7684;&#x901A;&#x4FE1;&#x8FDE;&#x63A5;&#x3002;</p>
+<li><p><strong>第5层 会话层(Session Layer)</strong><br>负责在数据传输中设置和维护电脑网络中两台电脑之间的通信连接。</p>
 </li>
-<li><p><strong>&#x7B2C;4&#x5C42; &#x4F20;&#x8F93;&#x5C42;(Transport Layer)</strong><br>&#x628A;&#x4F20;&#x8F93;&#x8868;&#x5934;(TH)&#x52A0;&#x81F3;&#x6570;&#x636E;&#x4EE5;&#x5F62;&#x6210;&#x6570;&#x636E;&#x62A5;&#x3002;&#x4F20;&#x8F93;&#x8868;&#x5934;&#x5305;&#x542B;&#x4E86;&#x6240;&#x4F7F;&#x7528;&#x7684;&#x534F;&#x8BAE;&#x7B49;&#x53D1;&#x9001;&#x4FE1;&#x606F;&#x3002;&#x4F8B;&#x5982;:&#x4F20;&#x8F93;&#x63A7;&#x5236;&#x534F;&#x8BAE;&#x4E49;(TCP) &#x7B49;&#x3002;</p>
+<li><p><strong>第4层 传输层(Transport Layer)</strong><br>把传输表头(TH)加至数据以形成数据报。传输表头包含了所使用的协议等发送信息。例如:传输控制协议义(TCP) 等。</p>
 </li>
-<li><p><strong>&#x7B2C;3&#x5C42; &#x7F51;&#x7EDC;&#x5C42;(Network Layer)</strong><br>&#x51B3;&#x5B9A;&#x6570;&#x636E;&#x7684;&#x8DEF;&#x5F84;&#x9009;&#x62E9;&#x548C;&#x8F6C;&#x5BC4;&#xFF0C;&#x5B83;&#x7F51;&#x7EDC;&#x8868;&#x5934;(NH)&#x52A0;&#x81F3;&#x6570;&#x636E;&#x62A5;&#xFF0C;&#x4EE5;&#x5F62;&#x6210;&#x5206;&#x7EC4;&#x3002;&#x7F51;&#x7EDC;&#x8868;&#x5934;&#x5305;&#x542B;&#x4E86;&#x7F51;&#x7EDC;&#x6570;&#x636E;&#x3002;&#x4F8B;&#x5982;:&#x4E92;&#x8054;&#x7F51;&#x534F;&#x8BAE;(IP) &#x7B49;&#x3002;</p>
+<li><p><strong>第3层 网络层(Network Layer)</strong><br>决定数据的路径选择和转寄，它网络表头(NH)加至数据报，以形成分组。网络表头包含了网络数据。例如:互联网协议(IP) 等。</p>
 </li>
-<li><p><strong>&#x7B2C;2&#x5C42; &#x6570;&#x636E;&#x94FE;&#x8DEF;&#x5C42;(Data Link Layer)</strong><br>&#x8D1F;&#x8D23;&#x7F51;&#x7EDC;&#x5BFB;&#x5740;&#x3001;&#x9519;&#x8BEF;&#x4FA6;&#x6D4B;&#x548C;&#x6539;&#x9519;&#x3002;&#x5F53;&#x8868;&#x5934;&#x548C;&#x8868;&#x5C3E;&#x88AB;&#x52A0;&#x81F3;&#x6570;&#x636E;&#x5305;&#x65F6;&#xFF0C;&#x4F1A;&#x5F62;&#x6210;&#x4E86;&#x5E27;&#x3002;&#x6570;&#x636E;&#x94FE;&#x8868;&#x5934;(DLH)&#x662F;&#x5305;&#x542B;&#x4E86;&#x7269;&#x7406;&#x5730;&#x5740;&#x548C;&#x9519;&#x8BEF;&#x4FA6;&#x6D4B;&#x53CA;&#x6539;&#x9519;&#x7684;&#x65B9;&#x6CD5;&#x3002;&#x6570;&#x636E;&#x94FE;&#x8868;&#x5C3E;(DLT)&#x662F;&#x4E00;&#x4E32;&#x6307;&#x793A;&#x6570;&#x636E;&#x5305;&#x672B;&#x7AEF;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x3002;&#x4F8B;&#x5982;&#x4EE5;&#x592A;&#x7F51;&#x3001;&#x65E0;&#x7EBF;&#x5C40;&#x57DF;&#x7F51;(Wi-Fi)&#x548C;&#x901A;&#x7528;&#x5206;&#x7EC4;&#x65E0;&#x7EBF;&#x670D;&#x52A1;(GPRS)&#x7B49;&#x3002;</p>
+<li><p><strong>第2层 数据链路层(Data Link Layer)</strong><br>负责网络寻址、错误侦测和改错。当表头和表尾被加至数据包时，会形成了帧。数据链表头(DLH)是包含了物理地址和错误侦测及改错的方法。数据链表尾(DLT)是一串指示数据包末端的字符串。例如以太网、无线局域网(Wi-Fi)和通用分组无线服务(GPRS)等。</p>
 </li>
-<li><p><strong>&#x7B2C;1&#x5C42; &#x7269;&#x7406;&#x5C42;(Physical Layer)</strong><br>&#x5728;&#x5C40;&#x90E8;&#x5C40;&#x57DF;&#x7F51;&#x7EDC;&#x4E0A;&#x4F20;&#x9001;&#x5E27;&#xFF0C;&#x5B83;&#x8D1F;&#x8D23;&#x7BA1;&#x7406;&#x7535;&#x8111;&#x901A;&#x4FE1;&#x8BBE;&#x5907;&#x548C;&#x7F51;&#x7EDC;&#x5A92;&#x4F53;&#x4E4B;&#x95F4;&#x7684;&#x4E92;&#x901A;&#x3002;&#x5305;&#x62EC;&#x4E86;&#x9488;&#x811A;&#x3001;&#x7535;&#x538B;&#x3001;&#x7EBF;&#x7F06;&#x89C4;&#x8303;&#x3001;&#x96C6;&#x7EBF;&#x5668;&#x3001;&#x4E2D;&#x7EE7;&#x5668;&#x3001;&#x7F51;&#x5361;&#x3001;&#x4E3B;&#x673A;&#x9002;&#x914D;&#x5668;&#x7B49;</p>
+<li><p><strong>第1层 物理层(Physical Layer)</strong><br>在局部局域网络上传送帧，它负责管理电脑通信设备和网络媒体之间的互通。包括了针脚、电压、线缆规范、集线器、中继器、网卡、主机适配器等</p>
 </li>
 </ul>
-<p></p><h2 id="tcpip">TCP/IP</h2><p></p>
+<p></p><h2>TCP/IP</h2><p></p>
 <blockquote>
-<p>TCP/IP&#x662F;&#x4E00;&#x4E2A;&#x534F;&#x8BAE;&#x65CF;&#xFF0C;&#x901A;&#x5E38;&#x5206;&#x4E0D;&#x540C;&#x5C42;&#x6B21;&#x8FDB;&#x884C;&#x5F00;&#x53D1;&#xFF0C;&#x6BCF;&#x4E2A;&#x5C42;&#x6B21;&#x8D1F;&#x8D23;&#x4E0D;&#x540C;&#x7684;&#x901A;&#x4FE1;&#x529F;&#x80FD;&#x3002;&#x5305;&#x542B;&#x4EE5;&#x4E0B;&#x56DB;&#x4E2A;&#x5C42;&#x6B21;&#xFF0C;&#x4E0E;OSI7&#x5C42;&#x5173;&#x7CFB;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p>TCP/IP是一个协议族，通常分不同层次进行开发，每个层次负责不同的通信功能。包含以下四个层次，与OSI7层关系如下：</p>
 </blockquote>
 <p><img src="/uploads/tcpip.png" class="blockquote-center"></p>
 <ol>
-<li><strong>&#x7F51;&#x7EDC;&#x63A5;&#x53E3;&#x5C42;</strong>&#xFF0C;&#x901A;&#x5E38;&#x5305;&#x62EC;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x4E2D;&#x7684;&#x8BBE;&#x5907;&#x9A71;&#x52A8;&#x7A0B;&#x5E8F;&#x548C;&#x8BA1;&#x7B97;&#x673A;&#x4E2D;&#x5BF9;&#x5E94;&#x7684;&#x7F51;&#x7EDC;&#x63A5;&#x53E3;&#x5361;&#x3002;&#x5B83;&#x4EEC;&#x4E00;&#x8D77;&#x5904;&#x7406;&#x4E0E;&#x7535;&#x7F06;&#xFF08;&#x6216;&#x5176;&#x4ED6;&#x4EFB;&#x4F55;&#x4F20;&#x8F93;&#x5A92;&#x4ECB;&#xFF09;&#x7684;&#x7269;&#x7406;&#x63A5;&#x53E3;&#x7EC6;&#x8282;&#xFF0C;&#x5BF9;&#x5E94;&#x7684;&#x7F51;&#x7EDC;&#x534F;&#x8BAE;&#x4E3B;&#x8981;&#x662F;&#xFF1A;Ethernet&#x3001;FDDI&#x548C;&#x80FD;&#x4F20;&#x8F93;IP&#x6570;&#x636E;&#x5305;&#x7684;&#x4EFB;&#x4F55;&#x534F;&#x8BAE;&#x3002;</li>
-<li><strong>&#x7F51;&#x9645;&#x5C42;</strong>&#xFF0C;&#x5904;&#x7406;&#x5206;&#x7EC4;&#x5728;&#x7F51;&#x7EDC;&#x4E2D;&#x7684;&#x6D3B;&#x52A8;&#xFF0C;&#x4F8B;&#x5982;&#x5206;&#x7EC4;&#x7684;&#x9009;&#x8DEF;&#x3002;&#x7F51;&#x7EDC;&#x5C42;&#x534F;&#x8BAE;&#x5305;&#x62EC;IP&#x534F;&#x8BAE;&#xFF08;&#x7F51;&#x9645;&#x534F;&#x8BAE;&#xFF09;&#x3001;ICMP&#x534F;&#x8BAE;&#xFF08;Internet&#x4E92;&#x8054;&#x7F51;&#x63A7;&#x5236;&#x62A5;&#x6587;&#x534F;&#x8BAE;&#xFF09;&#xFF0C;&#x4EE5;&#x53CA;IGMP&#x534F;&#x8BAE;&#xFF08;Internet&#x7EC4;&#x7BA1;&#x7406;&#x534F;&#x8BAE;&#xFF09;&#x3002;</li>
-<li><strong>&#x4F20;&#x8F93;&#x5C42;</strong>&#x4E3B;&#x8981;&#x4E3A;&#x4E24;&#x53F0;&#x4E3B;&#x673A;&#x4E0A;&#x7684;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x63D0;&#x4F9B;&#x7AEF;&#x5230;&#x7AEF;&#x7684;&#x901A;&#x4FE1;&#x3002;&#x5728;TCP/IP&#x534F;&#x8BAE;&#x65CF;&#x4E2D;&#xFF0C;&#x6709;&#x4E24;&#x4E2A;&#x4E92;&#x4E0D;&#x76F8;&#x540C;&#x7684;&#x4F20;&#x8F93;&#x534F;&#x8BAE;&#xFF1A;TCP&#xFF08;&#x4F20;&#x8F93;&#x63A7;&#x5236;&#x534F;&#x8BAE;&#xFF09;&#x548C;UDP&#xFF08;&#x7528;&#x6237;&#x6570;&#x636E;&#x62A5;&#x534F;&#x8BAE;&#xFF09;&#x3002;TCP&#x4E3A;&#x4E24;&#x53F0;&#x4E3B;&#x673A;&#x63D0;&#x4F9B;&#x9AD8;&#x53EF;&#x9760;&#x6027;&#x7684;&#x6570;&#x636E;&#x901A;&#x4FE1;&#x3002;&#x4ED6;&#x6240;&#x4F5C;&#x7684;&#x5DE5;&#x4F5C;&#x5305;&#x62EC;&#x628A;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x4EA4;&#x7ED9;&#x5B83;&#x7684;&#x6570;&#x636E;&#x5206;&#x6210;&#x5408;&#x9002;&#x7684;&#x5C0F;&#x5757;&#x4EA4;&#x7ED9;&#x4E0B;&#x9762;&#x7684;&#x7F51;&#x7EDC;&#x5C42;&#xFF0C;&#x786E;&#x8BA4;&#x63A5;&#x6536;&#x5230;&#x7684;&#x5206;&#x7EC4;&#xFF0C;&#x8BBE;&#x7F6E;&#x53D1;&#x9001;&#x6700;&#x540E;&#x786E;&#x8BA4;&#x5206;&#x7EC4;&#x7684;&#x8D85;&#x65F6;&#x65F6;&#x949F;&#x7B49;&#x3002;&#x7531;&#x4E8E;&#x8FD0;&#x8F93;&#x5C42;&#x63D0;&#x4F9B;&#x4E86;&#x9AD8;&#x53EF;&#x9760;&#x6027;&#x7684;&#x7AEF;&#x5230;&#x7AEF;&#x901A;&#x4FE1;&#xFF0C;&#x56E0;&#x6B64;&#x5E94;&#x7528;&#x5C42;&#x53EF;&#x4EE5;&#x5FFD;&#x7565;&#x6240;&#x6709;&#x8FD9;&#x4E9B;&#x7EC6;&#x8282;&#x3002;&#x800C;&#x53E6;&#x4E00;&#x65B9;&#x9762;&#xFF0C;UDP&#x5219;&#x4E3A;&#x5E94;&#x7528;&#x5C42;&#x63D0;&#x4F9B;&#x4E00;&#x79CD;&#x975E;&#x5E38;&#x7B80;&#x5355;&#x7684;&#x670D;&#x52A1;&#x3002;&#x5B83;&#x53EA;&#x662F;&#x628A;&#x79F0;&#x4F5C;&#x6570;&#x636E;&#x62A5;&#x7684;&#x5206;&#x7EC4;&#x4ECE;&#x4E00;&#x53F0;&#x4E3B;&#x673A;&#x53D1;&#x9001;&#x5230;&#x53E6;&#x4E00;&#x53F0;&#x4E3B;&#x673A;&#xFF0C;&#x4F46;&#x5E76;&#x4E0D;&#x4FDD;&#x8BC1;&#x8BE5;&#x6570;&#x636E;&#x62A5;&#x80FD;&#x5230;&#x8FBE;&#x53E6;&#x4E00;&#x7AEF;&#x3002;&#x4EFB;&#x4F55;&#x5FC5;&#x987B;&#x7684;&#x53EF;&#x9760;&#x6027;&#x5FC5;&#x987B;&#x7531;&#x5E94;&#x7528;&#x5C42;&#x6765;&#x63D0;&#x4F9B;&#x3002;</li>
-<li><strong>&#x5E94;&#x7528;&#x5C42;</strong>&#x8D1F;&#x8D23;&#x5904;&#x7406;&#x7279;&#x5B9A;&#x7684;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x7EC6;&#x8282;&#x3002;&#x5305;&#x62EC;Telnet&#xFF08;&#x8FDC;&#x7A0B;&#x767B;&#x5F55;&#xFF09;&#x3001;FTP&#xFF08;&#x6587;&#x4EF6;&#x4F20;&#x8F93;&#x534F;&#x8BAE;&#xFF09;&#x3001;SMTP&#xFF08;&#x7B80;&#x5355;&#x90AE;&#x4EF6;&#x4F20;&#x9001;&#x534F;&#x8BAE;&#xFF09;&#x4EE5;&#x53CA;SNMP&#xFF08;&#x7B80;&#x5355;&#x7F51;&#x7EDC;&#x7BA1;&#x7406;&#x534F;&#x8BAE;&#xFF09;&#x7B49;&#x3002;</li>
+<li><strong>网络接口层</strong>，通常包括操作系统中的设备驱动程序和计算机中对应的网络接口卡。它们一起处理与电缆（或其他任何传输媒介）的物理接口细节，对应的网络协议主要是：Ethernet、FDDI和能传输IP数据包的任何协议。</li>
+<li><strong>网际层</strong>，处理分组在网络中的活动，例如分组的选路。网络层协议包括IP协议（网际协议）、ICMP协议（Internet互联网控制报文协议），以及IGMP协议（Internet组管理协议）。</li>
+<li><strong>传输层</strong>主要为两台主机上的应用程序提供端到端的通信。在TCP/IP协议族中，有两个互不相同的传输协议：TCP（传输控制协议）和UDP（用户数据报协议）。TCP为两台主机提供高可靠性的数据通信。他所作的工作包括把应用程序交给它的数据分成合适的小块交给下面的网络层，确认接收到的分组，设置发送最后确认分组的超时时钟等。由于运输层提供了高可靠性的端到端通信，因此应用层可以忽略所有这些细节。而另一方面，UDP则为应用层提供一种非常简单的服务。它只是把称作数据报的分组从一台主机发送到另一台主机，但并不保证该数据报能到达另一端。任何必须的可靠性必须由应用层来提供。</li>
+<li><strong>应用层</strong>负责处理特定的应用程序细节。包括Telnet（远程登录）、FTP（文件传输协议）、SMTP（简单邮件传送协议）以及SNMP（简单网络管理协议）等。</li>
 </ol>
-<p></p><h3 id="tcp&#x6982;&#x5FF5;">TCP&#x6982;&#x5FF5;</h3><p></p>
+<p></p><h3>TCP概念</h3><p></p>
 <blockquote>
-<p>TCP&#x662F;&#x4E00;&#x79CD;&#x9762;&#x5411;&#x8FDE;&#x63A5;&#xFF08;&#x8FDE;&#x63A5;&#x5BFC;&#x5411;&#xFF09;&#x7684;&#x3001;&#x53EF;&#x9760;&#x7684;&#x57FA;&#x4E8E;&#x5B57;&#x8282;&#x6D41;&#x7684;&#x4F20;&#x8F93;&#x5C42;&#x901A;&#x4FE1;&#x534F;&#x8BAE;&#x3002;TCP&#x5C06;&#x7528;&#x6237;&#x6570;&#x636E;&#x6253;&#x5305;&#x6210;&#x62A5;&#x6587;&#x6BB5;&#xFF0C;&#x5B83;&#x53D1;&#x9001;&#x540E;&#x542F;&#x52A8;&#x4E00;&#x4E2A;&#x5B9A;&#x65F6;&#x5668;&#xFF0C;&#x53E6;&#x4E00;&#x7AEF;&#x6536;&#x5230;&#x7684;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x786E;&#x8BA4;&#x3001;&#x5BF9;&#x5931;&#x5E8F;&#x7684;&#x6570;&#x636E;&#x91CD;&#x65B0;&#x6392;&#x5E8F;&#x3001;&#x4E22;&#x5F03;&#x91CD;&#x590D;&#x6570;&#x636E;&#x3002;</p>
+<p>TCP是一种面向连接（连接导向）的、可靠的基于字节流的传输层通信协议。TCP将用户数据打包成报文段，它发送后启动一个定时器，另一端收到的数据进行确认、对失序的数据重新排序、丢弃重复数据。</p>
 </blockquote>
-<p><strong>TCP&#x7684;&#x7279;&#x70B9;&#x6709;&#xFF1A;</strong></p>
+<p><strong>TCP的特点有：</strong></p>
 <ol>
-<li>TCP&#x662F;&#x9762;&#x5411;&#x8FDE;&#x63A5;&#x7684;&#x8FD0;&#x8F93;&#x5C42;&#x534F;&#x8BAE;</li>
-<li>&#x6BCF;&#x4E00;&#x6761;TCP&#x8FDE;&#x63A5;&#x53EA;&#x80FD;&#x6709;&#x4E24;&#x4E2A;&#x7AEF;&#x70B9;&#xFF0C;&#x6BCF;&#x4E00;&#x6761;TCP&#x8FDE;&#x63A5;&#x53EA;&#x80FD;&#x662F;&#x70B9;&#x5BF9;&#x70B9;&#x7684;</li>
-<li>TCP&#x63D0;&#x4F9B;&#x53EF;&#x9760;&#x4EA4;&#x4ED8;&#x7684;&#x670D;&#x52A1;</li>
-<li>TCP&#x63D0;&#x4F9B;&#x5168;&#x53CC;&#x5DE5;&#x901A;&#x4FE1;&#x3002;&#x6570;&#x636E;&#x5728;&#x4E24;&#x4E2A;&#x65B9;&#x5411;&#x4E0A;&#x72EC;&#x7ACB;&#x7684;&#x8FDB;&#x884C;&#x4F20;&#x8F93;&#x3002;&#x56E0;&#x6B64;&#xFF0C;&#x8FDE;&#x63A5;&#x7684;&#x6BCF;&#x4E00;&#x7AEF;&#x5FC5;&#x987B;&#x4FDD;&#x6301;&#x6BCF;&#x4E2A;&#x65B9;&#x5411;&#x4E0A;&#x7684;&#x4F20;&#x8F93;&#x6570;&#x636E;&#x5E8F;&#x53F7;&#x3002;</li>
-<li>&#x9762;&#x5411;&#x5B57;&#x8282;&#x6D41;&#x3002;&#x9762;&#x5411;&#x5B57;&#x8282;&#x6D41;&#x7684;&#x542B;&#x4E49;&#xFF1A;&#x867D;&#x7136;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x548C;TCP&#x4EA4;&#x4E92;&#x662F;&#x4E00;&#x6B21;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x5757;&#xFF0C;&#x4F46;TCP&#x628A;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x4EA4;&#x4E0B;&#x6765;&#x7684;&#x6570;&#x636E;&#x4EC5;&#x4EC5;&#x662F;&#x4E00;&#x8FDE;&#x4E32;&#x7684;&#x65E0;&#x7ED3;&#x6784;&#x7684;&#x5B57;&#x8282;&#x6D41;</li>
+<li>TCP是面向连接的运输层协议</li>
+<li>每一条TCP连接只能有两个端点，每一条TCP连接只能是点对点的</li>
+<li>TCP提供可靠交付的服务</li>
+<li>TCP提供全双工通信。数据在两个方向上独立的进行传输。因此，连接的每一端必须保持每个方向上的传输数据序号。</li>
+<li>面向字节流。面向字节流的含义：虽然应用程序和TCP交互是一次一个数据块，但TCP把应用程序交下来的数据仅仅是一连串的无结构的字节流</li>
 </ol>
-<p>TCP&#x62A5;&#x6587;&#x9996;&#x90E8;&#x7ED3;&#x6784;&#x5982;&#x4E0B;&#x56FE;&#xFF1A;<br><img src="/uploads/tcpbao.png" class="blockquote-center"><br><strong>&#x56FE;&#x89E3;&#xFF1A;</strong></p>
+<p>TCP报文首部结构如下图：<br><img src="/uploads/tcpbao.png" class="blockquote-center"><br><strong>图解：</strong></p>
 <ol>
-<li>&#x6E90;&#x7AEF;&#x53E3;&#x53F7;&#xFF1A;&#x6570;&#x636E;&#x53D1;&#x8D77;&#x8005;&#x7684;&#x7AEF;&#x53E3;&#x53F7;&#xFF0C;16bit</li>
-<li>&#x76EE;&#x7684;&#x7AEF;&#x53E3;&#x53F7;&#xFF1A;&#x6570;&#x636E;&#x63A5;&#x6536;&#x8005;&#x7684;&#x7AEF;&#x53E3;&#x53F7;&#xFF0C;16bit</li>
-<li>&#x5E8F;&#x53F7;&#xFF1A;32bit&#x7684;&#x5E8F;&#x5217;&#x53F7;&#xFF0C;&#x7531;&#x53D1;&#x9001;&#x65B9;&#x4F7F;&#x7528;</li>
-<li>&#x786E;&#x8BA4;&#x5E8F;&#x53F7;&#xFF1A;32bit&#x7684;&#x786E;&#x8BA4;&#x53F7;&#xFF0C;&#x662F;&#x63A5;&#x6536;&#x6570;&#x636E;&#x65B9;&#x671F;&#x671B;&#x6536;&#x5230;&#x53D1;&#x9001;&#x65B9;&#x7684;&#x4E0B;&#x4E00;&#x4E2A;&#x62A5;&#x6587;&#x6BB5;&#x7684;&#x5E8F;&#x53F7;&#xFF0C;&#x56E0;&#x6B64;&#x786E;&#x8BA4;&#x5E8F;&#x53F7;&#x5E94;&#x5F53;&#x662F;&#x4E0A;&#x6B21;&#x5DF2;&#x6210;&#x529F;&#x6536;&#x5230;&#x6570;&#x636E;&#x5B57;&#x8282;&#x5E8F;&#x53F7;&#x52A0;1&#x3002;</li>
-<li>&#x9996;&#x90E8;&#x957F;&#x5EA6;&#xFF1A;&#x9996;&#x90E8;&#x4E2D;32bit&#x5B57;&#x7684;&#x6570;&#x76EE;&#xFF0C;&#x53EF;&#x8868;&#x793A;15*32bit=60&#x5B57;&#x8282;&#x7684;&#x9996;&#x90E8;&#x3002;&#x4E00;&#x822C;&#x9996;&#x90E8;&#x957F;&#x5EA6;&#x4E3A;20&#x5B57;&#x8282;&#x3002;</li>
-<li>&#x4FDD;&#x7559;&#xFF1A;6bit, &#x5747;&#x4E3A;0</li>
-<li>&#x7D27;&#x6025;URG&#xFF1A;&#x5F53;URG=1&#x65F6;&#xFF0C;&#x8868;&#x793A;&#x62A5;&#x6587;&#x6BB5;&#x4E2D;&#x6709;&#x7D27;&#x6025;&#x6570;&#x636E;&#xFF0C;&#x5E94;&#x5C3D;&#x5FEB;&#x4F20;&#x9001;&#x3002;</li>
-<li>&#x786E;&#x8BA4;&#x6BD4;&#x7279; ACK&#xFF1A;ACK = 1&#x65F6;&#x4EE3;&#x8868;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x786E;&#x8BA4;&#x7684;TCP&#x5305;&#xFF0C;&#x53D6;&#x503C;0&#x5219;&#x4E0D;&#x662F;&#x786E;&#x8BA4;&#x5305;&#x3002;</li>
-<li>&#x63A8;&#x9001;&#x6BD4;&#x7279; PSH&#xFF1A;&#x5F53;&#x53D1;&#x9001;&#x7AEF;PSH=1&#x65F6;&#xFF0C;&#x63A5;&#x6536;&#x7AEF;&#x5C3D;&#x5FEB;&#x7684;&#x4EA4;&#x4ED8;&#x7ED9;&#x5E94;&#x7528;&#x8FDB;&#x7A0B;&#x3002;</li>
-<li>&#x590D;&#x4F4D;&#x6BD4;&#x7279;&#xFF08;RST&#xFF09;&#xFF1A;&#x5F53;RST=1&#x65F6;&#xFF0C;&#x8868;&#x660E;TCP&#x8FDE;&#x63A5;&#x4E2D;&#x51FA;&#x73B0;&#x4E25;&#x91CD;&#x5DEE;&#x9519;&#xFF0C;&#x5FC5;&#x987B;&#x91CA;&#x653E;&#x8FDE;&#x63A5;&#xFF0C;&#x518D;&#x91CD;&#x65B0;&#x5EFA;&#x7ACB;&#x8FDE;&#x63A5;&#x3002;</li>
-<li>&#x540C;&#x6B65;&#x6BD4;&#x7279; SYN&#xFF1A;&#x5728;&#x5EFA;&#x7ACB;&#x8FDE;&#x63A5;&#x662F;&#x7528;&#x6765;&#x540C;&#x6B65;&#x5E8F;&#x53F7;&#x3002;SYN=1&#xFF0C; ACK=0&#x8868;&#x793A;&#x4E00;&#x4E2A;&#x8FDE;&#x63A5;&#x8BF7;&#x6C42;&#x62A5;&#x6587;&#x6BB5;&#x3002;SYN=1&#xFF0C;ACK=1&#x8868;&#x793A;&#x540C;&#x610F;&#x5EFA;&#x7ACB;&#x8FDE;&#x63A5;&#x3002;</li>
-<li>&#x7EC8;&#x6B62;&#x6BD4;&#x7279; FIN&#xFF1A;FIN=1&#x65F6;&#xFF0C;&#x8868;&#x660E;&#x6B64;&#x62A5;&#x6587;&#x6BB5;&#x7684;&#x53D1;&#x9001;&#x7AEF;&#x7684;&#x6570;&#x636E;&#x5DF2;&#x7ECF;&#x53D1;&#x9001;&#x5B8C;&#x6BD5;&#xFF0C;&#x5E76;&#x8981;&#x6C42;&#x91CA;&#x653E;&#x4F20;&#x8F93;&#x8FDE;&#x63A5;&#x3002;</li>
-<li>&#x7A97;&#x53E3;&#xFF1A;&#x7528;&#x6765;&#x63A7;&#x5236;&#x5BF9;&#x65B9;&#x53D1;&#x9001;&#x7684;&#x6570;&#x636E;&#x91CF;&#xFF0C;&#x901A;&#x77E5;&#x53D1;&#x653E;&#x5DF2;&#x786E;&#x5B9A;&#x7684;&#x53D1;&#x9001;&#x7A97;&#x53E3;&#x4E0A;&#x9650;&#x3002;</li>
-<li>&#x68C0;&#x9A8C;&#x548C;&#xFF1A;&#x8BE5;&#x5B57;&#x6BB5;&#x68C0;&#x9A8C;&#x7684;&#x8303;&#x56F4;&#x5305;&#x62EC;&#x9996;&#x90E8;&#x548C;&#x6570;&#x636E;&#x8FD9;&#x4E24;&#x90E8;&#x5206;&#x3002;&#x7531;&#x53D1;&#x7AEF;&#x8BA1;&#x7B97;&#x548C;&#x5B58;&#x50A8;&#xFF0C;&#x5E76;&#x7531;&#x6536;&#x7AEF;&#x8FDB;&#x884C;&#x9A8C;&#x8BC1;&#x3002;</li>
-<li>&#x7D27;&#x6025;&#x6307;&#x9488;&#xFF1A;&#x7D27;&#x6025;&#x6307;&#x9488;&#x5728;URG=1&#x65F6;&#x624D;&#x6709;&#x6548;&#xFF0C;&#x5B83;&#x6307;&#x51FA;&#x672C;&#x62A5;&#x6587;&#x6BB5;&#x4E2D;&#x7684;&#x7D27;&#x6025;&#x6570;&#x636E;&#x7684;&#x5B57;&#x8282;&#x6570;&#x3002;</li>
-<li>&#x9009;&#x9879;&#xFF1A;&#x957F;&#x5EA6;&#x53EF;&#x53D8;&#xFF0C;&#x6700;&#x957F;&#x53EF;&#x8FBE;40&#x5B57;&#x8282;</li>
+<li>源端口号：数据发起者的端口号，16bit</li>
+<li>目的端口号：数据接收者的端口号，16bit</li>
+<li>序号：32bit的序列号，由发送方使用</li>
+<li>确认序号：32bit的确认号，是接收数据方期望收到发送方的下一个报文段的序号，因此确认序号应当是上次已成功收到数据字节序号加1。</li>
+<li>首部长度：首部中32bit字的数目，可表示15*32bit=60字节的首部。一般首部长度为20字节。</li>
+<li>保留：6bit, 均为0</li>
+<li>紧急URG：当URG=1时，表示报文段中有紧急数据，应尽快传送。</li>
+<li>确认比特 ACK：ACK = 1时代表这是一个确认的TCP包，取值0则不是确认包。</li>
+<li>推送比特 PSH：当发送端PSH=1时，接收端尽快的交付给应用进程。</li>
+<li>复位比特（RST）：当RST=1时，表明TCP连接中出现严重差错，必须释放连接，再重新建立连接。</li>
+<li>同步比特 SYN：在建立连接是用来同步序号。SYN=1， ACK=0表示一个连接请求报文段。SYN=1，ACK=1表示同意建立连接。</li>
+<li>终止比特 FIN：FIN=1时，表明此报文段的发送端的数据已经发送完毕，并要求释放传输连接。</li>
+<li>窗口：用来控制对方发送的数据量，通知发放已确定的发送窗口上限。</li>
+<li>检验和：该字段检验的范围包括首部和数据这两部分。由发端计算和存储，并由收端进行验证。</li>
+<li>紧急指针：紧急指针在URG=1时才有效，它指出本报文段中的紧急数据的字节数。</li>
+<li>选项：长度可变，最长可达40字节</li>
 </ol>
-<p></p><h3 id="&#x4E09;&#x6B21;&#x63E1;&#x624B;&#x5EFA;&#x7ACB;&#x8FDE;&#x63A5;">&#x4E09;&#x6B21;&#x63E1;&#x624B;&#x5EFA;&#x7ACB;&#x8FDE;&#x63A5;</h3><br><img src="/uploads/tcp3.png" class="blockquote-center"><p></p>
+<p></p><h3>三次握手建立连接</h3><br><img src="/uploads/tcp3.png" class="blockquote-center"><p></p>
 <ul>
-<li><p><strong>&#x7B2C;&#x4E00;&#x6B21;&#x63E1;&#x624B;</strong>&#xFF1A;&#x5EFA;&#x7ACB;&#x8FDE;&#x63A5;&#x65F6;&#xFF0C;&#x5BA2;&#x6237;&#x7AEF;&#x53D1;&#x9001;syn&#x5305;(syn=j)&#x5230;&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x5E76;&#x8FDB;&#x5165;SYN_SEND&#x72B6;&#x6001;&#xFF0C;&#x7B49;&#x5F85;&#x670D;&#x52A1;&#x5668;&#x786E;&#x8BA4;&#xFF1B;</p>
+<li><p><strong>第一次握手</strong>：建立连接时，客户端发送syn包(syn=j)到服务器，并进入SYN_SEND状态，等待服务器确认；</p>
 </li>
-<li><p><strong>&#x7B2C;&#x4E8C;&#x6B21;&#x63E1;&#x624B;</strong>&#xFF1A;&#x670D;&#x52A1;&#x5668;&#x6536;&#x5230;syn&#x5305;&#xFF0C;&#x5FC5;&#x987B;&#x786E;&#x8BA4;&#x5BA2;&#x6237;&#x7684;SYN&#xFF08;ack=j+1&#xFF09;&#xFF0C;&#x540C;&#x65F6;&#x81EA;&#x5DF1;&#x4E5F;&#x53D1;&#x9001;&#x4E00;&#x4E2A;SYN&#x5305;&#xFF08;syn=k&#xFF09;&#xFF0C;&#x5373;SYN+ACK&#x5305;&#xFF0C;&#x6B64;&#x65F6;&#x670D;&#x52A1;&#x5668;&#x8FDB;&#x5165;SYN_RECV&#x72B6;&#x6001;&#xFF1B;</p>
+<li><p><strong>第二次握手</strong>：服务器收到syn包，必须确认客户的SYN（ack=j+1），同时自己也发送一个SYN包（syn=k），即SYN+ACK包，此时服务器进入SYN_RECV状态；</p>
 </li>
-<li><p><strong>&#x7B2C;&#x4E09;&#x6B21;&#x63E1;&#x624B;</strong>&#xFF1A;&#x5BA2;&#x6237;&#x7AEF;&#x6536;&#x5230;&#x670D;&#x52A1;&#x5668;&#x7684;SYN&#xFF0B;ACK&#x5305;&#xFF0C;&#x5411;&#x670D;&#x52A1;&#x5668;&#x53D1;&#x9001;&#x786E;&#x8BA4;&#x5305;ACK(ack=k+1)&#xFF0C;&#x6B64;&#x5305;&#x53D1;&#x9001;&#x5B8C;&#x6BD5;&#xFF0C;&#x5BA2;&#x6237;&#x7AEF;&#x548C;&#x670D;&#x52A1;&#x5668;&#x8FDB;&#x5165;ESTABLISHED&#x72B6;&#x6001;&#xFF0C;&#x5B8C;&#x6210;&#x4E09;&#x6B21;&#x63E1;&#x624B;&#x3002;</p>
+<li><p><strong>第三次握手</strong>：客户端收到服务器的SYN＋ACK包，向服务器发送确认包ACK(ack=k+1)，此包发送完毕，客户端和服务器进入ESTABLISHED状态，完成三次握手。</p>
 </li>
 </ul>
-<p>&#x5B8C;&#x6210;&#x4E09;&#x6B21;&#x63E1;&#x624B;&#xFF0C;&#x5BA2;&#x6237;&#x7AEF;&#x4E0E;&#x670D;&#x52A1;&#x5668;&#x5F00;&#x59CB;&#x4F20;&#x9001;&#x6570;&#x636E;.</p>
-<p></p><h3 id="&#x56DB;&#x6B21;&#x6325;&#x624B;&#x65AD;&#x5F00;&#x8FDE;&#x63A5;">&#x56DB;&#x6B21;&#x6325;&#x624B;&#x65AD;&#x5F00;&#x8FDE;&#x63A5;</h3><br><img src="/uploads/tcp4.png" class="blockquote-center"><p></p>
-<p><strong>&#x6CE8;&#x610F;</strong>&#xFF1A; &#x4E2D;&#x65AD;&#x8FDE;&#x63A5;&#x7AEF;&#x53EF;&#x4EE5;&#x662F;Client&#x7AEF;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x662F;Server&#x7AEF;&#x3002;<br>&#x5047;&#x8BBE;Client&#x7AEF;&#x53D1;&#x8D77;&#x4E2D;&#x65AD;&#x8FDE;&#x63A5;&#x8BF7;&#x6C42;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x53D1;&#x9001;FIN&#x62A5;&#x6587;&#x3002;Server&#x7AEF;&#x63A5;&#x5230;FIN&#x62A5;&#x6587;&#x540E;&#xFF0C;&#x610F;&#x601D;&#x662F;&#x8BF4;&#x201D;&#x6211;Client&#x7AEF;&#x6CA1;&#x6709;&#x6570;&#x636E;&#x8981;&#x53D1;&#x7ED9;&#x4F60;&#x4E86;&#x201C;&#xFF0C;&#x4F46;&#x662F;&#x5982;&#x679C;&#x4F60;&#x8FD8;&#x6709;&#x6570;&#x636E;&#x6CA1;&#x6709;&#x53D1;&#x9001;&#x5B8C;&#x6210;&#xFF0C;&#x5219;&#x4E0D;&#x5FC5;&#x6025;&#x7740;&#x5173;&#x95ED;Socket&#xFF0C;&#x53EF;&#x4EE5;&#x7EE7;&#x7EED;&#x53D1;&#x9001;&#x6570;&#x636E;&#x3002;&#x6240;&#x4EE5;&#x4F60;&#x5148;&#x53D1;&#x9001;ACK&#xFF0C;&#x201D;&#x544A;&#x8BC9;Client&#x7AEF;&#xFF0C;&#x4F60;&#x7684;&#x8BF7;&#x6C42;&#x6211;&#x6536;&#x5230;&#x4E86;&#xFF0C;&#x4F46;&#x662F;&#x6211;&#x8FD8;&#x6CA1;&#x51C6;&#x5907;&#x597D;&#xFF0C;&#x8BF7;&#x7EE7;&#x7EED;&#x4F60;&#x7B49;&#x6211;&#x7684;&#x6D88;&#x606F;&#x201C;&#x3002;&#x8FD9;&#x4E2A;&#x65F6;&#x5019;Client&#x7AEF;&#x5C31;&#x8FDB;&#x5165;<strong>FIN_WAIT</strong>&#x72B6;&#x6001;&#xFF0C;&#x7EE7;&#x7EED;&#x7B49;&#x5F85;Server&#x7AEF;&#x7684;FIN&#x62A5;&#x6587;&#x3002;&#x5F53;Server&#x7AEF;&#x786E;&#x5B9A;&#x6570;&#x636E;&#x5DF2;&#x53D1;&#x9001;&#x5B8C;&#x6210;&#xFF0C;&#x5219;&#x5411;Client&#x7AEF;&#x53D1;&#x9001;FIN&#x62A5;&#x6587;&#xFF0C;&#x201D;&#x544A;&#x8BC9;Client&#x7AEF;&#xFF0C;&#x597D;&#x4E86;&#xFF0C;&#x6211;&#x8FD9;&#x8FB9;&#x6570;&#x636E;&#x53D1;&#x5B8C;&#x4E86;&#xFF0C;&#x51C6;&#x5907;&#x597D;&#x5173;&#x95ED;&#x8FDE;&#x63A5;&#x4E86;&#x201C;&#x3002;Client&#x7AEF;&#x6536;&#x5230;FIN&#x62A5;&#x6587;&#x540E;&#xFF0C;&#x201D;&#x5C31;&#x77E5;&#x9053;&#x53EF;&#x4EE5;&#x5173;&#x95ED;&#x8FDE;&#x63A5;&#x4E86;&#xFF0C;&#x4F46;&#x662F;&#x4ED6;&#x8FD8;&#x662F;&#x4E0D;&#x76F8;&#x4FE1;&#x7F51;&#x7EDC;&#xFF0C;&#x6015;Server&#x7AEF;&#x4E0D;&#x77E5;&#x9053;&#x8981;&#x5173;&#x95ED;&#xFF0C;&#x6240;&#x4EE5;&#x53D1;&#x9001;ACK&#x540E;&#x8FDB;&#x5165;TIME_WAIT&#x72B6;&#x6001;&#xFF0C;&#x5982;&#x679C;Server&#x7AEF;&#x6CA1;&#x6709;&#x6536;&#x5230;ACK&#x5219;&#x53EF;&#x4EE5;&#x91CD;&#x4F20;&#x3002;Server&#x7AEF;&#x6536;&#x5230;ACK&#x540E;&#xFF0C;&#x201D;&#x5C31;&#x77E5;&#x9053;&#x53EF;&#x4EE5;&#x65AD;&#x5F00;&#x8FDE;&#x63A5;&#x4E86;&#x201D;&#x3002;Client&#x7AEF;&#x7B49;&#x5F85;&#x4E86;2MSL&#x540E;&#x4F9D;&#x7136;&#x6CA1;&#x6709;&#x6536;&#x5230;&#x56DE;&#x590D;&#xFF0C;&#x5219;&#x8BC1;&#x660E;Server&#x7AEF;&#x5DF2;&#x6B63;&#x5E38;&#x5173;&#x95ED;&#xFF0C;&#x90A3;&#x597D;&#xFF0C;&#x6211;Client&#x7AEF;&#x4E5F;&#x53EF;&#x4EE5;&#x5173;&#x95ED;&#x8FDE;&#x63A5;&#x4E86;&#x3002;Ok&#xFF0C;TCP&#x8FDE;&#x63A5;&#x5C31;&#x8FD9;&#x6837;&#x5173;&#x95ED;&#x4E86;&#xFF01;</p>
-<p></p><h4 id="client&#x7ECF;&#x5386;&#x8FC7;&#x7A0B;">client&#x7ECF;&#x5386;&#x8FC7;&#x7A0B;</h4><br><img src="/uploads/client.png" class="blockquote-center"><p></p>
-<p></p><h4 id="server&#x7ECF;&#x5386;&#x8FC7;&#x7A0B;">server&#x7ECF;&#x5386;&#x8FC7;&#x7A0B;</h4><br><img src="/uploads/server.png" class="blockquote-center"><br><strong>&#x6CE8;&#x610F;</strong> &#x5728;TIME_WAIT&#x72B6;&#x6001;&#x4E2D;&#xFF0C;&#x5982;&#x679C;TCP client&#x7AEF;&#x6700;&#x540E;&#x4E00;&#x6B21;&#x53D1;&#x9001;&#x7684;ACK&#x4E22;&#x5931;&#x4E86;&#xFF0C;&#x5B83;&#x5C06;&#x91CD;&#x65B0;&#x53D1;&#x9001;&#x3002;TIME_WAIT&#x72B6;&#x6001;&#x4E2D;&#x6240;&#x9700;&#x8981;&#x7684;&#x65F6;&#x95F4;&#x662F;&#x4F9D;&#x8D56;&#x4E8E;&#x5B9E;&#x73B0;&#x65B9;&#x6CD5;&#x7684;&#x3002;&#x5178;&#x578B;&#x7684;&#x503C;&#x4E3A;30&#x79D2;&#x3001;1&#x5206;&#x949F;&#x548C;2&#x5206;&#x949F;&#x3002;&#x7B49;&#x5F85;&#x4E4B;&#x540E;&#x8FDE;&#x63A5;&#x6B63;&#x5F0F;&#x5173;&#x95ED;&#xFF0C;&#x5E76;&#x4E14;&#x6240;&#x6709;&#x7684;&#x8D44;&#x6E90;(&#x5305;&#x62EC;&#x7AEF;&#x53E3;&#x53F7;)&#x90FD;&#x88AB;&#x91CA;&#x653E;&#x3002;<p></p>
-<p></p><h3 id="&#x95EE;&#x9898;">&#x95EE;&#x9898;</h3><br> -&#x3010;<strong>&#x95EE;&#x9898;1</strong>&#x3011;&#x4E3A;&#x4EC0;&#x4E48;&#x8FDE;&#x63A5;&#x7684;&#x65F6;&#x5019;&#x662F;&#x4E09;&#x6B21;&#x63E1;&#x624B;&#xFF0C;&#x5173;&#x95ED;&#x7684;&#x65F6;&#x5019;&#x5374;&#x662F;&#x56DB;&#x6B21;&#x63E1;&#x624B;&#xFF1F;<br>&#x7B54;&#xFF1A;&#x56E0;&#x4E3A;&#x5F53;Server&#x7AEF;&#x6536;&#x5230;Client&#x7AEF;&#x7684;SYN&#x8FDE;&#x63A5;&#x8BF7;&#x6C42;&#x62A5;&#x6587;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x53D1;&#x9001;SYN+ACK&#x62A5;&#x6587;&#x3002;&#x5176;&#x4E2D;ACK&#x62A5;&#x6587;&#x662F;&#x7528;&#x6765;&#x5E94;&#x7B54;&#x7684;&#xFF0C;SYN&#x62A5;&#x6587;&#x662F;&#x7528;&#x6765;&#x540C;&#x6B65;&#x7684;&#x3002;&#x4F46;&#x662F;&#x5173;&#x95ED;&#x8FDE;&#x63A5;&#x65F6;&#xFF0C;&#x5F53;Server&#x7AEF;&#x6536;&#x5230;FIN&#x62A5;&#x6587;&#x65F6;&#xFF0C;&#x5F88;&#x53EF;&#x80FD;&#x5E76;&#x4E0D;&#x4F1A;&#x7ACB;&#x5373;&#x5173;&#x95ED;SOCKET&#xFF0C;&#x6240;&#x4EE5;&#x53EA;&#x80FD;&#x5148;&#x56DE;&#x590D;&#x4E00;&#x4E2A;ACK&#x62A5;&#x6587;&#xFF0C;&#x544A;&#x8BC9;Client&#x7AEF;&#xFF0C;&#x201D;&#x4F60;&#x53D1;&#x7684;FIN&#x62A5;&#x6587;&#x6211;&#x6536;&#x5230;&#x4E86;&#x201D;&#x3002;&#x53EA;&#x6709;&#x7B49;&#x5230;&#x6211;Server&#x7AEF;&#x6240;&#x6709;&#x7684;&#x62A5;&#x6587;&#x90FD;&#x53D1;&#x9001;&#x5B8C;&#x4E86;&#xFF0C;&#x6211;&#x624D;&#x80FD;&#x53D1;&#x9001;FIN&#x62A5;&#x6587;&#xFF0C;&#x56E0;&#x6B64;&#x4E0D;&#x80FD;&#x4E00;&#x8D77;&#x53D1;&#x9001;&#x3002;&#x6545;&#x9700;&#x8981;&#x56DB;&#x6B65;&#x63E1;&#x624B;&#x3002;<p></p>
-<p> -&#x3010;<strong>&#x95EE;&#x9898;2</strong>&#x3011;&#x4E3A;&#x4EC0;&#x4E48;TIME_WAIT&#x72B6;&#x6001;&#x9700;&#x8981;&#x7ECF;&#x8FC7;2MSL(&#x6700;&#x5927;&#x62A5;&#x6587;&#x6BB5;&#x751F;&#x5B58;&#x65F6;&#x95F4;)&#x624D;&#x80FD;&#x8FD4;&#x56DE;&#x5230;CLOSE&#x72B6;&#x6001;&#xFF1F;<br>&#x7B54;&#xFF1A;&#x867D;&#x7136;&#x6309;&#x9053;&#x7406;&#xFF0C;&#x56DB;&#x4E2A;&#x62A5;&#x6587;&#x90FD;&#x53D1;&#x9001;&#x5B8C;&#x6BD5;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x8FDB;&#x5165;CLOSE&#x72B6;&#x6001;&#x4E86;&#xFF0C;&#x4F46;&#x662F;&#x6211;&#x4EEC;&#x5FC5;&#x987B;&#x5047;&#x8C61;&#x7F51;&#x7EDC;&#x662F;&#x4E0D;&#x53EF;&#x9760;&#x7684;&#xFF0C;&#x6709;&#x53EF;&#x4EE5;&#x6700;&#x540E;&#x4E00;&#x4E2A;ACK&#x4E22;&#x5931;&#x3002;&#x6240;&#x4EE5;TIME_WAIT&#x72B6;&#x6001;&#x5C31;&#x662F;&#x7528;&#x6765;&#x91CD;&#x53D1;&#x53EF;&#x80FD;&#x4E22;&#x5931;&#x7684;ACK&#x62A5;&#x6587;&#x3002;</p>
-<p></p><h3 id="&#x5B8C;&#x6574;&#x8FC7;&#x7A0B;&#x56FE;">&#x5B8C;&#x6574;&#x8FC7;&#x7A0B;&#x56FE;</h3><br><img src="/uploads/wanz.png" class="blockquote-center"><p></p>
-<p></p><h3 id="tcp&#x8FDE;&#x63A5;&#x72B6;&#x6001;&#x7801;">TCP&#x8FDE;&#x63A5;&#x72B6;&#x6001;&#x7801;</h3><p></p>
+<p>完成三次握手，客户端与服务器开始传送数据.</p>
+<p></p><h3>四次挥手断开连接</h3><br><img src="/uploads/tcp4.png" class="blockquote-center"><p></p>
+<p><strong>注意</strong>： 中断连接端可以是Client端，也可以是Server端。<br>假设Client端发起中断连接请求，也就是发送FIN报文。Server端接到FIN报文后，意思是说”我Client端没有数据要发给你了“，但是如果你还有数据没有发送完成，则不必急着关闭Socket，可以继续发送数据。所以你先发送ACK，”告诉Client端，你的请求我收到了，但是我还没准备好，请继续你等我的消息“。这个时候Client端就进入<strong>FIN_WAIT</strong>状态，继续等待Server端的FIN报文。当Server端确定数据已发送完成，则向Client端发送FIN报文，”告诉Client端，好了，我这边数据发完了，准备好关闭连接了“。Client端收到FIN报文后，”就知道可以关闭连接了，但是他还是不相信网络，怕Server端不知道要关闭，所以发送ACK后进入TIME_WAIT状态，如果Server端没有收到ACK则可以重传。Server端收到ACK后，”就知道可以断开连接了”。Client端等待了2MSL后依然没有收到回复，则证明Server端已正常关闭，那好，我Client端也可以关闭连接了。Ok，TCP连接就这样关闭了！</p>
+<p></p><h4>client经历过程</h4><br><img src="/uploads/client.png" class="blockquote-center"><p></p>
+<p></p><h4>server经历过程</h4><br><img src="/uploads/server.png" class="blockquote-center"><br><strong>注意</strong> 在TIME_WAIT状态中，如果TCP client端最后一次发送的ACK丢失了，它将重新发送。TIME_WAIT状态中所需要的时间是依赖于实现方法的。典型的值为30秒、1分钟和2分钟。等待之后连接正式关闭，并且所有的资源(包括端口号)都被释放。<p></p>
+<p></p><h3>问题</h3><br> -【<strong>问题1</strong>】为什么连接的时候是三次握手，关闭的时候却是四次握手？<br>答：因为当Server端收到Client端的SYN连接请求报文后，可以直接发送SYN+ACK报文。其中ACK报文是用来应答的，SYN报文是用来同步的。但是关闭连接时，当Server端收到FIN报文时，很可能并不会立即关闭SOCKET，所以只能先回复一个ACK报文，告诉Client端，”你发的FIN报文我收到了”。只有等到我Server端所有的报文都发送完了，我才能发送FIN报文，因此不能一起发送。故需要四步握手。<p></p>
+<p> -【<strong>问题2</strong>】为什么TIME_WAIT状态需要经过2MSL(最大报文段生存时间)才能返回到CLOSE状态？<br>答：虽然按道理，四个报文都发送完毕，我们可以直接进入CLOSE状态了，但是我们必须假象网络是不可靠的，有可以最后一个ACK丢失。所以TIME_WAIT状态就是用来重发可能丢失的ACK报文。</p>
+<p></p><h3>完整过程图</h3><br><img src="/uploads/wanz.png" class="blockquote-center"><p></p>
+<p></p><h3>TCP连接状态码</h3><p></p>
 <ul>
-<li><p><strong>LISTEN</strong>&#xFF1A;&#x4FA6;&#x542C;&#x6765;&#x81EA;&#x8FDC;&#x65B9;&#x7684;TCP&#x7AEF;&#x53E3;&#x7684;&#x8FDE;&#x63A5;&#x8BF7;&#x6C42;</p>
+<li><p><strong>LISTEN</strong>：侦听来自远方的TCP端口的连接请求</p>
 </li>
-<li><p><strong>SYN-SENT</strong>&#xFF1A;&#x518D;&#x53D1;&#x9001;&#x8FDE;&#x63A5;&#x8BF7;&#x6C42;&#x540E;&#x7B49;&#x5F85;&#x5339;&#x914D;&#x7684;&#x8FDE;&#x63A5;&#x8BF7;&#x6C42;</p>
+<li><p><strong>SYN-SENT</strong>：再发送连接请求后等待匹配的连接请求</p>
 </li>
-<li><p><strong>SYN-RECEIVED</strong>&#xFF1A;&#x518D;&#x6536;&#x5230;&#x548C;&#x53D1;&#x9001;&#x4E00;&#x4E2A;&#x8FDE;&#x63A5;&#x8BF7;&#x6C42;&#x540E;&#x7B49;&#x5F85;&#x5BF9;&#x65B9;&#x5BF9;&#x8FDE;&#x63A5;&#x8BF7;&#x6C42;&#x7684;&#x786E;&#x8BA4;</p>
+<li><p><strong>SYN-RECEIVED</strong>：再收到和发送一个连接请求后等待对方对连接请求的确认</p>
 </li>
-<li><p><strong>ESTABLISHED</strong>&#xFF1A;&#x4EE3;&#x8868;&#x4E00;&#x4E2A;&#x6253;&#x5F00;&#x7684;&#x8FDE;&#x63A5;</p>
+<li><p><strong>ESTABLISHED</strong>：代表一个打开的连接</p>
 </li>
-<li><p><strong>FIN-WAIT-1</strong>&#xFF1A;&#x7B49;&#x5F85;&#x8FDC;&#x7A0B;TCP&#x8FDE;&#x63A5;&#x4E2D;&#x65AD;&#x8BF7;&#x6C42;&#xFF0C;&#x6216;&#x5148;&#x524D;&#x7684;&#x8FDE;&#x63A5;&#x4E2D;&#x65AD;&#x8BF7;&#x6C42;&#x7684;&#x786E;&#x8BA4;</p>
+<li><p><strong>FIN-WAIT-1</strong>：等待远程TCP连接中断请求，或先前的连接中断请求的确认</p>
 </li>
-<li><p><strong>FIN-WAIT-2</strong>&#xFF1A;&#x4ECE;&#x8FDC;&#x7A0B;TCP&#x7B49;&#x5F85;&#x8FDE;&#x63A5;&#x4E2D;&#x65AD;&#x8BF7;&#x6C42;</p>
+<li><p><strong>FIN-WAIT-2</strong>：从远程TCP等待连接中断请求</p>
 </li>
-<li><p><strong>CLOSE-WAIT</strong>&#xFF1A;&#x7B49;&#x5F85;&#x4ECE;&#x672C;&#x5730;&#x7528;&#x6237;&#x53D1;&#x6765;&#x7684;&#x8FDE;&#x63A5;&#x4E2D;&#x65AD;&#x8BF7;&#x6C42;</p>
+<li><p><strong>CLOSE-WAIT</strong>：等待从本地用户发来的连接中断请求</p>
 </li>
-<li><p><strong>CLOSING</strong>&#xFF1A;&#x7B49;&#x5F85;&#x8FDC;&#x7A0B;TCP&#x5BF9;&#x8FDE;&#x63A5;&#x4E2D;&#x65AD;&#x7684;&#x786E;&#x8BA4;</p>
+<li><p><strong>CLOSING</strong>：等待远程TCP对连接中断的确认</p>
 </li>
-<li><p><strong>LAST-ACK</strong>&#xFF1A;&#x7B49;&#x5F85;&#x539F;&#x6765;&#x7684;&#x53D1;&#x5411;&#x8FDC;&#x7A0B;TCP&#x7684;&#x8FDE;&#x63A5;&#x4E2D;&#x65AD;&#x8BF7;&#x6C42;&#x7684;&#x786E;&#x8BA4;</p>
+<li><p><strong>LAST-ACK</strong>：等待原来的发向远程TCP的连接中断请求的确认</p>
 </li>
-<li><p><strong>TIME-WAIT</strong>&#xFF1A;&#x7B49;&#x5F85;&#x8DB3;&#x591F;&#x7684;&#x65F6;&#x95F4;&#x4EE5;&#x786E;&#x4FDD;&#x8FDC;&#x7A0B;TCP&#x63A5;&#x6536;&#x5230;&#x8FDE;&#x63A5;&#x4E2D;&#x65AD;&#x8BF7;&#x6C42;&#x7684;&#x786E;&#x8BA4;</p>
+<li><p><strong>TIME-WAIT</strong>：等待足够的时间以确保远程TCP接收到连接中断请求的确认</p>
 </li>
-<li><p><strong>CLOSED</strong>&#xFF1A;&#x6CA1;&#x6709;&#x4EFB;&#x4F55;&#x8FDE;&#x63A5;&#x72B6;&#x6001;</p>
+<li><p><strong>CLOSED</strong>：没有任何连接状态</p>
 </li>
 </ul>
 
@@ -728,7 +728,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#osi-七层网络模型"><span class="nav-number">1.</span> <span class="nav-text">OSI 七层网络模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tcpip"><span class="nav-number">2.</span> <span class="nav-text">TCP/IP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp概念"><span class="nav-number">2.1.</span> <span class="nav-text">TCP概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三次握手建立连接"><span class="nav-number">2.2.</span> <span class="nav-text">三次握手建立连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四次挥手断开连接"><span class="nav-number">2.3.</span> <span class="nav-text">四次挥手断开连接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#client经历过程"><span class="nav-number">2.3.1.</span> <span class="nav-text">client经历过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#server经历过程"><span class="nav-number">2.3.2.</span> <span class="nav-text">server经历过程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题"><span class="nav-number">2.4.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#完整过程图"><span class="nav-number">2.5.</span> <span class="nav-text">完整过程图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp连接状态码"><span class="nav-number">2.6.</span> <span class="nav-text">TCP连接状态码</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">OSI 七层网络模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">TCP/IP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.1.</span> <span class="nav-text">TCP概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.2.</span> <span class="nav-text">三次握手建立连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.3.</span> <span class="nav-text">四次挥手断开连接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">2.3.1.</span> <span class="nav-text">client经历过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">2.3.2.</span> <span class="nav-text">server经历过程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.4.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.5.</span> <span class="nav-text">完整过程图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.6.</span> <span class="nav-text">TCP连接状态码</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
@@ -1022,9 +1022,6 @@
 
 
   
-<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
-</script>
-
 
 </body>
 </html>

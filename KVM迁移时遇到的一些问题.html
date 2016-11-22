@@ -343,28 +343,28 @@
 
       
         <blockquote>
-<p>KVM&#x8FC1;&#x79FB;&#x6709;&#x4E24;&#x79CD;&#x65B9;&#x5F0F;&#xFF0C;&#x4E00;&#x79CD;&#x662F;&#x52A8;&#x6001;&#x8FC1;&#x79FB;&#xFF0C;&#x4E00;&#x79CD;&#x4E3A;&#x9759;&#x6001;&#x8FC1;&#x79FB;&#x3002;<br>kvm&#x9759;&#x6001;&#x8FC1;&#x79FB;&#x5C31;&#x662F;&#x865A;&#x62DF;&#x673A;&#x5728;&#x5173;&#x673A;&#x72B6;&#x6001;&#x4E0B;&#xFF0C;&#x62F7;&#x8D1D;&#x865A;&#x62DF;&#x673A;&#x865A;&#x62DF;&#x78C1;&#x76D8;&#x6587;&#x4EF6;&#x4E0E;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x5230;&#x76EE;&#x6807;&#x865A;&#x62DF;&#x4E3B;&#x673A;&#x4E2D;&#xFF0C;&#x5B9E;&#x73B0;&#x7684;&#x8FC1;&#x79FB;&#x3002;<br>kvm&#x52A8;&#x6001;&#x8FC1;&#x79FB;&#x65E0;&#x9700;&#x62F7;&#x8D1D;&#x865A;&#x62DF;&#x78C1;&#x76D8;&#x6587;&#x4EF6;&#xFF0C;&#x9700;&#x8981;&#x76EE;&#x7684;&#x4E3B;&#x673A;&#x548C;&#x6E90;&#x4E3B;&#x673A;&#x6709;&#x76F8;&#x540C;&#x7684;&#x76EE;&#x5F55;&#x7ED3;&#x6784;&#x865A;&#x62DF;&#x673A;&#x78C1;&#x76D8;&#x6587;&#x4EF6;&#xFF08;&#x4F9D;&#x8D56;&#x5171;&#x4EAB;&#x5B58;&#x50A8;&#xFF09;&#x3002;<br><a id="more"></a></p>
+<p>KVM迁移有两种方式，一种是动态迁移，一种为静态迁移。<br>kvm静态迁移就是虚拟机在关机状态下，拷贝虚拟机虚拟磁盘文件与配置文件到目标虚拟主机中，实现的迁移。<br>kvm动态迁移无需拷贝虚拟磁盘文件，需要目的主机和源主机有相同的目录结构虚拟机磁盘文件（依赖共享存储）。<br><a id="more"></a></p>
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">error:no hypervisor options were found ofr this connection</div><div class="line">this usually means that qemu or kvm is not installed on your machine,or the kvm kernel modules     are not loaded.</div></pre></td></tr></table></figure>
-<p>  &#x89E3;&#x51B3;&#x65B9;&#x6CD5;&#xFF1A;&#x5F00;&#x542F;bios&#x865A;&#x62DF;&#x5316;&#x5E76;&#x52A0;&#x8F7D;modprobe kvm&#x4EE5;&#x53CA;kvm_intel.</p>
+<p>  解决方法：开启bios虚拟化并加载modprobe kvm以及kvm_intel.</p>
 <pre><code class="bash">Unable to migrate guest: unsupported configuration: Domain requires KVM, but it is not  available. Check that virtualization is enabled <span class="keyword">in</span> the host BIOS, and host configuration is setup  to load the kvm modules.
 </code></pre>
-<p>  &#x89E3;&#x51B3;&#x65B9;&#x6CD5;:&#x65B9;&#x6CD5;&#x540C;&#x4E0A;.</p>
+<p>  解决方法:方法同上.</p>
 <pre><code class="bash">Unable to migrate guest: Unable to allow access <span class="keyword">for</span> disk path /img/musf-clone1-2-clone.img: No such file or directory
 </code></pre>
-<p>  &#x89E3;&#x51B3;&#x65B9;&#x6CD5;:&#x8FC1;&#x79FB;&#x4E0E;&#x88AB;&#x8FC1;&#x79FB;&#x4E3B;&#x673A;&#x7684;&#x9700;&#x8981;&#x76F8;&#x540C;&#x540D;&#x79F0;&#x7684;&#x78C1;&#x76D8;&#x6620;&#x50CF;&#x6587;&#x4EF6;<br>  qemu-img create -f raw(&#x78C1;&#x76D8;&#x786C;&#x4EF6;&#x6587;&#x4EF6;&#x683C;&#x5F0F;) /home/kvm-disk/test.img(&#x8DEF;&#x5F84;) 100G(&#x5927;&#x5C0F;)</p>
-<pre><code class="bash">Unable to migrate guest: unable to connect to server at <span class="string">&apos;kvm3:49153&apos;</span>: Connection refused
+<p>  解决方法:迁移与被迁移主机的需要相同名称的磁盘映像文件<br>  qemu-img create -f raw(磁盘硬件文件格式) /home/kvm-disk/test.img(路径) 100G(大小)</p>
+<pre><code class="bash">Unable to migrate guest: unable to connect to server at <span class="string">'kvm3:49153'</span>: Connection refused
 </code></pre>
-<p>  &#x89E3;&#x51B3;&#x65B9;&#x6CD5;:1.&#x5F00;&#x542F;&#x9632;&#x706B;&#x5899;&#x4E0A;&#x7AEF;&#x53E3;&#x6216;&#x5173;&#x95ED;&#x9632;&#x706B;&#x5899;.<br>           2.&#x5728;virt-manager&#x7684;&#x8FC1;&#x79FB;&#x4E2D;&#x6DFB;&#x52A0;&#x8FC1;&#x79FB;&#x7AEF;&#x53E3;.</p>
-<p>&#x5728;ovirt-engine&#x4E2D;&#x6DFB;&#x52A0;data/nfs&#x4F5C;&#x4E3A;&#x5B58;&#x50A8;&#x57DF;&#x65F6;&#x5E76;&#x4E0D;&#x80FD;&#x6210;&#x529F;&#x3002;<br>  &#x89E3;&#x51B3;&#x65B9;&#x6CD5;&#xFF1A;&#x91CD;&#x70B9;&#x67E5;&#x770B;&#x4E00;&#x4E0B;&#x5C06;&#x8981;&#x5171;&#x4EAB;&#x7684;&#x6587;&#x4EF6;&#x5939;&#x6743;&#x9650;&#x662F;&#x5426;&#x662F;vdsm&#xFF1A;kvm&#x3002;&#x82E5;&#x4E0D;&#x662F;&#x4F7F;&#x7528;chown -R&#x547D;&#x4EE4;&#x5373;&#x53EF;&#x3002;  </p>
-<p>&#x90E8;&#x5206;&#x4E3B;&#x673A;&#x521B;&#x5EFA;&#x865A;&#x62DF;&#x673A;&#x6210;&#x529F;,&#x5F00;&#x542F;&#x865A;&#x62DF;&#x673A;&#x65F6;&#x51FA;&#x73B0;error&#x2026;</p>
-<pre><code class="bash">VM CentOS6.3T is down. Exit message: internal error Process exited <span class="keyword">while</span> reading console <span class="built_in">log</span>      output: <span class="built_in">bind</span>(unix:/var/lib/libvirt/qemu/channels/CentOS6.3T.com.redhat.rhevm.vdsm): Permission    denied chardev: opening backend <span class="string">&quot;socket&quot;</span> failed
+<p>  解决方法:1.开启防火墙上端口或关闭防火墙.<br>           2.在virt-manager的迁移中添加迁移端口.</p>
+<p>在ovirt-engine中添加data/nfs作为存储域时并不能成功。<br>  解决方法：重点查看一下将要共享的文件夹权限是否是vdsm：kvm。若不是使用chown -R命令即可。  </p>
+<p>部分主机创建虚拟机成功,开启虚拟机时出现error…</p>
+<pre><code class="bash">VM CentOS6.3T is down. Exit message: internal error Process exited <span class="keyword">while</span> reading console <span class="built_in">log</span>      output: <span class="built_in">bind</span>(unix:/var/lib/libvirt/qemu/channels/CentOS6.3T.com.redhat.rhevm.vdsm): Permission    denied chardev: opening backend <span class="string">"socket"</span> failed
 </code></pre>
-<p>   &#x7531;&#x4E8E;../channels&#x8FD9;&#x4E2A;&#x6587;&#x4EF6;&#x5939;&#x7684;&#x6743;&#x9650;&#x662F;vdsm qemu&#x3002;root&#x7528;&#x6237;&#x53EF;&#x80FD;&#x4E0D;&#x80FD;&#x8BFB;&#x53D6;&#x5E76;&#x521B;&#x5EFA;&#x5176;&#x4E2D;&#x7684;&#x6587;&#x4EF6;&#x3002;&#x6211;&#x91C7;&#x7528;&#x7684;&#x65B9;&#x6CD5;&#x662F;&#x624B;&#x52A8;&#x5728;qemu.conf&#x4E2D;&#x6CE8;&#x91CA;&#x6389;.user = root &#x4EE5;&#x53CA; group = root&#x5E76;&#x91CD;&#x542F;libvirtd&#x3002;<br>   &#x4E4B;&#x540E;&#x51FA;&#x73B0;&#x9519;&#x8BEF;&#xFF1A;</p>
+<p>   由于../channels这个文件夹的权限是vdsm qemu。root用户可能不能读取并创建其中的文件。我采用的方法是手动在qemu.conf中注释掉.user = root 以及 group = root并重启libvirtd。<br>   之后出现错误：</p>
 <pre><code class="bash">VM CentOS6.3T is down. Exit message: internal error client socket is closed.
-VM <span class="built_in">test</span> is down. Exit message: cannot open file <span class="string">&apos;/rhev/data-center/78e07dee-36bc-439b-b71e-72cfd87a2bb3/f84e3679-281e-41d4-9ea9-b8221085fa7b/images/2e93290e-f1b5-42b2-bdf6-fad695de2ccb/ef334a97-e01b-4d7c-afb0-814ffbe537f0&apos;</span>: Permission denied.
+VM <span class="built_in">test</span> is down. Exit message: cannot open file <span class="string">'/rhev/data-center/78e07dee-36bc-439b-b71e-72cfd87a2bb3/f84e3679-281e-41d4-9ea9-b8221085fa7b/images/2e93290e-f1b5-42b2-bdf6-fad695de2ccb/ef334a97-e01b-4d7c-afb0-814ffbe537f0'</span>: Permission denied.
 </code></pre>
-<p>   &#x8FD9;&#x4E24;&#x4E2A;&#x9519;&#x8BEF;&#x90FD;&#x662F;&#x7531;&#x4E8E;libvirt&#x8BBE;&#x7F6E;&#x95EE;&#x9898;&#x624D;&#x62A5;&#x9519;&#x7684;&#xFF0C;&#x6211;&#x8FD9;&#x91CC;&#x76F4;&#x63A5;&#x8986;&#x76D6;libvirtd.conf qemu.conf&#x4EE5;&#x53CA;vdsm.conf&#x6587;&#x4EF6;</p>
+<p>   这两个错误都是由于libvirt设置问题才报错的，我这里直接覆盖libvirtd.conf qemu.conf以及vdsm.conf文件</p>
 
       
     </div>
@@ -909,9 +909,6 @@ VM <span class="built_in">test</span> is down. Exit message: cannot open file <s
 
 
   
-<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
-</script>
-
 
 </body>
 </html>

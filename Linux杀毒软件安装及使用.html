@@ -362,95 +362,95 @@
 
       
         <blockquote>
-<p>ClamAV &#x662F;Linux&#x5E73;&#x53F0;&#x6700;&#x53D7;&#x6B22;&#x8FCE;&#x7684;&#x6740;&#x6BD2;&#x8F6F;&#x4EF6;&#xFF0C;ClamAV &#x5C5E;&#x4E8E;&#x514D;&#x8D39;&#x5F00;&#x6E90;&#x4EA7;&#x54C1;&#xFF0C;&#x652F;&#x6301;&#x591A;&#x79CD;&#x5E73;&#x53F0;&#x3002;ClamAV&#x662F;&#x57FA;&#x4E8E;&#x75C5;&#x6BD2;&#x626B;&#x63CF;&#x7684;&#x547D;&#x4EE4;&#x884C;&#x5DE5;&#x5177;&#xFF0C;&#x4F46;&#x540C;&#x65F6;&#x4E5F;&#x6709;&#x652F;&#x6301;&#x56FE;&#x5F62;&#x754C;&#x9762;&#x7684;ClamTK&#x5DE5;&#x5177;&#x3002;ClamAV &#x4E3B;&#x8981;&#x7528;&#x4E8E;&#x90AE;&#x4EF6;&#x670D;&#x52A1;&#x5668;&#x626B;&#x63CF;&#x90AE;&#x4EF6;&#x3002;&#x5B83;&#x6709;&#x591A;&#x79CD;&#x63A5;&#x53E3;&#x4ECE;&#x90AE;&#x4EF6;&#x670D;&#x52A1;&#x5668;&#x626B;&#x63CF;&#x90AE;&#x4EF6;&#x3002;ClamAV &#x6709;&#x81EA;&#x52A8;&#x7684;&#x6570;&#x636E;&#x5E93;&#x66F4;&#x65B0;&#x5668;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x4ECE;&#x5171;&#x4EAB;&#x5E93;&#x4E2D;&#x8FD0;&#x884C;&#x3002;&#x547D;&#x4EE4;&#x884C;&#x7684;&#x754C;&#x9762;&#x8BA9; ClamAV&#x8FD0;&#x884C;&#x6D41;&#x7545;&#x3002;<br> <a id="more"></a></p>
+<p>ClamAV 是Linux平台最受欢迎的杀毒软件，ClamAV 属于免费开源产品，支持多种平台。ClamAV是基于病毒扫描的命令行工具，但同时也有支持图形界面的ClamTK工具。ClamAV 主要用于邮件服务器扫描邮件。它有多种接口从邮件服务器扫描邮件。ClamAV 有自动的数据库更新器，还可以从共享库中运行。命令行的界面让 ClamAV运行流畅。<br> <a id="more"></a></p>
 </blockquote>
-<p></p><h3 id="yum&#x6E90;&#x5B89;&#x88C5;">YUM&#x6E90;&#x5B89;&#x88C5;</h3><br>&#x8FD9;&#x91CC;&#x76F4;&#x63A5;&#x914D;&#x7F6E;&#x597D;&#x963F;&#x91CC;&#x4E91;&#x7684;epel&#x6E90;&#x5373;&#x53EF;yum&#x4E00;&#x952E;&#x5B89;&#x88C5;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum -y install clamav</div></pre></td></tr></table></figure><p></p>
-<p></p><h3 id="&#x7F16;&#x8BD1;&#x5B89;&#x88C5;">&#x7F16;&#x8BD1;&#x5B89;&#x88C5;</h3><p></p>
-<p></p><h4 id="&#x83B7;&#x53D6;&#x8F6F;&#x4EF6;&#x5305;">&#x83B7;&#x53D6;&#x8F6F;&#x4EF6;&#x5305;</h4><br>&#x63A8;&#x8350;&#x4E0A;&#x5B98;&#x7F51;&#x4E0B;&#x8F7D;&#x8F6F;&#x4EF6;&#x5305;&#xFF0C;&#x5B98;&#x7F51; <a href="http://www.clamav.net" target="_blank" rel="external">http://www.clamav.net</a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget http://www.clamav.net/downloads/production/clamav-0.99.2.tar.gz</div></pre></td></tr></table></figure><p></p>
-<p></p><h4 id="&#x51C6;&#x5907;&#x7F16;&#x8BD1;&#x73AF;&#x5883;&#x73AF;&#x5883;">&#x51C6;&#x5907;&#x7F16;&#x8BD1;&#x73AF;&#x5883;&#x73AF;&#x5883;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># &#x5B89;&#x88C5;&#x4F9D;&#x8D56;&#x5305;</span></div><div class="line">yum -y insatll gcc openssl openssl-devel</div><div class="line"><span class="comment"># &#x521B;&#x5EFA;clamav&#x7528;&#x6237;&#x548C;&#x7EC4;</span></div><div class="line">groupadd clamav</div><div class="line">useradd -g clamav <span class="_">-s</span> /sbin/nologin clamav</div></pre></td></tr></table></figure><p></p>
-<p></p><h4 id="&#x7F16;&#x8BD1;&#x5B89;&#x88C5;clamav">&#x7F16;&#x8BD1;&#x5B89;&#x88C5;clamav</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">tar -zxf clamav-0.99.2.tar.gz</div><div class="line"><span class="built_in">cd</span> clamav-0.99.2</div><div class="line">./configure --sysconfdir=/etc</div><div class="line">make &amp;&amp; make install</div></pre></td></tr></table></figure><p></p>
-<p></p><h4 id="&#x7A0B;&#x5E8F;&#x8BF4;&#x660E;">&#x7A0B;&#x5E8F;&#x8BF4;&#x660E;</h4><br>&#x7F16;&#x8BD1;&#x5B89;&#x88C5;&#x5B8C;&#x6210;&#x540E;&#xFF0C;&#x9ED8;&#x8BA4;&#x7A0B;&#x5E8F;&#x5B89;&#x88C5;&#x8DEF;&#x5F84;&#x4E3A;/usr/local/bin<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/bin/</div><div class="line">ls</div><div class="line">clamav-config  clambc  clamconf  clamdscan  clamscan  freshclam  sigtool</div></pre></td></tr></table></figure><p></p>
+<p></p><h3>YUM源安装</h3><br>这里直接配置好阿里云的epel源即可yum一键安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum -y install clamav</div></pre></td></tr></table></figure><p></p>
+<p></p><h3>编译安装</h3><p></p>
+<p></p><h4>获取软件包</h4><br>推荐上官网下载软件包，官网 <a href="http://www.clamav.net" target="_blank" rel="external">http://www.clamav.net</a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget http://www.clamav.net/downloads/production/clamav-0.99.2.tar.gz</div></pre></td></tr></table></figure><p></p>
+<p></p><h4>准备编译环境环境</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 安装依赖包</span></div><div class="line">yum -y insatll gcc openssl openssl-devel</div><div class="line"><span class="comment"># 创建clamav用户和组</span></div><div class="line">groupadd clamav</div><div class="line">useradd -g clamav <span class="_">-s</span> /sbin/nologin clamav</div></pre></td></tr></table></figure><p></p>
+<p></p><h4>编译安装clamav</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">tar -zxf clamav-0.99.2.tar.gz</div><div class="line"><span class="built_in">cd</span> clamav-0.99.2</div><div class="line">./configure --sysconfdir=/etc</div><div class="line">make &amp;&amp; make install</div></pre></td></tr></table></figure><p></p>
+<p></p><h4>程序说明</h4><br>编译安装完成后，默认程序安装路径为/usr/local/bin<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/bin/</div><div class="line">ls</div><div class="line">clamav-config  clambc  clamconf  clamdscan  clamscan  freshclam  sigtool</div></pre></td></tr></table></figure><p></p>
 <table>
 <thead>
 <tr>
-<th>&#x7A0B;&#x5E8F;&#x540D;&#x79F0;</th>
-<th>&#x8BE6;&#x7EC6;&#x8BF4;&#x660E;</th>
+<th>程序名称</th>
+<th>详细说明</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>clamscan</td>
-<td>&#x626B;&#x63CF;&#x7A0B;&#x5E8F;&#xFF0C;&#x6700;&#x4E3B;&#x8981;&#x7684;&#x4E00;&#x4E2A;&#x7A0B;&#x5E8F;</td>
+<td>扫描程序，最主要的一个程序</td>
 </tr>
 <tr>
 <td>clamd</td>
-<td>daemon&#x7A0B;&#x5E8F;&#xFF0C;&#x914D;&#x5408;clamscan&#xFF0C;&#x56E0;&#x4E3A;&#x662F;&#x9884;&#x8F7D;&#xFF0C;&#x53EF;&#x4EE5;&#x66F4;&#x5FEB;&#x7684;&#x626B;&#x63CF;</td>
+<td>daemon程序，配合clamscan，因为是预载，可以更快的扫描</td>
 </tr>
 <tr>
 <td>clamdscan</td>
-<td>&#x5FC5;&#x987B;&#x914D;&#x5408;clamd&#x4F7F;&#x7528;</td>
+<td>必须配合clamd使用</td>
 </tr>
 <tr>
 <td>clamuko</td>
-<td>&#x662F;&#x914D;&#x7F6E;&#x53CA;&#x65F6;&#x626B;&#x63CF;&#x7684;&#x4E2D;&#x4ECB;&#x7A0B;&#x5E8F;&#xFF0C;&#x9700;&#x914D;&#x5408;dazuko</td>
+<td>是配置及时扫描的中介程序，需配合dazuko</td>
 </tr>
 <tr>
 <td>freshclam</td>
-<td>&#x75C5;&#x6BD2;&#x7801;&#x66F4;&#x65B0;&#x7A0B;&#x5E8F;&#xFF0C;&#x9996;&#x6B21;&#x5B89;&#x88C5;&#x9700;&#x8FD0;&#x884C;&#x6B64;&#x7A0B;&#x5E8F;&#x66F4;&#x65B0;&#x75C5;&#x6BD2;&#x5E93;</td>
+<td>病毒码更新程序，首次安装需运行此程序更新病毒库</td>
 </tr>
 <tr>
 <td>sigtool</td>
-<td>&#x6CA1;&#x6709;&#x88AB;clamav&#x626B;&#x63CF;&#x5230;&#x7684;&#x75C5;&#x6BD2;&#xFF0C;&#x53EF;&#x4EE5;&#x7528;&#x6B64;&#x7A0B;&#x5E8F;&#x65B0;&#x589E;</td>
+<td>没有被clamav扫描到的病毒，可以用此程序新增</td>
 </tr>
 </tbody>
 </table>
-<p></p><h3 id="&#x4F7F;&#x7528;clamav&#x6740;&#x6BD2;">&#x4F7F;&#x7528;clamav&#x6740;&#x6BD2;</h3><p></p>
-<p></p><h4 id="&#x4FEE;&#x6539;&#x914D;&#x7F6E;&#x6587;&#x4EF6;">&#x4FEE;&#x6539;&#x914D;&#x7F6E;&#x6587;&#x4EF6;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">cp /etc/clamd.conf.sample /etc/clamd.conf</div><div class="line">vim /etc/clamd.conf</div><div class="line">&#x5728;Example &#x524D;&#x9762;&#x52A0;<span class="comment">#</span></div><div class="line">cp /etc/freshclam.conf.sample /etc/freshclam.conf</div><div class="line">vim /etc/freshclam.conf</div><div class="line">&#x5728;Example &#x524D;&#x9762;&#x52A0;<span class="comment">#</span></div><div class="line">&#x5728; DatabaseMirror database.clamav.net &#x884C;&#x4E0B;&#x9762;&#x589E;&#x52A0;&#x51E0;&#x4E2A;&#x5730;&#x5740;</div><div class="line">DatabaseMirror clamav.inet6.fr</div><div class="line">DatabaseMirror clamav.netopia.pt</div><div class="line">DatabaseMirror clamav.sonic.net</div></pre></td></tr></table></figure><p></p>
-<p></p><h4 id="&#x66F4;&#x65B0;&#x75C5;&#x6BD2;&#x5E93;">&#x66F4;&#x65B0;&#x75C5;&#x6BD2;&#x5E93;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># &#x65B0;&#x5EFA;&#x6240;&#x9700;&#x8981;&#x76EE;&#x5F55;</span></div><div class="line">mkdir /usr/<span class="built_in">local</span>/share/clamav</div><div class="line"><span class="comment"># &#x4FEE;&#x6539;&#x5C5E;&#x4E3B;&#x5C5E;&#x7EC4;</span></div><div class="line">chown clamav.clamav -R /usr/<span class="built_in">local</span>/share/clamav/</div><div class="line"><span class="comment"># &#x66F4;&#x65B0;&#x75C5;&#x6BD2;&#x5E93;</span></div><div class="line">/usr/<span class="built_in">local</span>/bin/freshclam</div></pre></td></tr></table></figure><p></p>
-<p></p><h4 id="clamav&#x547D;&#x4EE4;&#x8BE6;&#x89E3;">clamav&#x547D;&#x4EE4;&#x8BE6;&#x89E3;</h4><p></p>
-<p></p><h5 id="&#x547D;&#x4EE4;&#x53C2;&#x6570;">&#x547D;&#x4EE4;&#x53C2;&#x6570;</h5><p></p>
+<p></p><h3>使用clamav杀毒</h3><p></p>
+<p></p><h4>修改配置文件</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">cp /etc/clamd.conf.sample /etc/clamd.conf</div><div class="line">vim /etc/clamd.conf</div><div class="line">在Example 前面加<span class="comment">#</span></div><div class="line">cp /etc/freshclam.conf.sample /etc/freshclam.conf</div><div class="line">vim /etc/freshclam.conf</div><div class="line">在Example 前面加<span class="comment">#</span></div><div class="line">在 DatabaseMirror database.clamav.net 行下面增加几个地址</div><div class="line">DatabaseMirror clamav.inet6.fr</div><div class="line">DatabaseMirror clamav.netopia.pt</div><div class="line">DatabaseMirror clamav.sonic.net</div></pre></td></tr></table></figure><p></p>
+<p></p><h4>更新病毒库</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 新建所需要目录</span></div><div class="line">mkdir /usr/<span class="built_in">local</span>/share/clamav</div><div class="line"><span class="comment"># 修改属主属组</span></div><div class="line">chown clamav.clamav -R /usr/<span class="built_in">local</span>/share/clamav/</div><div class="line"><span class="comment"># 更新病毒库</span></div><div class="line">/usr/<span class="built_in">local</span>/bin/freshclam</div></pre></td></tr></table></figure><p></p>
+<p></p><h4>clamav命令详解</h4><p></p>
+<p></p><h5>命令参数</h5><p></p>
 <ul>
-<li>-l [&#x8DEF;&#x5F84;] [&#x6587;&#x4EF6;&#x540D;] &#x589E;&#x52A0;&#x626B;&#x63CF;&#x62A5;&#x544A;</li>
-<li>&#x2013;quiet &#x5B89;&#x9759;&#x65B9;&#x5F0F;&#xFF0C;&#x4E0D;&#x53D1;&#x51FA;&#x4EFB;&#x4F55;&#x6D88;&#x606F;&#xFF0C;&#x53EA;&#x6709;&#x51FA;&#x73B0;&#x75C5;&#x6BD2;&#x624D;&#x4F1A;&#x63D0;&#x793A;</li>
-<li>&#x2013;move [&#x8DEF;&#x5F84;] &#x79FB;&#x52A8;&#x75C5;&#x6BD2;&#x6587;&#x4EF6;&#x81F3;&#x2026;</li>
-<li>&#x2013;remove [&#x8DEF;&#x5F84;] &#x5220;&#x9664;&#x75C5;&#x6BD2;&#x6587;&#x4EF6;</li>
-<li>&#x2013;unzip(unrar) &#x89E3;&#x538B;&#x538B;&#x7F29;&#x6587;&#x4EF6;&#x626B;&#x63CF;</li>
+<li>-l [路径] [文件名] 增加扫描报告</li>
+<li>–quiet 安静方式，不发出任何消息，只有出现病毒才会提示</li>
+<li>–move [路径] 移动病毒文件至…</li>
+<li>–remove [路径] 删除病毒文件</li>
+<li>–unzip(unrar) 解压压缩文件扫描</li>
 </ul>
-<p></p><h5 id="&#x547D;&#x4EE4;&#x5E38;&#x7528;&#x793A;&#x4F8B;">&#x547D;&#x4EE4;&#x5E38;&#x7528;&#x793A;&#x4F8B;</h5><p></p>
+<p></p><h5>命令常用示例</h5><p></p>
 <ol>
-<li><p>&#x626B;&#x63CF;&#x6307;&#x5B9A;&#x7684;&#x6587;&#x4EF6;</p>
+<li><p>扫描指定的文件</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">clamscan file</div></pre></td></tr></table></figure>
 </li>
-<li><p>&#x626B;&#x63CF;/home&#x76EE;&#x5F55;&#x4E2D;&#x6240;&#x6709;&#x6587;&#x4EF6; (&#x5305;&#x62EC;&#x5B50;&#x76EE;&#x5F55;)</p>
+<li><p>扫描/home目录中所有文件 (包括子目录)</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">clamscan -r /home</div></pre></td></tr></table></figure>
 </li>
-<li><p>&#x5C06;&#x626B;&#x63CF;&#x7ED3;&#x679C;&#x5B58;&#x653E;&#x5230;log&#x4E2D;</p>
+<li><p>将扫描结果存放到log中</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">clamscan -r /home/<span class="built_in">test</span> <span class="_">-l</span> /tmp/clamav.log</div></pre></td></tr></table></figure>
 </li>
-<li><p>&#x626B;&#x63CF;&#x5230;&#x6709;&#x95EE;&#x9898;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x76F4;&#x63A5;&#x5220;&#x9664;</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">clamscan -r --remove /home/<span class="built_in">test</span></div><div class="line"><span class="comment"># &#x8FD9;&#x4E00;&#x6B65;&#x8981;&#x5C0F;&#x5FC3;&#xFF0C;&#x6700;&#x597D;&#x4E0D;&#x8981;&#x8FD9;&#x6837;&#x64CD;&#x4F5C;&#xFF0C;&#x5982;&#x679C;&#x5220;&#x9664;&#x4E86;&#x7CFB;&#x7EDF;&#x6587;&#x4EF6;&#x5C31;&#x9EBB;&#x70E6;&#x4E86;&#x3002;&#x53EF;&#x80FD;&#x5BFC;&#x81F4;&#x7CFB;&#x7EDF;&#x5D29;&#x6E83;</span></div></pre></td></tr></table></figure>
+<li><p>扫描到有问题的文件，直接删除</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">clamscan -r --remove /home/<span class="built_in">test</span></div><div class="line"><span class="comment"># 这一步要小心，最好不要这样操作，如果删除了系统文件就麻烦了。可能导致系统崩溃</span></div></pre></td></tr></table></figure>
 </li>
 </ol>
-<p></p><h4 id="&#x626B;&#x63CF;&#x8FD4;&#x56DE;&#x503C;">&#x626B;&#x63CF;&#x8FD4;&#x56DE;&#x503C;</h4><p></p>
+<p></p><h4>扫描返回值</h4><p></p>
 <ul>
-<li>0 : &#x65E0;&#x75C5;&#x6BD2; </li>
-<li>1 : &#x53D1;&#x73B0;&#x75C5;&#x6BD2; </li>
-<li>40 : &#x5DF2;&#x7ECF;&#x901A;&#x8FC7;&#x7684;&#x672A;&#x77E5;&#x9009;&#x9879; </li>
-<li>50 : &#x6570;&#x636E;&#x5E93;&#x521D;&#x59CB;&#x5316;&#x9519;&#x8BEF; </li>
-<li>52 : &#x4E0D;&#x652F;&#x6301;&#x7684;&#x6587;&#x4EF6;&#x683C;&#x5F0F; </li>
-<li>53 : &#x65E0;&#x6CD5;&#x6253;&#x5F00;&#x76EE;&#x5F55; </li>
-<li>54 : &#x4E0D;&#x80FD;&#x6253;&#x5F00;&#x6587;&#x4EF6;(ofm) </li>
-<li>55 : &#x8BFB;&#x6587;&#x4EF6;&#x9519;&#x8BEF;(ofm) </li>
-<li>56 : Can&#x2019;t stat input file / directory. </li>
-<li>57 : Can&#x2019;t get absolute path name of current working directory </li>
-<li>58 : I/O &#x9519;&#x8BEF;, &#x8BF7;&#x68C0;&#x67E5;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF; </li>
-<li>59 : &#x65E0;&#x6CD5;&#x5728;/etc/passwd&#x83B7;&#x5F97;&#x5F53;&#x524D;&#x7528;&#x6237;&#x7684;&#x4FE1;&#x606F; </li>
-<li>60 : &#x65E0;&#x6CD5;&#x5728;/etc/passwd&#x83B7;&#x5F97;&#x2019;clamav&#x2019;&#xFF08;&#x9ED8;&#x8BA4;&#x540D;&#xFF09;&#x7528;&#x6237;&#x7684;&#x4FE1;&#x606F; </li>
-<li>61 : Can&#x2019;t fork. </li>
-<li>63 : &#x4E0D;&#x80FD;&#x521B;&#x5EFA;&#x4E34;&#x65F6;&#x6587;&#x4EF6;/&#x76EE;&#x5F55;(&#x68C0;&#x67E5;&#x6743;&#x9650;). |</li>
-<li>64 : &#x65E0;&#x6CD5;&#x5BF9;&#x4E34;&#x65F6;&#x76EE;&#x5F55;&#x8FDB;&#x884C;&#x5199;&#x64CD;&#x4F5C; (&#x8BF7;&#x6307;&#x5B9A;&#x53E6;&#x4E00;&#x4E2A;&#x76EE;&#x5F55;). </li>
-<li>70 : &#x65E0;&#x6CD5;&#x5206;&#x914D;&#x6216;&#x91CA;&#x653E;&#x5185;&#x5B58; (calloc). </li>
-<li>71 : &#x65E0;&#x6CD5;&#x5206;&#x914D;&#x5185;&#x5B58; (malloc).</li>
+<li>0 : 无病毒 </li>
+<li>1 : 发现病毒 </li>
+<li>40 : 已经通过的未知选项 </li>
+<li>50 : 数据库初始化错误 </li>
+<li>52 : 不支持的文件格式 </li>
+<li>53 : 无法打开目录 </li>
+<li>54 : 不能打开文件(ofm) </li>
+<li>55 : 读文件错误(ofm) </li>
+<li>56 : Can’t stat input file / directory. </li>
+<li>57 : Can’t get absolute path name of current working directory </li>
+<li>58 : I/O 错误, 请检查文件系统 </li>
+<li>59 : 无法在/etc/passwd获得当前用户的信息 </li>
+<li>60 : 无法在/etc/passwd获得’clamav’（默认名）用户的信息 </li>
+<li>61 : Can’t fork. </li>
+<li>63 : 不能创建临时文件/目录(检查权限). |</li>
+<li>64 : 无法对临时目录进行写操作 (请指定另一个目录). </li>
+<li>70 : 无法分配或释放内存 (calloc). </li>
+<li>71 : 无法分配内存 (malloc). </li>
 </ul>
 
       
@@ -702,7 +702,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#yum源安装"><span class="nav-number">1.</span> <span class="nav-text">YUM源安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译安装"><span class="nav-number">2.</span> <span class="nav-text">编译安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#获取软件包"><span class="nav-number">2.1.</span> <span class="nav-text">获取软件包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#准备编译环境环境"><span class="nav-number">2.2.</span> <span class="nav-text">准备编译环境环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编译安装clamav"><span class="nav-number">2.3.</span> <span class="nav-text">编译安装clamav</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#程序说明"><span class="nav-number">2.4.</span> <span class="nav-text">程序说明</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用clamav杀毒"><span class="nav-number">3.</span> <span class="nav-text">使用clamav杀毒</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#修改配置文件"><span class="nav-number">3.1.</span> <span class="nav-text">修改配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新病毒库"><span class="nav-number">3.2.</span> <span class="nav-text">更新病毒库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#clamav命令详解"><span class="nav-number">3.3.</span> <span class="nav-text">clamav命令详解</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#命令参数"><span class="nav-number">3.3.1.</span> <span class="nav-text">命令参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#命令常用示例"><span class="nav-number">3.3.2.</span> <span class="nav-text">命令常用示例</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#扫描返回值"><span class="nav-number">3.4.</span> <span class="nav-text">扫描返回值</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">YUM源安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">编译安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">2.1.</span> <span class="nav-text">获取软件包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">2.2.</span> <span class="nav-text">准备编译环境环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">2.3.</span> <span class="nav-text">编译安装clamav</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">2.4.</span> <span class="nav-text">程序说明</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">使用clamav杀毒</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">3.1.</span> <span class="nav-text">修改配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">3.2.</span> <span class="nav-text">更新病毒库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">3.3.</span> <span class="nav-text">clamav命令详解</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#undefined"><span class="nav-number">3.3.1.</span> <span class="nav-text">命令参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#undefined"><span class="nav-number">3.3.2.</span> <span class="nav-text">命令常用示例</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">3.4.</span> <span class="nav-text">扫描返回值</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
@@ -996,9 +996,6 @@
 
 
   
-<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
-</script>
-
 
 </body>
 </html>
