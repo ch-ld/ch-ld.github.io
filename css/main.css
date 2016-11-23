@@ -519,6 +519,18 @@ pre code {
   background: none;
   text-shadow: none;
 }
+.code pre::selection,
+.code pre span::selection,
+.code pre div::selection,
+.code pre div span::selection {
+  background: #373b41;
+}
+.code pre::-moz-selection,
+.code pre span::-moz-selection,
+.code pre div::-moz-selection,
+.code pre div span::-moz-selection {
+  background: #373b41;
+}
 .highlight pre {
   border: none;
   margin: 0;
@@ -1666,7 +1678,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ffff37;
+  background: #82ffe0;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2542,10 +2554,4 @@ hr {
     width: auto;
     text-align: center;
   }
-}
-body {
-  background-image: url("/images/bj2.jpg");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: 50% 50%;
 }
