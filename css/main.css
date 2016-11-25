@@ -189,7 +189,7 @@ body {
   font-size: 17px;
   line-height: 2;
   color: #555;
-  background: #fff;
+  background: #00FF7F;
 }
 @media (max-width: 767px) {
   body {
@@ -869,7 +869,7 @@ pre .javascript .function {
   bottom: 19px;
 }
 .header {
-  background: #fff;
+  background: #696969;
 }
 .header-inner {
   position: relative;
