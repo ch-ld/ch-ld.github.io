@@ -1,3 +1,4 @@
+http://www.chen-hao.com.cn/Expect命令使用详解.html
 http://www.chen-hao.com.cn/HTML状态消息.html
 http://www.chen-hao.com.cn/Linux杀毒软件安装及使用.html
 http://www.chen-hao.com.cn/Linux命令小技巧.html
@@ -7,4 +8,3 @@ http://www.chen-hao.com.cn/Redis数据库入门.html
 http://www.chen-hao.com.cn/ELK-Kafka日志收集平台部署.html
 http://www.chen-hao.com.cn/nginx配置与优化.html
 http://www.chen-hao.com.cn/Linux常见配置文件汇总.html
-http://www.chen-hao.com.cn/Linux数据恢复.html
