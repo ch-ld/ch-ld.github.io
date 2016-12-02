@@ -1,3 +1,4 @@
+http://www.chen-hao.com.cn/利用logrotate服务切割日志.html
 http://www.chen-hao.com.cn/Shell中set和shopt命令选项含义.html
 http://www.chen-hao.com.cn/Expect命令使用详解.html
 http://www.chen-hao.com.cn/HTML状态消息.html
@@ -7,4 +8,3 @@ http://www.chen-hao.com.cn/hexo-github访问出现页面空白问题.html
 http://www.chen-hao.com.cn/隐藏Linux系统常见软件版本号.html
 http://www.chen-hao.com.cn/Redis数据库入门.html
 http://www.chen-hao.com.cn/ELK-Kafka日志收集平台部署.html
-http://www.chen-hao.com.cn/nginx配置与优化.html

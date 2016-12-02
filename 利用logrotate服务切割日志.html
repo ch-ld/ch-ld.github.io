@@ -86,7 +86,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="文件系统," />
+  <meta name="keywords" content="日志切割," />
 
 
 
@@ -104,16 +104,16 @@
 
 
 
-<meta name="description" content="本文不对基本的命令作过多的描述，让你了解不一样Linux命令小技巧，原来Linux还可以这么玩！">
+<meta name="description" content="logrotate 是一个日志管理程序，用来把旧的日志文件删除（备份），并创建新的日志文件，这个过程称为”转储”。我们可以根据日志的大小，或者根据其使用的天数来转储。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux命令小技巧">
-<meta property="og:url" content="http://www.chen-hao.com.cn/Linux命令小技巧.html">
+<meta property="og:title" content="利用logrotate服务切割日志">
+<meta property="og:url" content="http://www.chen-hao.com.cn/利用logrotate服务切割日志.html">
 <meta property="og:site_name" content="火柴的博客">
-<meta property="og:description" content="本文不对基本的命令作过多的描述，让你了解不一样Linux命令小技巧，原来Linux还可以这么玩！">
-<meta property="og:updated_time" content="2016-11-15T04:05:57.505Z">
+<meta property="og:description" content="logrotate 是一个日志管理程序，用来把旧的日志文件删除（备份），并创建新的日志文件，这个过程称为”转储”。我们可以根据日志的大小，或者根据其使用的天数来转储。">
+<meta property="og:updated_time" content="2016-12-02T08:12:00.397Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux命令小技巧">
-<meta name="twitter:description" content="本文不对基本的命令作过多的描述，让你了解不一样Linux命令小技巧，原来Linux还可以这么玩！">
+<meta name="twitter:title" content="利用logrotate服务切割日志">
+<meta name="twitter:description" content="logrotate 是一个日志管理程序，用来把旧的日志文件删除（备份），并创建新的日志文件，这个过程称为”转储”。我们可以根据日志的大小，或者根据其使用的天数来转储。">
 
 
 
@@ -149,11 +149,11 @@
 
 
 
-  <link rel="canonical" href="http://www.chen-hao.com.cn/Linux命令小技巧.html"/>
+  <link rel="canonical" href="http://www.chen-hao.com.cn/利用logrotate服务切割日志.html"/>
 
 
 
-  <title> Linux命令小技巧 | 火柴的博客 </title>
+  <title> 利用logrotate服务切割日志 | 火柴的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -318,7 +318,7 @@
             
             
               
-                Linux命令小技巧
+                利用logrotate服务切割日志
               
             
           </h1>
@@ -329,9 +329,9 @@
 			
 			  <span class="post-letters-count">
 				&nbsp; | &nbsp;
-				<span>916 字</span>
+				<span>1,118 字</span>
 				&nbsp; | &nbsp;
-				<span>4 min</span>
+				<span>5 min</span>
 			  </span>
 			
 			
@@ -340,8 +340,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-11-14T16:00:59+08:00" content="2016-11-14">
-              2016-11-14
+            <time itemprop="dateCreated" datetime="2016-12-02T14:10:44+08:00" content="2016-12-02">
+              2016-12-02
             </time>
           </span>
 
@@ -354,8 +354,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/基础/" itemprop="url" rel="index">
-                    <span itemprop="name">基础</span>
+                  <a href="/categories/工具/" itemprop="url" rel="index">
+                    <span itemprop="name">工具</span>
                   </a>
                 </span>
 
@@ -370,8 +370,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/Linux命令小技巧.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="Linux命令小技巧.html" itemprop="commentsCount"></span>
+                <a href="/利用logrotate服务切割日志.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="利用logrotate服务切割日志.html" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -381,7 +381,7 @@
 
           
           
-             <span id="/Linux命令小技巧.html" class="leancloud_visitors" data-flag-title="Linux命令小技巧">
+             <span id="/利用logrotate服务切割日志.html" class="leancloud_visitors" data-flag-title="利用logrotate服务切割日志">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -404,99 +404,99 @@
 
       
         <blockquote>
-<p>&#x672C;&#x6587;&#x4E0D;&#x5BF9;&#x57FA;&#x672C;&#x7684;&#x547D;&#x4EE4;&#x4F5C;&#x8FC7;&#x591A;&#x7684;&#x63CF;&#x8FF0;&#xFF0C;&#x8BA9;&#x4F60;&#x4E86;&#x89E3;&#x4E0D;&#x4E00;&#x6837;Linux&#x547D;&#x4EE4;&#x5C0F;&#x6280;&#x5DE7;&#xFF0C;&#x539F;&#x6765;Linux&#x8FD8;&#x53EF;&#x4EE5;&#x8FD9;&#x4E48;&#x73A9;&#xFF01;<br> <a id="more"></a></p>
+<p><code>logrotate</code> &#x662F;&#x4E00;&#x4E2A;&#x65E5;&#x5FD7;&#x7BA1;&#x7406;&#x7A0B;&#x5E8F;&#xFF0C;&#x7528;&#x6765;&#x628A;&#x65E7;&#x7684;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x5220;&#x9664;&#xFF08;&#x5907;&#x4EFD;&#xFF09;&#xFF0C;&#x5E76;&#x521B;&#x5EFA;&#x65B0;&#x7684;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#xFF0C;&#x8FD9;&#x4E2A;&#x8FC7;&#x7A0B;&#x79F0;&#x4E3A;&#x201D;&#x8F6C;&#x50A8;&#x201D;&#x3002;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x6839;&#x636E;&#x65E5;&#x5FD7;&#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x6216;&#x8005;&#x6839;&#x636E;&#x5176;&#x4F7F;&#x7528;&#x7684;&#x5929;&#x6570;&#x6765;&#x8F6C;&#x50A8;&#x3002;<br> <a id="more"></a></p>
 </blockquote>
-<p></p><h3 id="&#x83B7;&#x53D6;&#x78C1;&#x76D8;&#x7A7A;&#x95F4;&#x6700;&#x5927;&#x7684;&#x51E0;&#x4E2A;&#x6587;&#x4EF6;">&#x83B7;&#x53D6;&#x78C1;&#x76D8;&#x7A7A;&#x95F4;&#x6700;&#x5927;&#x7684;&#x51E0;&#x4E2A;&#x6587;&#x4EF6;</h3><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">du -hsx * | sort -rh | head -8</div></pre></td></tr></table></figure><p></p>
-<p>&#x547D;&#x4EE4;&#x548C;&#x9009;&#x9879;&#x7684;&#x89E3;&#x91CA;&#xFF1A;</p>
-<ul>
-<li>du &#x2013; &#x4F30;&#x8BA1;&#x6587;&#x4EF6;&#x7684;&#x7A7A;&#x95F4;&#x4F7F;&#x7528;&#x60C5;&#x51B5;</li>
-<li>-hsx &#x2013; &#xFF08;-h&#xFF09;&#x66F4;&#x6613;&#x8BFB;&#x7684;&#x683C;&#x5F0F;&#xFF0C;&#xFF08;-s&#xFF09;&#x6C47;&#x603B;&#x8F93;&#x51FA;&#xFF0C;&#xFF08;-x&#xFF09;&#x8DF3;&#x8FC7;&#x5176;&#x4ED6;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x7684;&#x6587;&#x4EF6;</li>
-<li>sort &#x2013; &#x5BF9;&#x6587;&#x672C;&#x6587;&#x4EF6;&#x6309;&#x884C;&#x6392;&#x5E8F;</li>
-<li>-rf &#x2013; &#xFF08;-r&#xFF09;&#x5C06;&#x6BD4;&#x8F83;&#x7684;&#x7ED3;&#x679C;&#x9006;&#x5E8F;&#x8F93;&#x51FA;&#xFF0C;&#xFF08;-f&#xFF09;&#x5FFD;&#x7565;&#x5927;&#x5C0F;&#x5199;</li>
-<li>head &#x2013; &#x8F93;&#x51FA;&#x6587;&#x4EF6;&#x7684;&#x5934;&#x51E0;&#x884C;</li>
-</ul>
-<p></p><h3 id="&#x663E;&#x793A;&#x5269;&#x4F59;&#x5185;&#x5B58;">&#x663E;&#x793A;&#x5269;&#x4F59;&#x5185;&#x5B58;</h3><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">free -m | grep cache | awk <span class="string">&apos;/[0-9]/{ print $4&quot; MB&quot; }&apos;</span></div></pre></td></tr></table></figure><p></p>
-<p></p><h3 id="&#x6D4B;&#x8BD5;&#x78C1;&#x76D8;&#x5199;&#x5165;&#x901F;&#x5EA6;">&#x6D4B;&#x8BD5;&#x78C1;&#x76D8;&#x5199;&#x5165;&#x901F;&#x5EA6;</h3><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dd <span class="keyword">if</span>=/dev/zero of=/tmp/output.img bs=8k count=256k conv=fdatasync</div></pre></td></tr></table></figure><p></p>
-<p>&#x547D;&#x4EE4;&#x548C;&#x9009;&#x9879;&#x7684;&#x89E3;&#x91CA;&#xFF1A;</p>
-<ul>
-<li>dd &#x2013; &#x8F6C;&#x6362;&#x548C;&#x590D;&#x5236;&#x6587;&#x4EF6;</li>
-<li>if=/dev/zero &#x2013; &#x6307;&#x5B9A;&#x8F93;&#x5165;&#x6587;&#x4EF6;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;stdin&#xFF08;&#x6807;&#x51C6;&#x8F93;&#x5165;&#xFF09;</li>
-<li>of=/tmp/output.img &#x2013; &#x6307;&#x5B9A;&#x8F93;&#x51FA;&#x6587;&#x4EF6;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;stdout&#xFF08;&#x6807;&#x51C6;&#x8F93;&#x51FA;&#xFF09;</li>
-<li>bs &#x2013; &#x4E00;&#x6B21;&#x8BFB;&#x548C;&#x5199;&#x7684;&#x5757;&#x5927;&#x5C0F;&#xFF0C;&#x6700;&#x5927;&#x53EF;&#x4EE5;&#x4EE5;MB&#x4E3A;&#x5355;&#x4F4D;</li>
-<li>count &#x2013; &#x590D;&#x5236;&#x6B21;&#x6570;</li>
-<li>conv &#x2013; &#x4F7F;&#x7528;&#x9017;&#x53F7;&#x5206;&#x9694;&#x7684;&#x7B56;&#x7565;&#x6765;&#x8F6C;&#x6362;&#x6587;&#x4EF6;&#xFF08;LCTT &#x8BD1;&#x6CE8;&#xFF1A;&#x6BD4;&#x5982;&#x5C06;&#x5927;&#x5199;&#x5B57;&#x6BCD;&#x8F6C;&#x6362;&#x6210;&#x5C0F;&#x5199;&#xFF0C;echo AA | dd conv=lcase&#xFF09;</li>
-</ul>
-<p></p><h3 id="&#x6D4B;&#x8BD5;&#x78C1;&#x76D8;&#x8BFB;&#x53D6;&#x901F;&#x5EA6;">&#x6D4B;&#x8BD5;&#x78C1;&#x76D8;&#x8BFB;&#x53D6;&#x901F;&#x5EA6;</h3><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hdparm -Tt /dev/vda</div></pre></td></tr></table></figure><p></p>
-<p>&#x547D;&#x4EE4;&#x548C;&#x9009;&#x9879;&#x7684;&#x89E3;&#x91CA;&#xFF1A;</p>
-<ul>
-<li>hdparm - &#x8BFB;&#x53D6;&#x548C;&#x8BBE;&#x7F6E;IDE&#x6216;SCSI&#x786C;&#x76D8;&#x53C2;&#x6570;</li>
-<li>-T - &#x8BC4;&#x4F30;&#x786C;&#x76D8;&#x5FEB;&#x901F;&#x7684;&#x8BFB;&#x53D6;&#x6548;&#x7387;</li>
-<li>-t - &#x8BC4;&#x4F30;&#x786C;&#x76D8;&#x7684;&#x8BFB;&#x53D6;&#x6548;&#x7387;</li>
-</ul>
-<p></p><h3 id="&#x5728;history&#x4E2D;&#x52A0;&#x65F6;&#x95F4;&#x548C;&#x547D;&#x4EE4;&#x6267;&#x884C;&#x8005;">&#x5728;history&#x4E2D;&#x52A0;&#x65F6;&#x95F4;&#x548C;&#x547D;&#x4EE4;&#x6267;&#x884C;&#x8005;</h3><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">vim ~/.bashrc</div><div class="line"><span class="built_in">export</span> HISTTIMEFORMAT=<span class="string">&quot;%d/%m/%y %T `whoami`&quot;</span></div><div class="line"><span class="built_in">source</span> ~/.bashrc</div></pre></td></tr></table></figure><p></p>
-<p>&#x547D;&#x4EE4;&#x548C;&#x9009;&#x9879;&#x7684;&#x89E3;&#x91CA;&#xFF1A;</p>
-<ul>
-<li>history &#x2013; &#x67E5;&#x770B;&#x8FD0;&#x884C;&#x8FC7;&#x7684;&#x547D;&#x4EE4;</li>
-<li>HISTIMEFORMAT &#x2013; &#x8BBE;&#x7F6E;&#x65F6;&#x95F4;&#x683C;&#x5F0F;&#x7684;&#x73AF;&#x5883;&#x53D8;&#x91CF;<br>-%d &#x2013; &#x5929;</li>
-<li>%m &#x2013; &#x6708;</li>
-<li>%y &#x2013; &#x5E74;</li>
-<li>%T &#x2013; &#x65F6;&#x95F4;&#x6233;</li>
-<li>whoami - &#x5F53;&#x524D;&#x6267;&#x884C;&#x547D;&#x4EE4;&#x7684;&#x7528;&#x6237;</li>
-</ul>
-<p></p><h3 id="&#x5B9E;&#x65F6;&#x76D1;&#x63A7;&#x5F53;&#x524D;&#x547D;&#x4EE4;&#x6267;&#x884C;&#x7684;&#x7ED3;&#x679C;">&#x5B9E;&#x65F6;&#x76D1;&#x63A7;&#x5F53;&#x524D;&#x547D;&#x4EE4;&#x6267;&#x884C;&#x7684;&#x7ED3;&#x679C;</h3><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">watch -n 2 <span class="string">&apos;cat /proc/mdstat&apos;</span></div></pre></td></tr></table></figure><p></p>
-<p>&#x547D;&#x4EE4;&#x548C;&#x9009;&#x9879;&#x7684;&#x89E3;&#x91CA;:</p>
-<ul>
-<li>watch - &#x7528;&#x4E8E;&#x5468;&#x671F;&#x6027;&#x6267;&#x884C;&#x547D;&#x4EE4;</li>
-<li>-n - &#x6307;&#x5B9A;&#x95F4;&#x9694;&#x7684;&#x65F6;&#x957F;</li>
-</ul>
-<p></p><h3 id="&#x9632;&#x6B62;&#x7CFB;&#x7EDF;&#x5173;&#x952E;&#x6587;&#x4EF6;&#x88AB;&#x7BE1;&#x6539;">&#x9632;&#x6B62;&#x7CFB;&#x7EDF;&#x5173;&#x952E;&#x6587;&#x4EF6;&#x88AB;&#x7BE1;&#x6539;</h3><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">chattr +i note.txt</div><div class="line">lsattr note.txt</div></pre></td></tr></table></figure><p></p>
-<p>&#x547D;&#x4EE4;&#x548C;&#x9009;&#x9879;&#x7684;&#x89E3;&#x91CA;:</p>
-<ul>
-<li>chattr - &#x6539;&#x53D8;&#x6587;&#x4EF6;&#x5C5E;&#x6027;</li>
-<li>lsattr - &#x67E5;&#x770B;&#x6587;&#x4EF6;&#x5C5E;&#x6027;</li>
-<li>a - &#x8BA9;&#x6587;&#x4EF6;&#x6216;&#x76EE;&#x5F55;&#x4EC5;&#x4F9B;&#x9644;&#x52A0;&#x7528;&#x9014;</li>
-<li>b - &#x4E0D;&#x66F4;&#x65B0;&#x6587;&#x4EF6;&#x6216;&#x76EE;&#x5F55;&#x7684;&#x6700;&#x540E;&#x5B58;&#x53D6;&#x65F6;&#x95F4;</li>
-<li>c - &#x5C06;&#x6587;&#x4EF6;&#x6216;&#x76EE;&#x5F55;&#x538B;&#x7F29;&#x540E;&#x5B58;&#x653E;</li>
-<li>d - &#x5C06;&#x6587;&#x4EF6;&#x6216;&#x76EE;&#x5F55;&#x6392;&#x9664;&#x5728;&#x503E;&#x5012;&#x64CD;&#x4F5C;&#x4E4B;&#x5916;</li>
-<li>i - &#x4E0D;&#x5F97;&#x4EFB;&#x610F;&#x66F4;&#x52A8;&#x6587;&#x4EF6;&#x6216;&#x76EE;&#x5F55;</li>
-<li>s - &#x4FDD;&#x5BC6;&#x6027;&#x5220;&#x9664;&#x6587;&#x4EF6;&#x6216;&#x76EE;&#x5F55;</li>
-<li>S - &#x5373;&#x65F6;&#x66F4;&#x65B0;&#x6587;&#x4EF6;&#x6216;&#x76EE;&#x5F55;</li>
-<li>u - &#x9884;&#x9632;&#x4EE5;&#x5916;&#x5220;&#x9664;</li>
-</ul>
-<p></p><h3 id="&#x7528;-wget-&#x7684;&#x9012;&#x5F52;&#x65B9;&#x5F0F;&#x4E0B;&#x8F7D;&#x6574;&#x4E2A;&#x7F51;&#x7AD9;">&#x7528; Wget &#x7684;&#x9012;&#x5F52;&#x65B9;&#x5F0F;&#x4E0B;&#x8F7D;&#x6574;&#x4E2A;&#x7F51;&#x7AD9;</h3><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget --random-wait -r -p <span class="_">-e</span> robots=off -U Mozilla www.example.com</div></pre></td></tr></table></figure><p></p>
-<p>&#x547D;&#x4EE4;&#x548C;&#x9009;&#x9879;&#x7684;&#x89E3;&#x91CA;:</p>
-<ul>
-<li>&#x2013;random-wait &#x7B49;&#x5F85; 0.5 &#x5230; 1.5 &#x79D2;&#x7684;&#x65F6;&#x95F4;&#x6765;&#x8FDB;&#x884C;&#x4E0B;&#x4E00;&#x6B21;&#x8BF7;&#x6C42; </li>
-<li>-r &#x5F00;&#x542F;&#x9012;&#x5F52;&#x68C0;&#x7D22; </li>
-<li>-e robots=off &#x5FFD;&#x7565; robots.txt </li>
-<li>-U Mozilla &#x8BBE;&#x7F6E; User-Agent &#x5934;&#x4E3A; Mozilla</li>
-<li>&#x2013;limit-rate=20K &#x9650;&#x5236;&#x4E0B;&#x8F7D;&#x901F;&#x5EA6;&#x4E3A; 20K </li>
-<li>-o logfile.txt &#x8BB0;&#x5F55;&#x4E0B;&#x8F7D;&#x65E5;&#x5FD7; </li>
-<li>-l 0 &#x5220;&#x9664;&#x6DF1;&#x5EA6;&#xFF08;&#x9ED8;&#x8BA4;&#x4E3A;5&#xFF09; </li>
-<li>&#x2013;wait=1h &#x6BCF;&#x4E0B;&#x8F7D;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x540E;&#x7B49;&#x5F85;1&#x5C0F;&#x65F6;</li>
-</ul>
-<p></p><h3 id="&#x4EA7;&#x751F;&#x968F;&#x673A;&#x7684;&#x5341;&#x516D;&#x8FDB;&#x5236;&#x6570;">&#x4EA7;&#x751F;&#x968F;&#x673A;&#x7684;&#x5341;&#x516D;&#x8FDB;&#x5236;&#x6570;</h3><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">openssl rand -hex -n</div></pre></td></tr></table></figure><p></p>
-<p>&#x547D;&#x4EE4;&#x548C;&#x9009;&#x9879;&#x7684;&#x89E3;&#x91CA;:</p>
-<ul>
-<li>-n - &#x751F;&#x6210;&#x968F;&#x673A;&#x5B57;&#x7B26;&#x6570;&#x91CF;</li>
-</ul>
-<p></p><h3 id="&#x68C0;&#x67E5;&#x8FDC;&#x7A0B;&#x7AEF;&#x53E3;&#x662F;&#x5426;&#x5BF9;&#x672C;&#x673A;&#x5F00;&#x653E;">&#x68C0;&#x67E5;&#x8FDC;&#x7A0B;&#x7AEF;&#x53E3;&#x662F;&#x5426;&#x5BF9;&#x672C;&#x673A;&#x5F00;&#x653E;</h3><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">echo</span> &gt; /dev/tcp/8.8.8.8/53 &amp;&amp; <span class="built_in">echo</span> <span class="string">&quot;open&quot;</span></div></pre></td></tr></table></figure><p></p>
-<p></p><h3 id="&#x5FEB;&#x901F;&#x5907;&#x4EFD;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;">&#x5FEB;&#x901F;&#x5907;&#x4EFD;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;</h3><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cp some_file_name{,.bkp}</div></pre></td></tr></table></figure><p></p>
-<p></p><h3 id="&#x4FEE;&#x6539;&#x6587;&#x4EF6;&#x7684;&#x65F6;&#x95F4;&#x6233;&#x6216;&#x521B;&#x5EFA;&#x7A7A;&#x6587;&#x4EF6;">&#x4FEE;&#x6539;&#x6587;&#x4EF6;&#x7684;&#x65F6;&#x95F4;&#x6233;&#x6216;&#x521B;&#x5EFA;&#x7A7A;&#x6587;&#x4EF6;</h3><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">touch <span class="_">-a</span> -t 201601011111 test.sh</div></pre></td></tr></table></figure><p></p>
-<p>&#x547D;&#x4EE4;&#x548C;&#x9009;&#x9879;&#x7684;&#x89E3;&#x91CA;:</p>
-<ul>
-<li>-t - STAMP:&#x6307;&#x660E;&#x65F6;&#x95F4; [[CC]YY]MMDDhhmm[.ss]</li>
-<li>-a - &#x4EC5;&#x4FEE;&#x6539;atime</li>
-<li>-m - &#x4EC5;&#x4FEE;&#x6539;mtime</li>
-<li>-c - &#x4E0D;&#x521B;&#x5EFA;&#x6587;&#x4EF6;</li>
-</ul>
-<p></p><h3 id="&#x663E;&#x793A;&#x6587;&#x4EF6;&#x6216;&#x7CFB;&#x7EDF;&#x72B6;&#x6001;">&#x663E;&#x793A;&#x6587;&#x4EF6;&#x6216;&#x7CFB;&#x7EDF;&#x72B6;&#x6001;</h3><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">stat</span> text.txt</div></pre></td></tr></table></figure><p></p>
-<p>&#x547D;&#x4EE4;&#x548C;&#x9009;&#x9879;&#x7684;&#x89E3;&#x91CA;:</p>
-<ul>
-<li>access time - atime,&#x6587;&#x4EF6;&#x6700;&#x8FD1;&#x4E00;&#x6B21;&#x88AB;&#x8BBF;&#x95EE;&#x7684;&#x65F6;&#x95F4;</li>
-<li>modify time - mtime,&#x6587;&#x4EF6;&#x6700;&#x8FD1;&#x4E00;&#x6B21;&#x88AB;&#x4FEE;&#x6539;&#x7684;&#x65F6;&#x95F4;&#xFF08;&#x6570;&#x636E;&#xFF09;</li>
-<li>change time - ctime,&#x6587;&#x4EF6;&#x6700;&#x8FD1;&#x4E00;&#x6B21;&#x6539;&#x52A8;&#x7684;&#x65F6;&#x95F4;&#xFF08;&#x5143;&#x6570;&#x636E;&#xFF09;</li>
-</ul>
+<p></p><h3 id="&#x542F;&#x52A8;&#x65B9;&#x5F0F;">&#x542F;&#x52A8;&#x65B9;&#x5F0F;</h3><br>logrotate &#x7684;&#x6267;&#x884C;&#x7531;crond&#x670D;&#x52A1;&#x5B9E;&#x73B0;&#x3002;&#x5728; <code>/etc/cron.daily</code> &#x76EE;&#x5F55;&#x4E2D;&#xFF0C;&#x6709;&#x4E2A;&#x6587;&#x4EF6;logrotate&#xFF0C;&#x5B83;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x4E2A;shell script&#xFF0C;&#x7528;&#x6765;&#x542F;&#x52A8;logrotate&#x3002;logrotate&#x7A0B;&#x5E8F;&#x6BCF;&#x5929;&#x7531;cron&#x5728;&#x6307;&#x5B9A;&#x7684;&#x65F6;&#x95F4; <code>&#xFF08;/etc/crontab&#xFF09;</code> &#x542F;&#x52A8;&#x3002;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># cat /etc/cron.daily/logrotate </span></div><div class="line"><span class="meta">#!/bin/sh</span></div><div class="line"></div><div class="line">/usr/sbin/logrotate /etc/logrotate.conf &gt;/dev/null 2&gt;&amp;1</div><div class="line">EXITVALUE=$?</div><div class="line"><span class="keyword">if</span> [ <span class="variable">$EXITVALUE</span> != 0 ]; <span class="keyword">then</span></div><div class="line">    /usr/bin/logger -t logrotate <span class="string">&quot;ALERT exited abnormally with [<span class="variable">$EXITVALUE</span>]&quot;</span></div><div class="line"><span class="keyword">fi</span></div><div class="line"><span class="built_in">exit</span> 0</div></pre></td></tr></table></figure><p></p>
+<p>&#x5728;&#x6267;&#x884C;logrotate&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x6307;&#x5B9A;&#x5176;&#x914D;&#x7F6E;&#x6587;&#x4EF6;/etc/logrotate.conf</p>
+<p>&#x8FD9;&#x4E2A;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x7684;&#x6CE8;&#x91CA;&#x5199;&#x5F97;&#x5F88;&#x6E05;&#x695A;&#xFF0C;&#x6CA1;&#x6709;&#x5FC5;&#x8981;&#x518D;&#x7F57;&#x55E6;&#x4E86;&#x3002;&#x53EA;&#x60F3;&#x5F3A;&#x8C03;&#x4E0B;&#x9762;&#x8FD9;&#x884C;&#xFF0C;&#x5B83;&#x7684;&#x4F5C;&#x7528;&#x5305;&#x542B;&#x5B58;&#x653E;&#x5728;/etc/logrotate.d&#x76EE;&#x5F55;&#x4E0B;&#x9762;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x4E0D;&#x53EF;&#x6216;&#x7F3A;&#x3002;&#x5982;&#x679C;&#x4F60;&#x5B89;&#x88C5;&#x4E86;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x670D;&#x52A1;&#xFF0C;&#x5B83;&#x7684;&#x65E5;&#x5FD7;&#x8F6C;&#x50A8;&#x7684;&#x89C4;&#x5219;&#x53EF;&#x4EE5;&#x5EFA;&#x7ACB;&#x4E00;&#x4E2A;&#x4E13;&#x95E8;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x653E;&#x5728;/etc/logrotate.d&#x4E0B;&#x9762;&#x3002;&#x5B83;&#x5176;&#x5B9E;&#x4E5F;&#x56E0;&#x4E3A;&#x4E0B;&#x9762;&#x7684;&#x8FD9;&#x53E5;&#x8BDD;&#xFF0C;&#x5728; logrotate&#x670D;&#x52A1;&#x542F;&#x52A8;&#x65F6;&#x88AB;&#x8BFB;&#x53D6;&#x3002;</p>
+<p>&#x6BCF;&#x4E2A;&#x5B58;&#x653E;&#x5728;/etc/logrotate.d&#x76EE;&#x5F55;&#x91CC;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x90FD;&#x6709;&#x4E0A;&#x9762;&#x683C;&#x5F0F;&#x7684;&#x914D;&#x7F6E;&#x4FE1;&#x606F;&#x3002;&#x5728;{}&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x89C4;&#x5219;&#xFF0C;&#x5982;&#x679C;&#x4E0E;logrotate.conf&#x4E2D;&#x7684;&#x51B2;&#x7A81;&#xFF0C;&#x4EE5;/etc/logrotatate.d/&#x4E2D;&#x7684;&#x6587;&#x4EF6;&#x5B9A;&#x4E49;&#x7684;&#x4E3A;&#x51C6;&#x3002;</p>
+<p></p><h3 id="&#x53C2;&#x6570;&#x8BF4;&#x660E;">&#x53C2;&#x6570;&#x8BF4;&#x660E;</h3><br>&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x5339;&#x914D;&#x89C4;&#x5219;&#x4E2D;&#xFF0C;&#x4E0D;&#x8981;&#x4F7F;&#x7528;/var/log/news/<em>&#xFF0C;&#x8FD9;&#x4F1A;&#x5339;&#x914D;&#x5DF2;&#x7ECF;&#x5207;&#x6362;&#x8FC7;&#x7684;&#x65E5;&#x5FD7;&#xFF0C;&#x5E94;&#x4F7F;&#x7528;/var/log/news/</em>.log<p></p>
+<table>
+<thead>
+<tr>
+<th>&#x9009;&#x9879;</th>
+<th>&#x7528;&#x9014;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nocompress/compress</td>
+<td>&#x4E0D;&#x538B;&#x7F29;/&#x538B;&#x7F29;</td>
+</tr>
+<tr>
+<td>delaycompress</td>
+<td>&#x4E0D;&#x538B;&#x7F29;&#x524D;&#x4E00;&#x4E2A;&#x622A;&#x65AD;&#x7684;&#x6587;&#x4EF6;&#xFF08;&#x9700;&#x8981;&#x4E0E;compress&#x4E00;&#x8D77;&#x7528;&#xFF09;</td>
+</tr>
+<tr>
+<td>daily/weekly/monthly</td>
+<td>&#x6BCF;&#x5929;/&#x5468;/&#x6708;&#x8F6E;&#x8F6C;&#x4E00;&#x6B21;</td>
+</tr>
+<tr>
+<td>copytruncate</td>
+<td>&#x6E05;&#x7A7A;&#x539F;&#x6709;&#x6587;&#x4EF6;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x65B0;&#x6587;&#x4EF6;</td>
+</tr>
+<tr>
+<td>create 0644 root utmp</td>
+<td>&#x65B0;&#x5EFA;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#xFF0C;&#x6743;&#x9650;&#x3001;&#x5C5E;&#x4E3B;&#x3001;&#x7EC4;</td>
+</tr>
+<tr>
+<td>ifempty</td>
+<td>&#x5373;&#x4F7F;&#x7528;&#x7A7A;&#x6587;&#x4EF6;&#x4E5F;&#x8F6C;&#x50A8;</td>
+</tr>
+<tr>
+<td>notifempty</td>
+<td>&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x4E3A;&#x7A7A;&#x4E0D;&#x8FDB;&#x884C;&#x8F6C;&#x50A8;</td>
+</tr>
+<tr>
+<td>olddir <dir></dir></td>
+<td>&#x8F6C;&#x50A8;&#x540E;&#x7684;&#x65E5;&#x5FD7;&#x5B58;&#x653E;&#x76EE;&#x5F55;&#xFF0C;&#x5FC5;&#x987B;&#x548C;&#x5F53;&#x524D;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x5728;&#x540C;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;</td>
+</tr>
+<tr>
+<td>rotate 5</td>
+<td>&#x4FDD;&#x7559;&#x6700;&#x8FD1;&#x7684;5&#x4E2A;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;</td>
+</tr>
+<tr>
+<td>minisize 1M</td>
+<td>&#x5FC5;&#x987B;&#x5927;&#x4E8E;1MB&#x624D;&#x4F1A;&#x8F6C;&#x50A8;</td>
+</tr>
+<tr>
+<td>size 50M</td>
+<td>&#x8D85;&#x8FC7;50MB&#x540E;&#x8F6E;&#x8F6C;&#x65E5;&#x5FD7;</td>
+</tr>
+<tr>
+<td>mail www@my.org</td>
+<td>&#x8F6E;&#x6362;&#x540E;&#x7684;&#x628A;&#x65E5;&#x5FD7;&#x53D1;&#x7ED9;&#x90AE;&#x7BB1;</td>
+</tr>
+<tr>
+<td>missingok</td>
+<td>&#x5982;&#x679C;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x4E0D;&#x5B58;&#x5728;&#xFF0C;&#x4E0D;&#x62A5;&#x9519;</td>
+</tr>
+<tr>
+<td>prerotate,endscript</td>
+<td>&#x5728;logrotate&#x4E4B;&#x524D;&#x6267;&#x884C;&#x7684;&#x547D;&#x4EE4;</td>
+</tr>
+<tr>
+<td>postrotate,endscript</td>
+<td>&#x5728;logrotate&#x4E4B;&#x540E;&#x6267;&#x884C;&#x7684;&#x547D;&#x4EE4;</td>
+</tr>
+<tr>
+<td>sharedscripts</td>
+<td>&#x5171;&#x4EAB;&#x811A;&#x672C;&#xFF0C;&#x8868;&#x793A;&#x5207;&#x6362;&#x65F6;&#x53EA;&#x6267;&#x884C;&#x4E00;&#x6B21;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td>dateext</td>
+<td>&#x589E;&#x52A0;&#x65E5;&#x671F;&#x4F5C;&#x4E3A;&#x540E;&#x7F00;&#xFF0C;&#x4E0D;&#x7136;&#x4F1A;&#x662F;&#x4E00;&#x4E32;&#x65E0;&#x610F;&#x4E49;&#x7684;&#x6570;&#x5B57;</td>
+</tr>
+<tr>
+<td>dateformat .%s</td>
+<td>&#x5207;&#x6362;&#x540E;&#x6587;&#x4EF6;&#x540D;&#xFF0C;&#x5FC5;&#x987B;&#x914D;&#x5408;dateext&#x4F7F;&#x7528;</td>
+</tr>
+</tbody>
+</table>
+<p></p><h4 id="logrotateconf&#x8303;&#x4F8B;">logrotate.conf&#x8303;&#x4F8B;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># sample logrotate configuration file</span></div><div class="line">compress     <span class="comment"># &#x5168;&#x5C40;&#x8BBE;&#x7F6E;, &#x538B;&#x7F29;</span></div><div class="line"> </div><div class="line">/var/<span class="built_in">log</span>/messages {</div><div class="line">    rotate 5     <span class="comment"># &#x4FDD;&#x7559;5&#x4EFD;&#x65E5;&#x5FD7;</span></div><div class="line">    weekly       <span class="comment"># &#x6BCF;&#x5468;&#x8F6E;&#x6362;&#x4E00;&#x6B21;</span></div><div class="line">    postrotate   <span class="comment"># &#x8F6E;&#x6362;&#x4E4B;&#x540E;&#x91CD;&#x542F;syslogd&#x670D;&#x52A1;</span></div><div class="line">    /usr/bin/killall -HUP syslogd</div><div class="line">    <span class="comment"># rhel6&#x4E2D;&#x4E3A;:/bin/kill -HUP `cat /var/run/syslogd.pid 2&gt; /dev/null` 2&gt; /dev/null || true</span></div><div class="line">    <span class="comment"># &#x53EF;&#x67E5;&#x770B;/etc/logrotate.d/&#x4E0B;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;</span></div><div class="line">    endscript</div><div class="line">}</div><div class="line"> </div><div class="line"><span class="string">&quot;/var/log/httpd/access.log&quot;</span> /var/<span class="built_in">log</span>/httpd/error.log {   <span class="comment">#  &#x6307;&#x5B9A;&#x591A;&#x4E2A;&#x6587;&#x4EF6;, &#x5982;&#x679C;&#x6709;&#x7279;&#x6B8A;&#x5B57;&#x7B26;&#x9700;&#x8981;&#x7528;&#x5355;&#x5F15;&#x53F7;</span></div><div class="line">    rotate 5</div><div class="line">    mail www@my.org</div><div class="line">    size 100k        <span class="comment"># &#x8D85;&#x8FC7;100k&#x540E;&#x5207;&#x6362;&#x65E5;&#x5FD7;, &#x5E76;&#x628A;&#x8001;&#x7684;&#x65E5;&#x5FD7;&#x53D1;&#x9001;&#x90AE;&#x4EF6;&#x7ED9;www@my.org</span></div><div class="line">    sharedscripts    <span class="comment"># &#x5171;&#x4EAB;&#x811A;&#x672C;.&#x4E0B;&#x9762;&#x7684;postrotate&#x811A;&#x672C;&#x53EA;&#x8FD0;&#x884C;&#x4E00;&#x6B21;.</span></div><div class="line">    postrotate</div><div class="line">    /usr/bin/killall -HUP httpd</div><div class="line">    endscript</div><div class="line">}</div><div class="line"> </div><div class="line">/var/<span class="built_in">log</span>/news/* {    <span class="comment"># &#x5C11;&#x7528;&#x901A;&#x914D;&#x7B26;, &#x56E0;&#x4F1A;&#x5B83;&#x4F1A;&#x5305;&#x62EC;&#x5DF2;&#x7ECF;&#x5207;&#x6362;&#x8FC7;&#x7684;&#x65E5;&#x5FD7;, &#x8981;&#x7528;&#x7684;&#x8BDD;&#x6700;&#x597D;&#x5728;*&#x53F7;&#x540E;&#x52A0;&#x4E0A;&#x6269;&#x5C55;&#x540D;, &#x5982;*.log</span></div><div class="line">    monthly</div><div class="line">    rotate 2</div><div class="line">    olddir /var/<span class="built_in">log</span>/news/old</div><div class="line">    missingok</div><div class="line">    postrotate</div><div class="line">    <span class="built_in">kill</span> -HUP <span class="string">&apos;cat /var/run/inn.pid&apos;</span></div><div class="line">    endscript</div><div class="line">    nocompress</div><div class="line">}</div><div class="line"> </div><div class="line">/var/<span class="built_in">log</span>/ipwall/messages.log {   <span class="comment">#&#x65E5;&#x5FD7;&#x8DEF;&#x5F84;&#x4E00;&#x5B9A;&#x8981;&#x548C;rsyslog&#x5B9A;&#x4E49;&#x7684;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x8DEF;&#x5F84;&#x4E00;&#x81F4;</span></div><div class="line">    rotate 65535             <span class="comment">#&#x6EDA;&#x52A8;65535&#x6B21;</span></div><div class="line">    create 0777 syslog adm   <span class="comment">#&#x8BBE;&#x7F6E;&#x6743;&#x9650;&#xFF0C;&#x65B9;&#x4FBF;windows&#x8FDE;&#x63A5;samba&#x670D;&#x52A1;&#x5668;</span></div><div class="line">    compress                 <span class="comment">#&#x91C7;&#x7528;&#x538B;&#x7F29;</span></div><div class="line">    size 50M                 <span class="comment">#&#x6587;&#x4EF6;&#x5927;&#x5C0F;50M&#x4EE5;&#x4E0A;&#x7684;&#x5206;&#x5272;&#x65E5;&#x5FD7;</span></div><div class="line">    dateext</div><div class="line">    dateformat .%s           <span class="comment">#&#x5B9A;&#x4E49;&#x6587;&#x4EF6;&#x5207;&#x5272;&#x540E;&#x7684;&#x6587;&#x4EF6;&#x540D;&#xFF0C;&#x5FC5;&#x987B;&#x914D;&#x5408;dateext&#x4F7F;&#x7528;</span></div><div class="line"> </div><div class="line">    <span class="comment">#posrotate/endscript&#x8FD9;&#x6BB5;&#x811A;&#x672C;&#x4F7F;rsyslog&#x7A0B;&#x5E8F;&#x91CD;&#x65B0;&#x8BFB;&#x53D6;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x7A0B;&#x5E8F;&#x91CA;&#x653E;&#x5BF9;messages.log&#x6587;&#x4EF6;&#x6301;&#x6709;&#x7684;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;</span></div><div class="line">    postrotate</div><div class="line">    /bin/<span class="built_in">kill</span> -HUP $(/bin/cat /var/run/rsyslogd.pid 2&gt;/dev/null) &amp;&gt;/dev/null</div><div class="line">    endscript</div><div class="line">}</div></pre></td></tr></table></figure><p></p>
+<p></p><h4 id="&#x5F3A;&#x5236;&#x8F6E;&#x8F6C;">&#x5F3A;&#x5236;&#x8F6E;&#x8F6C;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">logrotate <span class="_">-f</span> /etc/logrotate.conf     <span class="comment"># &#x2013;&#x5F3A;&#x5236;&#x8F6E;&#x8F6C;</span></div><div class="line">logrotate -vf /etc/logrotate.conf    <span class="comment"># &#x2013;&#x518D;&#x52A0;&#x4E00;&#x4E2A;-v&#x53C2;&#x6570;&#x67E5;&#x770B;&#x8F6E;&#x8F6C;&#x7684;&#x8FC7;&#x7A0B;</span></div><div class="line"> </div><div class="line">logger -t <span class="string">&apos;aaaa&apos;</span> <span class="string">&apos;bbbbbb&apos;</span>            <span class="comment">#&#x2013;&#x5728;&#x65E5;&#x5FD7;&#x91CC;&#x52A0;&#x4E00;&#x4E2A;&#x5185;&#x5BB9;tag&#x548C;&#x5185;&#x5BB9;</span></div><div class="line">tail /var/<span class="built_in">log</span>/messages</div><div class="line"><span class="comment"># Jun 12 20:34:22 kadefor aaaa: bbbbbb</span></div></pre></td></tr></table></figure><p></p>
+<p></p><h3 id="nginx&#x65E5;&#x5FD7;&#x5207;&#x5272;">Nginx&#x65E5;&#x5FD7;&#x5207;&#x5272;</h3><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">/var/<span class="built_in">log</span>/nginx/*<span class="built_in">log</span> {</div><div class="line">    daily</div><div class="line">    rotate 10</div><div class="line">    missingok</div><div class="line">    notifempty</div><div class="line">    compress</div><div class="line">    sharedscripts</div><div class="line">    su root</div><div class="line">    postrotate</div><div class="line">        /bin/<span class="built_in">kill</span> -USR1 $(cat /var/run/nginx.pid 2&gt;/dev/null) 2&gt;/dev/null || :</div><div class="line">    endscript</div><div class="line">}</div></pre></td></tr></table></figure><p></p>
+<p></p><h3 id="php&#x65E5;&#x5FD7;&#x5207;&#x5272;">PHP&#x65E5;&#x5FD7;&#x5207;&#x5272;</h3><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">/var/<span class="built_in">log</span>/php-fpm/*<span class="built_in">log</span> {</div><div class="line">    missingok</div><div class="line">    notifempty</div><div class="line">    sharedscripts</div><div class="line">    delaycompress</div><div class="line">    create 0664 www www</div><div class="line">    postrotate</div><div class="line">        /bin/<span class="built_in">kill</span> -SIGUSR1 `cat /var/run/php-fpm/php-fpm.pid 2&gt;/dev/null` 2&gt;/dev/null || <span class="literal">true</span></div><div class="line">    endscript</div><div class="line">}</div></pre></td></tr></table></figure><p></p>
 
       
     </div>
@@ -528,11 +528,11 @@
 			<!-- 版权声明开始 -->
 		<b:if cond='data:blog.pageType == &quot;item&quot;'>
 		<div style='background-color: #F2F2F2; padding: 4px; margin: 6px; border:1px solid #000000;'>		           
-           <p>&nbsp &nbsp  本文标题 &nbsp : &nbsp <a href="/Linux命令小技巧.html">Linux命令小技巧</a></p>
+           <p>&nbsp &nbsp  本文标题 &nbsp : &nbsp <a href="/利用logrotate服务切割日志.html">利用logrotate服务切割日志</a></p>
 		   <p>&nbsp &nbsp      文章作者 &nbsp : &nbsp <a href="/" title="访问 火柴 的个人博客">火柴</a></p>
-           <p>&nbsp &nbsp      发布时间 &nbsp : &nbsp </span>2016年11月14日 - 16时11分</p>
-		   <p>&nbsp &nbsp      本文链接 &nbsp : &nbsp <a href="/Linux命令小技巧.html" title="Linux命令小技巧">http://www.chen-hao.com.cn/Linux命令小技巧.html</a></p>
-           <p>&nbsp &nbsp      本文字数 &nbsp : &nbsp <span class="page-count">本文一共有916字</span></script></a></p>
+           <p>&nbsp &nbsp      发布时间 &nbsp : &nbsp </span>2016年12月2日 - 14时12分</p>
+		   <p>&nbsp &nbsp      本文链接 &nbsp : &nbsp <a href="/利用logrotate服务切割日志.html" title="利用logrotate服务切割日志">http://www.chen-hao.com.cn/利用logrotate服务切割日志.html</a></p>
+           <p>&nbsp &nbsp      本文字数 &nbsp : &nbsp <span class="page-count">本文一共有1,118字</span></script></a></p>
 		   <p>&nbsp &nbsp      许可协议 &nbsp : &nbsp <i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" title="Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)">Attribution-NonCommercial 4.0</a></p>
 		   <p> &nbsp &nbsp  &copy 转载请保留以上信息，谢谢合作。</p>
 		</div>
@@ -545,7 +545,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/文件系统/" rel="tag">#文件系统</a>
+            <a href="/tags/日志切割/" rel="tag">#日志切割</a>
           
         </div>
       
@@ -556,17 +556,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/hexo-github访问出现页面空白问题.html" rel="next" title="hexo+github访问出现页面空白问题">
-                <i class="fa fa-chevron-left"></i> hexo+github访问出现页面空白问题
+              <a href="/Shell中set和shopt命令选项含义.html" rel="next" title="Shell中set和shopt命令选项含义">
+                <i class="fa fa-chevron-left"></i> Shell中set和shopt命令选项含义
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/Linux杀毒软件安装及使用.html" rel="prev" title="Linux杀毒软件安装及使用">
-                Linux杀毒软件安装及使用 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -582,10 +578,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="Linux命令小技巧.html"
-     data-title="Linux命令小技巧"
+        <div class="ds-share flat" data-thread-key="利用logrotate服务切割日志.html"
+     data-title="利用logrotate服务切割日志"
      data-content=""
-     data-url="http://www.chen-hao.com.cn/Linux命令小技巧.html">
+     data-url="http://www.chen-hao.com.cn/利用logrotate服务切割日志.html">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -613,8 +609,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="Linux命令小技巧.html"
-           data-title="Linux命令小技巧" data-url="http://www.chen-hao.com.cn/Linux命令小技巧.html">
+      <div class="ds-thread" data-thread-key="利用logrotate服务切割日志.html"
+           data-title="利用logrotate服务切割日志" data-url="http://www.chen-hao.com.cn/利用logrotate服务切割日志.html">
       </div>
     
   </div>
@@ -911,7 +907,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#获取磁盘空间最大的几个文件"><span class="nav-number">1.</span> <span class="nav-text">获取磁盘空间最大的几个文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#显示剩余内存"><span class="nav-number">2.</span> <span class="nav-text">显示剩余内存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试磁盘写入速度"><span class="nav-number">3.</span> <span class="nav-text">测试磁盘写入速度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试磁盘读取速度"><span class="nav-number">4.</span> <span class="nav-text">测试磁盘读取速度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在history中加时间和命令执行者"><span class="nav-number">5.</span> <span class="nav-text">在history中加时间和命令执行者</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实时监控当前命令执行的结果"><span class="nav-number">6.</span> <span class="nav-text">实时监控当前命令执行的结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#防止系统关键文件被篡改"><span class="nav-number">7.</span> <span class="nav-text">防止系统关键文件被篡改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用-wget-的递归方式下载整个网站"><span class="nav-number">8.</span> <span class="nav-text">用 Wget 的递归方式下载整个网站</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#产生随机的十六进制数"><span class="nav-number">9.</span> <span class="nav-text">产生随机的十六进制数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检查远程端口是否对本机开放"><span class="nav-number">10.</span> <span class="nav-text">检查远程端口是否对本机开放</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速备份一个文件"><span class="nav-number">11.</span> <span class="nav-text">快速备份一个文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改文件的时间戳或创建空文件"><span class="nav-number">12.</span> <span class="nav-text">修改文件的时间戳或创建空文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#显示文件或系统状态"><span class="nav-number">13.</span> <span class="nav-text">显示文件或系统状态</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#启动方式"><span class="nav-number">1.</span> <span class="nav-text">启动方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数说明"><span class="nav-number">2.</span> <span class="nav-text">参数说明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#logrotateconf范例"><span class="nav-number">2.1.</span> <span class="nav-text">logrotate.conf范例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#强制轮转"><span class="nav-number">2.2.</span> <span class="nav-text">强制轮转</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx日志切割"><span class="nav-number">3.</span> <span class="nav-text">Nginx日志切割</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#php日志切割"><span class="nav-number">4.</span> <span class="nav-text">PHP日志切割</span></a></li></ol></div>
             
           </div>
         </section>
