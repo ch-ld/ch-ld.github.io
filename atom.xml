@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.chen-hao.com.cn/"/>
-  <updated>2016-12-12T10:05:31.593Z</updated>
+  <updated>2016-12-13T01:03:42.571Z</updated>
   <id>http://www.chen-hao.com.cn/</id>
   
   <author>
@@ -20,10 +20,10 @@
     <link href="http://www.chen-hao.com.cn/%E6%90%AD%E5%BB%BA%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F-JIRA%E6%B1%89%E5%8C%96%E7%A0%B4%E8%A7%A3%E7%89%88.html"/>
     <id>http://www.chen-hao.com.cn/搭建项目管理系统-JIRA汉化破解版.html</id>
     <published>2016-12-12T06:27:04.000Z</published>
-    <updated>2016-12-12T10:05:31.593Z</updated>
+    <updated>2016-12-13T01:03:42.571Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
-<p> JIRA&#x662F;&#x4E00;&#x4E2A;&#x9879;&#x76EE;&#x8DDF;&#x8E2A;&#x7BA1;&#x7406;&#x5DE5;&#x5177;&#xFF0C;&#x5E2E;&#x52A9;&#x56E2;&#x961F;&#x521B;&#x5EFA;&#x8BA1;&#x5212;&#x4EFB;&#x52A1;&#x3001;&#x6784;&#x5EFA;&#x5E76;&#x53D1;&#x5E03;&#x4F18;&#x79C0;&#x7684;&#x4EA7;&#x54C1;&#x3002;&#x5168;&#x7403;&#x6210;&#x5343;&#x4E0A;&#x4E07;&#x7684;&#x56E2;&#x961F;&#x9009;&#x62E9;JIRA&#xFF0C;&#x7528;JIRA&#x6765;&#x6355;&#x83B7;&#x3001;&#x7EC4;&#x7EC7;&#x7BA1;&#x7406;&#x7F3A;&#x9677;&#x3001;&#x5206;&#x914D;&#x4EFB;&#x52A1;&#xFF0C;&#x8DDF;&#x8E2A;&#x56E2;&#x961F;&#x7684;&#x6D3B;&#x52A8;&#x3002;&#x4E0D;&#x8BBA;&#x5728;&#x684C;&#x9762;PC&#x8FD8;&#x662F;&#x79FB;&#x52A8;&#x7EC8;&#x7AEF;&#x8BBE;&#x5907;&#x4E0A;&#xFF0C;JIRA&#x90FD;&#x80FD;&#x5B8C;&#x7F8E;&#x7684;&#x8FD0;&#x884C;&#xFF0C;&#x5E2E;&#x52A9;&#x56E2;&#x961F;&#x5B8C;&#x6210;&#x5DE5;&#x4F5C;&#x3002;<br><a id="more"></a></p>
+<p> <code>JIRA</code>&#x662F;&#x4E00;&#x4E2A;&#x9879;&#x76EE;&#x8DDF;&#x8E2A;&#x7BA1;&#x7406;&#x5DE5;&#x5177;&#xFF0C;&#x5E2E;&#x52A9;&#x56E2;&#x961F;&#x521B;&#x5EFA;&#x8BA1;&#x5212;&#x4EFB;&#x52A1;&#x3001;&#x6784;&#x5EFA;&#x5E76;&#x53D1;&#x5E03;&#x4F18;&#x79C0;&#x7684;&#x4EA7;&#x54C1;&#x3002;&#x5168;&#x7403;&#x6210;&#x5343;&#x4E0A;&#x4E07;&#x7684;&#x56E2;&#x961F;&#x9009;&#x62E9;JIRA&#xFF0C;&#x7528;JIRA&#x6765;&#x6355;&#x83B7;&#x3001;&#x7EC4;&#x7EC7;&#x7BA1;&#x7406;&#x7F3A;&#x9677;&#x3001;&#x5206;&#x914D;&#x4EFB;&#x52A1;&#xFF0C;&#x8DDF;&#x8E2A;&#x56E2;&#x961F;&#x7684;&#x6D3B;&#x52A8;&#x3002;&#x4E0D;&#x8BBA;&#x5728;&#x684C;&#x9762;PC&#x8FD8;&#x662F;&#x79FB;&#x52A8;&#x7EC8;&#x7AEF;&#x8BBE;&#x5907;&#x4E0A;&#xFF0C;JIRA&#x90FD;&#x80FD;&#x5B8C;&#x7F8E;&#x7684;&#x8FD0;&#x884C;&#xFF0C;&#x5E2E;&#x52A9;&#x56E2;&#x961F;&#x5B8C;&#x6210;&#x5DE5;&#x4F5C;&#x3002;<br><a id="more"></a></p>
 </blockquote>
 <p></p><h3 id="&#x73AF;&#x5883;&#x51C6;&#x5907;">&#x73AF;&#x5883;&#x51C6;&#x5907;</h3><p></p>
 <ul>
@@ -54,7 +54,7 @@
     <summary type="html">
     
       &lt;blockquote&gt;
-&lt;p&gt; JIRA是一个项目跟踪管理工具，帮助团队创建计划任务、构建并发布优秀的产品。全球成千上万的团队选择JIRA，用JIRA来捕获、组织管理缺陷、分配任务，跟踪团队的活动。不论在桌面PC还是移动终端设备上，JIRA都能完美的运行，帮助团队完成工作。&lt;br&gt;
+&lt;p&gt; &lt;code&gt;JIRA&lt;/code&gt;是一个项目跟踪管理工具，帮助团队创建计划任务、构建并发布优秀的产品。全球成千上万的团队选择JIRA，用JIRA来捕获、组织管理缺陷、分配任务，跟踪团队的活动。不论在桌面PC还是移动终端设备上，JIRA都能完美的运行，帮助团队完成工作。&lt;br&gt;
     
     </summary>
     
@@ -70,10 +70,10 @@
     <link href="http://www.chen-hao.com.cn/%E6%90%AD%E5%BB%BA%E5%85%AC%E5%8F%B8wiki%E7%B3%BB%E7%BB%9F-confluence-%E6%B1%89%E5%8C%96%E7%A0%B4%E8%A7%A3%E7%89%88.html"/>
     <id>http://www.chen-hao.com.cn/搭建公司wiki系统-confluence-汉化破解版.html</id>
     <published>2016-12-12T02:18:24.000Z</published>
-    <updated>2016-12-12T10:00:51.090Z</updated>
+    <updated>2016-12-13T01:03:28.269Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
-<p><code>Confluence</code>&#x662F;&#x4E00;&#x4E2A;&#x4E13;&#x4E1A;&#x7684;<code>wiki</code>&#x7A0B;&#x5E8F;&#x3002;&#x5B83;&#x662F;&#x4E00;&#x4E2A;&#x77E5;&#x8BC6;&#x7BA1;&#x7406;&#x7684;&#x5DE5;&#x5177;&#xFF0C;&#x901A;&#x8FC7;&#x5B83;&#x53EF;&#x4EE5;&#x5B9E;&#x73B0;&#x56E2;&#x961F;&#x6210;&#x5458;&#x4E4B;&#x95F4;&#x7684;&#x534F;&#x4F5C;&#x548C;&#x77E5;&#x8BC6;&#x5171;&#x4EAB;&#x3002;<code>Confluence</code>&#x4E0D;&#x662F;&#x4E00;&#x4E2A;&#x5F00;&#x6E90;&#x8F6F;&#x4EF6;&#xFF0C;&#x975E;&#x5546;&#x4E1A;&#x7528;&#x9014;&#x53EF;&#x4EE5;&#x514D;&#x8D39;&#x4F7F;&#x7528;&#x3002;<br><code>Confluence</code>&#x4F7F;&#x7528;&#x7B80;&#x5355;&#xFF0C;&#x4F46;&#x5B83;&#x5F3A;&#x5927;&#x7684;&#x7F16;&#x8F91;&#x548C;&#x7AD9;&#x70B9;&#x7BA1;&#x7406;&#x7279;&#x5F81;&#x80FD;&#x591F;&#x5E2E;&#x52A9;&#x56E2;&#x961F;&#x6210;&#x5458;&#x4E4B;&#x95F4;&#x5171;&#x4EAB;&#x4FE1;&#x606F;&#xFF0C;&#x6587;&#x6863;&#x534F;&#x4F5C;&#xFF0C;&#x96C6;&#x4F53;&#x8BA8;&#x8BBA;&#x3002; &#x76EE;&#x524D;&#xFF0C;<code>Confluence</code>&#x88AB;&#x7528;&#x4E8E;&#x5E7F;&#x6CDB;&#x5730;&#x7528;&#x4E8E;&#x9879;&#x76EE;&#x56E2;&#x961F;&#xFF0C;&#x5F00;&#x53D1;&#x56E2;&#x961F;&#xFF0C;&#x5E02;&#x573A;&#x9500;&#x552E;&#x56E2;&#x961F;&#x3002;<br><a id="more"></a></p>
+<p><code>Confluence</code>&#x662F;&#x4E00;&#x4E2A;&#x4E13;&#x4E1A;&#x7684;<code>wiki</code>&#x7A0B;&#x5E8F;&#x3002;&#x5B83;&#x662F;&#x4E00;&#x4E2A;&#x77E5;&#x8BC6;&#x7BA1;&#x7406;&#x7684;&#x5DE5;&#x5177;&#xFF0C;&#x901A;&#x8FC7;&#x5B83;&#x53EF;&#x4EE5;&#x5B9E;&#x73B0;&#x56E2;&#x961F;&#x6210;&#x5458;&#x4E4B;&#x95F4;&#x7684;&#x534F;&#x4F5C;&#x548C;&#x77E5;&#x8BC6;&#x5171;&#x4EAB;&#x3002;Confluence&#x4E0D;&#x662F;&#x4E00;&#x4E2A;&#x5F00;&#x6E90;&#x8F6F;&#x4EF6;&#xFF0C;&#x975E;&#x5546;&#x4E1A;&#x7528;&#x9014;&#x53EF;&#x4EE5;&#x514D;&#x8D39;&#x4F7F;&#x7528;&#x3002;<br>Confluence&#x4F7F;&#x7528;&#x7B80;&#x5355;&#xFF0C;&#x4F46;&#x5B83;&#x5F3A;&#x5927;&#x7684;&#x7F16;&#x8F91;&#x548C;&#x7AD9;&#x70B9;&#x7BA1;&#x7406;&#x7279;&#x5F81;&#x80FD;&#x591F;&#x5E2E;&#x52A9;&#x56E2;&#x961F;&#x6210;&#x5458;&#x4E4B;&#x95F4;&#x5171;&#x4EAB;&#x4FE1;&#x606F;&#xFF0C;&#x6587;&#x6863;&#x534F;&#x4F5C;&#xFF0C;&#x96C6;&#x4F53;&#x8BA8;&#x8BBA;&#x3002;<br><a id="more"></a></p>
 </blockquote>
 <p></p><h3 id="&#x73AF;&#x5883;&#x51C6;&#x5907;">&#x73AF;&#x5883;&#x51C6;&#x5907;</h3><p></p>
 <ul>
@@ -101,7 +101,7 @@
     <summary type="html">
     
       &lt;blockquote&gt;
-&lt;p&gt;&lt;code&gt;Confluence&lt;/code&gt;是一个专业的&lt;code&gt;wiki&lt;/code&gt;程序。它是一个知识管理的工具，通过它可以实现团队成员之间的协作和知识共享。&lt;code&gt;Confluence&lt;/code&gt;不是一个开源软件，非商业用途可以免费使用。&lt;br&gt;&lt;code&gt;Confluence&lt;/code&gt;使用简单，但它强大的编辑和站点管理特征能够帮助团队成员之间共享信息，文档协作，集体讨论。 目前，&lt;code&gt;Confluence&lt;/code&gt;被用于广泛地用于项目团队，开发团队，市场销售团队。&lt;br&gt;
+&lt;p&gt;&lt;code&gt;Confluence&lt;/code&gt;是一个专业的&lt;code&gt;wiki&lt;/code&gt;程序。它是一个知识管理的工具，通过它可以实现团队成员之间的协作和知识共享。Confluence不是一个开源软件，非商业用途可以免费使用。&lt;br&gt;Confluence使用简单，但它强大的编辑和站点管理特征能够帮助团队成员之间共享信息，文档协作，集体讨论。&lt;br&gt;
     
     </summary>
     
