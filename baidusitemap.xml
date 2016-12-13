@@ -4,6 +4,66 @@
 
     
   <url>
+    <loc>http://www.chen-hao.com.cn/Linux%E7%B3%BB%E7%BB%9F%E5%88%9D%E5%A7%8B%E5%8C%96%E8%84%9A%E6%9C%AC.html</loc>
+    <lastmod>2016-12-13T07:54:45.073Z</lastmod>
+    <data>
+        <display>
+        <title>Linux系统初始化脚本</title>
+        <pubTime>2016-12-13T07:37:27.000Z</pubTime>
+        
+        <tag>shell</tag>
+         
+         
+           
+             
+              <breadCrumb title="shell" url="http://www.chen-hao.com.cn/categories/shell/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.chen-hao.com.cn/mysqldump%E5%85%A8%E9%87%8F%E5%92%8C%E5%A2%9E%E9%87%8F%E5%A4%87%E4%BB%BD%E8%84%9A%E6%9C%AC.html</loc>
+    <lastmod>2016-12-13T07:54:30.059Z</lastmod>
+    <data>
+        <display>
+        <title>mysqldump全量和增量备份脚本</title>
+        <pubTime>2016-09-01T06:10:16.000Z</pubTime>
+        
+        <tag>mysqldump</tag>
+         
+         
+           
+             
+              <breadCrumb title="shell" url="http://www.chen-hao.com.cn/categories/shell/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.chen-hao.com.cn/mysql%E4%BD%BF%E7%94%A8xtrabackup%E7%9A%84%E5%85%A8%E9%87%8F%E5%92%8C%E5%A2%9E%E9%87%8F%E8%84%9A%E6%9C%AC.html</loc>
+    <lastmod>2016-12-13T07:54:20.386Z</lastmod>
+    <data>
+        <display>
+        <title>mysql使用xtrabackup的全量和增量脚本</title>
+        <pubTime>2016-08-30T05:16:27.000Z</pubTime>
+        
+        <tag>xtrabackup</tag>
+         
+         
+           
+             
+              <breadCrumb title="shell" url="http://www.chen-hao.com.cn/categories/shell/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.chen-hao.com.cn/%E6%90%AD%E5%BB%BA%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F-JIRA%E6%B1%89%E5%8C%96%E7%A0%B4%E8%A7%A3%E7%89%88.html</loc>
     <lastmod>2016-12-13T01:03:42.571Z</lastmod>
     <data>
@@ -461,52 +521,12 @@
 
     
   <url>
-    <loc>http://www.chen-hao.com.cn/mysqldump%E5%85%A8%E9%87%8F%E5%92%8C%E5%A2%9E%E9%87%8F%E5%A4%87%E4%BB%BD%E8%84%9A%E6%9C%AC.html</loc>
-    <lastmod>2016-09-01T06:14:38.224Z</lastmod>
-    <data>
-        <display>
-        <title>mysqldump全量和增量备份脚本</title>
-        <pubTime>2016-09-01T06:10:16.000Z</pubTime>
-        
-        <tag>mysqldump</tag>
-         
-         
-           
-             
-              <breadCrumb title="数据库" url="http://www.chen-hao.com.cn/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://www.chen-hao.com.cn/xtrabackup%E8%87%AA%E5%8A%A8%E6%81%A2%E5%A4%8D%E8%84%9A%E6%9C%AC.html</loc>
     <lastmod>2016-09-01T03:50:24.211Z</lastmod>
     <data>
         <display>
         <title>xtrabackup自动恢复脚本</title>
         <pubTime>2016-09-01T00:29:17.000Z</pubTime>
-        
-        <tag>xtrabackup</tag>
-         
-         
-           
-             
-              <breadCrumb title="数据库" url="http://www.chen-hao.com.cn/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.chen-hao.com.cn/mysql%E4%BD%BF%E7%94%A8xtrabackup%E7%9A%84%E5%85%A8%E9%87%8F%E5%92%8C%E5%A2%9E%E9%87%8F%E8%84%9A%E6%9C%AC.html</loc>
-    <lastmod>2016-08-30T06:16:27.779Z</lastmod>
-    <data>
-        <display>
-        <title>mysql使用xtrabackup的全量和增量脚本</title>
-        <pubTime>2016-08-30T05:16:27.000Z</pubTime>
         
         <tag>xtrabackup</tag>
          
