@@ -121,7 +121,7 @@
 <meta property="og:image" content="http://www.chen-hao.com.cn/uploads/confluence9.png">
 <meta property="og:image" content="http://www.chen-hao.com.cn/uploads/confluence10.png">
 <meta property="og:image" content="http://www.chen-hao.com.cn/uploads/confluence11.png">
-<meta property="og:updated_time" content="2016-12-12T06:18:12.049Z">
+<meta property="og:updated_time" content="2016-12-12T10:00:51.090Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="搭建公司wiki系统-confluence 汉化破解版">
 <meta name="twitter:description" content="Confluence是一个专业的wiki程序。它是一个知识管理的工具，通过它可以实现团队成员之间的协作和知识共享。Confluence不是一个开源软件，非商业用途可以免费使用。Confluence使用简单，但它强大的编辑和站点管理特征能够帮助团队成员之间共享信息，文档协作，集体讨论。 目前，Confluence被用于广泛地用于项目团队，开发团队，市场销售团队。">
@@ -427,7 +427,7 @@
 </ul>
 <p></p><h3 id="&#x4E0B;&#x8F7D;confiluence&#x53CA;&#x5176;&#x7834;&#x89E3;&#x5305;">&#x4E0B;&#x8F7D;confiluence&#x53CA;&#x5176;&#x7834;&#x89E3;&#x5305;</h3><br>confluence&#x6709;&#x5F88;&#x591A;&#x7248;&#x672C;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x901A;&#x8FC7;&#x5982;&#x4E0B;&#x8FDE;&#x63A5;&#x8FDB;&#x884C;&#x67E5;&#x770B;<br><a href="https://www.atlassian.com/software/confluence/download-archives" target="_blank" rel="external">https://www.atlassian.com/software/confluence/download-archives</a><br><img src="/uploads/confluence1.png" class="blockquote-center"><br>&#x901A;&#x8FC7;&#x4E0A;&#x56FE;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x51FA;confluence&#x5BF9;&#x4E8E;windows&#x548C;linux&#x5E73;&#x53F0;&#x6BCF;&#x4E00;&#x4E2A;&#x7248;&#x672C;&#x6709;&#x591A;&#x79CD;&#x5B89;&#x88C5;&#x5305;&#xFF0C;&#x5728;&#x6B64;&#x6211;&#x4EEC;&#x9009;&#x62E9;&#x7684;&#x662F;bin&#x65B9;&#x5F0F;&#x3002;&#x9664;&#x6B64;&#x4E4B;&#x5916;&#xFF0C;&#x6211;&#x4EEC;&#x4E5F;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x76EE;&#x524D;confluence&#x6700;&#x65B0;&#x7248;&#x672C;&#x662F;6.0.1&#x3002;<br>&#x4E0B;&#x8F7D;confluence5.6.6<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -o atlassian-confluence-5.6.6-x64.bin https://downloads.atlassian.com/software/confluence/downloads/atlassian-confluence-5.6.6-x64.bin</div></pre></td></tr></table></figure><p></p>
 <p>&#x4E0B;&#x8F7D;confluence&#x7834;&#x89E3;&#x5305;<br>&#x8FD9;&#x91CC;&#x662F;&#x7F51;&#x4E0A;&#x7684;&#x8D44;&#x6E90;&#xFF0C;&#x6211;&#x5C31;&#x4FDD;&#x5B58;&#x5230;&#x767E;&#x5EA6;&#x7F51;&#x76D8;&#x4E86;&#xFF0C;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x4E0B;&#x8F7D;<br><a href="https://pan.baidu.com/s/1kVK3Hm3" target="_blank" rel="external">https://pan.baidu.com/s/1kVK3Hm3</a></p>
-<p></p><h3 id="&#x65B0;&#x5EFA;&#x6570;&#x636E;&#x5E93;">&#x65B0;&#x5EFA;&#x6570;&#x636E;&#x5E93;</h3><br>&#x5728;&#x5B89;&#x88C5;confluence&#x4E4B;&#x524D;&#xFF0C;&#x6211;&#x5DF2;&#x7ECF;&#x5B89;&#x88C5;&#x597D;&#x4E86;mysql5.6&#x7684;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x5E76;&#x4E14;&#x521B;&#x5EFA;&#x4E86;&#x6570;&#x636E;&#x5E93;&#x548C;&#x7528;&#x6237;&#xFF0C;&#x8BED;&#x53E5;&#x5982;&#x4E0B;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mysql&gt; CREATE DATABASE confluence CHARACTER SET utf8 COLLATE utf8_bin;</div><div class="line">mysql&gt; GRANT ALL PRIVILEGES ON confluence.* TO <span class="string">&apos;confluence&apos;</span>@<span class="string">&apos;localhost&apos;</span> IDENTIFIED BY <span class="string">&apos;123.com&apos;</span>;</div><div class="line">mysql&gt; GRANT ALL PRIVILEGES ON confluence.* TO <span class="string">&apos;confluence&apos;</span>@<span class="string">&apos;10.16.10.44&apos;</span> IDENTIFIED BY <span class="string">&apos;123.com&apos;</span>;</div><div class="line">mysql&gt; FLUSH PRIVILEGES;</div></pre></td></tr></table></figure><p></p>
+<p></p><h3 id="&#x521B;&#x5EFA;&#x6570;&#x636E;&#x5E93;">&#x521B;&#x5EFA;&#x6570;&#x636E;&#x5E93;</h3><br>&#x5728;&#x5B89;&#x88C5;confluence&#x4E4B;&#x524D;&#xFF0C;&#x6211;&#x5DF2;&#x7ECF;&#x5B89;&#x88C5;&#x597D;&#x4E86;mysql5.6&#x7684;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x5E76;&#x4E14;&#x521B;&#x5EFA;&#x4E86;&#x6570;&#x636E;&#x5E93;&#x548C;&#x7528;&#x6237;&#xFF0C;&#x8BED;&#x53E5;&#x5982;&#x4E0B;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mysql&gt; CREATE DATABASE confluence CHARACTER SET utf8 COLLATE utf8_bin;</div><div class="line">mysql&gt; GRANT ALL PRIVILEGES ON confluence.* TO <span class="string">&apos;confluence&apos;</span>@<span class="string">&apos;localhost&apos;</span> IDENTIFIED BY <span class="string">&apos;123.com&apos;</span>;</div><div class="line">mysql&gt; GRANT ALL PRIVILEGES ON confluence.* TO <span class="string">&apos;confluence&apos;</span>@<span class="string">&apos;10.16.10.44&apos;</span> IDENTIFIED BY <span class="string">&apos;123.com&apos;</span>;</div><div class="line">mysql&gt; FLUSH PRIVILEGES;</div></pre></td></tr></table></figure><p></p>
 <p></p><h3 id="&#x5B89;&#x88C5;confluence">&#x5B89;&#x88C5;confluence</h3><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">chmod +x atlassian-confluence-5.6.6-x64.bin</div><div class="line">./atlassian-confluence-5.6.6-x64.bin</div></pre></td></tr></table></figure><p></p>
 <p><img src="/uploads/confluence2.png" class="blockquote-center"><br>&#x901A;&#x8FC7;&#x4E0A;&#x56FE;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5F88;&#x660E;&#x663E;&#x7684;&#x770B;&#x51FA;confluence&#x5B89;&#x88C5;&#x5230;&#x4E86;/opt/atlassian/confluence&#x548C;/var/atlassian/application-data/confluence&#x76EE;&#x5F55;&#x4E0B;&#xFF0C;&#x5E76;&#x4E14;confluence&#x76D1;&#x542C;&#x7684;&#x7AEF;&#x53E3;&#x662F;8090<br>&#x4E0B;&#x9762;&#x8BBF;&#x95EE;&#x5730;&#x5740; 192.168.4.38:8090<br><img src="/uploads/confluence3.png" class="blockquote-center"></p>
 <p></p><h3 id="&#x7834;&#x89E3;confluence">&#x7834;&#x89E3;confluence</h3><p></p>
@@ -505,6 +505,10 @@
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/搭建项目管理系统-JIRA汉化破解版.html" rel="prev" title="搭建项目管理系统-JIRA汉化破解版">
+                搭建项目管理系统-JIRA汉化破解版 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -597,7 +601,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">38</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -605,7 +609,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -849,7 +853,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境准备"><span class="nav-number">1.</span> <span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下载confiluence及其破解包"><span class="nav-number">2.</span> <span class="nav-text">下载confiluence及其破解包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新建数据库"><span class="nav-number">3.</span> <span class="nav-text">新建数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装confluence"><span class="nav-number">4.</span> <span class="nav-text">安装confluence</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#破解confluence"><span class="nav-number">5.</span> <span class="nav-text">破解confluence</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关闭confluence"><span class="nav-number">5.1.</span> <span class="nav-text">关闭confluence</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除jar文件"><span class="nav-number">5.2.</span> <span class="nav-text">删除jar文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解压破解包并导入"><span class="nav-number">5.3.</span> <span class="nav-text">解压破解包并导入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运行破解jar包"><span class="nav-number">5.4.</span> <span class="nav-text">运行破解jar包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开始安装confluence"><span class="nav-number">5.5.</span> <span class="nav-text">开始安装confluence</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装完成"><span class="nav-number">5.6.</span> <span class="nav-text">安装完成</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境准备"><span class="nav-number">1.</span> <span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下载confiluence及其破解包"><span class="nav-number">2.</span> <span class="nav-text">下载confiluence及其破解包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建数据库"><span class="nav-number">3.</span> <span class="nav-text">创建数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装confluence"><span class="nav-number">4.</span> <span class="nav-text">安装confluence</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#破解confluence"><span class="nav-number">5.</span> <span class="nav-text">破解confluence</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关闭confluence"><span class="nav-number">5.1.</span> <span class="nav-text">关闭confluence</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除jar文件"><span class="nav-number">5.2.</span> <span class="nav-text">删除jar文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解压破解包并导入"><span class="nav-number">5.3.</span> <span class="nav-text">解压破解包并导入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运行破解jar包"><span class="nav-number">5.4.</span> <span class="nav-text">运行破解jar包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开始安装confluence"><span class="nav-number">5.5.</span> <span class="nav-text">开始安装confluence</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装完成"><span class="nav-number">5.6.</span> <span class="nav-text">安装完成</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
@@ -917,7 +921,7 @@
 	</script>
 	
   <div class="powered-by"></div>
-  <span class="post-count">共53.1k字</span>
+  <span class="post-count">共53.6k字</span>
 </div>
 
         

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.chen-hao.com.cn/"/>
-  <updated>2016-12-12T06:18:12.049Z</updated>
+  <updated>2016-12-12T10:05:31.593Z</updated>
   <id>http://www.chen-hao.com.cn/</id>
   
   <author>
@@ -16,11 +16,61 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>搭建项目管理系统-JIRA汉化破解版</title>
+    <link href="http://www.chen-hao.com.cn/%E6%90%AD%E5%BB%BA%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F-JIRA%E6%B1%89%E5%8C%96%E7%A0%B4%E8%A7%A3%E7%89%88.html"/>
+    <id>http://www.chen-hao.com.cn/搭建项目管理系统-JIRA汉化破解版.html</id>
+    <published>2016-12-12T06:27:04.000Z</published>
+    <updated>2016-12-12T10:05:31.593Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p> JIRA&#x662F;&#x4E00;&#x4E2A;&#x9879;&#x76EE;&#x8DDF;&#x8E2A;&#x7BA1;&#x7406;&#x5DE5;&#x5177;&#xFF0C;&#x5E2E;&#x52A9;&#x56E2;&#x961F;&#x521B;&#x5EFA;&#x8BA1;&#x5212;&#x4EFB;&#x52A1;&#x3001;&#x6784;&#x5EFA;&#x5E76;&#x53D1;&#x5E03;&#x4F18;&#x79C0;&#x7684;&#x4EA7;&#x54C1;&#x3002;&#x5168;&#x7403;&#x6210;&#x5343;&#x4E0A;&#x4E07;&#x7684;&#x56E2;&#x961F;&#x9009;&#x62E9;JIRA&#xFF0C;&#x7528;JIRA&#x6765;&#x6355;&#x83B7;&#x3001;&#x7EC4;&#x7EC7;&#x7BA1;&#x7406;&#x7F3A;&#x9677;&#x3001;&#x5206;&#x914D;&#x4EFB;&#x52A1;&#xFF0C;&#x8DDF;&#x8E2A;&#x56E2;&#x961F;&#x7684;&#x6D3B;&#x52A8;&#x3002;&#x4E0D;&#x8BBA;&#x5728;&#x684C;&#x9762;PC&#x8FD8;&#x662F;&#x79FB;&#x52A8;&#x7EC8;&#x7AEF;&#x8BBE;&#x5907;&#x4E0A;&#xFF0C;JIRA&#x90FD;&#x80FD;&#x5B8C;&#x7F8E;&#x7684;&#x8FD0;&#x884C;&#xFF0C;&#x5E2E;&#x52A9;&#x56E2;&#x961F;&#x5B8C;&#x6210;&#x5DE5;&#x4F5C;&#x3002;<br><a id="more"></a></p>
+</blockquote>
+<p></p><h3 id="&#x73AF;&#x5883;&#x51C6;&#x5907;">&#x73AF;&#x5883;&#x51C6;&#x5907;</h3><p></p>
+<ul>
+<li>CentOS 6.5</li>
+<li>java jdk 1.8</li>
+<li>mysql-server 5.6</li>
+<li><p>jira-6.3.6.tar.gz</p>
+<p>&#x7834;&#x89E3;&#x5305;&#x4E0B;&#x8F7D;&#xFF1A;<br><a href="http://pan.baidu.com/s/1c2DWvYS" target="_blank" rel="external">http://pan.baidu.com/s/1c2DWvYS</a> </p>
+</li>
+</ul>
+<p></p><h3 id="&#x521B;&#x5EFA;&#x6570;&#x636E;&#x5E93;">&#x521B;&#x5EFA;&#x6570;&#x636E;&#x5E93;</h3><br>&#x5728;&#x5B89;&#x88C5;JIRA&#x4E4B;&#x524D;&#xFF0C;&#x6211;&#x5DF2;&#x7ECF;&#x5B89;&#x88C5;&#x597D;&#x4E86;mysql5.6&#x7684;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x5E76;&#x4E14;&#x521B;&#x5EFA;&#x4E86;&#x6570;&#x636E;&#x5E93;&#x548C;&#x7528;&#x6237;&#xFF0C;&#x8BED;&#x53E5;&#x5982;&#x4E0B;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mysql&gt; create database jira character <span class="built_in">set</span> utf8;</div><div class="line">mysql&gt; grant all on jira.* to <span class="string">&apos;jira&apos;</span>@<span class="string">&apos;localhost&apos;</span> identified by <span class="string">&apos;jirapass&apos;</span>;</div><div class="line">mysql&gt; FLUSH PRIVILEGES;</div></pre></td></tr></table></figure><p></p>
+<p></p><h3 id="&#x5B89;&#x88C5;jira">&#x5B89;&#x88C5;jira</h3><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">chmod +x atlassian-jira-6.2.3-x64.bin</div><div class="line">./atlassian-jira-6.2.3-x64.bin</div><div class="line">cp mysql-connector-java-5.1.38-bin.jar /opt/atlassian/jira/atlassian-jira/WEB-INF/lib/</div></pre></td></tr></table></figure><p></p>
+<p><img src="/uploads/jira1.png" class="blockquote-center"><br>&#x8BBF;&#x95EE; <a href="http://192.168.16.109:8080" target="_blank" rel="external">http://192.168.16.109:8080</a><br><img src="/uploads/jira2.png" class="blockquote-center"><br><img src="/uploads/jira3.png" class="blockquote-center"><br><img src="/uploads/jira4.png" class="blockquote-center"><br><img src="/uploads/jira5.png" class="blockquote-center"><br>&#x5B89;&#x88C5;&#x5B8C;&#x6210;&#x540E;&#x663E;&#x793A;&#x5982;&#x4E0B;&#xFF1A;<br><img src="/uploads/jira6.png" class="blockquote-center"></p>
+<p></p><h3 id="&#x6C49;&#x5316;&#x7834;&#x89E3;">&#x6C49;&#x5316;&#x7834;&#x89E3;</h3><p></p>
+<ol>
+<li><p>&#x9009;&#x62E9;&#x63D2;&#x4EF6;<br><img src="/uploads/jira7.png" class="blockquote-center"></p>
+</li>
+<li><p>&#x4E0A;&#x4F20;&#x4E2D;&#x6587;&#x8BED;&#x8A00;&#x5305;<br><img src="/uploads/jira8.png" class="blockquote-center"><br>&#x4E2D;&#x6587;&#x63D2;&#x4EF6;&#x4E0A;&#x4F20;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#x4F1A;&#x9ED8;&#x8BA4;&#x53D8;&#x5230;&#x4E2D;&#x6587;&#x5B57;&#x4F53;&#xFF0C;&#x56E0;&#x4E3A;&#x4E0A;&#x4F20;&#x4E2D;&#x6587;&#x8BED;&#x8A00;&#x5305;&#x4E4B;&#x540E;&#x9ED8;&#x8BA4;&#x8BED;&#x8A00;&#x4F1A;&#x53D8;&#x4E3A;&#x4E2D;&#x6587;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x53D8;&#xFF0C;&#x53EF;&#x4EE5;&#x81EA;&#x884C;&#x5728;&#x7CFB;&#x7EDF;&#x8BBE;&#x7F6E;&#x4FEE;&#x6539;</p>
+</li>
+<li><p>&#x7834;&#x89E3;</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">service jira stop</div><div class="line">cp atlassian-extras-2.2.2.jar atlassian-universal-plugin-manager-plugin-2.17.13.jar /opt/atlassian/jira/atlassian-jira/WEB-INF/lib/</div><div class="line">service jira start</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>&#x542F;&#x52A8;jira&#xFF0C;&#x767B;&#x5F55;&#x540E;&#x53F0;&#xFF0C;&#x8FDB;&#x5165;&#x7CFB;&#x7EDF;&#x7BA1;&#x7406;&#x2014;&#x2014;&gt;&#x6388;&#x6743;&#x8F93;&#x5165;&#x4E0B;&#x9762;&#x7684;&#x6388;&#x6743;&#x7801;&#xFF0C;&#x70B9;&#x51FB;&#x589E;&#x52A0;&#xFF0C;&#x7136;&#x540E;&#x5C31;&#x770B;&#x5230;jira&#x7684;&#x4F7F;&#x7528;&#x671F;&#x9650;&#x5230;&#x4E86;2099&#x5E74;&#xFF0C;&#x8BF4;&#x660E;&#x7834;&#x89E3;&#x6210;&#x529F;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">Description=JIRA: Commercial,</div><div class="line">CreationDate=2014-09-20,</div><div class="line">jira.LicenseEdition=ENTERPRISE,</div><div class="line">Evaluation=<span class="literal">false</span>,</div><div class="line">jira.LicenseTypeName=COMMERCIAL,</div><div class="line">jira.active=<span class="literal">true</span>,</div><div class="line">licenseVersion=2,</div><div class="line">MaintenanceExpiryDate=2099-12-31,</div><div class="line">Organisation=pl,</div><div class="line"><span class="comment"># &#x4FEE;&#x6539;&#x4E0B;&#x9762;2&#x5904;&#x5373;&#x53EF;</span></div><div class="line">SEN=SEN-L4572887,</div><div class="line">ServerID=BPT3-4QRK-FCRR-HEP3,</div><div class="line"></div><div class="line">jira.NumberOfUsers=-1,</div><div class="line">LicenseID=AAABBw0ODAoPeNptkFtLxDAQhd/zKwI+R9Kwy66FPKxthGhvtF0p4kuso0a6sUwvuP/edissyj4MD</div><div class="line">HPOfHOYqzu0tICWeoJy4a+FzzkNwpIK7q1ICF2Ntu3tl5P3Ot89+1SNphnMPCEBwqkJTQ9y9jN+w</div><div class="line">zxBPi2a68jW4DpQr/a0rZJS5VmuC0XOBNnjAH/s5bGFxBxABmkcqzzQu2jRTd3bEZaFZvE+AnYzR</div><div class="line">JDYWNeDM64G9d1aPJ4TeXxOlOK7cbZbjrbNgkyGwwtg+rbvJpBkHikAR0Adytt0XzFV7R5Y+qQzV</div><div class="line">kWZIoVK5FQsWq03YrvdkN/Ekz3S4SXlcpRswPrDdPD/aT+P1nzDMC0CFQCM9+0LlHVNnZQnSTwuR</div><div class="line">O3eK+2gVgIUCteTs4Q3khIgrnsY64hxYB/d8bM=X02dh,</div><div class="line">LicenseExpiryDate=2099-12-31,</div><div class="line">PurchaseDate=2014-09-20</div></pre></td></tr></table></figure></p>
+<p><img src="/uploads/jira9.png" class="blockquote-center"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt; JIRA是一个项目跟踪管理工具，帮助团队创建计划任务、构建并发布优秀的产品。全球成千上万的团队选择JIRA，用JIRA来捕获、组织管理缺陷、分配任务，跟踪团队的活动。不论在桌面PC还是移动终端设备上，JIRA都能完美的运行，帮助团队完成工作。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="自动化" scheme="http://www.chen-hao.com.cn/categories/%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
+    
+    
+      <category term="jira" scheme="http://www.chen-hao.com.cn/tags/jira/"/>
+    
+  </entry>
+  
+  <entry>
     <title>搭建公司wiki系统-confluence 汉化破解版</title>
     <link href="http://www.chen-hao.com.cn/%E6%90%AD%E5%BB%BA%E5%85%AC%E5%8F%B8wiki%E7%B3%BB%E7%BB%9F-confluence-%E6%B1%89%E5%8C%96%E7%A0%B4%E8%A7%A3%E7%89%88.html"/>
     <id>http://www.chen-hao.com.cn/搭建公司wiki系统-confluence-汉化破解版.html</id>
     <published>2016-12-12T02:18:24.000Z</published>
-    <updated>2016-12-12T06:18:12.049Z</updated>
+    <updated>2016-12-12T10:00:51.090Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p><code>Confluence</code>&#x662F;&#x4E00;&#x4E2A;&#x4E13;&#x4E1A;&#x7684;<code>wiki</code>&#x7A0B;&#x5E8F;&#x3002;&#x5B83;&#x662F;&#x4E00;&#x4E2A;&#x77E5;&#x8BC6;&#x7BA1;&#x7406;&#x7684;&#x5DE5;&#x5177;&#xFF0C;&#x901A;&#x8FC7;&#x5B83;&#x53EF;&#x4EE5;&#x5B9E;&#x73B0;&#x56E2;&#x961F;&#x6210;&#x5458;&#x4E4B;&#x95F4;&#x7684;&#x534F;&#x4F5C;&#x548C;&#x77E5;&#x8BC6;&#x5171;&#x4EAB;&#x3002;<code>Confluence</code>&#x4E0D;&#x662F;&#x4E00;&#x4E2A;&#x5F00;&#x6E90;&#x8F6F;&#x4EF6;&#xFF0C;&#x975E;&#x5546;&#x4E1A;&#x7528;&#x9014;&#x53EF;&#x4EE5;&#x514D;&#x8D39;&#x4F7F;&#x7528;&#x3002;<br><code>Confluence</code>&#x4F7F;&#x7528;&#x7B80;&#x5355;&#xFF0C;&#x4F46;&#x5B83;&#x5F3A;&#x5927;&#x7684;&#x7F16;&#x8F91;&#x548C;&#x7AD9;&#x70B9;&#x7BA1;&#x7406;&#x7279;&#x5F81;&#x80FD;&#x591F;&#x5E2E;&#x52A9;&#x56E2;&#x961F;&#x6210;&#x5458;&#x4E4B;&#x95F4;&#x5171;&#x4EAB;&#x4FE1;&#x606F;&#xFF0C;&#x6587;&#x6863;&#x534F;&#x4F5C;&#xFF0C;&#x96C6;&#x4F53;&#x8BA8;&#x8BBA;&#x3002; &#x76EE;&#x524D;&#xFF0C;<code>Confluence</code>&#x88AB;&#x7528;&#x4E8E;&#x5E7F;&#x6CDB;&#x5730;&#x7528;&#x4E8E;&#x9879;&#x76EE;&#x56E2;&#x961F;&#xFF0C;&#x5F00;&#x53D1;&#x56E2;&#x961F;&#xFF0C;&#x5E02;&#x573A;&#x9500;&#x552E;&#x56E2;&#x961F;&#x3002;<br><a id="more"></a></p>
@@ -34,7 +84,7 @@
 </ul>
 <p></p><h3 id="&#x4E0B;&#x8F7D;confiluence&#x53CA;&#x5176;&#x7834;&#x89E3;&#x5305;">&#x4E0B;&#x8F7D;confiluence&#x53CA;&#x5176;&#x7834;&#x89E3;&#x5305;</h3><br>confluence&#x6709;&#x5F88;&#x591A;&#x7248;&#x672C;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x901A;&#x8FC7;&#x5982;&#x4E0B;&#x8FDE;&#x63A5;&#x8FDB;&#x884C;&#x67E5;&#x770B;<br><a href="https://www.atlassian.com/software/confluence/download-archives" target="_blank" rel="external">https://www.atlassian.com/software/confluence/download-archives</a><br><img src="/uploads/confluence1.png" class="blockquote-center"><br>&#x901A;&#x8FC7;&#x4E0A;&#x56FE;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x51FA;confluence&#x5BF9;&#x4E8E;windows&#x548C;linux&#x5E73;&#x53F0;&#x6BCF;&#x4E00;&#x4E2A;&#x7248;&#x672C;&#x6709;&#x591A;&#x79CD;&#x5B89;&#x88C5;&#x5305;&#xFF0C;&#x5728;&#x6B64;&#x6211;&#x4EEC;&#x9009;&#x62E9;&#x7684;&#x662F;bin&#x65B9;&#x5F0F;&#x3002;&#x9664;&#x6B64;&#x4E4B;&#x5916;&#xFF0C;&#x6211;&#x4EEC;&#x4E5F;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x76EE;&#x524D;confluence&#x6700;&#x65B0;&#x7248;&#x672C;&#x662F;6.0.1&#x3002;<br>&#x4E0B;&#x8F7D;confluence5.6.6<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -o atlassian-confluence-5.6.6-x64.bin https://downloads.atlassian.com/software/confluence/downloads/atlassian-confluence-5.6.6-x64.bin</div></pre></td></tr></table></figure><p></p>
 <p>&#x4E0B;&#x8F7D;confluence&#x7834;&#x89E3;&#x5305;<br>&#x8FD9;&#x91CC;&#x662F;&#x7F51;&#x4E0A;&#x7684;&#x8D44;&#x6E90;&#xFF0C;&#x6211;&#x5C31;&#x4FDD;&#x5B58;&#x5230;&#x767E;&#x5EA6;&#x7F51;&#x76D8;&#x4E86;&#xFF0C;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x4E0B;&#x8F7D;<br><a href="https://pan.baidu.com/s/1kVK3Hm3" target="_blank" rel="external">https://pan.baidu.com/s/1kVK3Hm3</a></p>
-<p></p><h3 id="&#x65B0;&#x5EFA;&#x6570;&#x636E;&#x5E93;">&#x65B0;&#x5EFA;&#x6570;&#x636E;&#x5E93;</h3><br>&#x5728;&#x5B89;&#x88C5;confluence&#x4E4B;&#x524D;&#xFF0C;&#x6211;&#x5DF2;&#x7ECF;&#x5B89;&#x88C5;&#x597D;&#x4E86;mysql5.6&#x7684;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x5E76;&#x4E14;&#x521B;&#x5EFA;&#x4E86;&#x6570;&#x636E;&#x5E93;&#x548C;&#x7528;&#x6237;&#xFF0C;&#x8BED;&#x53E5;&#x5982;&#x4E0B;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mysql&gt; CREATE DATABASE confluence CHARACTER SET utf8 COLLATE utf8_bin;</div><div class="line">mysql&gt; GRANT ALL PRIVILEGES ON confluence.* TO <span class="string">&apos;confluence&apos;</span>@<span class="string">&apos;localhost&apos;</span> IDENTIFIED BY <span class="string">&apos;123.com&apos;</span>;</div><div class="line">mysql&gt; GRANT ALL PRIVILEGES ON confluence.* TO <span class="string">&apos;confluence&apos;</span>@<span class="string">&apos;10.16.10.44&apos;</span> IDENTIFIED BY <span class="string">&apos;123.com&apos;</span>;</div><div class="line">mysql&gt; FLUSH PRIVILEGES;</div></pre></td></tr></table></figure><p></p>
+<p></p><h3 id="&#x521B;&#x5EFA;&#x6570;&#x636E;&#x5E93;">&#x521B;&#x5EFA;&#x6570;&#x636E;&#x5E93;</h3><br>&#x5728;&#x5B89;&#x88C5;confluence&#x4E4B;&#x524D;&#xFF0C;&#x6211;&#x5DF2;&#x7ECF;&#x5B89;&#x88C5;&#x597D;&#x4E86;mysql5.6&#x7684;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x5E76;&#x4E14;&#x521B;&#x5EFA;&#x4E86;&#x6570;&#x636E;&#x5E93;&#x548C;&#x7528;&#x6237;&#xFF0C;&#x8BED;&#x53E5;&#x5982;&#x4E0B;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mysql&gt; CREATE DATABASE confluence CHARACTER SET utf8 COLLATE utf8_bin;</div><div class="line">mysql&gt; GRANT ALL PRIVILEGES ON confluence.* TO <span class="string">&apos;confluence&apos;</span>@<span class="string">&apos;localhost&apos;</span> IDENTIFIED BY <span class="string">&apos;123.com&apos;</span>;</div><div class="line">mysql&gt; GRANT ALL PRIVILEGES ON confluence.* TO <span class="string">&apos;confluence&apos;</span>@<span class="string">&apos;10.16.10.44&apos;</span> IDENTIFIED BY <span class="string">&apos;123.com&apos;</span>;</div><div class="line">mysql&gt; FLUSH PRIVILEGES;</div></pre></td></tr></table></figure><p></p>
 <p></p><h3 id="&#x5B89;&#x88C5;confluence">&#x5B89;&#x88C5;confluence</h3><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">chmod +x atlassian-confluence-5.6.6-x64.bin</div><div class="line">./atlassian-confluence-5.6.6-x64.bin</div></pre></td></tr></table></figure><p></p>
 <p><img src="/uploads/confluence2.png" class="blockquote-center"><br>&#x901A;&#x8FC7;&#x4E0A;&#x56FE;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5F88;&#x660E;&#x663E;&#x7684;&#x770B;&#x51FA;confluence&#x5B89;&#x88C5;&#x5230;&#x4E86;/opt/atlassian/confluence&#x548C;/var/atlassian/application-data/confluence&#x76EE;&#x5F55;&#x4E0B;&#xFF0C;&#x5E76;&#x4E14;confluence&#x76D1;&#x542C;&#x7684;&#x7AEF;&#x53E3;&#x662F;8090<br>&#x4E0B;&#x9762;&#x8BBF;&#x95EE;&#x5730;&#x5740; 192.168.4.38:8090<br><img src="/uploads/confluence3.png" class="blockquote-center"></p>
 <p></p><h3 id="&#x7834;&#x89E3;confluence">&#x7834;&#x89E3;confluence</h3><p></p>
@@ -1862,43 +1912,6 @@
     
     
       <category term="cobbler" scheme="http://www.chen-hao.com.cn/tags/cobbler/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>dubbo-monitor-simple 监控中心安装</title>
-    <link href="http://www.chen-hao.com.cn/dubbo-monitor-simple-%E7%9B%91%E6%8E%A7%E4%B8%AD%E5%BF%83%E5%AE%89%E8%A3%85.html"/>
-    <id>http://www.chen-hao.com.cn/dubbo-monitor-simple-监控中心安装.html</id>
-    <published>2016-09-03T02:26:00.000Z</published>
-    <updated>2016-11-28T08:27:19.292Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote>
-<p>Dubbo &#x662F;&#x963F;&#x91CC;&#x5DF4;&#x5DF4;&#x516C;&#x53F8;&#x5F00;&#x6E90;&#x7684;&#x4E00;&#x4E2A;&#x9AD8;&#x6027;&#x80FD;&#x4F18;&#x79C0;&#x7684;&#x670D;&#x52A1;&#x6846;&#x67B6;&#xFF0C;&#x4F7F;&#x5F97;&#x5E94;&#x7528;&#x53EF;&#x901A;&#x8FC7;&#x9AD8;&#x6027;&#x80FD;&#x7684; RPC &#x5B9E;&#x73B0;&#x670D;&#x52A1;&#x7684;&#x8F93;&#x51FA;&#x548C;&#x8F93;&#x5165;&#x529F;&#x80FD;&#xFF0C;&#x53EF;&#x4EE5;&#x548C; Spring&#x6846;&#x67B6;&#x65E0;&#x7F1D;&#x96C6;&#x6210;&#x3002;&#x5B83;&#x6700;&#x5927;&#x7684;&#x7279;&#x70B9;&#x662F;&#x6309;&#x7167;&#x5206;&#x5C42;&#x7684;&#x65B9;&#x5F0F;&#x6765;&#x67B6;&#x6784;&#xFF0C;&#x4F7F;&#x7528;&#x8FD9;&#x79CD;&#x65B9;&#x5F0F;&#x53EF;&#x4EE5;&#x4F7F;&#x5404;&#x4E2A;&#x5C42;&#x4E4B;&#x95F4;&#x89E3;&#x8026;&#x5408;&#xFF08;&#x6216;&#x8005;&#x6700;&#x5927;&#x9650;&#x5EA6;&#x5730;&#x677E;&#x8026;&#x5408;&#xFF09;&#x3002;&#x672C;&#x6587;&#x4E3B;&#x8981;&#x8BB2;&#x89E3;&#x600E;&#x4E48;&#x5B89;&#x88C5;&#x6B64;&#x76D1;&#x63A7;&#x7CFB;&#x7EDF;&#x2026;&#x2026;<br><a id="more"></a></p>
-</blockquote>
-<p></p><h2 id="&#x4F9D;&#x8D56;&#x7EC4;&#x4EF6;">&#x4F9D;&#x8D56;&#x7EC4;&#x4EF6;</h2><p></p>
-<ul>
-<li>java jdk 1.6&#x53CA;&#x4EE5;&#x4E0A;</li>
-<li>git </li>
-<li>maven</li>
-<li>zookeeper </li>
-</ul>
-<p></p><h2 id="&#x83B7;&#x53D6;&#x6E90;&#x4EE3;&#x7801;">&#x83B7;&#x53D6;&#x6E90;&#x4EE3;&#x7801;</h2><br>&#x4ECE;github&#x4E0A;&#x4E0B;&#x8F7D;dubbo&#x6E90;&#x7801;&#x8FDB;&#x884C;&#x7F16;&#x8BD1;&#xFF0C;&#x4E0B;&#x8F7D;&#x5730;&#x5740;&#x4E3A; <a href="https://github.com/alibaba/dubbo.git" target="_blank" rel="external">dubbo github&#x5730;&#x5740;</a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> https://github.com/alibaba/dubbo.git</div><div class="line"><span class="built_in">cd</span> dubbo </div><div class="line">mvn clean install -Dmaven.test.skip</div><div class="line"><span class="comment"># &#x6B64;&#x6B65;&#x9AA4;&#x53EF;&#x80FD;&#x6781;&#x6162;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;google&#x76F4;&#x63A5;&#x4E0B;&#x8F7D;.tar.gz&#x7684;&#x5305;&#x76F4;&#x63A5;&#x5B89;&#x88C5;&#x5373;&#x53EF;</span></div></pre></td></tr></table></figure><p></p>
-<p></p><h2 id="&#x5B89;&#x88C5;monitor">&#x5B89;&#x88C5;monitor</h2><br>&#x7F16;&#x8BD1;&#x6253;&#x5305;dubbo&#x6E90;&#x7801;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x627E;&#x5230;dubbo-monitor-simple-2.5.4-SNAPSHOT-assembly.tar.gz&#x5B89;&#x88C5;&#x5305;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">tar -zxf dubbo-monitor-simple-2.5.4-SNAPSHOT-assembly.tar.gz -C /usr/<span class="built_in">local</span></div><div class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/dubbo-monitor-simple</div><div class="line">vim conf/dubbo.properties  <span class="comment"># &#x4FEE;&#x6539;&#x914D;&#x7F6E;&#x6587;&#x4EF6;</span></div><div class="line">dubbo.container=<span class="built_in">log</span>4j,spring,registry,jetty</div><div class="line">dubbo.application.name=simple-monitor</div><div class="line">dubbo.application.owner=</div><div class="line"><span class="comment">#dubbo.registry.address=multicast://224.5.6.7:1234     # &#x6CE8;&#x91CA;&#x6389;19&#x884C;</span></div><div class="line">dubbo.registry.address=zookeeper://127.0.0.1:2181      <span class="comment"># &#x4FEE;&#x6539;&#x4E3A; zookeeper&#x670D;&#x52A1;&#x5668;&#x7684;ip&#x5730;&#x5740;&#x7AEF;&#x53E3;&#x53F7;&#xFF0C;&#x5982;&#x679C;&#x4F60;&#x7684;zookeeper&#x662F;&#x96C6;&#x7FA4;&#xFF0C;&#x5219;&#x6CE8;&#x518C;&#x5730;&#x5740;&#x4FEE;&#x6539;&#x4E3A;zookeeper://127.0.0.1:2181?backup=127.0.0.1:2182,127.0.0.1:2183</span></div><div class="line"><span class="comment">#dubbo.registry.address=redis://127.0.0.1:7000         # &#x8FDE;&#x63A5;redis&#x7684;&#x7AEF;&#x53E3;</span></div><div class="line"><span class="comment">#dubbo.registry.address=dubbo://123.56.243.77:9090</span></div><div class="line">dubbo.protocol.port=7070</div><div class="line">dubbo.jetty.port=8080</div><div class="line">dubbo.jetty.directory=<span class="variable">${user.home}</span>/monitor</div><div class="line">dubbo.charts.directory=<span class="variable">${dubbo.jetty.directory}</span>/charts</div><div class="line">dubbo.statistics.directory=<span class="variable">${user.home}</span>/monitor/statistics</div><div class="line">dubbo.log4j.file=logs/dubbo-monitor-simple.log</div><div class="line">dubbo.log4j.level=WARN</div><div class="line"><span class="comment"># &#x5176;&#x4ED6;&#x7684;&#x914D;&#x7F6E;&#x9ED8;&#x8BA4;&#x5C31;&#x884C;&#xFF0C;&#x5F53;&#x7136;&#x4E5F;&#x53EF;&#x4EE5;&#x81EA;&#x5DF1;&#x914D;&#x7F6E;&#x3002;</span></div></pre></td></tr></table></figure><p></p>
-<p></p><h2 id="&#x542F;&#x52A8;monitor">&#x542F;&#x52A8;monitor</h2><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">tail <span class="_">-f</span> /usr/<span class="built_in">local</span>/dubbo-monitor-simple-2.5.3/logs/stdout.log</div><div class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/dubbo-monitor-simple-2.5.3/bin</div><div class="line">./start.sh</div><div class="line">Starting the simple-monitor .....OK!</div><div class="line">PID: 30864</div><div class="line">STDOUT: logs/stdout.log</div><div class="line"><span class="comment"># &#x51FA;&#x73B0;&#x4EE5;&#x4E0A;&#x8F93;&#x51FA;&#x8BC1;&#x660E;&#x542F;&#x52A8;OK&#x4E86;</span></div></pre></td></tr></table></figure><p></p>
-<p>&#x6D4F;&#x89C8;&#x5668;&#x8BBF;&#x95EE;<a href="http://IP:8080/&#x5373;&#x53EF;&#x663E;&#x793A;&#x9875;&#x9762;" target="_blank" rel="external">http://IP:8080/&#x5373;&#x53EF;&#x663E;&#x793A;&#x9875;&#x9762;</a><br><img src="/uploads/moniotr.png" class="blockquote-center"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;Dubbo 是阿里巴巴公司开源的一个高性能优秀的服务框架，使得应用可通过高性能的 RPC 实现服务的输出和输入功能，可以和 Spring框架无缝集成。它最大的特点是按照分层的方式来架构，使用这种方式可以使各个层之间解耦合（或者最大限度地松耦合）。本文主要讲解怎么安装此监控系统……&lt;br&gt;
-    
-    </summary>
-    
-      <category term="监控" scheme="http://www.chen-hao.com.cn/categories/%E7%9B%91%E6%8E%A7/"/>
-    
-    
-      <category term="dubbo-monitor-simple" scheme="http://www.chen-hao.com.cn/tags/dubbo-monitor-simple/"/>
     
   </entry>
   
