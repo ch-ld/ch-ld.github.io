@@ -1,3 +1,4 @@
+http://www.chen-hao.com.cn/网站架构演化.html
 http://www.chen-hao.com.cn/Codis3-1-集群安装部署.html
 http://www.chen-hao.com.cn/Linux系统初始化脚本.html
 http://www.chen-hao.com.cn/搭建项目管理系统-JIRA汉化破解版.html
@@ -7,4 +8,3 @@ http://www.chen-hao.com.cn/Shell中set和shopt命令选项含义.html
 http://www.chen-hao.com.cn/Expect命令使用详解.html
 http://www.chen-hao.com.cn/HTML状态消息.html
 http://www.chen-hao.com.cn/Linux杀毒软件安装及使用.html
-http://www.chen-hao.com.cn/Linux命令小技巧.html
