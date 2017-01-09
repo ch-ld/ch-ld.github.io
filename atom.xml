@@ -1329,7 +1329,7 @@
     <link href="http://www.chen-hao.com.cn/hexo-github%E8%AE%BF%E9%97%AE%E5%87%BA%E7%8E%B0%E9%A1%B5%E9%9D%A2%E7%A9%BA%E7%99%BD%E9%97%AE%E9%A2%98.html"/>
     <id>http://www.chen-hao.com.cn/hexo-github访问出现页面空白问题.html</id>
     <published>2016-11-09T01:13:53.000Z</published>
-    <updated>2016-11-09T01:32:44.777Z</updated>
+    <updated>2017-01-09T07:44:01.692Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>&#x6545;&#x969C;&#x91CD;&#x73B0;&#xFF1A;<br>&#x672C;&#x5730;&#x9884;&#x89C8;&#x6CA1;&#x95EE;&#x9898;&#xFF0C;&#x4F46;&#x662F;deploy&#x5230;github&#x4E4B;&#x540E;&#xFF0C;&#x4E3B;&#x9875;&#xFF0C;&#x53EA;&#x663E;&#x793A;&#x4E2A;&#x7A7A;&#x767D;&#x80CC;&#x666F;&#x3002;<br><a id="more"></a></p>
@@ -1353,7 +1353,7 @@
     
     </summary>
     
-      <category term="工具" scheme="http://www.chen-hao.com.cn/categories/%E5%B7%A5%E5%85%B7/"/>
+      <category term="故障记录" scheme="http://www.chen-hao.com.cn/categories/%E6%95%85%E9%9A%9C%E8%AE%B0%E5%BD%95/"/>
     
     
       <category term="github" scheme="http://www.chen-hao.com.cn/tags/github/"/>
@@ -1568,7 +1568,7 @@
     <link href="http://www.chen-hao.com.cn/ELK-Kafka%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2.html"/>
     <id>http://www.chen-hao.com.cn/ELK-Kafka日志收集平台部署.html</id>
     <published>2016-10-14T01:10:19.000Z</published>
-    <updated>2016-11-16T07:53:58.455Z</updated>
+    <updated>2017-01-09T07:44:37.338Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>&#x6700;&#x8FD1;&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x4E2D;&#x51C6;&#x5907;&#x4F7F;&#x7528;ELK&#xFF0C;&#x4E8E;&#x662F;&#x81EA;&#x5DF1;&#x52A8;&#x624B;&#x5F00;&#x59CB;&#x642D;&#x5EFA;&#x73AF;&#x5883;&#x6D4B;&#x8BD5;&#x3002;<br> <a id="more"></a></p>
@@ -1735,7 +1735,7 @@
     
     </summary>
     
-      <category term="工具" scheme="http://www.chen-hao.com.cn/categories/%E5%B7%A5%E5%85%B7/"/>
+      <category term="运维" scheme="http://www.chen-hao.com.cn/categories/%E8%BF%90%E7%BB%B4/"/>
     
     
       <category term="ELK" scheme="http://www.chen-hao.com.cn/tags/ELK/"/>
