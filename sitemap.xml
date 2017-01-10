@@ -2,6 +2,55 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.chen-hao.com.cn/Linux%E7%B3%BB%E7%BB%9F%E5%88%9D%E5%A7%8B%E5%8C%96%E8%84%9A%E6%9C%AC.html</loc>
+    
+    <lastmod>2017-01-10T01:26:13.016Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.chen-hao.com.cn/%E7%BD%91%E7%BB%9C%E5%88%86%E6%9E%90shell%E8%84%9A%E6%9C%AC-%E5%AE%9E%E6%97%B6%E6%B5%81%E9%87%8F-%E8%BF%9E%E6%8E%A5%E7%BB%9F%E8%AE%A1.html</loc>
+    
+    <lastmod>2017-01-10T01:25:48.657Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.chen-hao.com.cn/mysql%E4%BD%BF%E7%94%A8xtrabackup%E7%9A%84%E5%85%A8%E9%87%8F%E5%92%8C%E5%A2%9E%E9%87%8F%E8%84%9A%E6%9C%AC.html</loc>
+    
+    <lastmod>2017-01-10T01:25:38.135Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.chen-hao.com.cn/mysqldump%E5%85%A8%E9%87%8F%E5%92%8C%E5%A2%9E%E9%87%8F%E5%A4%87%E4%BB%BD%E8%84%9A%E6%9C%AC.html</loc>
+    
+    <lastmod>2017-01-10T01:25:31.328Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.chen-hao.com.cn/%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85cobbler%E8%84%9A%E6%9C%AC.html</loc>
+    
+    <lastmod>2017-01-10T01:25:13.249Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.chen-hao.com.cn/xtrabackup%E8%87%AA%E5%8A%A8%E6%81%A2%E5%A4%8D%E8%84%9A%E6%9C%AC.html</loc>
+    
+    <lastmod>2017-01-10T01:24:53.345Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.chen-hao.com.cn/mongodb%E5%88%86%E7%89%87%E9%85%8D%E7%BD%AE.html</loc>
+    
+    <lastmod>2017-01-10T01:24:22.617Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.chen-hao.com.cn/ELK-Kafka%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2.html</loc>
     
     <lastmod>2017-01-09T07:44:37.338Z</lastmod>
@@ -82,27 +131,6 @@
     <loc>http://www.chen-hao.com.cn/Redis%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%A5%E9%97%A8.html</loc>
     
     <lastmod>2016-12-20T06:33:34.319Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.chen-hao.com.cn/Linux%E7%B3%BB%E7%BB%9F%E5%88%9D%E5%A7%8B%E5%8C%96%E8%84%9A%E6%9C%AC.html</loc>
-    
-    <lastmod>2016-12-14T02:27:34.001Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.chen-hao.com.cn/mysqldump%E5%85%A8%E9%87%8F%E5%92%8C%E5%A2%9E%E9%87%8F%E5%A4%87%E4%BB%BD%E8%84%9A%E6%9C%AC.html</loc>
-    
-    <lastmod>2016-12-13T07:54:30.059Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.chen-hao.com.cn/mysql%E4%BD%BF%E7%94%A8xtrabackup%E7%9A%84%E5%85%A8%E9%87%8F%E5%92%8C%E5%A2%9E%E9%87%8F%E8%84%9A%E6%9C%AC.html</loc>
-    
-    <lastmod>2016-12-13T07:54:20.386Z</lastmod>
     
   </url>
   
@@ -240,23 +268,9 @@
   </url>
   
   <url>
-    <loc>http://www.chen-hao.com.cn/%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85cobbler%E8%84%9A%E6%9C%AC.html</loc>
-    
-    <lastmod>2016-09-05T09:28:11.403Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.chen-hao.com.cn/%E5%9C%A8Linux%E4%B8%AD%E6%B5%8B%E8%AF%95%E7%BD%91%E7%BB%9C%E5%B8%A6%E5%AE%BD.html</loc>
     
     <lastmod>2016-09-02T02:21:11.999Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.chen-hao.com.cn/xtrabackup%E8%87%AA%E5%8A%A8%E6%81%A2%E5%A4%8D%E8%84%9A%E6%9C%AC.html</loc>
-    
-    <lastmod>2016-09-01T03:50:24.211Z</lastmod>
     
   </url>
   
@@ -278,20 +292,6 @@
     <loc>http://www.chen-hao.com.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E5%B7%A5%E5%85%B7shadowsocks.html</loc>
     
     <lastmod>2016-08-24T07:16:34.352Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.chen-hao.com.cn/%E7%BD%91%E7%BB%9C%E5%88%86%E6%9E%90shell%E8%84%9A%E6%9C%AC-%E5%AE%9E%E6%97%B6%E6%B5%81%E9%87%8F-%E8%BF%9E%E6%8E%A5%E7%BB%9F%E8%AE%A1.html</loc>
-    
-    <lastmod>2016-08-24T07:12:03.360Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.chen-hao.com.cn/mongodb%E5%88%86%E7%89%87%E9%85%8D%E7%BD%AE.html</loc>
-    
-    <lastmod>2016-08-24T07:10:42.649Z</lastmod>
     
   </url>
   

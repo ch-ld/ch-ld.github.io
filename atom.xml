@@ -260,7 +260,7 @@
     <link href="http://www.chen-hao.com.cn/Linux%E7%B3%BB%E7%BB%9F%E5%88%9D%E5%A7%8B%E5%8C%96%E8%84%9A%E6%9C%AC.html"/>
     <id>http://www.chen-hao.com.cn/Linux系统初始化脚本.html</id>
     <published>2016-12-13T07:37:27.000Z</published>
-    <updated>2016-12-14T02:27:34.001Z</updated>
+    <updated>2017-01-10T01:26:13.016Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p><code>CentOS</code>&#x7CFB;&#x7EDF;&#x5B89;&#x88C5;&#x4E4B;&#x540E;&#x5E76;&#x4E0D;&#x80FD;&#x7ACB;&#x5373;&#x6295;&#x5165;&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x4F7F;&#x7528;&#xFF0C;&#x5F80;&#x5F80;&#x9700;&#x8981;&#x5148;&#x7ECF;&#x8FC7;&#x6211;&#x4EEC;&#x8FD0;&#x7EF4;&#x4EBA;&#x5458;&#x7684;&#x4F18;&#x5316;&#x624D;&#x884C;&#xFF0C;&#x6240;&#x4EE5;&#x4E3A;&#x4E86;&#x65B9;&#x4FBF;&#x7701;&#x4E8B;&#xFF0C;&#x5F04;&#x4E00;&#x4E2A;&#x521D;&#x59CB;&#x5316;&#x811A;&#x672C;&#x52BF;&#x5728;&#x5FC5;&#x884C;&#x3002;<br> <a id="more"></a></p>
@@ -276,7 +276,7 @@
     
     </summary>
     
-      <category term="shell" scheme="http://www.chen-hao.com.cn/categories/shell/"/>
+      <category term="Shell" scheme="http://www.chen-hao.com.cn/categories/Shell/"/>
     
     
       <category term="shell" scheme="http://www.chen-hao.com.cn/tags/shell/"/>
