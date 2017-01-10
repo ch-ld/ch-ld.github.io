@@ -1,4 +1,4 @@
-http://www.chen-hao.com.cn/MongoDB3-x-权限配置.html
+http://www.chen-hao.com.cn/mongodb3-x-权限配置.html
 http://www.chen-hao.com.cn/MongoDB3-x-配置文件.html
 http://www.chen-hao.com.cn/优化内核参数提高服务器并发处理能力.html
 http://www.chen-hao.com.cn/网站架构演化.html
