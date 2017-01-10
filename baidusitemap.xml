@@ -4,6 +4,46 @@
 
     
   <url>
+    <loc>http://www.chen-hao.com.cn/mongodb3-x-%E6%9D%83%E9%99%90%E9%85%8D%E7%BD%AE.html</loc>
+    <lastmod>2017-01-10T02:43:39.796Z</lastmod>
+    <data>
+        <display>
+        <title>mongodb3.x-权限配置</title>
+        <pubTime>2017-01-10T01:57:55.000Z</pubTime>
+        
+        <tag>mongodb</tag>
+         
+         
+           
+             
+              <breadCrumb title="NoSQL" url="http://www.chen-hao.com.cn/categories/NoSQL/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.chen-hao.com.cn/%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85cobbler%E8%84%9A%E6%9C%AC.html</loc>
+    <lastmod>2017-01-10T02:00:41.858Z</lastmod>
+    <data>
+        <display>
+        <title>一键安装cobbler脚本</title>
+        <pubTime>2016-09-05T06:57:10.000Z</pubTime>
+        
+        <tag>cobbler</tag>
+         
+         
+           
+             
+              <breadCrumb title="Shell" url="http://www.chen-hao.com.cn/categories/Shell/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.chen-hao.com.cn/Linux%E7%B3%BB%E7%BB%9F%E5%88%9D%E5%A7%8B%E5%8C%96%E8%84%9A%E6%9C%AC.html</loc>
     <lastmod>2017-01-10T01:26:13.016Z</lastmod>
     <data>
@@ -72,26 +112,6 @@
         <pubTime>2016-09-01T06:10:16.000Z</pubTime>
         
         <tag>mysqldump</tag>
-         
-         
-           
-             
-              <breadCrumb title="Shell" url="http://www.chen-hao.com.cn/categories/Shell/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.chen-hao.com.cn/%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85cobbler%E8%84%9A%E6%9C%AC.html</loc>
-    <lastmod>2017-01-10T01:25:13.249Z</lastmod>
-    <data>
-        <display>
-        <title>一键安装cobbler脚本</title>
-        <pubTime>2016-09-05T06:57:10.000Z</pubTime>
-        
-        <tag>cobbler</tag>
          
          
            

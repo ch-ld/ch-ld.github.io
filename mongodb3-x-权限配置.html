@@ -86,7 +86,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="http," />
+  <meta name="keywords" content="mongodb," />
 
 
 
@@ -104,16 +104,16 @@
 
 
 
-<meta name="description" content="当浏览器从 web 服务器请求服务时，可能会发生错误。返回下面的一系列状态消息，从状态码的类型我们可以定位故障，从而解决线上环境的各种问题。">
+<meta name="description" content="‘MongoDB 3.0’ 安全权限访问控制，在添加用户上和3.0之前的版本有很大的区别，由于刚接触mongodb，可是在这方面走了许多弯路，这里说明下3.x的用户配置。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HTML状态消息">
-<meta property="og:url" content="http://www.chen-hao.com.cn/HTML状态消息.html">
+<meta property="og:title" content="mongodb3.x-权限配置">
+<meta property="og:url" content="http://www.chen-hao.com.cn/mongodb3-x-权限配置.html">
 <meta property="og:site_name" content="火柴的博客">
-<meta property="og:description" content="当浏览器从 web 服务器请求服务时，可能会发生错误。返回下面的一系列状态消息，从状态码的类型我们可以定位故障，从而解决线上环境的各种问题。">
-<meta property="og:updated_time" content="2016-11-25T03:14:09.369Z">
+<meta property="og:description" content="‘MongoDB 3.0’ 安全权限访问控制，在添加用户上和3.0之前的版本有很大的区别，由于刚接触mongodb，可是在这方面走了许多弯路，这里说明下3.x的用户配置。">
+<meta property="og:updated_time" content="2017-01-10T02:43:39.796Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HTML状态消息">
-<meta name="twitter:description" content="当浏览器从 web 服务器请求服务时，可能会发生错误。返回下面的一系列状态消息，从状态码的类型我们可以定位故障，从而解决线上环境的各种问题。">
+<meta name="twitter:title" content="mongodb3.x-权限配置">
+<meta name="twitter:description" content="‘MongoDB 3.0’ 安全权限访问控制，在添加用户上和3.0之前的版本有很大的区别，由于刚接触mongodb，可是在这方面走了许多弯路，这里说明下3.x的用户配置。">
 
 
 
@@ -149,11 +149,11 @@
 
 
 
-  <link rel="canonical" href="http://www.chen-hao.com.cn/HTML状态消息.html"/>
+  <link rel="canonical" href="http://www.chen-hao.com.cn/mongodb3-x-权限配置.html"/>
 
 
 
-  <title> HTML状态消息 | 火柴的博客 </title>
+  <title> mongodb3.x-权限配置 | 火柴的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -328,7 +328,7 @@
             
             
               
-                HTML状态消息
+                mongodb3.x-权限配置
               
             
           </h1>
@@ -339,9 +339,9 @@
 			
 			  <span class="post-letters-count">
 				&nbsp; | &nbsp;
-				<span>1,045 字</span>
+				<span>688 字</span>
 				&nbsp; | &nbsp;
-				<span>4 min</span>
+				<span>3 min</span>
 			  </span>
 			
 			
@@ -350,8 +350,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-11-22T09:08:26+08:00" content="2016-11-22">
-              2016-11-22
+            <time itemprop="dateCreated" datetime="2017-01-10T09:57:55+08:00" content="2017-01-10">
+              2017-01-10
             </time>
           </span>
 
@@ -364,8 +364,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/运维/" itemprop="url" rel="index">
-                    <span itemprop="name">运维</span>
+                  <a href="/categories/NoSQL/" itemprop="url" rel="index">
+                    <span itemprop="name">NoSQL</span>
                   </a>
                 </span>
 
@@ -380,8 +380,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/HTML状态消息.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="HTML状态消息.html" itemprop="commentsCount"></span>
+                <a href="/mongodb3-x-权限配置.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="mongodb3-x-权限配置.html" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -391,7 +391,7 @@
 
           
           
-             <span id="/HTML状态消息.html" class="leancloud_visitors" data-flag-title="HTML状态消息">
+             <span id="/mongodb3-x-权限配置.html" class="leancloud_visitors" data-flag-title="mongodb3.x-权限配置">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -414,227 +414,22 @@
 
       
         <blockquote>
-<p>&#x5F53;&#x6D4F;&#x89C8;&#x5668;&#x4ECE; <code>web</code> &#x670D;&#x52A1;&#x5668;&#x8BF7;&#x6C42;&#x670D;&#x52A1;&#x65F6;&#xFF0C;&#x53EF;&#x80FD;&#x4F1A;&#x53D1;&#x751F;&#x9519;&#x8BEF;&#x3002;&#x8FD4;&#x56DE;&#x4E0B;&#x9762;&#x7684;&#x4E00;&#x7CFB;&#x5217;&#x72B6;&#x6001;&#x6D88;&#x606F;&#xFF0C;&#x4ECE;&#x72B6;&#x6001;&#x7801;&#x7684;&#x7C7B;&#x578B;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5B9A;&#x4F4D;&#x6545;&#x969C;&#xFF0C;&#x4ECE;&#x800C;&#x89E3;&#x51B3;&#x7EBF;&#x4E0A;&#x73AF;&#x5883;&#x7684;&#x5404;&#x79CD;&#x95EE;&#x9898;&#x3002;<br><a id="more"></a></p>
+<p>&#x2018;MongoDB 3.0&#x2019; &#x5B89;&#x5168;&#x6743;&#x9650;&#x8BBF;&#x95EE;&#x63A7;&#x5236;&#xFF0C;&#x5728;&#x6DFB;&#x52A0;&#x7528;&#x6237;&#x4E0A;&#x548C;3.0&#x4E4B;&#x524D;&#x7684;&#x7248;&#x672C;&#x6709;&#x5F88;&#x5927;&#x7684;&#x533A;&#x522B;&#xFF0C;&#x7531;&#x4E8E;&#x521A;&#x63A5;&#x89E6;mongodb&#xFF0C;&#x53EF;&#x662F;&#x5728;&#x8FD9;&#x65B9;&#x9762;&#x8D70;&#x4E86;&#x8BB8;&#x591A;&#x5F2F;&#x8DEF;&#xFF0C;&#x8FD9;&#x91CC;&#x8BF4;&#x660E;&#x4E0B;3.x&#x7684;&#x7528;&#x6237;&#x914D;&#x7F6E;&#x3002;<br> <a id="more"></a></p>
 </blockquote>
-<h3 id="1xx-&#x4FE1;&#x606F;">1xx: &#x4FE1;&#x606F;</h3>
-
-<table>
-<thead>
-<tr>
-<th>&#x6D88;&#x606F;</th>
-<th>&#x63CF;&#x8FF0;</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>100 Continue</td>
-<td>&#x670D;&#x52A1;&#x5668;&#x4EC5;&#x63A5;&#x6536;&#x5230;&#x90E8;&#x5206;&#x8BF7;&#x6C42;&#xFF0C;&#x4F46;&#x662F;&#x4E00;&#x65E6;&#x670D;&#x52A1;&#x5668;&#x5E76;&#x6CA1;&#x6709;&#x62D2;&#x7EDD;&#x8BE5;&#x8BF7;&#x6C42;&#xFF0C;&#x5BA2;&#x6237;&#x7AEF;&#x5E94;&#x8BE5;&#x7EE7;&#x7EED;&#x53D1;&#x9001;&#x5176;&#x4F59;&#x7684;&#x8BF7;&#x6C42;</td>
-</tr>
-<tr>
-<td>101 Switching Protocols</td>
-<td>&#x670D;&#x52A1;&#x5668;&#x8F6C;&#x6362;&#x534F;&#x8BAE;&#xFF1A;&#x670D;&#x52A1;&#x5668;&#x5C06;&#x9075;&#x4ECE;&#x5BA2;&#x6237;&#x7684;&#x8BF7;&#x6C42;&#x8F6C;&#x6362;&#x5230;&#x53E6;&#x5916;&#x4E00;&#x79CD;&#x534F;&#x8BAE;</td>
-</tr>
-</tbody>
-</table>
-<h3 id="2xx-&#x6210;&#x529F;">2xx: &#x6210;&#x529F;</h3>
-
-<table>
-<thead>
-<tr>
-<th>&#x6D88;&#x606F;</th>
-<th>&#x63CF;&#x8FF0;</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>200 OK</td>
-<td>&#x8BF7;&#x6C42;&#x6210;&#x529F;&#xFF08;&#x5176;&#x540E;&#x662F;&#x5BF9;GET&#x548C;POST&#x8BF7;&#x6C42;&#x7684;&#x5E94;&#x7B54;&#x6587;&#x6863;&#xFF09;</td>
-</tr>
-<tr>
-<td>201 Created</td>
-<td>&#x8BF7;&#x6C42;&#x88AB;&#x521B;&#x5EFA;&#x5B8C;&#x6210;&#xFF0C;&#x540C;&#x65F6;&#x65B0;&#x7684;&#x8D44;&#x6E90;&#x88AB;&#x521B;&#x5EFA;</td>
-</tr>
-<tr>
-<td>202 Accepted</td>
-<td>&#x4F9B;&#x5904;&#x7406;&#x7684;&#x8BF7;&#x6C42;&#x5DF2;&#x88AB;&#x63A5;&#x53D7;&#xFF0C;&#x4F46;&#x662F;&#x5904;&#x7406;&#x672A;&#x5B8C;&#x6210;</td>
-</tr>
-<tr>
-<td>203 Non-authoritative Information</td>
-<td>&#x6587;&#x6863;&#x5DF2;&#x7ECF;&#x6B63;&#x5E38;&#x5730;&#x8FD4;&#x56DE;&#xFF0C;&#x4F46;&#x4E00;&#x4E9B;&#x5E94;&#x7B54;&#x5934;&#x53EF;&#x80FD;&#x4E0D;&#x6B63;&#x786E;&#xFF0C;&#x56E0;&#x4E3A;&#x4F7F;&#x7528;&#x7684;&#x662F;&#x6587;&#x6863;&#x7684;&#x62F7;&#x8D1D;</td>
-</tr>
-<tr>
-<td>204 No Content</td>
-<td>&#x6CA1;&#x6709;&#x65B0;&#x6587;&#x6863;&#x3002;&#x6D4F;&#x89C8;&#x5668;&#x5E94;&#x8BE5;&#x7EE7;&#x7EED;&#x663E;&#x793A;&#x539F;&#x6765;&#x7684;&#x6587;&#x6863;&#x3002;&#x5982;&#x679C;&#x7528;&#x6237;&#x5B9A;&#x671F;&#x5730;&#x5237;&#x65B0;&#x9875;&#x9762;&#xFF0C;&#x800C;Servlet&#x53EF;&#x4EE5;&#x786E;&#x5B9A;&#x7528;&#x6237;&#x6587;&#x6863;&#x8DB3;&#x591F;&#x65B0;&#xFF0C;&#x8FD9;&#x4E2A;&#x72B6;&#x6001;&#x4EE3;&#x7801;&#x662F;&#x5F88;&#x6709;&#x7528;&#x7684;</td>
-</tr>
-<tr>
-<td>205 Reset Content</td>
-<td>&#x6CA1;&#x6709;&#x65B0;&#x6587;&#x6863;&#x3002;&#x4F46;&#x6D4F;&#x89C8;&#x5668;&#x5E94;&#x8BE5;&#x91CD;&#x7F6E;&#x5B83;&#x6240;&#x663E;&#x793A;&#x7684;&#x5185;&#x5BB9;&#x3002;&#x7528;&#x6765;&#x5F3A;&#x5236;&#x6D4F;&#x89C8;&#x5668;&#x6E05;&#x9664;&#x8868;&#x5355;&#x8F93;&#x5165;&#x5185;&#x5BB9;</td>
-</tr>
-<tr>
-<td>206 Partial Content</td>
-<td>&#x5BA2;&#x6237;&#x53D1;&#x9001;&#x4E86;&#x4E00;&#x4E2A;&#x5E26;&#x6709;Range&#x5934;&#x7684;GET&#x8BF7;&#x6C42;&#xFF0C;&#x670D;&#x52A1;&#x5668;&#x5B8C;&#x6210;&#x4E86;&#x5B83;</td>
-</tr>
-</tbody>
-</table>
-<h3 id="3xx-&#x91CD;&#x5B9A;&#x5411;">3xx: &#x91CD;&#x5B9A;&#x5411;</h3>
-
-<table>
-<thead>
-<tr>
-<th>&#x6D88;&#x606F;</th>
-<th>&#x63CF;&#x8FF0;</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>300 Multiple Choices</td>
-<td>&#x591A;&#x91CD;&#x9009;&#x62E9;&#x3002;&#x94FE;&#x63A5;&#x5217;&#x8868;&#x3002;&#x7528;&#x6237;&#x53EF;&#x4EE5;&#x9009;&#x62E9;&#x67D0;&#x94FE;&#x63A5;&#x5230;&#x8FBE;&#x76EE;&#x7684;&#x5730;&#x3002;&#x6700;&#x591A;&#x5141;&#x8BB8;&#x4E94;&#x4E2A;&#x5730;&#x5740;</td>
-</tr>
-<tr>
-<td>301 Moved Permanently</td>
-<td>&#x6240;&#x8BF7;&#x6C42;&#x7684;&#x9875;&#x9762;&#x5DF2;&#x7ECF;&#x8F6C;&#x79FB;&#x81F3;&#x65B0;&#x7684;url</td>
-</tr>
-<tr>
-<td>302 Found</td>
-<td>&#x6240;&#x8BF7;&#x6C42;&#x7684;&#x9875;&#x9762;&#x5DF2;&#x7ECF;&#x4E34;&#x65F6;&#x8F6C;&#x79FB;&#x81F3;&#x65B0;&#x7684;url</td>
-</tr>
-<tr>
-<td>303 See Other</td>
-<td>&#x6240;&#x8BF7;&#x6C42;&#x7684;&#x9875;&#x9762;&#x53EF;&#x5728;&#x522B;&#x7684;url&#x4E0B;&#x88AB;&#x627E;&#x5230;</td>
-</tr>
-<tr>
-<td>304 Not Modified</td>
-<td>&#x672A;&#x6309;&#x9884;&#x671F;&#x4FEE;&#x6539;&#x6587;&#x6863;&#x3002;&#x5BA2;&#x6237;&#x7AEF;&#x6709;&#x7F13;&#x51B2;&#x7684;&#x6587;&#x6863;&#x5E76;&#x53D1;&#x51FA;&#x4E86;&#x4E00;&#x4E2A;&#x6761;&#x4EF6;&#x6027;&#x7684;&#x8BF7;&#x6C42;&#xFF08;&#x4E00;&#x822C;&#x662F;&#x63D0;&#x4F9B;If-Modified-Since&#x5934;&#x8868;&#x793A;&#x5BA2;&#x6237;&#x53EA;&#x60F3;&#x6BD4;&#x6307;&#x5B9A;&#x65E5;&#x671F;&#x66F4;&#x65B0;&#x7684;&#x6587;&#x6863;&#xFF09;&#x3002;&#x670D;&#x52A1;&#x5668;&#x544A;&#x8BC9;&#x5BA2;&#x6237;&#xFF0C;&#x539F;&#x6765;&#x7F13;&#x51B2;&#x7684;&#x6587;&#x6863;&#x8FD8;&#x53EF;&#x4EE5;&#x7EE7;&#x7EED;&#x4F7F;&#x7528;</td>
-</tr>
-<tr>
-<td>305 Use Proxy</td>
-<td>&#x5BA2;&#x6237;&#x8BF7;&#x6C42;&#x7684;&#x6587;&#x6863;&#x5E94;&#x8BE5;&#x901A;&#x8FC7;Location&#x5934;&#x6240;&#x6307;&#x660E;&#x7684;&#x4EE3;&#x7406;&#x670D;&#x52A1;&#x5668;&#x63D0;&#x53D6;</td>
-</tr>
-<tr>
-<td>306 Unused</td>
-<td>&#x6B64;&#x4EE3;&#x7801;&#x88AB;&#x7528;&#x4E8E;&#x524D;&#x4E00;&#x7248;&#x672C;&#x3002;&#x76EE;&#x524D;&#x5DF2;&#x4E0D;&#x518D;&#x4F7F;&#x7528;&#xFF0C;&#x4F46;&#x662F;&#x4EE3;&#x7801;&#x4F9D;&#x7136;&#x88AB;&#x4FDD;&#x7559;</td>
-</tr>
-<tr>
-<td>307 Temporary Redirect</td>
-<td>&#x88AB;&#x8BF7;&#x6C42;&#x7684;&#x9875;&#x9762;&#x5DF2;&#x7ECF;&#x4E34;&#x65F6;&#x79FB;&#x81F3;&#x65B0;&#x7684;url</td>
-</tr>
-</tbody>
-</table>
-<h3 id="4xx-&#x5BA2;&#x6237;&#x7AEF;&#x9519;&#x8BEF;">4xx: &#x5BA2;&#x6237;&#x7AEF;&#x9519;&#x8BEF;</h3>
-
-<table>
-<thead>
-<tr>
-<th>&#x6D88;&#x606F;</th>
-<th>&#x63CF;&#x8FF0;</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>400 Bad Request</td>
-<td>&#x670D;&#x52A1;&#x5668;&#x672A;&#x80FD;&#x7406;&#x89E3;&#x8BF7;&#x6C42;</td>
-</tr>
-<tr>
-<td>401 Unauthorized</td>
-<td>&#x88AB;&#x8BF7;&#x6C42;&#x7684;&#x9875;&#x9762;&#x9700;&#x8981;&#x7528;&#x6237;&#x540D;&#x548C;&#x5BC6;&#x7801;</td>
-</tr>
-<tr>
-<td>402 Payment Required    &#x6B64;&#x4EE3;&#x7801;&#x5C1A;&#x65E0;&#x6CD5;&#x4F7F;&#x7528;</td>
-</tr>
-<tr>
-<td>403 Forbidden</td>
-<td>&#x5BF9;&#x88AB;&#x8BF7;&#x6C42;&#x9875;&#x9762;&#x7684;&#x8BBF;&#x95EE;&#x88AB;&#x7981;&#x6B62;</td>
-</tr>
-<tr>
-<td>404 Not Found</td>
-<td>&#x670D;&#x52A1;&#x5668;&#x65E0;&#x6CD5;&#x627E;&#x5230;&#x88AB;&#x8BF7;&#x6C42;&#x7684;&#x9875;&#x9762;</td>
-</tr>
-<tr>
-<td>405 Method Not Allowed</td>
-<td>&#x8BF7;&#x6C42;&#x4E2D;&#x6307;&#x5B9A;&#x7684;&#x65B9;&#x6CD5;&#x4E0D;&#x88AB;&#x5141;&#x8BB8;</td>
-</tr>
-<tr>
-<td>406 Not Acceptable</td>
-<td>&#x670D;&#x52A1;&#x5668;&#x751F;&#x6210;&#x7684;&#x54CD;&#x5E94;&#x65E0;&#x6CD5;&#x88AB;&#x5BA2;&#x6237;&#x7AEF;&#x6240;&#x63A5;&#x53D7;</td>
-</tr>
-<tr>
-<td>407 Proxy Authentication Required</td>
-<td>&#x7528;&#x6237;&#x5FC5;&#x987B;&#x9996;&#x5148;&#x4F7F;&#x7528;&#x4EE3;&#x7406;&#x670D;&#x52A1;&#x5668;&#x8FDB;&#x884C;&#x9A8C;&#x8BC1;&#xFF0C;&#x8FD9;&#x6837;&#x8BF7;&#x6C42;&#x624D;&#x4F1A;&#x88AB;&#x5904;&#x7406;</td>
-</tr>
-<tr>
-<td>408 Request Timeout</td>
-<td>&#x8BF7;&#x6C42;&#x8D85;&#x51FA;&#x4E86;&#x670D;&#x52A1;&#x5668;&#x7684;&#x7B49;&#x5F85;&#x65F6;&#x95F4;</td>
-</tr>
-<tr>
-<td>409 Conflict</td>
-<td>&#x7531;&#x4E8E;&#x51B2;&#x7A81;&#xFF0C;&#x8BF7;&#x6C42;&#x65E0;&#x6CD5;&#x88AB;&#x5B8C;&#x6210;</td>
-</tr>
-<tr>
-<td>410 Gone</td>
-<td>&#x88AB;&#x8BF7;&#x6C42;&#x7684;&#x9875;&#x9762;&#x4E0D;&#x53EF;&#x7528;</td>
-</tr>
-<tr>
-<td>411 Length Required &#x201C;Content-Length&#x201D;</td>
-<td>&#x672A;&#x88AB;&#x5B9A;&#x4E49;&#x3002;&#x5982;&#x679C;&#x65E0;&#x6B64;&#x5185;&#x5BB9;&#xFF0C;&#x670D;&#x52A1;&#x5668;&#x4E0D;&#x4F1A;&#x63A5;&#x53D7;&#x8BF7;&#x6C42;</td>
-</tr>
-<tr>
-<td>412 Precondition Failed</td>
-<td>&#x8BF7;&#x6C42;&#x4E2D;&#x7684;&#x524D;&#x63D0;&#x6761;&#x4EF6;&#x88AB;&#x670D;&#x52A1;&#x5668;&#x8BC4;&#x4F30;&#x4E3A;&#x5931;&#x8D25;</td>
-</tr>
-<tr>
-<td>413 Request Entity Too Large</td>
-<td>&#x7531;&#x4E8E;&#x6240;&#x8BF7;&#x6C42;&#x7684;&#x5B9E;&#x4F53;&#x7684;&#x592A;&#x5927;&#xFF0C;&#x670D;&#x52A1;&#x5668;&#x4E0D;&#x4F1A;&#x63A5;&#x53D7;&#x8BF7;&#x6C42;</td>
-</tr>
-<tr>
-<td>414 Request-url Too Long</td>
-<td>&#x7531;&#x4E8E;url&#x592A;&#x957F;&#xFF0C;&#x670D;&#x52A1;&#x5668;&#x4E0D;&#x4F1A;&#x63A5;&#x53D7;&#x8BF7;&#x6C42;&#x3002;&#x5F53;post&#x8BF7;&#x6C42;&#x88AB;&#x8F6C;&#x6362;&#x4E3A;&#x5E26;&#x6709;&#x5F88;&#x957F;&#x7684;&#x67E5;&#x8BE2;&#x4FE1;&#x606F;&#x7684;get&#x8BF7;&#x6C42;&#x65F6;&#xFF0C;&#x5C31;&#x4F1A;&#x53D1;&#x751F;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;</td>
-</tr>
-<tr>
-<td>415 Unsupported Media Type</td>
-<td>&#x7531;&#x4E8E;&#x5A92;&#x4ECB;&#x7C7B;&#x578B;&#x4E0D;&#x88AB;&#x652F;&#x6301;&#xFF0C;&#x670D;&#x52A1;&#x5668;&#x4E0D;&#x4F1A;&#x63A5;&#x53D7;&#x8BF7;&#x6C42;</td>
-</tr>
-<tr>
-<td>416</td>
-<td>&#x670D;&#x52A1;&#x5668;&#x4E0D;&#x80FD;&#x6EE1;&#x8DB3;&#x5BA2;&#x6237;&#x5728;&#x8BF7;&#x6C42;&#x4E2D;&#x6307;&#x5B9A;&#x7684;Range&#x5934;</td>
-</tr>
-</tbody>
-</table>
-<h3 id="5xx-&#x670D;&#x52A1;&#x5668;&#x9519;&#x8BEF;">5xx: &#x670D;&#x52A1;&#x5668;&#x9519;&#x8BEF;</h3>
-
-<table>
-<thead>
-<tr>
-<th>&#x6D88;&#x606F;</th>
-<th>&#x63CF;&#x8FF0;</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>500 Internal Server Error</td>
-<td>&#x8BF7;&#x6C42;&#x672A;&#x5B8C;&#x6210;&#x3002;&#x670D;&#x52A1;&#x5668;&#x9047;&#x5230;&#x4E0D;&#x53EF;&#x9884;&#x77E5;&#x7684;&#x60C5;&#x51B5;</td>
-</tr>
-<tr>
-<td>501 Not Implemented</td>
-<td>&#x8BF7;&#x6C42;&#x672A;&#x5B8C;&#x6210;&#x3002;&#x670D;&#x52A1;&#x5668;&#x4E0D;&#x652F;&#x6301;&#x6240;&#x8BF7;&#x6C42;&#x7684;&#x529F;&#x80FD;</td>
-</tr>
-<tr>
-<td>502 Bad Gateway</td>
-<td>&#x8BF7;&#x6C42;&#x672A;&#x5B8C;&#x6210;&#x3002;&#x670D;&#x52A1;&#x5668;&#x4ECE;&#x4E0A;&#x6E38;&#x670D;&#x52A1;&#x5668;&#x6536;&#x5230;&#x4E00;&#x4E2A;&#x65E0;&#x6548;&#x7684;&#x54CD;&#x5E94;</td>
-</tr>
-<tr>
-<td>503 Service Unavailable</td>
-<td>&#x8BF7;&#x6C42;&#x672A;&#x5B8C;&#x6210;&#x3002;&#x670D;&#x52A1;&#x5668;&#x4E34;&#x65F6;&#x8FC7;&#x8F7D;&#x6216;&#x5F53;&#x673A;</td>
-</tr>
-<tr>
-<td>504 Gateway Timeout</td>
-<td>&#x7F51;&#x5173;&#x8D85;&#x65F6;</td>
-</tr>
-<tr>
-<td>505 HTTP Version Not Supported</td>
-<td>&#x670D;&#x52A1;&#x5668;&#x4E0D;&#x652F;&#x6301;&#x8BF7;&#x6C42;&#x4E2D;&#x6307;&#x660E;&#x7684;HTTP&#x534F;&#x8BAE;&#x7248;&#x672C;</td>
-</tr>
-</tbody>
-</table>
+<p></p><h4 id="&#x521B;&#x5EFA;&#x7528;&#x6237;">&#x521B;&#x5EFA;&#x7528;&#x6237;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&gt; use admin</div><div class="line">switched to db admin</div><div class="line">&gt; db.createUser(</div><div class="line">...   {</div><div class="line">...     user: <span class="string">&quot;dba&quot;</span>,</div><div class="line">...     <span class="built_in">pwd</span>: <span class="string">&quot;dba&quot;</span>,</div><div class="line">...     roles: [ { role: <span class="string">&quot;userAdminAnyDatabase&quot;</span>, db: <span class="string">&quot;admin&quot;</span> } ]</div><div class="line">...   }</div><div class="line">... )</div><div class="line">Successfully added user: {</div><div class="line">    <span class="string">&quot;user&quot;</span> : <span class="string">&quot;dba&quot;</span>,</div><div class="line">    <span class="string">&quot;roles&quot;</span> : [</div><div class="line">        {</div><div class="line">            <span class="string">&quot;role&quot;</span> : <span class="string">&quot;userAdminAnyDatabase&quot;</span>,</div><div class="line">            <span class="string">&quot;db&quot;</span> : <span class="string">&quot;admin&quot;</span></div><div class="line">        }</div><div class="line">    ]</div><div class="line">}</div></pre></td></tr></table></figure><p></p>
+<ul>
+<li>user&#xFF1A;&#x7528;&#x6237;&#x540D;</li>
+<li>pwd&#xFF1A;&#x5BC6;&#x7801;</li>
+<li>db : &#x6570;&#x636E;&#x5E93;&#x540D;&#x5B57;</li>
+<li>roles&#xFF1A;&#x6307;&#x5B9A;&#x7528;&#x6237;&#x7684;&#x89D2;&#x8272;&#xFF0C;&#x53EF;&#x4EE5;&#x7528;&#x4E00;&#x4E2A;&#x7A7A;&#x6570;&#x7EC4;&#x7ED9;&#x65B0;&#x7528;&#x6237;&#x8BBE;&#x5B9A;&#x7A7A;&#x89D2;&#x8272;&#xFF1B;&#x5728;roles&#x5B57;&#x6BB5;,&#x53EF;&#x4EE5;&#x6307;&#x5B9A;&#x5185;&#x7F6E;&#x89D2;&#x8272;&#x548C;&#x7528;&#x6237;&#x5B9A;&#x4E49;&#x7684;&#x89D2;&#x8272;&#x3002;</li>
+</ul>
+<p>role&#x91CC;&#x7684;&#x89D2;&#x8272;&#x53EF;&#x4EE5;&#x9009;&#xFF1A;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">Built-In Roles&#xFF08;&#x5185;&#x7F6E;&#x89D2;&#x8272;&#xFF09;&#xFF1A;</div><div class="line">1. &#x6570;&#x636E;&#x5E93;&#x7528;&#x6237;&#x89D2;&#x8272;&#xFF1A;<span class="built_in">read</span>&#x3001;<span class="built_in">read</span>Write;</div><div class="line">2. &#x6570;&#x636E;&#x5E93;&#x7BA1;&#x7406;&#x89D2;&#x8272;&#xFF1A;dbAdmin&#x3001;dbOwner&#x3001;userAdmin&#xFF1B;</div><div class="line">3. &#x96C6;&#x7FA4;&#x7BA1;&#x7406;&#x89D2;&#x8272;&#xFF1A;clusterAdmin&#x3001;clusterManager&#x3001;clusterMonitor&#x3001;hostManager&#xFF1B;</div><div class="line">4. &#x5907;&#x4EFD;&#x6062;&#x590D;&#x89D2;&#x8272;&#xFF1A;backup&#x3001;restore&#xFF1B;</div><div class="line">5. &#x6240;&#x6709;&#x6570;&#x636E;&#x5E93;&#x89D2;&#x8272;&#xFF1A;<span class="built_in">read</span>AnyDatabase&#x3001;<span class="built_in">read</span>WriteAnyDatabase&#x3001;userAdminAnyDatabase&#x3001;dbAdminAnyDatabase</div><div class="line">6. &#x8D85;&#x7EA7;&#x7528;&#x6237;&#x89D2;&#x8272;&#xFF1A;root  </div><div class="line">// &#x8FD9;&#x91CC;&#x8FD8;&#x6709;&#x51E0;&#x4E2A;&#x89D2;&#x8272;&#x95F4;&#x63A5;&#x6216;&#x76F4;&#x63A5;&#x63D0;&#x4F9B;&#x4E86;&#x7CFB;&#x7EDF;&#x8D85;&#x7EA7;&#x7528;&#x6237;&#x7684;&#x8BBF;&#x95EE;&#xFF08;dbOwner &#x3001;userAdmin&#x3001;userAdminAnyDatabase&#xFF09;</div><div class="line">7. &#x5185;&#x90E8;&#x89D2;&#x8272;&#xFF1A;__system</div><div class="line">&#x5177;&#x4F53;&#x89D2;&#x8272;&#xFF1A;</div><div class="line"><span class="built_in">read</span>&#xFF1A;&#x5141;&#x8BB8;&#x7528;&#x6237;&#x8BFB;&#x53D6;&#x6307;&#x5B9A;&#x6570;&#x636E;&#x5E93;</div><div class="line"><span class="built_in">read</span>Write&#xFF1A;&#x5141;&#x8BB8;&#x7528;&#x6237;&#x8BFB;&#x5199;&#x6307;&#x5B9A;&#x6570;&#x636E;&#x5E93;</div><div class="line">dbAdmin&#xFF1A;&#x5141;&#x8BB8;&#x7528;&#x6237;&#x5728;&#x6307;&#x5B9A;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x6267;&#x884C;&#x7BA1;&#x7406;&#x51FD;&#x6570;&#xFF0C;&#x5982;&#x7D22;&#x5F15;&#x521B;&#x5EFA;&#x3001;&#x5220;&#x9664;&#xFF0C;&#x67E5;&#x770B;&#x7EDF;&#x8BA1;&#x6216;&#x8BBF;&#x95EE;system.profile</div><div class="line">userAdmin&#xFF1A;&#x5141;&#x8BB8;&#x7528;&#x6237;&#x5411;system.users&#x96C6;&#x5408;&#x5199;&#x5165;&#xFF0C;&#x53EF;&#x4EE5;&#x627E;&#x6307;&#x5B9A;&#x6570;&#x636E;&#x5E93;&#x91CC;&#x521B;&#x5EFA;&#x3001;&#x5220;&#x9664;&#x548C;&#x7BA1;&#x7406;&#x7528;&#x6237;</div><div class="line">clusterAdmin&#xFF1A;&#x53EA;&#x5728;admin&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x53EF;&#x7528;&#xFF0C;&#x8D4B;&#x4E88;&#x7528;&#x6237;&#x6240;&#x6709;&#x5206;&#x7247;&#x548C;&#x590D;&#x5236;&#x96C6;&#x76F8;&#x5173;&#x51FD;&#x6570;&#x7684;&#x7BA1;&#x7406;&#x6743;&#x9650;&#x3002;</div><div class="line"><span class="built_in">read</span>AnyDatabase&#xFF1A;&#x53EA;&#x5728;admin&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x53EF;&#x7528;&#xFF0C;&#x8D4B;&#x4E88;&#x7528;&#x6237;&#x6240;&#x6709;&#x6570;&#x636E;&#x5E93;&#x7684;&#x8BFB;&#x6743;&#x9650;</div><div class="line"><span class="built_in">read</span>WriteAnyDatabase&#xFF1A;&#x53EA;&#x5728;admin&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x53EF;&#x7528;&#xFF0C;&#x8D4B;&#x4E88;&#x7528;&#x6237;&#x6240;&#x6709;&#x6570;&#x636E;&#x5E93;&#x7684;&#x8BFB;&#x5199;&#x6743;&#x9650;</div><div class="line">userAdminAnyDatabase&#xFF1A;&#x53EA;&#x5728;admin&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x53EF;&#x7528;&#xFF0C;&#x8D4B;&#x4E88;&#x7528;&#x6237;&#x6240;&#x6709;&#x6570;&#x636E;&#x5E93;&#x7684;userAdmin&#x6743;&#x9650;</div><div class="line">dbAdminAnyDatabase&#xFF1A;&#x53EA;&#x5728;admin&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x53EF;&#x7528;&#xFF0C;&#x8D4B;&#x4E88;&#x7528;&#x6237;&#x6240;&#x6709;&#x6570;&#x636E;&#x5E93;&#x7684;dbAdmin&#x6743;&#x9650;&#x3002;</div><div class="line">root&#xFF1A;&#x53EA;&#x5728;admin&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x53EF;&#x7528;&#x3002;&#x8D85;&#x7EA7;&#x8D26;&#x53F7;&#xFF0C;&#x8D85;&#x7EA7;&#x6743;&#x9650;</div></pre></td></tr></table></figure></p>
+<p></p><h4 id="&#x5F00;&#x542F;&#x7528;&#x6237;&#x9A8C;&#x8BC1;">&#x5F00;&#x542F;&#x7528;&#x6237;&#x9A8C;&#x8BC1;</h4><br>&#x65B0;&#x5EFA;mongodb.conf&#x6587;&#x4EF6;&#xFF0C;&#x5E76;&#x52A0;&#x5165;&#x201C;auth=true&#x201D;<br>&#x4ECE;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x542F;&#x52A8;mongodb&#x670D;&#x52A1;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./bin/mongod <span class="_">-f</span> mongodb.conf</div></pre></td></tr></table></figure><p></p>
+<p></p><h4 id="&#x7528;&#x6237;&#x9A8C;&#x8BC1;">&#x7528;&#x6237;&#x9A8C;&#x8BC1;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[chenhao@localhost mongodb3.2.10]$ ./bin/mongo </div><div class="line">MongoDB shell version: 3.2.10</div><div class="line">connecting to: <span class="built_in">test</span></div><div class="line">&gt; use caideyang</div><div class="line">switched to db caideyang</div><div class="line">&gt; db.auth(<span class="string">&apos;dba&apos;</span>,<span class="string">&apos;dba&apos;</span>)</div><div class="line">1</div><div class="line">&gt;</div></pre></td></tr></table></figure><p></p>
+<p></p><h4 id="&#x67E5;&#x8BE2;&#x7528;&#x6237;">&#x67E5;&#x8BE2;&#x7528;&#x6237;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&gt; show users</div><div class="line">{</div><div class="line">true<span class="string">&quot;_id&quot;</span> : <span class="string">&quot;test.dba&quot;</span>,</div><div class="line">true<span class="string">&quot;user&quot;</span> : <span class="string">&quot;dba&quot;</span>,</div><div class="line">true<span class="string">&quot;db&quot;</span> : <span class="string">&quot;test&quot;</span>,</div><div class="line">true<span class="string">&quot;roles&quot;</span> : [</div><div class="line">truetrue{</div><div class="line">truetruetrue<span class="string">&quot;role&quot;</span> : <span class="string">&quot;userAdminAnyDatabase&quot;</span>,</div><div class="line">truetruetrue<span class="string">&quot;db&quot;</span> : <span class="string">&quot;admin&quot;</span></div><div class="line">truetrue}</div><div class="line">true]</div><div class="line">}</div></pre></td></tr></table></figure><p></p>
+<p></p><h4 id="&#x5220;&#x9664;&#x7528;&#x6237;">&#x5220;&#x9664;&#x7528;&#x6237;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; db.system.users.remove({user:<span class="string">&quot;dba&quot;</span>})</div></pre></td></tr></table></figure><p></p>
+<p></p><h4 id="&#x5907;&#x4EFD;&#x6570;&#x636E;&#x5E93;">&#x5907;&#x4EFD;&#x6570;&#x636E;&#x5E93;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mongodump --port=27020 -u admin -p admin --db=admin -o /root/backup </div><div class="line"><span class="comment">#&#x53C2;&#x6570;&#x8BF4;&#x660E;</span></div><div class="line">true--port: mongodb&#x7684;&#x7AEF;&#x53E3;&#x53F7;</div><div class="line">true-u:  &#x6267;&#x884C;&#x5907;&#x4EFD;&#x7684;&#x7528;&#x6237;</div><div class="line">true-p:  &#x6267;&#x884C;&#x5907;&#x4EFD;&#x7528;&#x6237;&#x7684;&#x5BC6;&#x7801;</div><div class="line">true--db&#xFF1A; &#x9700;&#x8981;&#x5907;&#x4EFD;&#x7684;&#x6570;&#x636E;&#x5E93;&#x5B9E;&#x4F8B;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;admin</div><div class="line">true-o&#xFF1A; &#x5907;&#x4EFD;&#x7684;&#x6570;&#x636E;&#x5B58;&#x653E;&#x4F4D;&#x7F6E;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;/root/backup</div></pre></td></tr></table></figure><p></p>
+<p></p><h4 id="&#x8FD8;&#x539F;&#x6570;&#x636E;&#x5E93;">&#x8FD8;&#x539F;&#x6570;&#x636E;&#x5E93;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mongorestore --port=27020 -u admin -p admin  --db=admin backup/<span class="built_in">test</span>/</div></pre></td></tr></table></figure><p></p>
 
       
     </div>
@@ -666,11 +461,11 @@
 			<!-- 版权声明开始 -->
 		<b:if cond='data:blog.pageType == &quot;item&quot;'>
 		<div style='background-color: #F2F2F2; padding: 4px; margin: 6px; border:1px solid #000000;'>		           
-           <p>&nbsp &nbsp  本文标题 &nbsp : &nbsp <a href="/HTML状态消息.html">HTML状态消息</a></p>
+           <p>&nbsp &nbsp  本文标题 &nbsp : &nbsp <a href="/mongodb3-x-权限配置.html">mongodb3.x-权限配置</a></p>
 		   <p>&nbsp &nbsp      文章作者 &nbsp : &nbsp <a href="/" title="访问 火柴 的个人博客">火柴</a></p>
-           <p>&nbsp &nbsp      发布时间 &nbsp : &nbsp </span>2016年11月22日 - 09时11分</p>
-		   <p>&nbsp &nbsp      本文链接 &nbsp : &nbsp <a href="/HTML状态消息.html" title="HTML状态消息">http://www.chen-hao.com.cn/HTML状态消息.html</a></p>
-           <p>&nbsp &nbsp      本文字数 &nbsp : &nbsp <span class="page-count">本文一共有1,045字</span></script></a></p>
+           <p>&nbsp &nbsp      发布时间 &nbsp : &nbsp </span>2017年1月10日 - 09时01分</p>
+		   <p>&nbsp &nbsp      本文链接 &nbsp : &nbsp <a href="/mongodb3-x-权限配置.html" title="mongodb3.x-权限配置">http://www.chen-hao.com.cn/mongodb3-x-权限配置.html</a></p>
+           <p>&nbsp &nbsp      本文字数 &nbsp : &nbsp <span class="page-count">本文一共有688字</span></script></a></p>
 		   <p>&nbsp &nbsp      许可协议 &nbsp : &nbsp <i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" title="Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)">Attribution-NonCommercial 4.0</a></p>
 		   <p> &nbsp &nbsp  &copy 转载请保留以上信息，谢谢合作。</p>
 		</div>
@@ -683,7 +478,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/http/" rel="tag">#http</a>
+            <a href="/tags/mongodb/" rel="tag">#mongodb</a>
           
         </div>
       
@@ -694,17 +489,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/Linux杀毒软件安装及使用.html" rel="next" title="Linux杀毒软件安装及使用">
-                <i class="fa fa-chevron-left"></i> Linux杀毒软件安装及使用
+              <a href="/优化内核参数提高服务器并发处理能力.html" rel="next" title="优化内核参数提高服务器并发处理能力">
+                <i class="fa fa-chevron-left"></i> 优化内核参数提高服务器并发处理能力
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/Expect命令使用详解.html" rel="prev" title="Expect命令使用详解">
-                Expect命令使用详解 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -720,10 +511,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="HTML状态消息.html"
-     data-title="HTML状态消息"
+        <div class="ds-share flat" data-thread-key="mongodb3-x-权限配置.html"
+     data-title="mongodb3.x-权限配置"
      data-content=""
-     data-url="http://www.chen-hao.com.cn/HTML状态消息.html">
+     data-url="http://www.chen-hao.com.cn/mongodb3-x-权限配置.html">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -751,8 +542,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="HTML状态消息.html"
-           data-title="HTML状态消息" data-url="http://www.chen-hao.com.cn/HTML状态消息.html">
+      <div class="ds-thread" data-thread-key="mongodb3-x-权限配置.html"
+           data-title="mongodb3.x-权限配置" data-url="http://www.chen-hao.com.cn/mongodb3-x-权限配置.html">
       </div>
     
   </div>
@@ -1063,7 +854,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1xx-信息"><span class="nav-number">1.</span> <span class="nav-text">1xx: 信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2xx-成功"><span class="nav-number">2.</span> <span class="nav-text">2xx: 成功</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3xx-重定向"><span class="nav-number">3.</span> <span class="nav-text">3xx: 重定向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4xx-客户端错误"><span class="nav-number">4.</span> <span class="nav-text">4xx: 客户端错误</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5xx-服务器错误"><span class="nav-number">5.</span> <span class="nav-text">5xx: 服务器错误</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建用户"><span class="nav-number">1.</span> <span class="nav-text">创建用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开启用户验证"><span class="nav-number">2.</span> <span class="nav-text">开启用户验证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户验证"><span class="nav-number">3.</span> <span class="nav-text">用户验证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查询用户"><span class="nav-number">4.</span> <span class="nav-text">查询用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除用户"><span class="nav-number">5.</span> <span class="nav-text">删除用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#备份数据库"><span class="nav-number">6.</span> <span class="nav-text">备份数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#还原数据库"><span class="nav-number">7.</span> <span class="nav-text">还原数据库</span></a></li></ol></div>
             
           </div>
         </section>
