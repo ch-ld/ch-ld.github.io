@@ -104,16 +104,16 @@
 
 
 
-<meta name="description" content="‘MongoDB’ 3.0 安全权限访问控制，在添加用户上和3.0之前的版本有很大的区别，由于刚接触mongodb，可是在这方面走了许多弯路，这里说明下3.x的用户配置。">
+<meta name="description" content="MongoDB3.x 安全权限访问控制，在添加用户上和3.0之前的版本有很大的区别，由于刚接触mongodb，可是在这方面走了许多弯路，这里说明下3.x的用户配置。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mongodb3.x-权限配置">
 <meta property="og:url" content="http://www.chen-hao.com.cn/mongodb3-x-权限配置.html">
 <meta property="og:site_name" content="火柴的博客">
-<meta property="og:description" content="‘MongoDB’ 3.0 安全权限访问控制，在添加用户上和3.0之前的版本有很大的区别，由于刚接触mongodb，可是在这方面走了许多弯路，这里说明下3.x的用户配置。">
-<meta property="og:updated_time" content="2017-01-10T02:49:49.516Z">
+<meta property="og:description" content="MongoDB3.x 安全权限访问控制，在添加用户上和3.0之前的版本有很大的区别，由于刚接触mongodb，可是在这方面走了许多弯路，这里说明下3.x的用户配置。">
+<meta property="og:updated_time" content="2017-01-10T02:51:59.661Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mongodb3.x-权限配置">
-<meta name="twitter:description" content="‘MongoDB’ 3.0 安全权限访问控制，在添加用户上和3.0之前的版本有很大的区别，由于刚接触mongodb，可是在这方面走了许多弯路，这里说明下3.x的用户配置。">
+<meta name="twitter:description" content="MongoDB3.x 安全权限访问控制，在添加用户上和3.0之前的版本有很大的区别，由于刚接触mongodb，可是在这方面走了许多弯路，这里说明下3.x的用户配置。">
 
 
 
@@ -339,7 +339,7 @@
 			
 			  <span class="post-letters-count">
 				&nbsp; | &nbsp;
-				<span>688 字</span>
+				<span>684 字</span>
 				&nbsp; | &nbsp;
 				<span>3 min</span>
 			  </span>
@@ -414,7 +414,7 @@
 
       
         <blockquote>
-<p>&#x2018;MongoDB&#x2019; 3.0 &#x5B89;&#x5168;&#x6743;&#x9650;&#x8BBF;&#x95EE;&#x63A7;&#x5236;&#xFF0C;&#x5728;&#x6DFB;&#x52A0;&#x7528;&#x6237;&#x4E0A;&#x548C;3.0&#x4E4B;&#x524D;&#x7684;&#x7248;&#x672C;&#x6709;&#x5F88;&#x5927;&#x7684;&#x533A;&#x522B;&#xFF0C;&#x7531;&#x4E8E;&#x521A;&#x63A5;&#x89E6;mongodb&#xFF0C;&#x53EF;&#x662F;&#x5728;&#x8FD9;&#x65B9;&#x9762;&#x8D70;&#x4E86;&#x8BB8;&#x591A;&#x5F2F;&#x8DEF;&#xFF0C;&#x8FD9;&#x91CC;&#x8BF4;&#x660E;&#x4E0B;3.x&#x7684;&#x7528;&#x6237;&#x914D;&#x7F6E;&#x3002;<br> <a id="more"></a></p>
+<p><code>MongoDB3.x</code> &#x5B89;&#x5168;&#x6743;&#x9650;&#x8BBF;&#x95EE;&#x63A7;&#x5236;&#xFF0C;&#x5728;&#x6DFB;&#x52A0;&#x7528;&#x6237;&#x4E0A;&#x548C;3.0&#x4E4B;&#x524D;&#x7684;&#x7248;&#x672C;&#x6709;&#x5F88;&#x5927;&#x7684;&#x533A;&#x522B;&#xFF0C;&#x7531;&#x4E8E;&#x521A;&#x63A5;&#x89E6;mongodb&#xFF0C;&#x53EF;&#x662F;&#x5728;&#x8FD9;&#x65B9;&#x9762;&#x8D70;&#x4E86;&#x8BB8;&#x591A;&#x5F2F;&#x8DEF;&#xFF0C;&#x8FD9;&#x91CC;&#x8BF4;&#x660E;&#x4E0B;3.x&#x7684;&#x7528;&#x6237;&#x914D;&#x7F6E;&#x3002;<br><a id="more"></a></p>
 </blockquote>
 <p></p><h4 id="&#x521B;&#x5EFA;&#x7528;&#x6237;">&#x521B;&#x5EFA;&#x7528;&#x6237;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&gt; use admin</div><div class="line">switched to db admin</div><div class="line">&gt; db.createUser(</div><div class="line">...   {</div><div class="line">...     user: <span class="string">&quot;dba&quot;</span>,</div><div class="line">...     <span class="built_in">pwd</span>: <span class="string">&quot;dba&quot;</span>,</div><div class="line">...     roles: [ { role: <span class="string">&quot;userAdminAnyDatabase&quot;</span>, db: <span class="string">&quot;admin&quot;</span> } ]</div><div class="line">...   }</div><div class="line">... )</div><div class="line">Successfully added user: {</div><div class="line">    <span class="string">&quot;user&quot;</span> : <span class="string">&quot;dba&quot;</span>,</div><div class="line">    <span class="string">&quot;roles&quot;</span> : [</div><div class="line">        {</div><div class="line">            <span class="string">&quot;role&quot;</span> : <span class="string">&quot;userAdminAnyDatabase&quot;</span>,</div><div class="line">            <span class="string">&quot;db&quot;</span> : <span class="string">&quot;admin&quot;</span></div><div class="line">        }</div><div class="line">    ]</div><div class="line">}</div></pre></td></tr></table></figure><p></p>
 <ul>
@@ -428,7 +428,7 @@
 <p></p><h4 id="&#x7528;&#x6237;&#x9A8C;&#x8BC1;">&#x7528;&#x6237;&#x9A8C;&#x8BC1;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[chenhao@localhost mongodb3.2.10]$ ./bin/mongo </div><div class="line">MongoDB shell version: 3.2.10</div><div class="line">connecting to: <span class="built_in">test</span></div><div class="line">&gt; use caideyang</div><div class="line">switched to db caideyang</div><div class="line">&gt; db.auth(<span class="string">&apos;dba&apos;</span>,<span class="string">&apos;dba&apos;</span>)</div><div class="line">1</div></pre></td></tr></table></figure><p></p>
 <p></p><h4 id="&#x67E5;&#x8BE2;&#x7528;&#x6237;">&#x67E5;&#x8BE2;&#x7528;&#x6237;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&gt; show users</div><div class="line">{</div><div class="line">true<span class="string">&quot;_id&quot;</span> : <span class="string">&quot;test.dba&quot;</span>,</div><div class="line">true<span class="string">&quot;user&quot;</span> : <span class="string">&quot;dba&quot;</span>,</div><div class="line">true<span class="string">&quot;db&quot;</span> : <span class="string">&quot;test&quot;</span>,</div><div class="line">true<span class="string">&quot;roles&quot;</span> : [</div><div class="line">truetrue{</div><div class="line">truetruetrue<span class="string">&quot;role&quot;</span> : <span class="string">&quot;userAdminAnyDatabase&quot;</span>,</div><div class="line">truetruetrue<span class="string">&quot;db&quot;</span> : <span class="string">&quot;admin&quot;</span></div><div class="line">truetrue}</div><div class="line">true]</div><div class="line">}</div></pre></td></tr></table></figure><p></p>
 <p></p><h4 id="&#x5220;&#x9664;&#x7528;&#x6237;">&#x5220;&#x9664;&#x7528;&#x6237;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; db.system.users.remove({user:<span class="string">&quot;dba&quot;</span>})</div></pre></td></tr></table></figure><p></p>
-<p></p><h4 id="&#x5907;&#x4EFD;&#x6570;&#x636E;&#x5E93;">&#x5907;&#x4EFD;&#x6570;&#x636E;&#x5E93;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mongodump --port=27020 -u admin -p admin --db=admin -o /root/backup </div><div class="line"><span class="comment">#&#x53C2;&#x6570;&#x8BF4;&#x660E;</span></div><div class="line">true--port: mongodb&#x7684;&#x7AEF;&#x53E3;&#x53F7;</div><div class="line">true-u:  &#x6267;&#x884C;&#x5907;&#x4EFD;&#x7684;&#x7528;&#x6237;</div><div class="line">true-p:  &#x6267;&#x884C;&#x5907;&#x4EFD;&#x7528;&#x6237;&#x7684;&#x5BC6;&#x7801;</div><div class="line">true--db&#xFF1A; &#x9700;&#x8981;&#x5907;&#x4EFD;&#x7684;&#x6570;&#x636E;&#x5E93;&#x5B9E;&#x4F8B;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;admin</div><div class="line">true-o&#xFF1A; &#x5907;&#x4EFD;&#x7684;&#x6570;&#x636E;&#x5B58;&#x653E;&#x4F4D;&#x7F6E;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;/root/backup</div></pre></td></tr></table></figure><p></p>
+<p></p><h4 id="&#x5907;&#x4EFD;&#x6570;&#x636E;&#x5E93;">&#x5907;&#x4EFD;&#x6570;&#x636E;&#x5E93;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mongodump --port=27020 -u admin -p admin --db=admin -o /root/backup </div><div class="line"><span class="comment">#&#x53C2;&#x6570;&#x8BF4;&#x660E;</span></div><div class="line">--port: mongodb&#x7684;&#x7AEF;&#x53E3;&#x53F7;</div><div class="line">-u:  &#x6267;&#x884C;&#x5907;&#x4EFD;&#x7684;&#x7528;&#x6237;</div><div class="line">-p:  &#x6267;&#x884C;&#x5907;&#x4EFD;&#x7528;&#x6237;&#x7684;&#x5BC6;&#x7801;</div><div class="line">--db&#xFF1A; &#x9700;&#x8981;&#x5907;&#x4EFD;&#x7684;&#x6570;&#x636E;&#x5E93;&#x5B9E;&#x4F8B;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;admin</div><div class="line">-o&#xFF1A; &#x5907;&#x4EFD;&#x7684;&#x6570;&#x636E;&#x5B58;&#x653E;&#x4F4D;&#x7F6E;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;/root/backup</div></pre></td></tr></table></figure><p></p>
 <p></p><h4 id="&#x8FD8;&#x539F;&#x6570;&#x636E;&#x5E93;">&#x8FD8;&#x539F;&#x6570;&#x636E;&#x5E93;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mongorestore --port=27020 -u admin -p admin  --db=admin backup/<span class="built_in">test</span>/</div></pre></td></tr></table></figure><p></p>
 
       
@@ -465,7 +465,7 @@
 		   <p>&nbsp &nbsp      文章作者 &nbsp : &nbsp <a href="/" title="访问 火柴 的个人博客">火柴</a></p>
            <p>&nbsp &nbsp      发布时间 &nbsp : &nbsp </span>2017年1月10日 - 09时01分</p>
 		   <p>&nbsp &nbsp      本文链接 &nbsp : &nbsp <a href="/mongodb3-x-权限配置.html" title="mongodb3.x-权限配置">http://www.chen-hao.com.cn/mongodb3-x-权限配置.html</a></p>
-           <p>&nbsp &nbsp      本文字数 &nbsp : &nbsp <span class="page-count">本文一共有688字</span></script></a></p>
+           <p>&nbsp &nbsp      本文字数 &nbsp : &nbsp <span class="page-count">本文一共有684字</span></script></a></p>
 		   <p>&nbsp &nbsp      许可协议 &nbsp : &nbsp <i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" title="Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)">Attribution-NonCommercial 4.0</a></p>
 		   <p> &nbsp &nbsp  &copy 转载请保留以上信息，谢谢合作。</p>
 		</div>
