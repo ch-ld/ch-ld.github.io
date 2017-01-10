@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://www.chen-hao.com.cn/mongodb3-x-%E6%9D%83%E9%99%90%E9%85%8D%E7%BD%AE.html</loc>
+    <loc>http://www.chen-hao.com.cn/MongoDB3-x-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.html</loc>
     
-    <lastmod>2017-01-10T02:51:59.661Z</lastmod>
+    <lastmod>2017-01-10T07:07:04.929Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.chen-hao.com.cn/MongoDB%E5%88%86%E7%89%87%E9%85%8D%E7%BD%AE.html</loc>
+    
+    <lastmod>2017-01-10T06:25:23.364Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.chen-hao.com.cn/MongoDB3-x-%E6%9D%83%E9%99%90%E9%85%8D%E7%BD%AE.html</loc>
+    
+    <lastmod>2017-01-10T06:25:00.241Z</lastmod>
     
   </url>
   
@@ -47,13 +61,6 @@
     <loc>http://www.chen-hao.com.cn/xtrabackup%E8%87%AA%E5%8A%A8%E6%81%A2%E5%A4%8D%E8%84%9A%E6%9C%AC.html</loc>
     
     <lastmod>2017-01-10T01:24:53.345Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.chen-hao.com.cn/mongodb%E5%88%86%E7%89%87%E9%85%8D%E7%BD%AE.html</loc>
-    
-    <lastmod>2017-01-10T01:24:22.617Z</lastmod>
     
   </url>
   

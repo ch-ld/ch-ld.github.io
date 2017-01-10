@@ -1,4 +1,5 @@
-http://www.chen-hao.com.cn/mongodb3-x-权限配置.html
+http://www.chen-hao.com.cn/MongoDB3-x-配置文件.html
+http://www.chen-hao.com.cn/MongoDB3-x-权限配置.html
 http://www.chen-hao.com.cn/优化内核参数提高服务器并发处理能力.html
 http://www.chen-hao.com.cn/网站架构演化.html
 http://www.chen-hao.com.cn/Codis3-1-集群安装部署.html
@@ -7,4 +8,3 @@ http://www.chen-hao.com.cn/搭建项目管理系统-JIRA汉化破解版.html
 http://www.chen-hao.com.cn/搭建公司wiki系统-confluence-汉化破解版.html
 http://www.chen-hao.com.cn/利用logrotate服务切割日志.html
 http://www.chen-hao.com.cn/Shell中set和shopt命令选项含义.html
-http://www.chen-hao.com.cn/Expect命令使用详解.html
