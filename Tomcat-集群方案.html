@@ -1,0 +1,1312 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Tomcat," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="火柴的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="多个tomcat要一起协同工作有多种办法，这里总结一下几种方案的优缺点，以及各自的实现方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tomcat-集群方案">
+<meta property="og:url" content="http://www.chen-hao.com.cn/Tomcat-集群方案.html">
+<meta property="og:site_name" content="火柴的博客">
+<meta property="og:description" content="多个tomcat要一起协同工作有多种办法，这里总结一下几种方案的优缺点，以及各自的实现方法。">
+<meta property="og:image" content="http://www.chen-hao.com.cn/uploads/tomcat1.gif">
+<meta property="og:image" content="http://www.chen-hao.com.cn/uploads/tomcat2.gif">
+<meta property="og:image" content="http://www.chen-hao.com.cn/uploads/tomcat3.gif">
+<meta property="og:image" content="http://www.chen-hao.com.cn/uploads/tomcat4.png">
+<meta property="og:updated_time" content="2017-01-16T03:17:16.469Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tomcat-集群方案">
+<meta name="twitter:description" content="多个tomcat要一起协同工作有多种办法，这里总结一下几种方案的优缺点，以及各自的实现方法。">
+<meta name="twitter:image" content="http://www.chen-hao.com.cn/uploads/tomcat1.gif">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #000000; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #4682B4; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #00FFFF;    /*上边框颜色*/
+        border-left-color: #00FFFF;    /*左边框颜色*/
+    }
+  </style>
+
+
+
+  <link rel="canonical" href="http://www.chen-hao.com.cn/Tomcat-集群方案.html"/>
+
+
+
+  <title> Tomcat-集群方案 | 火柴的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+	
+	
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	
+	<a href="https://github.com/ch-ld/ch-ld.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
+	
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">火柴的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+
+<nav class="site-nav" id="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comments"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-cywz">
+          <a href="/cywz" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-globe"></i> <br />
+            
+            常用网站
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Tomcat-集群方案
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+		
+			
+			  <span class="post-letters-count">
+				&nbsp; | &nbsp;
+				<span>2,318 字</span>
+				&nbsp; | &nbsp;
+				<span>12 min</span>
+			  </span>
+			
+			
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-13T13:50:03+08:00" content="2017-01-13">
+              2017-01-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/集群/" itemprop="url" rel="index">
+                    <span itemprop="name">集群</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/Tomcat-集群方案.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="Tomcat-集群方案.html" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/Tomcat-集群方案.html" class="leancloud_visitors" data-flag-title="Tomcat-集群方案">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">热度 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>&#x591A;&#x4E2A;<code>tomcat</code>&#x8981;&#x4E00;&#x8D77;&#x534F;&#x540C;&#x5DE5;&#x4F5C;&#x6709;&#x591A;&#x79CD;&#x529E;&#x6CD5;&#xFF0C;&#x8FD9;&#x91CC;&#x603B;&#x7ED3;&#x4E00;&#x4E0B;&#x51E0;&#x79CD;&#x65B9;&#x6848;&#x7684;&#x4F18;&#x7F3A;&#x70B9;&#xFF0C;&#x4EE5;&#x53CA;&#x5404;&#x81EA;&#x7684;&#x5B9E;&#x73B0;&#x65B9;&#x6CD5;&#x3002;<br><a id="more"></a></p>
+</blockquote>
+<h4 id="&#x96C6;&#x7FA4;&#x65B9;&#x6848;">&#x96C6;&#x7FA4;&#x65B9;&#x6848;</h4>
+
+<table>
+<thead>
+<tr>
+<th>&#x65B9;&#x6848;</th>
+<th>&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;</th>
+<th>&#x9002;&#x7528;&#x573A;&#x666F;</th>
+<th>&#x4F18;&#x70B9;</th>
+<th>&#x7F3A;&#x70B9;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>session sticky</td>
+<td>&#x57FA;&#x4E8E;&#x4E03;&#x5C42;&#x7684;&#x6E90;&#x5730;&#x5740;hash</td>
+<td>&#x5C0F;&#x578B;&#x89C4;&#x6A21;</td>
+<td>&#x914D;&#x7F6E;&#x7B80;&#x5355;</td>
+<td>&#x540E;&#x7AEF;&#x4EFB;&#x4F55;&#x8282;&#x70B9;&#x6389;&#x7EBF;&#xFF0C;session&#x4E22;&#x5931;</td>
+</tr>
+<tr>
+<td>session cluster</td>
+<td>tomcat&#x81EA;&#x5E26;&#x96C6;&#x7FA4;&#x65B9;&#x6848;</td>
+<td>&#x4E2D;&#x5C0F;&#x578B;&#x89C4;&#x6A21;</td>
+<td>&#x914D;&#x7F6E;&#x7B80;&#x5355;</td>
+<td>&#x5360;&#x7528;&#x5185;&#x5B58;&#x5927;&#xFF0C;&#x6BCF;&#x4E2A;&#x8282;&#x70B9;&#x90FD;&#x8981;&#x6301;&#x6709;&#x6574;&#x4E2A;&#x96C6;&#x7FA4;&#x7684;&#x4F1A;&#x8BDD;&#x4FE1;&#x606F;</td>
+</tr>
+<tr>
+<td>session server</td>
+<td>&#x5229;&#x7528;memcached&#x6216;redis&#x5C06;session&#x96C6;&#x4E2D;&#x7BA1;&#x7406;</td>
+<td>&#x4EFB;&#x4F55;&#x89C4;&#x6A21;</td>
+<td>&#x6027;&#x80FD;&#x8F83;&#x597D;</td>
+<td>&#x914D;&#x7F6E;&#x590D;&#x6742;</td>
+</tr>
+</tbody>
+</table>
+<h4 id="session-stickey">session stickey</h4>
+
+<table>
+<thead>
+<tr>
+<th>&#x4E3B;&#x673A;&#x540D;</th>
+<th>IP&#x5730;&#x5740;</th>
+<th>&#x7528;&#x9014;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nginx</td>
+<td>192.168.4.207</td>
+<td>&#x524D;&#x7AEF;&#x8D1F;&#x8F7D; ip_hash</td>
+</tr>
+<tr>
+<td>tomcat1</td>
+<td>192.168.4.208</td>
+<td>&#x6D4B;&#x8BD5;&#x8282;&#x70B9;1</td>
+</tr>
+<tr>
+<td>tomcat2</td>
+<td>192.168.4.207</td>
+<td>&#x6D4B;&#x8BD5;&#x8282;&#x70B9;2</td>
+</tr>
+</tbody>
+</table>
+<p>&#x5229;&#x7528;<code>nginx/haproxy/httpd</code>&#x57FA;&#x4E8E;&#x8BBF;&#x95EE;ip&#x7684;hash&#x8DEF;&#x7531;&#x7B56;&#x7565;&#xFF0C;&#x4FDD;&#x8BC1;&#x8BBF;&#x95EE;&#x7684;ip&#x59CB;&#x7EC8;&#x88AB;&#x8DEF;&#x7531;&#x5230;&#x540C;&#x4E00;&#x4E2A;tomcat&#x4E0A;&#x3002;</p>
+<p></p><h5 id="nginx&#x914D;&#x7F6E;">nginx&#x914D;&#x7F6E;</h5><br>&#x8FD9;&#x91CC;&#x4F7F;&#x7528;&#x7684;&#x662F;nginx1.8&#xFF0C;&#x5177;&#x4F53;&#x5B89;&#x88C5;&#x6B65;&#x9AA4;&#x6682;&#x4E14;&#x4E0D;&#x8868;&#x3002;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">vim /etc/nginx/nginx.conf</div><div class="line">http {</div><div class="line">...</div><div class="line">    upstream tomcat_cluster {</div><div class="line">        server 192.168.4.208:8080 weight=1;</div><div class="line">        server 192.168.4.209:8080 weight=1;</div><div class="line">        <span class="comment">#ip_hash;</span></div><div class="line">        <span class="comment">#&#x8FD9;&#x91CC;&#x5148;&#x7981;&#x7528;ip hash&#xFF0C;&#x770B;&#x770B;&#x6709;&#x4EC0;&#x4E48;&#x6548;&#x679C;</span></div><div class="line">        }</div><div class="line">   ...</div><div class="line">   server {</div><div class="line">       location / {</div><div class="line">       proxy_pass http://tomcat_cluster;</div><div class="line">       }</div><div class="line">   }</div><div class="line">   ......	</div><div class="line">}</div></pre></td></tr></table></figure><p></p>
+<p></p><h5 id="tomcat&#x914D;&#x7F6E;">tomcat&#x914D;&#x7F6E;</h5><br>&#x540C;&#x6837;&#x5B89;&#x88C5;&#x597D;JDK&#x548C;tomcat&#xFF0C;&#x5206;&#x522B;&#x5728;tomcat1&#x548C;tomcat2&#x7684;/webapps/ROOT&#x76EE;&#x5F55;&#x4E0B;&#x521B;&#x5EFA;index.jsp&#x6587;&#x4EF6;&#x3002;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">vim index.jsp </div><div class="line">&lt;%@page language=<span class="string">&quot;java&quot;</span> %&gt;</div><div class="line">    &lt;html&gt;</div><div class="line">        &lt;head&gt;&lt;title&gt;Tomcat111&lt;/title&gt;&lt;/head&gt;</div><div class="line">             &lt;body&gt;</div><div class="line">                 &lt;h1&gt;&lt;font color=<span class="string">&quot;red&quot;</span>&gt;TomcatA.chen-hao.com.cn&lt;/font&gt;&lt;/h1&gt;</div><div class="line">                 &lt;table align=<span class="string">&quot;centre&quot;</span> border=<span class="string">&quot;1&quot;</span>&gt;</div><div class="line">                 &lt;tr&gt;</div><div class="line">                 &lt;td&gt;Session ID&lt;/td&gt;</div><div class="line">                 &lt;% session.setAttribute(<span class="string">&quot;chen-hao.com.cn&quot;</span>,<span class="string">&quot;chen-hao.com.cn&quot;</span>); %&gt;</div><div class="line">                 &lt;td&gt;&lt;%= session.getId() %&gt;&lt;/td&gt;</div><div class="line">                 &lt;/tr&gt;</div><div class="line">                 &lt;tr&gt;</div><div class="line">                 &lt;td&gt;Created on&lt;/td&gt;</div><div class="line">                 &lt;td&gt;&lt;%= session.getCreationTime() %&gt;&lt;/td&gt;</div><div class="line">                 &lt;/tr&gt;</div><div class="line">                 &lt;/table&gt;</div><div class="line">             &lt;/body&gt;</div><div class="line">    &lt;/html&gt;</div></pre></td></tr></table></figure><p></p>
+<p>tomcat2 &#x9700;&#x4FEE;&#x6539;<code>&lt;head&gt;&lt;title&gt;Tomcat222&lt;/title&gt;&lt;/head&gt;</code>&#xFF0C;&#x5176;&#x4ED6;&#x4FDD;&#x6301;&#x4E00;&#x81F4;&#x5373;&#x53EF;&#x3002;</p>
+<p></p><h5 id="&#x9A8C;&#x8BC1;1">&#x9A8C;&#x8BC1;1</h5><p></p>
+<ul>
+<li>&#x6CE8;&#x91CA;&#x6389;ip hash&#xFF0C;&#x9A8C;&#x8BC1;&#x5982;&#x4E0B;</li>
+</ul>
+<p><img src="/uploads/tomcat1.gif" class="blockquote-center"> </p>
+<ul>
+<li>&#x5F00;&#x542F;ip hash,&#x9A8C;&#x8BC1;&#x5982;&#x4E0B;</li>
+</ul>
+<p><img src="/uploads/tomcat2.gif" class="blockquote-center"></p>
+<h4 id="session-cluster">session cluster</h4>
+
+<table>
+<thead>
+<tr>
+<th>&#x4E3B;&#x673A;&#x540D;</th>
+<th>IP&#x5730;&#x5740;</th>
+<th>&#x7528;&#x9014;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nginx</td>
+<td>192.168.4.207</td>
+<td>&#x524D;&#x7AEF;&#x8D1F;&#x8F7D; &#x8F6E;&#x5E8F;&#x8C03;&#x5EA6;</td>
+</tr>
+<tr>
+<td>tomcat1</td>
+<td>192.168.4.208</td>
+<td>&#x6D4B;&#x8BD5;&#x8282;&#x70B9;1</td>
+</tr>
+<tr>
+<td>tomcat2</td>
+<td>192.168.4.207</td>
+<td>&#x6D4B;&#x8BD5;&#x8282;&#x70B9;2</td>
+</tr>
+</tbody>
+</table>
+<p>&#x4F7F;&#x7528;tomcat&#x81EA;&#x5E26;&#x7684;cluster&#x65B9;&#x5F0F;&#xFF0C;&#x591A;&#x4E2A;tomcat&#x95F4;&#x81EA;&#x52A8;&#x5B9E;&#x65F6;&#x590D;&#x5236;session&#x4FE1;&#x606F;&#x3002;<br>&#x53C2;&#x8003;&#x5B98;&#x65B9;&#x6587;&#x6863;&#xFF1A;<a href="http://tomcat.apache.org/tomcat-7.0-doc/cluster-howto.html" target="_blank" rel="external">http://tomcat.apache.org/tomcat-7.0-doc/cluster-howto.html</a></p>
+<p></p><h5 id="tomcat&#x7684;&#x914D;&#x7F6E;">tomcat&#x7684;&#x914D;&#x7F6E;</h5><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">vim conf/server.xml</div><div class="line"></div><div class="line">&lt;Engine name=<span class="string">&quot;Catalina&quot;</span> defaultHost=<span class="string">&quot;localhost&quot;</span> jvmRoute=<span class="string">&quot;Tomcat222&quot;</span>&gt;</div><div class="line"></div><div class="line">&lt;Cluster className=<span class="string">&quot;org.apache.catalina.ha.tcp.SimpleTcpCluster&quot;</span></div><div class="line">truetrue channelSendOptions=<span class="string">&quot;8&quot;</span>&gt;</div><div class="line"></div><div class="line">  &lt;Manager className=<span class="string">&quot;org.apache.catalina.ha.session.DeltaManager&quot;</span></div><div class="line">truetrue   expireSessionsOnShutdown=<span class="string">&quot;false&quot;</span></div><div class="line">truetrue   notifyListenersOnReplication=<span class="string">&quot;true&quot;</span>/&gt;</div><div class="line"></div><div class="line">  &lt;Channel className=<span class="string">&quot;org.apache.catalina.tribes.group.GroupChannel&quot;</span>&gt;</div><div class="line">true&lt;Membership className=<span class="string">&quot;org.apache.catalina.tribes.membership.McastService&quot;</span></div><div class="line">truetruetruetrueaddress=<span class="string">&quot;228.0.0.4&quot;</span></div><div class="line">truetruetruetrueport=<span class="string">&quot;45564&quot;</span></div><div class="line">truetruetruetruefrequency=<span class="string">&quot;500&quot;</span></div><div class="line">truetruetruetruedropTime=<span class="string">&quot;3000&quot;</span>/&gt;</div><div class="line">true&lt;Receiver className=<span class="string">&quot;org.apache.catalina.tribes.transport.nio.NioReceiver&quot;</span></div><div class="line">truetruetrue  address=<span class="string">&quot;auto&quot;</span></div><div class="line">truetruetrue  port=<span class="string">&quot;4000&quot;</span></div><div class="line">truetruetrue  autoBind=<span class="string">&quot;100&quot;</span></div><div class="line">truetruetrue  selectorTimeout=<span class="string">&quot;5000&quot;</span></div><div class="line">truetruetrue  maxThreads=<span class="string">&quot;6&quot;</span>/&gt;</div><div class="line"></div><div class="line">true&lt;Sender className=<span class="string">&quot;org.apache.catalina.tribes.transport.ReplicationTransmitter&quot;</span>&gt;</div><div class="line">true  &lt;Transport className=<span class="string">&quot;org.apache.catalina.tribes.transport.nio.PooledParallelSender&quot;</span>/&gt;</div><div class="line">true&lt;/Sender&gt;</div><div class="line">true&lt;Interceptor className=<span class="string">&quot;org.apache.catalina.tribes.group.interceptors.TcpFailureDetector&quot;</span>/&gt;</div><div class="line">true&lt;Interceptor className=<span class="string">&quot;org.apache.catalina.tribes.group.interceptors.MessageDispatch15Interceptor&quot;</span>/&gt;</div><div class="line">  &lt;/Channel&gt;</div><div class="line"></div><div class="line">  &lt;Valve className=<span class="string">&quot;org.apache.catalina.ha.tcp.ReplicationValve&quot;</span></div><div class="line">truetrue filter=<span class="string">&quot;&quot;</span>/&gt;</div><div class="line">  &lt;Valve className=<span class="string">&quot;org.apache.catalina.ha.session.JvmRouteBinderValve&quot;</span>/&gt;</div><div class="line"></div><div class="line">  &lt;Deployer className=<span class="string">&quot;org.apache.catalina.ha.deploy.FarmWarDeployer&quot;</span></div><div class="line">truetruetruetempDir=<span class="string">&quot;/tmp/war-temp/&quot;</span></div><div class="line">truetruetruedeployDir=<span class="string">&quot;/tmp/war-deploy/&quot;</span></div><div class="line">truetruetruewatchDir=<span class="string">&quot;/tmp/war-listen/&quot;</span></div><div class="line">truetruetruewatchEnabled=<span class="string">&quot;false&quot;</span>/&gt;</div><div class="line"></div><div class="line">  &lt;ClusterListener className=<span class="string">&quot;org.apache.catalina.ha.session.ClusterSessionListener&quot;</span>/&gt;</div><div class="line">&lt;/Cluster&gt;</div></pre></td></tr></table></figure><p></p>
+<p>tomcat1&#x548C;tomcat2&#x914D;&#x7F6E;&#x4E00;&#x6837;&#xFF0C;&#x53EA;&#x9700;&#x5206;&#x522B;&#x4FEE;&#x6539;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;Engine name=<span class="string">&quot;Catalina&quot;</span> defaultHost=<span class="string">&quot;localhost&quot;</span> jvmRoute=<span class="string">&quot;Tomcat222&quot;</span>&gt;</div></pre></td></tr></table></figure></p>
+<p>&#x5176;&#x4E2D;&#xFF1A;<br>Cluster&#xFF1A;&#x5B9A;&#x4E49;&#x96C6;&#x7FA4;&#xFF1B;&#x53EF;&#x653E;&#x5728;Engine&#x6216;Host&#x914D;&#x7F6E;&#x6BB5;&#x4F46;&#x751F;&#x6548;&#x8303;&#x56F4;&#x4E0D;&#x7528;&#xFF1B;<br>Channel: &#x662F;&#x505A;&#x6210;&#x5458;&#x5173;&#x7CFB;&#x5224;&#x65AD;&#x548C;&#x53D1;&#x9001;&#x3001;&#x63A5;&#x6536;session&#x4FE1;&#x606F;&#xFF1B;<br>Manager&#xFF1A;&#x4F1A;&#x8BDD;&#x7BA1;&#x7406;&#x5668;&#xFF0C;tomcat&#x652F;&#x6301;&#x591A;&#x79CD;&#x7BA1;&#x7406;&#x5668;&#xFF1B;<br>Membership&#xFF1A;&#x5B9A;&#x4E49;&#x96C6;&#x7FA4;&#x6210;&#x5458;&#xFF1B;<br>Receiver&#xFF1A;&#x4F1A;&#x8BDD;&#x63A5;&#x6536;&#x5668;&#xFF1B;<br>Sender&#xFF1A;&#x4F1A;&#x8BDD;&#x53D1;&#x9001;&#x5668;&#xFF1B;<br>&#x6CE8;&#x610F;&#x51E0;&#x70B9;:</p>
+<ol>
+<li>&#x786E;&#x4FDD;&#x5728;web.xml&#x4E2D;&#x6DFB;&#x52A0;<distributables>&#xFF1B;</distributables></li>
+<li>&#x786E;&#x4FDD;<engine>&#x4E0A;&#x9762;&#x6709;jvmRoute=&#x201D;Tomcat222&#x201D;&#x5C5E;&#x6027;&#xFF1B;</engine></li>
+<li>&#x786E;&#x4FDD;&#x5404;&#x8282;&#x70B9;&#x95F4;&#x65F6;&#x95F4;&#x662F;&#x540C;&#x6B65;&#x7684;&#xFF1B;</li>
+</ol>
+<p></p><h5 id="&#x9A8C;&#x8BC1;2">&#x9A8C;&#x8BC1;2</h5><br>&#x8FD9;&#x91CC;&#x518D;&#x8BBF;&#x95EE;&#x524D;&#x7AEF;nginx&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF1A;<br><img src="/uploads/tomcat3.gif" class="blockquote-center"><br>&#x65E0;&#x8BBA;&#x600E;&#x4E48;&#x5237;&#x65B0;SessionID&#x90FD;&#x4E0D;&#x4F1A;&#x53D8;<p></p>
+<p></p><h4 id="session-server">session server</h4><br>&#x5229;&#x7528;<code>memcached/redis</code>&#x628A;&#x591A;&#x4E2A;tomcat&#x7684;session&#x96C6;&#x4E2D;&#x7BA1;&#x7406;&#xFF0C;&#x524D;&#x7AEF;&#x5728;&#x5229;&#x7528;nginx&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x548C;&#x52A8;&#x9759;&#x6001;&#x8D44;&#x6E90;&#x5206;&#x79BB;&#xFF0C;&#x5728;&#x517C;&#x987E;&#x7CFB;&#x7EDF;&#x6C34;&#x5E73;&#x6269;&#x5C55;&#x7684;&#x540C;&#x65F6;&#x53C8;&#x80FD;&#x4FDD;&#x8BC1;&#x8F83;&#x9AD8;&#x7684;&#x6027;&#x80FD;&#x3002;<p></p>
+<p></p><h5 id="gradle&#x914D;&#x7F6E;">gradle&#x914D;&#x7F6E;</h5><br>&#x7531;&#x4E8E;&#x6E90;&#x7801;&#x6784;&#x5EFA;&#x57FA;&#x4E8E; gradle&#xFF0C;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x5148;&#x914D;&#x7F6E; gradle &#x73AF;&#x5883;&#x3002;<br>&#x5B98;&#x7F51;&#x4E0B;&#x8F7D;&#x5730;&#x5740;&#xFF1A;<br><a href="https://gradle.org/gradle-download/" target="_blank" rel="external">https://gradle.org/gradle-download/</a><p></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">curl <span class="_">-s</span> https://get.sdkman.io | bash</div><div class="line">chmod +x /root/.sdkman/bin/sdkman-init.sh</div><div class="line">. /root/.bash_profile</div><div class="line">sdk install gradle 3.3</div></pre></td></tr></table></figure>
+<p>&#x786E;&#x8BA4;gradle&#x5B89;&#x88C5;&#x6210;&#x529F;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">gradle</div><div class="line">Starting a Gradle Daemon (subsequent builds will be faster)</div><div class="line">:<span class="built_in">help</span></div><div class="line"></div><div class="line">Welcome to Gradle 3.3.</div><div class="line"></div><div class="line">To run a build, run gradle &lt;task&gt; ...</div><div class="line"></div><div class="line">To see a list of available tasks, run gradle tasks</div><div class="line"></div><div class="line">To see a list of <span class="built_in">command</span>-line options, run gradle --help</div><div class="line"></div><div class="line">To see more detail about a task, run gradle <span class="built_in">help</span> --task &lt;task&gt;</div><div class="line"></div><div class="line">BUILD SUCCESSFUL</div><div class="line"></div><div class="line">Total time: 3.283 secs</div></pre></td></tr></table></figure></p>
+<p></p><h5 id="&#x7F16;&#x8BD1;tomcat-redis-session-manager">&#x7F16;&#x8BD1;tomcat-redis-session-manager</h5><br>&#x8BA9;Tomcat&#x628A;&#x4F1A;&#x8BDD;Session&#x4FDD;&#x5B58;&#x5230;Redis&#x6570;&#x636E;&#x5E93;&#x4E2D;&#xFF0C;&#x9700;&#x8981;&#x4F7F;&#x7528;tomcat-redis-session-manager&#x8FD9;&#x6837;&#x7684;&#x7B2C;&#x4E09;&#x65B9;&#x5E93;&#x3002;<br>&#x4E3B;&#x9875;&#x89C1;&#xFF1A; <a href="https://github.com/jcoleman/tomcat-redis-session-manager" target="_blank" rel="external">https://github.com/jcoleman/tomcat-redis-session-manager</a><br>&#x6309;&#x7167;&#x81EA;&#x5DF1;&#x7684;&#x914D;&#x7F6E;&#xFF0C;&#x7F16;&#x8BD1;&#x591A;&#x6B21;&#x672A;&#x6210;&#x529F;&#xFF0C;&#x8FD9;&#x91CC;&#x76F4;&#x63A5;&#x8D34;&#x51FA;&#x4E00;&#x4E2A;&#x7F16;&#x8BD1;&#x6210;&#x529F;&#x7684;&#x914D;&#x7F6E;&#x3002;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div></pre></td><td class="code"><pre><div class="line">vim build.gradle</div><div class="line"></div><div class="line">apply plugin: <span class="string">&apos;java&apos;</span></div><div class="line">apply plugin: <span class="string">&apos;maven&apos;</span></div><div class="line">apply plugin: <span class="string">&apos;signing&apos;</span></div><div class="line"></div><div class="line">group = <span class="string">&apos;com.orangefunction&apos;</span></div><div class="line">version = <span class="string">&apos;2.0.0&apos;</span></div><div class="line"></div><div class="line">repositories {</div><div class="line">  mavenCentral()</div><div class="line">}</div><div class="line"></div><div class="line">compileJava {</div><div class="line">  <span class="built_in">source</span>Compatibility = 1.7</div><div class="line">  targetCompatibility = 1.7</div><div class="line">}</div><div class="line"></div><div class="line">dependencies {</div><div class="line">  compile group: <span class="string">&apos;org.apache.tomcat&apos;</span>, name: <span class="string">&apos;tomcat-catalina&apos;</span>, version: <span class="string">&apos;7.0.27&apos;</span></div><div class="line">  compile group: <span class="string">&apos;redis.clients&apos;</span>, name: <span class="string">&apos;jedis&apos;</span>, version: <span class="string">&apos;2.5.2&apos;</span></div><div class="line">  compile group: <span class="string">&apos;org.apache.commons&apos;</span>, name: <span class="string">&apos;commons-pool2&apos;</span>, version: <span class="string">&apos;2.2&apos;</span></div><div class="line">  //compile group: <span class="string">&apos;commons-codec&apos;</span>, name: <span class="string">&apos;commons-codec&apos;</span>, version: <span class="string">&apos;1.9&apos;</span></div><div class="line"></div><div class="line">  <span class="built_in">test</span>Compile group: <span class="string">&apos;junit&apos;</span>, name: <span class="string">&apos;junit&apos;</span>, version: <span class="string">&apos;4.+&apos;</span></div><div class="line">  <span class="built_in">test</span>Compile <span class="string">&apos;org.hamcrest:hamcrest-core:1.3&apos;</span></div><div class="line">  <span class="built_in">test</span>Compile <span class="string">&apos;org.hamcrest:hamcrest-library:1.3&apos;</span></div><div class="line">  <span class="built_in">test</span>Compile <span class="string">&apos;org.mockito:mockito-all:1.9.5&apos;</span></div><div class="line">  <span class="built_in">test</span>Compile group: <span class="string">&apos;org.apache.tomcat&apos;</span>, name: <span class="string">&apos;tomcat-coyote&apos;</span>, version: <span class="string">&apos;7.0.27&apos;</span></div><div class="line">}</div><div class="line"></div><div class="line">task javadocJar(<span class="built_in">type</span>: Jar, dependsOn: javadoc) {</div><div class="line">  classifier = <span class="string">&apos;javadoc&apos;</span></div><div class="line">  from <span class="string">&apos;build/docs/javadoc&apos;</span></div><div class="line">}</div><div class="line"></div><div class="line">task sourcesJar(<span class="built_in">type</span>: Jar) {</div><div class="line">  from <span class="built_in">source</span>Sets.main.allSource</div><div class="line">  classifier = <span class="string">&apos;sources&apos;</span></div><div class="line">}</div><div class="line"></div><div class="line">artifacts {</div><div class="line">  archives jar</div><div class="line"></div><div class="line">  archives javadocJar</div><div class="line">  archives sourcesJar</div><div class="line">}</div><div class="line"></div><div class="line">//signing</div><div class="line"> // sign configurations.archives</div><div class="line">  //required = <span class="literal">false</span></div><div class="line">//}</div><div class="line"></div><div class="line"></div><div class="line">uploadArchives {</div><div class="line">  repositories {</div><div class="line">    mavenDeployer {</div><div class="line">      beforeDeployment { MavenDeployment deployment -&gt; signing.signPom(deployment) }</div><div class="line"></div><div class="line">      //repository(url: <span class="string">&quot;https://oss.sonatype.org/service/local/staging/deploy/maven2/&quot;</span>) {</div><div class="line">        //authentication(userName: sonatypeUsername, password: sonatypePassword)</div><div class="line">      //}</div><div class="line">      //repository(url: <span class="string">&quot;https://oss.sonatype.org/content/repositories/snapshots&quot;</span>) {</div><div class="line">      //  authentication(userName: sonatypeUsername, password: sonatypePassword)</div><div class="line">      //}</div><div class="line"></div><div class="line">      pom.project {</div><div class="line">        name <span class="string">&apos;tomcat-redis-session-manager&apos;</span></div><div class="line">        packaging <span class="string">&apos;jar&apos;</span></div><div class="line">        description <span class="string">&apos;Tomcat Redis Session Manager is a Tomcat extension to store sessions in Redis&apos;</span></div><div class="line">        url <span class="string">&apos;https://github.com/jcoleman/tomcat-redis-session-manager&apos;</span></div><div class="line"></div><div class="line">        issueManagement {</div><div class="line">          url <span class="string">&apos;https://github.com:jcoleman/tomcat-redis-session-manager/issues&apos;</span></div><div class="line">          system <span class="string">&apos;GitHub Issues&apos;</span></div><div class="line">        }</div><div class="line"></div><div class="line">        scm {</div><div class="line">          url <span class="string">&apos;https://github.com:jcoleman/tomcat-redis-session-manager&apos;</span></div><div class="line">          connection <span class="string">&apos;scm:git:git://github.com/jcoleman/tomcat-redis-session-manager.git&apos;</span></div><div class="line">          developerConnection <span class="string">&apos;scm:git:git@github.com:jcoleman/tomcat-redis-session-manager.git&apos;</span></div><div class="line">        }</div><div class="line"></div><div class="line">        licenses {</div><div class="line">          license {</div><div class="line">            name <span class="string">&apos;MIT&apos;</span></div><div class="line">            url <span class="string">&apos;http://opensource.org/licenses/MIT&apos;</span></div><div class="line">            distribution <span class="string">&apos;repo&apos;</span></div><div class="line">          }</div><div class="line">        }</div><div class="line"></div><div class="line">        developers {</div><div class="line">          developer {</div><div class="line">            id <span class="string">&apos;jcoleman&apos;</span></div><div class="line">            name <span class="string">&apos;James Coleman&apos;</span></div><div class="line">            email <span class="string">&apos;jtc331@gmail.com&apos;</span></div><div class="line">            url <span class="string">&apos;https://github.com/jcoleman&apos;</span></div><div class="line">          }</div><div class="line">        }</div><div class="line">      }</div><div class="line">    }</div><div class="line">  }</div><div class="line">}</div></pre></td></tr></table></figure><p></p>
+<p>&#x6267;&#x884C;&#x7F16;&#x8BD1;&#x547D;&#x4EE4;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">gradle build --stacktrace</div><div class="line">:compileJava</div><div class="line">Download https://repo1.maven.org/maven2/org/apache/tomcat/tomcat-catalina/7.0.27/tomcat-catalina-7.0.27.pom</div><div class="line">Download https://repo1.maven.org/maven2/org/apache/tomcat/tomcat-servlet-api/7.0.27/tomcat-servlet-api-7.0.27.pom</div><div class="line">Download https://repo1.maven.org/maven2/org/apache/tomcat/tomcat-juli/7.0.27/tomcat-juli-7.0.27.pom</div><div class="line">Download https://repo1.maven.org/maven2/org/apache/tomcat/tomcat-annotations-api/7.0.27/tomcat-annotations-api-7.0.27.pom</div><div class="line">Download https://repo1.maven.org/maven2/org/apache/tomcat/tomcat-api/7.0.27/tomcat-api-7.0.27.pom</div><div class="line">Download https://repo1.maven.org/maven2/org/apache/tomcat/tomcat-util/7.0.27/tomcat-util-7.0.27.pom</div><div class="line">Download https://repo1.maven.org/maven2/org/apache/tomcat/tomcat-catalina/7.0.27/tomcat-catalina-7.0.27.jar</div><div class="line">Download https://repo1.maven.org/maven2/redis/clients/jedis/2.5.2/jedis-2.5.2.jar</div><div class="line">Download https://repo1.maven.org/maven2/org/apache/commons/commons-pool2/2.2/commons-pool2-2.2.jar</div><div class="line">Download https://repo1.maven.org/maven2/org/apache/tomcat/tomcat-servlet-api/7.0.27/tomcat-servlet-api-7.0.27.jar</div><div class="line">Download https://repo1.maven.org/maven2/org/apache/tomcat/tomcat-juli/7.0.27/tomcat-juli-7.0.27.jar</div><div class="line">Download https://repo1.maven.org/maven2/org/apache/tomcat/tomcat-annotations-api/7.0.27/tomcat-annotations-api-7.0.27.jar</div><div class="line">Download https://repo1.maven.org/maven2/org/apache/tomcat/tomcat-api/7.0.27/tomcat-api-7.0.27.jar</div><div class="line">Download https://repo1.maven.org/maven2/org/apache/tomcat/tomcat-util/7.0.27/tomcat-util-7.0.27.jar</div><div class="line">warning: [options] bootstrap class path not <span class="built_in">set</span> <span class="keyword">in</span> conjunction with -source 1.7</div><div class="line">1 warning</div><div class="line">:processResources UP-TO-DATE</div><div class="line">:classes</div><div class="line">:jar</div><div class="line">:javadoc</div><div class="line">:javadocJar</div><div class="line">:sourcesJar</div><div class="line">:assemble</div><div class="line">:compileTestJava UP-TO-DATE</div><div class="line">:processTestResources UP-TO-DATE</div><div class="line">:<span class="built_in">test</span>Classes UP-TO-DATE</div><div class="line">:<span class="built_in">test</span> UP-TO-DATE</div><div class="line">:check UP-TO-DATE</div><div class="line">:build</div><div class="line"></div><div class="line">BUILD SUCCESSFUL</div></pre></td></tr></table></figure></p>
+<p>&#x5728;tomcat-redis-session-manager/build/libs/&#x76EE;&#x5F55;&#x4E0B;&#x67E5;&#x770B;&#x662F;&#x5426;&#x751F;&#x6210;tomcat-redis-session-manager&#x7684;jar&#x5305;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /work/tomcat-redis-session-manager/build/libs/</div><div class="line">ls</div><div class="line">tomcat-redis-session-manager-2.0.0.jar  tomcat-redis-session-manager-2.0.0-javadoc.jar  tomcat-redis-session-manager-2.0.0-sources.jar</div></pre></td></tr></table></figure></p>
+<p>&#x6B64;&#x65F6;&#x53EA;&#x9700;&#x8981;&#x5C06;tomcat-redis-session-manager-2.0.0.jar&#x4EE5;&#x53CA;&#x53E6;&#x5916;&#x4E24;&#x4E2A;&#x4F9D;&#x8D56;&#x5305;&#xFF1A;jedis- 2.5.2.jar&#xFF0C;commons-pool2-2.2.jar&#x4E00;&#x5E76;&#x62F7;&#x5165;tomcat&#x7684;lib&#x76EE;&#x5F55;&#x4E0B;&#x5373;&#x53EF;&#xFF08;&#x4F9D;&#x8D56;&#x5305;&#x53EF;&#x4EE5;&#x5728;gradle&#x7684;&#x7528;&#x6237;&#x76EE;&#x5F55;&#x4E0B;&#x627E;&#x5230;&#xFF09;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">find / -name <span class="string">&apos;jedis-2.5.2.jar&apos;</span></div><div class="line">/root/.gradle/caches/modules-2/files-2.1/redis.clients/jedis/2.5.2/83d833f48052456f197ba55ef2a82<span class="built_in">fc</span>4909880b/jedis-2.5.2.jar</div><div class="line">find -name <span class="string">&apos;commons-pool2-2.2.jar&apos;</span></div><div class="line">./.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-pool2/2.2/bd1a6e384f3cf0f9b9a60e1e6c1c1ecbbee7e0b7/commons-pool2-2.2.jar</div></pre></td></tr></table></figure></p>
+<p></p><h5 id="redis&#x914D;&#x7F6E;">redis&#x914D;&#x7F6E;</h5><br>&#x4FEE;&#x6539;&#x914D;&#x7F6E;&#x4F7F;&#x7528; tomcat-redis-session-manager-master &#x4F5C;&#x4E3A; tomcat session &#x7BA1;&#x7406;&#x5668;<p></p>
+<ol>
+<li>&#x5206;&#x522B;&#x5C06;&#x751F;&#x6210;&#x7684; tomcat-redis-session-manager-master &#x53CA;&#x4F9D;&#x8D56;jar&#x5305;&#x8986;&#x76D6;&#x5230; tomcat &#x5B89;&#x88C5;&#x76EE;&#x5F55;&#x7684; lib &#x6587;&#x4EF6;&#x5939;</li>
+<li>&#x5206;&#x522B;&#x4FEE;&#x6539;2&#x53F0; tomcat &#x7684; context.xml &#x6587;&#x4EF6;&#xFF0C;&#x4F7F; tomcat-redis-session-manager-master &#x4F5C;&#x4E3A;session&#x7BA1;&#x7406;&#x5668;&#xFF0C;&#x540C;&#x65F6;&#x6307;&#x5B9A;redis&#x5730;&#x5740;&#x548C;&#x7AEF;&#x53E3;&#x3002;<br>&#x7F16;&#x8F91;context.xml&#x914D;&#x7F6E;&#x6587;&#x4EF6;<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">vim conf/context.xml</div><div class="line">&lt;Context&gt;</div><div class="line">    &lt;Valve className=<span class="string">&quot;com.orangefunction.tomcat.redissessions.RedisSessionHandlerValve&quot;</span> /&gt;</div><div class="line">    &lt;Manager className=<span class="string">&quot;com.orangefunction.tomcat.redissessions.RedisSessionManager&quot;</span></div><div class="line">        host=<span class="string">&quot;127.0.0.1&quot;</span>  &lt;!-- &#x53EF;&#x9009;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F;<span class="string">&quot;localhost&quot;</span> --&gt;</div><div class="line">truetruepassword=<span class="string">&quot;abc&quot;</span>    &lt;!-- &#x53EF;&#x9009; --&gt;</div><div class="line">        port=<span class="string">&quot;6379&quot;</span>       &lt;!-- &#x53EF;&#x9009;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F; <span class="string">&quot;6379&quot;</span> --&gt;</div><div class="line">        database=<span class="string">&quot;0&quot;</span>      &lt;!-- &#x53EF;&#x9009;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F; <span class="string">&quot;0&quot;</span> --&gt; </div><div class="line">        maxInactiveInterval=<span class="string">&quot;60&quot;</span>/&gt;    &lt;!-- &#x53EF;&#x9009;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F; <span class="string">&quot;60&quot;</span> &#xFF08;&#x5355;&#x4F4D;&#xFF1A;&#x79D2;&#xFF09;--&gt; /&gt;</div><div class="line">&lt;/Context&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><code>&#x8FD9;&#x91CC;&#x63D0;&#x9192;&#x4E0B;&#xFF0C;&#x4E00;&#x5B9A;&#x8981;&#x6CE8;&#x610F;tomcat&#x7684;&#x7248;&#x672C;&#xFF0C;jdk&#x7684;&#x7248;&#x672C;&#xFF0C;&#x8981;&#x548C;&#x7F16;&#x8BD1;&#x7684;&#x914D;&#x7F6E;&#x586B;&#x7684;&#x7248;&#x672C;&#x4E00;&#x81F4;&#xFF0C;&#x5426;&#x5219;tomcat&#x53EF;&#x80FD;&#x4F1A;&#x62A5;&#x9519;</code><br>redis&#x5B89;&#x88C5;&#x542F;&#x52A8;&#x540E;&#xFF0C;tomcat&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x7F16;&#x8F91;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#xFF0C;&#x5219;&#x91CD;&#x65B0;&#x542F;&#x52A8;tomcat&#x5373;&#x53EF;</p>
+<p></p><h5 id="&#x9A8C;&#x8BC1;3">&#x9A8C;&#x8BC1;3</h5><br>&#x8BBF;&#x95EE;&#x7F51;&#x9875;&#x67E5;&#x770B; session id<br><img src="/uploads/tomcat4.png" class="blockquote-center"><br>&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#x6211;&#x4EEC;&#x7684; session id &#x4E3A; <code>764A35AC567302EDBA2AC05C4EACC7E7.Tomcat111</code><p></p>
+<p>&#x76F4;&#x63A5;&#x5230;&#x540E;&#x7AEF;redis &#x770B;&#x770B;&#x6B64;session&#x662F;&#x5426;&#x4FDD;&#x5B58;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">/usr/<span class="built_in">local</span>/redis-3.0.0/src/redis-cli</div><div class="line">127.0.0.1:6379&gt; get 764A35AC567302EDBA2AC05C4EACC7E7.Tomcat111</div><div class="line"><span class="string">&quot;\xac\xed\x00\x05sr\x00Dcom.orangefunction.tomcat.redissessions.SessionSerializationMetadataB\xd9\xd9\xf7v\xa2\xdbL\x03\x00\x01[\x00\x15sessionAttributesHasht\x00\x02[Bxpw\x14\x00\x00\x00\x10rG\x034\xbe\x9a&gt;F\xd2KN\xf2}\xdb\xde\x7fxsr\x00\x0ejava.lang.Long;\x8b\xe4\x90\xcc\x8f#\xdf\x02\x00\x01J\x00\x05valuexr\x00\x10java.lang.Number\x86\xac\x95\x1d\x0b\x94\xe0\x8b\x02\x00\x00xp\x00\x00\x01Y\xa5)\x96\xccsq\x00~\x00\x03\x00\x00\x01Y\xa5)\x96\xccsr\x00\x11java.lang.Integer\x12\xe2\xa0\xa4\xf7\x81\x878\x02\x00\x01I\x00\x05valuexq\x00~\x00\x04\x00\x00\a\bsr\x00\x11java.lang.Boolean\xcd r\x80\xd5\x9c\xfa\xee\x02\x00\x01Z\x00\x05valuexp\x01q\x00~\x00\nsq\x00~\x00\x03\x00\x00\x01Y\xa5)\x96\xd8t\x00*764A35AC567302EDBA2AC05C4EACC7E7.Tomcat111sq\x00~\x00\a\x00\x00\x00\x01t\x00\x0fchen-hao.com.cnq\x00~\x00\x0ew\b\x00\x00\x01Y\xa5)\x96\xcc&quot;</span></div></pre></td></tr></table></figure></p>
+<p>&#x7531;&#x6B64;&#x53EF;&#x89C1;&#xFF0C;session&#x5DF2;&#x7ECF;&#x4FDD;&#x5B58;&#x5728;redis&#x5F53;&#x4E2D;&#xFF0C;&#x8FD9;&#x91CC;&#x6682;&#x4E14;&#x6F14;&#x793A;&#x4E00;&#x53F0;&#xFF0C;&#x81F3;&#x4E8E;&#x591A;&#x53F0;&#xFF0C;&#x540C;&#x6837;&#x914D;&#x7F6E;&#x5373;&#x53EF;&#xFF0C;&#x518D;&#x52A0;&#x4E0A;&#x524D;&#x7AEF;nginx&#xFF0C;tomcat&#x7684;&#x96C6;&#x7FA4;&#x5C31;&#x53EF;&#x4EE5;&#x4E86;&#x3002;</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	
+	
+		<div>
+	  
+		﻿
+	  
+	</div>
+	
+		
+		<div>
+	   
+			<!-- 版权声明开始 -->
+		<b:if cond='data:blog.pageType == &quot;item&quot;'>
+		<div style='background-color: #F2F2F2; padding: 4px; margin: 6px; border:1px solid #000000;'>		           
+           <p>&nbsp &nbsp  本文标题 &nbsp : &nbsp <a href="/Tomcat-集群方案.html">Tomcat-集群方案</a></p>
+		   <p>&nbsp &nbsp      文章作者 &nbsp : &nbsp <a href="/" title="访问 火柴 的个人博客">火柴</a></p>
+           <p>&nbsp &nbsp      发布时间 &nbsp : &nbsp </span>2017年1月13日 - 13时01分</p>
+		   <p>&nbsp &nbsp      本文链接 &nbsp : &nbsp <a href="/Tomcat-集群方案.html" title="Tomcat-集群方案">http://www.chen-hao.com.cn/Tomcat-集群方案.html</a></p>
+           <p>&nbsp &nbsp      本文字数 &nbsp : &nbsp <span class="page-count">本文一共有2,318字</span></script></a></p>
+		   <p>&nbsp &nbsp      许可协议 &nbsp : &nbsp <i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" title="Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)">Attribution-NonCommercial 4.0</a></p>
+		   <p> &nbsp &nbsp  &copy 转载请保留以上信息，谢谢合作。</p>
+		</div>
+		</b:if>
+		<!-- 版权声明结束 -->		
+	  
+	  </div>
+	
+	    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Tomcat/" rel="tag">#Tomcat</a>
+          
+        </div>
+      
+	  
+
+	  
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/mongodb3-x-权限配置.html" rel="next" title="MongoDB3-x-权限配置">
+                <i class="fa fa-chevron-left"></i> MongoDB3-x-权限配置
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="Tomcat-集群方案.html"
+     data-title="Tomcat-集群方案"
+     data-content=""
+     data-url="http://www.chen-hao.com.cn/Tomcat-集群方案.html">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+
+  
+  
+  
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="Tomcat-集群方案.html"
+           data-title="Tomcat-集群方案" data-url="http://www.chen-hao.com.cn/Tomcat-集群方案.html">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+  
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/linux5.gif"
+               alt="火柴" />
+          <p class="site-author-name" itemprop="name">火柴</p>
+          <p class="site-description motion-element" itemprop="description">对自己要求高一点！</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">45</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+			﻿<a title="点击high一下哦^_^" rel="alternate" class="mw-harlem_shake_slow wobble shake" href='javascript:(function() {
+    function c() {
+        var e = document.createElement("link");
+        e.setAttribute("type", "text/css");
+        e.setAttribute("rel", "stylesheet");
+        e.setAttribute("href", f);
+        e.setAttribute("class", l);
+        document.body.appendChild(e)
+    }
+ 
+    function h() {
+        var e = document.getElementsByClassName(l);
+        for (var t = 0; t < e.length; t++) {
+            document.body.removeChild(e[t])
+        }
+    }
+ 
+    function p() {
+        var e = document.createElement("div");
+        e.setAttribute("class", a);
+        document.body.appendChild(e);
+        setTimeout(function() {
+            document.body.removeChild(e)
+        }, 100)
+    }
+ 
+    function d(e) {
+        return {
+            height : e.offsetHeight,
+            width : e.offsetWidth
+        }
+    }
+ 
+    function v(i) {
+        var s = d(i);
+        return s.height > e && s.height < n && s.width > t && s.width < r
+    }
+ 
+    function m(e) {
+        var t = e;
+        var n = 0;
+        while (!!t) {
+            n += t.offsetTop;
+            t = t.offsetParent
+        }
+        return n
+    }
+ 
+    function g() {
+        var e = document.documentElement;
+        if (!!window.innerWidth) {
+            return window.innerHeight
+        } else if (e && !isNaN(e.clientHeight)) {
+            return e.clientHeight
+        }
+        return 0
+    }
+ 
+    function y() {
+        if (window.pageYOffset) {
+            return window.pageYOffset
+        }
+        return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+    }
+ 
+    function E(e) {
+        var t = m(e);
+        return t >= w && t <= b + w
+    }
+ 
+    function S() {
+        var e = document.createElement("audio");
+        e.setAttribute("class", l);
+        e.src = i;
+        e.loop = false;
+        e.addEventListener("canplay", function() {
+            setTimeout(function() {
+                x(k)
+            }, 500);
+            setTimeout(function() {
+                N();
+                p();
+                for (var e = 0; e < O.length; e++) {
+                    T(O[e])
+                }
+            }, 15500)
+        }, true);
+        e.addEventListener("ended", function() {
+            N();
+            h()
+        }, true);
+        e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+        document.body.appendChild(e);
+        e.play()
+    }
+ 
+    function x(e) {
+        e.className += " " + s + " " + o
+    }
+ 
+    function T(e) {
+        e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+    }
+ 
+    function N() {
+        var e = document.getElementsByClassName(s);
+        var t = new RegExp("\\b" + s + "\\b");
+        for (var n = 0; n < e.length; ) {
+            e[n].className = e[n].className.replace(t, "")
+        }
+    }
+ 
+    var e = 30;
+    var t = 30;
+    var n = 350;
+    var r = 350;
+    var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+    var s = "mw-harlem_shake_me";
+    var o = "im_first";
+    var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+    var a = "mw-strobe_light";
+    var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+    var l = "mw_added_css";
+    var b = g();
+    var w = y();
+    var C = document.getElementsByTagName("*");
+    var k = null;
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            if (E(A)) {
+                k = A;
+                break
+            }
+        }
+    }
+    if (A === null) {
+        console.warn("Could not find a node of the right size. Please try a different page.");
+        return
+    }
+    c();
+    S();
+    var O = [];
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            O.push(A)
+        }
+    }
+})()'><i class="fa fa-music"></i> High</a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://wpa.qq.com/msgrd?V=1&uin=396303331&exe=qq&Site=qq&menu=yes" target="_blank" title="QQ">
+                  
+                    <i class="fa fa-fw fa-qq"></i>
+                  
+                  QQ
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:18201620971@163.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ch-ld/ch-ld.github.io" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.magedu.com/" title="马哥教育" target="_blank">马哥教育</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.fblinux.com/" title="师兄-王君康" target="_blank">师兄-王君康</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.sctux.com/" title="师兄-郭茂秋" target="_blank">师兄-郭茂秋</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://linsj.blog.51cto.com/" title="同学-林水晶" target="_blank">同学-林水晶</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://mrchen.org/" title="同学-陈晨" target="_blank">同学-陈晨</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://blog.whsir.com/" title="师弟-吴昊" target="_blank">师弟-吴昊</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.yuangg.com/" title="师弟-洋洋" target="_blank">师弟-洋洋</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#集群方案"><span class="nav-number">1.</span> <span class="nav-text">集群方案</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#session-stickey"><span class="nav-number">2.</span> <span class="nav-text">session stickey</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#nginx配置"><span class="nav-number">2.1.</span> <span class="nav-text">nginx配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#tomcat配置"><span class="nav-number">2.2.</span> <span class="nav-text">tomcat配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#验证1"><span class="nav-number">2.3.</span> <span class="nav-text">验证1</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#session-cluster"><span class="nav-number">3.</span> <span class="nav-text">session cluster</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#tomcat的配置"><span class="nav-number">3.1.</span> <span class="nav-text">tomcat的配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#验证2"><span class="nav-number">3.2.</span> <span class="nav-text">验证2</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#session-server"><span class="nav-number">4.</span> <span class="nav-text">session server</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#gradle配置"><span class="nav-number">4.1.</span> <span class="nav-text">gradle配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#编译tomcat-redis-session-manager"><span class="nav-number">4.2.</span> <span class="nav-text">编译tomcat-redis-session-manager</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#redis配置"><span class="nav-number">4.3.</span> <span class="nav-text">redis配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#验证3"><span class="nav-number">4.4.</span> <span class="nav-text">验证3</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+	  
+	  
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">火柴</span>
+</div>
+
+<div class="theme-info">
+	<span id="sitetime"></span>
+	<script language=javascript>
+	function siteTime(){
+	window.setTimeout("siteTime()", 1000);
+	var seconds = 1000
+	var minutes = seconds * 60
+	var hours = minutes * 60
+	var days = hours * 24
+	var years = days * 365
+
+	var today = new Date()
+	var todayYear = today.getFullYear()
+	var todayMonth = today.getMonth()
+	var todayDate = today.getDate()
+	var todayHour = today.getHours()
+	var todayMinute = today.getMinutes()
+	var todaySecond = today.getSeconds()
+
+	/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳) 
+	year - 作为date对象的年份，为4位年份值
+	month - 0-11之间的整数，做为date对象的月份
+	day - 1-31之间的整数，做为date对象的天数
+	hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+	minutes - 0-59之间的整数，做为date对象的分钟数
+	seconds - 0-59之间的整数，做为date对象的秒数
+	microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+	var t1 = Date.UTC(2015,10,14,11,19,00)
+	var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond)
+	var diff = t2-t1
+
+	var diffYears = Math.floor(diff/years)
+	var diffDays = Math.floor((diff/days)-diffYears*365)
+	var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours)
+	var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes)
+	var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds)
+	document.getElementById("sitetime").innerHTML=" 本站已运行"+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒"
+	}
+	siteTime()
+	</script>
+	
+  <div class="powered-by"></div>
+  <span class="post-count">共68.3k字</span>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">您是第<i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span>位访客</span>
+  
+
+  
+    <span class="site-pv">本站总点击<i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chenhao123"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("A8bl8bnNfRNjhOq3Dp7i5nF6-gzGzoHsz", "pnVmIflnOX5YpTT0rXBSBCXJ");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0+"°C");
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time+"°C");
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0+"°C");
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time')+"°C");
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time')+"°C");
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+  
+  
+<!-- 点击爱心效果 -->
+<script src="/js/love.js"></script>
+<!-- 背景动画 -->
+<!-- <script src="/js/particle.js"></script> -->
+
+
+</body>
+</html>
