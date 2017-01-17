@@ -1,3 +1,4 @@
+http://www.chen-hao.com.cn/解决故障的处理思路.html
 http://www.chen-hao.com.cn/Tomcat-集群方案.html
 http://www.chen-hao.com.cn/mongodb3-x-权限配置.html
 http://www.chen-hao.com.cn/MongoDB3-x-配置文件.html
@@ -7,4 +8,3 @@ http://www.chen-hao.com.cn/Codis3-1-集群安装部署.html
 http://www.chen-hao.com.cn/Linux系统初始化脚本.html
 http://www.chen-hao.com.cn/搭建项目管理系统-JIRA汉化破解版.html
 http://www.chen-hao.com.cn/搭建公司wiki系统-confluence-汉化破解版.html
-http://www.chen-hao.com.cn/利用logrotate服务切割日志.html
