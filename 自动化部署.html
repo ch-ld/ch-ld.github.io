@@ -104,22 +104,16 @@
 
 
 
-<meta name="description" content="&amp;#x672C;&amp;#x6587;&amp;#x4E3B;&amp;#x8981;&amp;#x8BB0;&amp;#x5F55;&amp;#x7EBF;&amp;#x4E0A;&amp;#x7684;&amp;#x81EA;&amp;#x52A8;&amp;#x5316;&amp;#x53D1;&amp;#x5E03;&amp;#x7684;&amp;#x6D41;&amp;#x7A0B;
-
-&amp;#x4EE3;&amp;#x7801;&amp;#x7BA1;&amp;#x7406;gitlab&amp;#x89C4;&amp;#x8303;&amp;#x676">
+<meta name="description" content="本文主要记录线上的自动化发布的流程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="自动化部署">
 <meta property="og:url" content="http://www.chen-hao.com.cn/自动化部署.html">
 <meta property="og:site_name" content="火柴的博客">
-<meta property="og:description" content="&amp;#x672C;&amp;#x6587;&amp;#x4E3B;&amp;#x8981;&amp;#x8BB0;&amp;#x5F55;&amp;#x7EBF;&amp;#x4E0A;&amp;#x7684;&amp;#x81EA;&amp;#x52A8;&amp;#x5316;&amp;#x53D1;&amp;#x5E03;&amp;#x7684;&amp;#x6D41;&amp;#x7A0B;
-
-&amp;#x4EE3;&amp;#x7801;&amp;#x7BA1;&amp;#x7406;gitlab&amp;#x89C4;&amp;#x8303;&amp;#x676">
-<meta property="og:updated_time" content="2017-06-01T08:51:41.581Z">
+<meta property="og:description" content="本文主要记录线上的自动化发布的流程">
+<meta property="og:updated_time" content="2017-06-01T08:55:17.318Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自动化部署">
-<meta name="twitter:description" content="&amp;#x672C;&amp;#x6587;&amp;#x4E3B;&amp;#x8981;&amp;#x8BB0;&amp;#x5F55;&amp;#x7EBF;&amp;#x4E0A;&amp;#x7684;&amp;#x81EA;&amp;#x52A8;&amp;#x5316;&amp;#x53D1;&amp;#x5E03;&amp;#x7684;&amp;#x6D41;&amp;#x7A0B;
-
-&amp;#x4EE3;&amp;#x7801;&amp;#x7BA1;&amp;#x7406;gitlab&amp;#x89C4;&amp;#x8303;&amp;#x676">
+<meta name="twitter:description" content="本文主要记录线上的自动化发布的流程">
 
 
 
@@ -411,9 +405,8 @@
       
 
       
-        <a id="more"></a>
-<blockquote>
-<p>&#x672C;&#x6587;&#x4E3B;&#x8981;&#x8BB0;&#x5F55;&#x7EBF;&#x4E0A;&#x7684;&#x81EA;&#x52A8;&#x5316;&#x53D1;&#x5E03;&#x7684;&#x6D41;&#x7A0B;</p>
+        <blockquote>
+<p>&#x672C;&#x6587;&#x4E3B;&#x8981;&#x8BB0;&#x5F55;&#x7EBF;&#x4E0A;&#x7684;&#x81EA;&#x52A8;&#x5316;&#x53D1;&#x5E03;&#x7684;&#x6D41;&#x7A0B;<br> <a id="more"></a></p>
 </blockquote>
 <p></p><h4 id="&#x4EE3;&#x7801;&#x7BA1;&#x7406;gitlab">&#x4EE3;&#x7801;&#x7BA1;&#x7406;gitlab</h4><br>&#x89C4;&#x8303;&#x6765;&#x8BF4;&#xFF0C;&#x4EFB;&#x4F55;&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x7684;&#x4EE3;&#x7801;&#xFF0C;&#x5FC5;&#x987B;&#x4E25;&#x683C;&#x4E0E; git &#x4ED3;&#x5E93;&#x4E00;&#x81F4;&#x3002;&#x5373;&#x4E00;&#x5207;&#x63D0;&#x4EA4;&#x5230; master&#x7684;&#x4EE3;&#x7801;&#xFF0C;&#x5FC5;&#x987B;&#x77ED;&#x65F6;&#x95F4;&#x5185;&#x4E0A;&#x7EBF;&#xFF0C;&#x53CD;&#x8FC7;&#x6765;&#xFF0C;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x5728;&#x8FD0;&#x884C;&#x7684;&#x4EE3;&#x7801;&#x4E00;&#x5B9A;&#x662F;&#x5728; git &#x4ED3;&#x5E93;&#x91CC;&#x7684;&#x3002;<br>&#x5408;&#x7406;&#x4F7F;&#x7528; git &#x5206;&#x652F;&#x3002;master &#x5206;&#x652F;&#x8868;&#x793A;&#x5F53;&#x524D;&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x5728;&#x4F7F;&#x7528;&#x7684;&#x4EE3;&#x7801;&#xFF0C;&#x4E0D;&#x662F;&#x8C01;&#x90FD;&#x53EF;&#x4EE5;&#x63D0;&#x4EA4;&#x7684;&#xFF0C;&#x5FC5;&#x987B;&#x662F;&#x6388;&#x6743;&#x4EBA;&#x5458;&#x624D;&#x80FD;&#x63D0;&#x4EA4;&#x4EE3;&#x7801;&#x5230; master&#x3002;&#x800C;&#x9879;&#x76EE;&#x4E2D;&#xFF0C;&#x6839;&#x636E;&#x4E0D;&#x540C;&#x7684;&#x5F00;&#x53D1;&#x5468;&#x671F;&#xFF0C;&#x8BBE;&#x5B9A;&#x591A;&#x4E2A; &#x5F00;&#x53D1;&#x7279;&#x6027; &#x5206;&#x652F;&#xFF0C;&#x4E00;&#x822C;&#x5F00;&#x53D1;&#x4EBA;&#x5458;&#x63D0;&#x4EA4;&#x4EE3;&#x7801;&#x5230;&#x5BF9;&#x5E94;&#x7684; &#x5F00;&#x53D1;&#x7279;&#x6027; &#x5206;&#x652F;&#x3002;<br>&#x6D4B;&#x8BD5;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x628A;&#x7279;&#x6027;&#x5206;&#x652F;&#x53D1;&#x5E03;&#x5230;&#x6D4B;&#x8BD5;&#x73AF;&#x5883;&#xFF0C;&#x6D4B;&#x8BD5;&#x4E0D;&#x901A;&#x8FC7;&#xFF0C;&#x7EE7;&#x7EED;&#x4FEE;&#x6539;&#x7279;&#x6027;&#x5206;&#x652F;&#x4EE3;&#x7801;&#x63D0;&#x4EA4;&#x91CD;&#x65B0;&#x53D1;&#x5E03;&#x5230;&#x6D4B;&#x8BD5;&#x73AF;&#x5883;&#x3002;&#x6D4B;&#x8BD5;&#x9A8C;&#x6536;&#x901A;&#x8FC7;&#xFF0C;merge &#x5230; master &#x5206;&#x652F;&#xFF0C;&#x518D;&#x628A; master &#x5206;&#x652F;&#x53D1;&#x5E03;&#x5230;&#x9884;&#x53D1;&#x5E03;&#x73AF;&#x5883;&#x6D4B;&#x8BD5;&#xFF0C;&#x9A8C;&#x6536;&#x901A;&#x8FC7;&#xFF0C;&#x5C06; master &#x5206;&#x652F;&#x53D1;&#x5E03;&#x5230;&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x3002;<p></p>
 <p>&#x76F8;&#x5173;&#x6587;&#x7AE0;&#xFF1A; <a href="http://chen-hao.com.cn/%E6%90%AD%E5%BB%BA%E5%86%85%E7%BD%91gitlab%E4%BB%93%E5%BA%93.html#more" target="_blank" rel="external">&#x642D;&#x5EFA;&#x5185;&#x7F51;gitlab&#x4ED3;&#x5E93;</a></p>
