@@ -1,0 +1,1242 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="基础语法," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="火柴的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Python 基础语法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常量变量-运算符-程序结构01">
+<meta property="og:url" content="http://www.chen-hao.com.cn/常量变量-运算符-程序结构01.html">
+<meta property="og:site_name" content="火柴的博客">
+<meta property="og:description" content="Python 基础语法">
+<meta property="og:updated_time" content="2017-06-05T03:07:23.326Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="常量变量-运算符-程序结构01">
+<meta name="twitter:description" content="Python 基础语法">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #000000; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #4682B4; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #00FFFF;    /*上边框颜色*/
+        border-left-color: #00FFFF;    /*左边框颜色*/
+    }
+  </style>
+
+
+
+  <link rel="canonical" href="http://www.chen-hao.com.cn/常量变量-运算符-程序结构01.html"/>
+
+
+
+  <title> 常量变量-运算符-程序结构01 | 火柴的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+	
+	
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	
+	<a href="https://github.com/ch-ld/ch-ld.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
+	
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">火柴的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+
+<nav class="site-nav" id="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comments"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-cywz">
+          <a href="/cywz" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-globe"></i> <br />
+            
+            常用网站
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                常量变量-运算符-程序结构01
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+		
+			
+			  <span class="post-letters-count">
+				&nbsp; | &nbsp;
+				<span>508 字</span>
+				&nbsp; | &nbsp;
+				<span>2 min</span>
+			  </span>
+			
+			
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-06-05T10:30:36+08:00" content="2017-06-05">
+              2017-06-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/python学习/" itemprop="url" rel="index">
+                    <span itemprop="name">python学习</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/常量变量-运算符-程序结构01.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="常量变量-运算符-程序结构01.html" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/常量变量-运算符-程序结构01.html" class="leancloud_visitors" data-flag-title="常量变量-运算符-程序结构01">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">热度 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>Python &#x57FA;&#x7840;&#x8BED;&#x6CD5;<br><a id="more"></a></p>
+</blockquote>
+<h4 id="&#x5E38;&#x91CF;&#x53D8;&#x91CF;">&#x5E38;&#x91CF;/&#x53D8;&#x91CF;</h4>
+
+<ul>
+<li>&#x5E38;&#x91CF;&#xFF1A;&#x4E00;&#x65E6;&#x8D4B;&#x503C;&#xFF0C;&#x5C31;&#x4E0D;&#x80FD;&#x518D;&#x6539;&#x53D8;&#x5979;&#x7684;&#x503C;&#x3002;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#x4E0D;&#x80FD;&#x5BF9;&#x4ED6;&#x8FDB;&#x884C;&#x91CD;&#x65B0;&#x8D4B;&#x503C;</li>
+<li>&#x5B57;&#x9762;&#x5E38;&#x91CF;&#xFF1A;&#x4E00;&#x4E2A;&#x5355;&#x72EC;&#x51FA;&#x73B0;&#x7684;&#x91CF;&#xFF0C;&#x672A;&#x8D4B;&#x503C;&#x7ED9;&#x4EFB;&#x4F55;&#x7684;&#x5E38;&#x91CF;&#x6216;&#x8005;&#x53D8;&#x91CF;&#x3002;</li>
+<li>&#x53D8;&#x91CF;&#xFF1A;&#x662F;&#x4E00;&#x4E2A;&#x540D;&#x5B57;&#xFF0C;&#x5728;&#x8D4B;&#x503C;&#x7B26;&#x53F7;&#x7684;&#x5DE6;&#x8FB9;&#xFF0C;&#x8FD9;&#x4E2A;&#x540D;&#x5B57;&#x53EF;&#x4EE5;&#x6307;&#x4EE3;&#x8D4B;&#x503C;&#x7B26;&#x53F7;&#x53F3;&#x8FB9;&#x7684;&#x5185;&#x5BB9;&#x3002;</li>
+<li><strong>python&#x4E0D;&#x5B58;&#x5728;&#x5E38;&#x91CF;</strong></li>
+</ul>
+<h4 id="&#x7C7B;&#x578B;&#x7CFB;&#x7EDF;">&#x7C7B;&#x578B;&#x7CFB;&#x7EDF;</h4>
+
+<ul>
+<li>python &#x662F;&#x5F3A;&#x7C7B;&#x578B;&#x8BED;&#x8A00; &#x2014;&gt; &#x5F31;&#x7C7B;&#x578B;</li>
+<li>python &#x662F;&#x52A8;&#x6001;&#x8BED;&#x8A00; &#x2014;&gt; &#x9759;&#x6001;&#x8BED;&#x8A00;</li>
+<li>&#x5F3A;&#x7C7B;&#x578B;&#xFF1A;&#x4E0D;&#x540C;&#x7C7B;&#x578B;&#x4E4B;&#x95F4;&#xFF0C;&#x4E0D;&#x80FD;&#x76F8;&#x4E92;&#x8BA1;&#x7B97;&#xFF0C;&#x8FD0;&#x7B97;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x505A;&#x7C7B;&#x578B;&#x8F6C;&#x6362;</li>
+<li>&#x52A8;&#x6001;&#x8BED;&#x8A00;&#xFF1A;&#x53D8;&#x91CF;&#x53EF;&#x4EE5;&#x91CD;&#x65B0;&#x8D4B;&#x503C;&#x4E3A;&#x5176;&#x4ED6;&#x7C7B;&#x578B;</li>
+<li><strong>&#x8D4B;&#x503C;&#x5373;&#x5B9A;&#x4E49;</strong></li>
+</ul>
+<h4 id="&#x57FA;&#x672C;&#x7C7B;&#x578B;">&#x57FA;&#x672C;&#x7C7B;&#x578B;</h4>
+
+<ul>
+<li>int&#xFF08;&#x6574;&#x6570;&#xFF09;&#x3001;float&#xFF08;&#x6D6E;&#x70B9;&#xFF09;&#x3001;bool&#xFF08;&#x5E03;&#x5C14;&#xFF09;&#x3001;str&#xFF08;&#x5B57;&#x7B26;&#x4E32;&#xFF09;&#x3001;None</li>
+<li>python2&#x4E2D;&#x533A;&#x5206;&#x6574;&#x5F62;&#x548C;&#x957F;&#x6574;&#x578B;&#xFF0C;python3&#x4E0D;&#x533A;&#x5206;</li>
+<li>&#x6D6E;&#x70B9;&#x6570;&#x5B58;&#x5728;&#x635F;&#x5931;&#x7CBE;&#x5EA6;&#x7684;&#x60C5;&#x51B5;</li>
+</ul>
+<h4 id="&#x8FD0;&#x7B97;&#x7B26;&#x53F7;">&#x8FD0;&#x7B97;&#x7B26;&#x53F7;</h4>
+
+<ul>
+<li>+&#x3001;-&#x3001;<em>&#x3001;/&#x3001;//&#x3001;*</em> &#x3001;%</li>
+<li><strong> : &#x6C42;&#x5E42;&#xFF0C;2 </strong> 3&#xFF0C;2&#x7684;3&#x6B21;&#x5E42;</li>
+<li>% :&#x3000;&#x53D6;&#x6A21;&#xFF0C;&#xFF12; % &#xFF13;&#xFF0C;&#x4F59;&#xFF12;</li>
+<li><strong>python3 &#x662F;&#x81EA;&#x7136;&#x9664;&#xFF0C;python2&#x662F;&#x6574;&#x9664;</strong></li>
+</ul>
+<h4 id="&#x6BD4;&#x8F83;&#x8FD0;&#x7B97;&#x7B26;">&#x6BD4;&#x8F83;&#x8FD0;&#x7B97;&#x7B26;</h4>
+
+<ul>
+<li>&gt;,&lt;,==,!=,&gt;=,&lt;=</li>
+<li>&#x6BD4;&#x8F83;&#x8FD0;&#x7B97;&#x7B26;&#x7684;&#x8FD4;&#x56DE;&#x503C;&#xFF1A;bool&#x7C7B;&#x578B;</li>
+</ul>
+<h4 id="&#x903B;&#x8F91;&#x8FD0;&#x7B97;&#x7B26;">&#x903B;&#x8F91;&#x8FD0;&#x7B97;&#x7B26;</h4>
+
+<ul>
+<li>and&#xFF0C;or&#xFF0C;not</li>
+<li>False and &#x4E00;&#x5207;&#x90FD;&#x662F;False</li>
+<li>True or &#x4E00;&#x5207;&#x90FD;&#x662F;True</li>
+</ul>
+<h4 id="&#x6210;&#x5458;&#x8FD0;&#x7B97;&#x7B26;">&#x6210;&#x5458;&#x8FD0;&#x7B97;&#x7B26;</h4>
+
+<ul>
+<li>in&#x3001; not in </li>
+</ul>
+<h4 id="&#x8EAB;&#x4EFD;&#x8FD0;&#x7B97;&#x7B26;">&#x8EAB;&#x4EFD;&#x8FD0;&#x7B97;&#x7B26;</h4>
+
+<ul>
+<li>is&#x3001; in not</li>
+</ul>
+<h4 id="&#x4F4D;&#x8FD0;&#x7B97;&#x7B26;">&#x4F4D;&#x8FD0;&#x7B97;&#x7B26;</h4>
+
+<ul>
+<li>&lt;&lt;&#x3001; &gt;&gt;&#x3001; &amp;&#x3001; |&#x3001; ^</li>
+</ul>
+<h4 id="&#x8D4B;&#x503C;&#x8FD0;&#x7B97;&#x7B26;">&#x8D4B;&#x503C;&#x8FD0;&#x7B97;&#x7B26;</h4>
+
+<ul>
+<li>i +=3</li>
+<li>i *=3</li>
+</ul>
+<p></p><h4 id="&#x7A0B;&#x5E8F;&#x7ED3;&#x6784;">&#x7A0B;&#x5E8F;&#x7ED3;&#x6784;</h4><p></p>
+<p></p><h5 id="&#x987A;&#x5E8F;&#x6267;&#x884C;">&#x987A;&#x5E8F;&#x6267;&#x884C;</h5><br>&#x793A;&#x4F8B;&#xFF1A;<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">i = <span class="number">3</span></div><div class="line">print(i)</div><div class="line">i += <span class="number">5</span></div><div class="line">print(i)</div></pre></td></tr></table></figure><p></p>
+<p></p><h5 id="&#x5206;&#x652F;&#x7ED3;&#x6784;">&#x5206;&#x652F;&#x7ED3;&#x6784;</h5><p></p>
+<p></p><h6 id="&#x5355;&#x5206;&#x652F;">&#x5355;&#x5206;&#x652F;</h6><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#x5F00;&#x59CB;</div><div class="line">    <span class="keyword">if</span> &#x6761;&#x4EF6;:</div><div class="line">         &#x64CD;&#x4F5C;</div><div class="line">&#x7ED3;&#x675F;</div></pre></td></tr></table></figure><p></p>
+<p></p><h6 id="&#x53CC;&#x5206;&#x652F;">&#x53CC;&#x5206;&#x652F;</h6><p></p>
+<ul>
+<li>&#x53CC;&#x5206;&#x652F;&#x89E3;&#x6784;&#x6C38;&#x8FDC;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x6761;&#x4EF6;&#x4F1A;&#x88AB;&#x6267;&#x884C;</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#x5F00;&#x59CB;</div><div class="line">     <span class="keyword">if</span> &#x6761;&#x4EF6;<span class="number">1</span>:</div><div class="line">         &#x64CD;&#x4F5C;<span class="number">1</span></div><div class="line">     <span class="keyword">elif</span> &#x6761;&#x4EF6;<span class="number">2</span>&#xFF1A;</div><div class="line">         &#x64CD;&#x4F5C;<span class="number">2</span></div><div class="line">     ......</div><div class="line">     <span class="keyword">else</span>:</div><div class="line">         &#x64CD;&#x4F5C;<span class="number">3</span></div><div class="line">&#x7ED3;&#x675F;</div></pre></td></tr></table></figure>
+<p></p><h5 id="&#x5FAA;&#x73AF;&#x7ED3;&#x6784;">&#x5FAA;&#x73AF;&#x7ED3;&#x6784;</h5><p></p>
+<p></p><h6 id="while&#x5FAA;&#x73AF;">while&#x5FAA;&#x73AF;</h6><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#x5F00;&#x59CB;</div><div class="line">    <span class="keyword">while</span> &#x6761;&#x4EF6;:</div><div class="line">         &#x64CD;&#x4F5C; </div><div class="line">&#x7ED3;&#x675F;</div></pre></td></tr></table></figure><p></p>
+<p></p><h6 id="for-&#x5FAA;&#x73AF;">for &#x5FAA;&#x73AF;</h6><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#x5F00;&#x59CB;</div><div class="line">     <span class="keyword">for</span> &#x5143;&#x7D20; <span class="keyword">in</span> &#x53EF;&#x8FED;&#x4EE3;&#x5BF9;&#x8C61;&#xFF1B;</div><div class="line">         &#x64CD;&#x4F5C;<span class="number">1</span></div><div class="line">     <span class="keyword">else</span>:</div><div class="line">         &#x64CD;&#x4F5C;<span class="number">2</span> </div><div class="line"><span class="comment"># &#x5F53;&#x5FAA;&#x73AF;&#x6CA1;&#x6709;&#x63D0;&#x524D;&#x9000;&#x51FA;&#x65F6;&#xFF0C;&#x4F1A;&#x6267;&#x884C;else&#x5B50;&#x53E5;		 </span></div><div class="line">&#x7ED3;&#x675F;</div></pre></td></tr></table></figure><p></p>
+<ul>
+<li>for&#x5FAA;&#x73AF;&#x4E2D;&#xFF0C;break&#x4EE3;&#x8868;&#x9000;&#x51FA;&#xFF0C;&#x4E0D;&#x6267;&#x884C;&#x540E;&#x9762;&#x7684;&#x6240;&#x6709;&#x8BED;&#x53E5;</li>
+<li>for&#x5FAA;&#x73AF;&#x4E2D;&#xFF0C;continue&#x4EE3;&#x8868;&#x8DF3;&#x8FC7;&#x5F53;&#x524D;&#x4EE3;&#x7801;&#x7684;&#x4EE5;&#x4E0B;&#x4EE3;&#x7801;&#xFF0C;&#x76F4;&#x63A5;&#x8FDB;&#x884C;&#x4E0B;&#x4E00;&#x6B21;&#x5FAA;&#x73AF;</li>
+<li>&#x65E0;&#x8BBA;&#x662F;break&#x8FD8;&#x662F;continue&#xFF0C;&#x90FD;&#x662F;&#x9488;&#x5BF9;&#x6700;&#x8FD1;&#x7684;&#x4E00;&#x4E2A;for&#x5FAA;&#x73AF;&#x4F53;</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	
+	
+		<div>
+	  
+		﻿
+	  
+	</div>
+	
+		
+		<div>
+	   
+			<!-- 版权声明开始 -->
+		<b:if cond='data:blog.pageType == &quot;item&quot;'>
+		<div style='background-color: #F2F2F2; padding: 4px; margin: 6px; border:1px solid #000000;'>		           
+           <p>&nbsp &nbsp  本文标题 &nbsp : &nbsp <a href="/常量变量-运算符-程序结构01.html">常量变量-运算符-程序结构01</a></p>
+		   <p>&nbsp &nbsp      文章作者 &nbsp : &nbsp <a href="/" title="访问 火柴 的个人博客">火柴</a></p>
+           <p>&nbsp &nbsp      发布时间 &nbsp : &nbsp </span>2017年6月5日 - 10时06分</p>
+		   <p>&nbsp &nbsp      本文链接 &nbsp : &nbsp <a href="/常量变量-运算符-程序结构01.html" title="常量变量-运算符-程序结构01">http://www.chen-hao.com.cn/常量变量-运算符-程序结构01.html</a></p>
+           <p>&nbsp &nbsp      本文字数 &nbsp : &nbsp <span class="page-count">本文一共有508字</span></script></a></p>
+		   <p>&nbsp &nbsp      许可协议 &nbsp : &nbsp <i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" title="Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)">Attribution-NonCommercial 4.0</a></p>
+		   <p> &nbsp &nbsp  &copy 转载请保留以上信息，谢谢合作。</p>
+		</div>
+		</b:if>
+		<!-- 版权声明结束 -->		
+	  
+	  </div>
+	
+	    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/基础语法/" rel="tag">#基础语法</a>
+          
+        </div>
+      
+	  
+
+	  
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/jenkins部署及构建方式.html" rel="next" title="jenkins部署及构建方式">
+                <i class="fa fa-chevron-left"></i> jenkins部署及构建方式
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/字符串及其操作02.html" rel="prev" title="字符串及其操作02">
+                字符串及其操作02 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+
+  </article>
+
+
+
+    <div class="post-spread">
+      
+
+  
+  
+  
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="常量变量-运算符-程序结构01.html"
+           data-title="常量变量-运算符-程序结构01" data-url="http://www.chen-hao.com.cn/常量变量-运算符-程序结构01.html">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+  
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/linux5.gif"
+               alt="火柴" />
+          <p class="site-author-name" itemprop="name">火柴</p>
+          <p class="site-description motion-element" itemprop="description">对自己要求高一点！！！</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">52</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+			﻿<a title="点击high一下哦^_^" rel="alternate" class="mw-harlem_shake_slow wobble shake" href='javascript:(function() {
+    function c() {
+        var e = document.createElement("link");
+        e.setAttribute("type", "text/css");
+        e.setAttribute("rel", "stylesheet");
+        e.setAttribute("href", f);
+        e.setAttribute("class", l);
+        document.body.appendChild(e)
+    }
+ 
+    function h() {
+        var e = document.getElementsByClassName(l);
+        for (var t = 0; t < e.length; t++) {
+            document.body.removeChild(e[t])
+        }
+    }
+ 
+    function p() {
+        var e = document.createElement("div");
+        e.setAttribute("class", a);
+        document.body.appendChild(e);
+        setTimeout(function() {
+            document.body.removeChild(e)
+        }, 100)
+    }
+ 
+    function d(e) {
+        return {
+            height : e.offsetHeight,
+            width : e.offsetWidth
+        }
+    }
+ 
+    function v(i) {
+        var s = d(i);
+        return s.height > e && s.height < n && s.width > t && s.width < r
+    }
+ 
+    function m(e) {
+        var t = e;
+        var n = 0;
+        while (!!t) {
+            n += t.offsetTop;
+            t = t.offsetParent
+        }
+        return n
+    }
+ 
+    function g() {
+        var e = document.documentElement;
+        if (!!window.innerWidth) {
+            return window.innerHeight
+        } else if (e && !isNaN(e.clientHeight)) {
+            return e.clientHeight
+        }
+        return 0
+    }
+ 
+    function y() {
+        if (window.pageYOffset) {
+            return window.pageYOffset
+        }
+        return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+    }
+ 
+    function E(e) {
+        var t = m(e);
+        return t >= w && t <= b + w
+    }
+ 
+    function S() {
+        var e = document.createElement("audio");
+        e.setAttribute("class", l);
+        e.src = i;
+        e.loop = false;
+        e.addEventListener("canplay", function() {
+            setTimeout(function() {
+                x(k)
+            }, 500);
+            setTimeout(function() {
+                N();
+                p();
+                for (var e = 0; e < O.length; e++) {
+                    T(O[e])
+                }
+            }, 15500)
+        }, true);
+        e.addEventListener("ended", function() {
+            N();
+            h()
+        }, true);
+        e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+        document.body.appendChild(e);
+        e.play()
+    }
+ 
+    function x(e) {
+        e.className += " " + s + " " + o
+    }
+ 
+    function T(e) {
+        e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+    }
+ 
+    function N() {
+        var e = document.getElementsByClassName(s);
+        var t = new RegExp("\\b" + s + "\\b");
+        for (var n = 0; n < e.length; ) {
+            e[n].className = e[n].className.replace(t, "")
+        }
+    }
+ 
+    var e = 30;
+    var t = 30;
+    var n = 350;
+    var r = 350;
+    var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+    var s = "mw-harlem_shake_me";
+    var o = "im_first";
+    var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+    var a = "mw-strobe_light";
+    var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+    var l = "mw_added_css";
+    var b = g();
+    var w = y();
+    var C = document.getElementsByTagName("*");
+    var k = null;
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            if (E(A)) {
+                k = A;
+                break
+            }
+        }
+    }
+    if (A === null) {
+        console.warn("Could not find a node of the right size. Please try a different page.");
+        return
+    }
+    c();
+    S();
+    var O = [];
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            O.push(A)
+        }
+    }
+})()'><i class="fa fa-music"></i> High</a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://wpa.qq.com/msgrd?V=1&uin=396303331&exe=qq&Site=qq&menu=yes" target="_blank" title="QQ">
+                  
+                    <i class="fa fa-fw fa-qq"></i>
+                  
+                  QQ
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:18201620971@163.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ch-ld/ch-ld.github.io" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.magedu.com/" title="马哥教育" target="_blank">马哥教育</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.fblinux.com/" title="师兄-王君康" target="_blank">师兄-王君康</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.sctux.com/" title="师兄-郭茂秋" target="_blank">师兄-郭茂秋</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://linsj.blog.51cto.com/" title="同学-林水晶" target="_blank">同学-林水晶</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://mrchen.org/" title="同学-陈晨" target="_blank">同学-陈晨</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://blog.whsir.com/" title="师弟-吴昊" target="_blank">师弟-吴昊</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.yuangg.com/" title="师弟-洋洋" target="_blank">师弟-洋洋</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#常量变量"><span class="nav-number">1.</span> <span class="nav-text">常量/变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类型系统"><span class="nav-number">2.</span> <span class="nav-text">类型系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基本类型"><span class="nav-number">3.</span> <span class="nav-text">基本类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运算符号"><span class="nav-number">4.</span> <span class="nav-text">运算符号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#比较运算符"><span class="nav-number">5.</span> <span class="nav-text">比较运算符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#逻辑运算符"><span class="nav-number">6.</span> <span class="nav-text">逻辑运算符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#成员运算符"><span class="nav-number">7.</span> <span class="nav-text">成员运算符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#身份运算符"><span class="nav-number">8.</span> <span class="nav-text">身份运算符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#位运算符"><span class="nav-number">9.</span> <span class="nav-text">位运算符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#赋值运算符"><span class="nav-number">10.</span> <span class="nav-text">赋值运算符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#程序结构"><span class="nav-number">11.</span> <span class="nav-text">程序结构</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#顺序执行"><span class="nav-number">11.1.</span> <span class="nav-text">顺序执行</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#分支结构"><span class="nav-number">11.2.</span> <span class="nav-text">分支结构</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#单分支"><span class="nav-number">11.2.1.</span> <span class="nav-text">单分支</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#双分支"><span class="nav-number">11.2.2.</span> <span class="nav-text">双分支</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#循环结构"><span class="nav-number">11.3.</span> <span class="nav-text">循环结构</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#while循环"><span class="nav-number">11.3.1.</span> <span class="nav-text">while循环</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#for-循环"><span class="nav-number">11.3.2.</span> <span class="nav-text">for 循环</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+	  
+	  
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">火柴</span>
+</div>
+
+<div class="theme-info">
+	<span id="sitetime"></span>
+	<script language=javascript>
+	function siteTime(){
+	window.setTimeout("siteTime()", 1000);
+	var seconds = 1000
+	var minutes = seconds * 60
+	var hours = minutes * 60
+	var days = hours * 24
+	var years = days * 365
+
+	var today = new Date()
+	var todayYear = today.getFullYear()
+	var todayMonth = today.getMonth()
+	var todayDate = today.getDate()
+	var todayHour = today.getHours()
+	var todayMinute = today.getMinutes()
+	var todaySecond = today.getSeconds()
+
+	/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳) 
+	year - 作为date对象的年份，为4位年份值
+	month - 0-11之间的整数，做为date对象的月份
+	day - 1-31之间的整数，做为date对象的天数
+	hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+	minutes - 0-59之间的整数，做为date对象的分钟数
+	seconds - 0-59之间的整数，做为date对象的秒数
+	microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+	var t1 = Date.UTC(2015,10,14,11,19,00)
+	var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond)
+	var diff = t2-t1
+
+	var diffYears = Math.floor(diff/years)
+	var diffDays = Math.floor((diff/days)-diffYears*365)
+	var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours)
+	var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes)
+	var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds)
+	document.getElementById("sitetime").innerHTML=" 本站已运行"+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒"
+	}
+	siteTime()
+	</script>
+	
+  <div class="powered-by"></div>
+  <span class="post-count">共75.6k字</span>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">您是第<i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span>位访客</span>
+  
+
+  
+    <span class="site-pv">本站总点击<i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chenhao123"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("A8bl8bnNfRNjhOq3Dp7i5nF6-gzGzoHsz", "pnVmIflnOX5YpTT0rXBSBCXJ");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0+"°C");
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time+"°C");
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0+"°C");
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time')+"°C");
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time')+"°C");
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+  
+  
+<!-- 点击爱心效果 -->
+<script src="/js/love.js"></script>
+<!-- 背景动画 -->
+<!-- <script src="/js/particle.js"></script> -->
+
+
+</body>
+</html>
