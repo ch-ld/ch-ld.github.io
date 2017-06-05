@@ -86,7 +86,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="ansible," />
 
 
 
@@ -104,16 +104,16 @@
 
 
 
-<meta name="description" content="对自己要求高一点！！！">
+<meta name="description" content="在中小企业如果需要实现代码的自动化部署，99%以上公司不会开发什么自动化部署回滚平台的，这个时候就需要运维人员通过shell+ansible+jenkins来自动化部署我们的服务器了。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ansible部署脚本">
 <meta property="og:url" content="http://www.chen-hao.com.cn/ansible部署脚本.html">
 <meta property="og:site_name" content="火柴的博客">
-<meta property="og:description" content="对自己要求高一点！！！">
-<meta property="og:updated_time" content="2017-06-05T07:49:23.505Z">
+<meta property="og:description" content="在中小企业如果需要实现代码的自动化部署，99%以上公司不会开发什么自动化部署回滚平台的，这个时候就需要运维人员通过shell+ansible+jenkins来自动化部署我们的服务器了。">
+<meta property="og:updated_time" content="2017-06-05T08:46:28.080Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ansible部署脚本">
-<meta name="twitter:description" content="对自己要求高一点！！！">
+<meta name="twitter:description" content="在中小企业如果需要实现代码的自动化部署，99%以上公司不会开发什么自动化部署回滚平台的，这个时候就需要运维人员通过shell+ansible+jenkins来自动化部署我们的服务器了。">
 
 
 
@@ -331,9 +331,9 @@
 			
 			  <span class="post-letters-count">
 				&nbsp; | &nbsp;
-				<span>0 字</span>
+				<span>292 字</span>
 				&nbsp; | &nbsp;
-				<span>0 min</span>
+				<span>1 min</span>
 			  </span>
 			
 			
@@ -347,6 +347,25 @@
             </time>
           </span>
 
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/自动化/" itemprop="url" rel="index">
+                    <span itemprop="name">自动化</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
           
 
           
@@ -386,7 +405,15 @@
       
 
       
-        
+        <blockquote>
+<p>&#x3000;&#x5728;&#x4E2D;&#x5C0F;&#x4F01;&#x4E1A;&#x5982;&#x679C;&#x9700;&#x8981;&#x5B9E;&#x73B0;&#x4EE3;&#x7801;&#x7684;&#x81EA;&#x52A8;&#x5316;&#x90E8;&#x7F72;&#xFF0C;99%&#x4EE5;&#x4E0A;&#x516C;&#x53F8;&#x4E0D;&#x4F1A;&#x5F00;&#x53D1;&#x4EC0;&#x4E48;&#x81EA;&#x52A8;&#x5316;&#x90E8;&#x7F72;&#x56DE;&#x6EDA;&#x5E73;&#x53F0;&#x7684;&#xFF0C;&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#x5C31;&#x9700;&#x8981;&#x8FD0;&#x7EF4;&#x4EBA;&#x5458;&#x901A;&#x8FC7;shell+ansible+jenkins&#x6765;&#x81EA;&#x52A8;&#x5316;&#x90E8;&#x7F72;&#x6211;&#x4EEC;&#x7684;&#x670D;&#x52A1;&#x5668;&#x4E86;&#x3002;<br><a id="more"></a></p>
+</blockquote>
+<p>&#x56E0;&#x4E3A;&#x6D89;&#x53CA;&#x5230;&#x7EBF;&#x4E0A;&#x4E1A;&#x52A1;&#xFF0C;&#x8FD9;&#x91CC;&#x53EA;&#x6F14;&#x793A;&#x90E8;&#x7F72;&#x4E00;&#x4E2A;war&#x5305;&#x7684;&#x5177;&#x4F53;&#x64CD;&#x4F5C;&#x548C;&#x811A;&#x672C;&#x3002;</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">vim deploy.sh</div><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"><span class="comment"># &#x7528;&#x4E8E;jenkins&#x81EA;&#x52A8;&#x5316;&#x53D1;&#x5E03;</span></div><div class="line"></div><div class="line"><span class="built_in">source</span> /etc/profile</div><div class="line"><span class="built_in">source</span> /etc/bashrc</div><div class="line"><span class="built_in">source</span> /etc/profile.d/*.sh</div><div class="line">datestamp=`date +%Y-%m-%d-%H:%M:%S`</div><div class="line"><span class="built_in">cd</span> /mnt/resource/data/deploy</div><div class="line"></div><div class="line"><span class="function"><span class="title">deploy_tomcat</span></span>(){</div><div class="line">        cp -r /var/lib/jenkins/workspace/<span class="built_in">test</span>/target/*.war playbooks/config/tomcat_<span class="built_in">test</span>/war/tomcat_test.war</div><div class="line">        ansible-playbook -i hosts playbooks/tomcat_test.yml <span class="_">-e</span> <span class="string">&quot;<span class="variable">$(python var.py tomcat_test)</span>&quot;</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">case</span> <span class="string">&quot;<span class="variable">$1</span>&quot;</span> <span class="keyword">in</span></div><div class="line">        <span class="string">&quot;tomcat&quot;</span>)</div><div class="line">                deploy_tomcat;</div><div class="line">        ;;</div><div class="line"></div><div class="line">        *)</div><div class="line">                <span class="built_in">echo</span> <span class="string">&quot;error,please use nginx|tomcat|php&quot;</span>;</div><div class="line">        ;;</div><div class="line"><span class="keyword">esac</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">vim var.py</div><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="keyword">import</span> json</div><div class="line"><span class="comment"># &#x8FD9;&#x91CC;&#x5199;&#x7684;&#x4E00;&#x4E2A;&#x5C0F;&#x7684;python&#x811A;&#x672C;&#x7528;&#x4E8E;&#x7ED9;ansible&#x7528;&#x6237;&#x4F20;&#x53C2;</span></div><div class="line"></div><div class="line"><span class="keyword">with</span> open(<span class="string">&apos;var.json&apos;</span>) <span class="keyword">as</span> data_file:</div><div class="line">    var_json = json.load(data_file)</div><div class="line"></div><div class="line"><span class="comment">#with open(&apos;share.json&apos;) as data_file:</span></div><div class="line"><span class="comment">#    share_json = json.load(data_file)</span></div><div class="line"></div><div class="line">sys.stdout.write(json.dumps(dict((var_json[sys.argv[<span class="number">1</span>]].items()))))</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">vim var.json</div><div class="line">{</div><div class="line">        <span class="string">&quot;tomcat_test&quot;</span>: {</div><div class="line">                <span class="string">&quot;app&quot;</span>: <span class="string">&quot;tomcat_test&quot;</span>,</div><div class="line">                <span class="string">&quot;context_path&quot;</span>: <span class="string">&quot;tomcat_test&quot;</span>,</div><div class="line">                <span class="string">&quot;http_port&quot;</span> : <span class="string">&quot;8092&quot;</span>,</div><div class="line">                <span class="string">&quot;https_port&quot;</span>: <span class="string">&quot;8099&quot;</span>,</div><div class="line">                <span class="string">&quot;admin_username&quot;</span>: <span class="string">&quot;admin&quot;</span>,</div><div class="line">                <span class="string">&quot;admin_password&quot;</span>: <span class="string">&quot;admin&quot;</span>,</div><div class="line">                <span class="string">&quot;templates&quot;</span>: [</div><div class="line">                        {</div><div class="line">                        <span class="string">&quot;source&quot;</span>: <span class="string">&quot;tomcat_test/template/log4j.properties&quot;</span>,</div><div class="line">                        <span class="string">&quot;target&quot;</span>: <span class="string">&quot;tomcat_test/WEB-INF/classes/log4j.properties&quot;</span></div><div class="line">                        }</div><div class="line">                ]</div><div class="line">        }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x7531;&#x4E8E;&#x6587;&#x4EF6;&#x592A;&#x591A;&#xFF0C;&#x8FD9;&#x91CC;&#x5C31;&#x5728;&#x7F51;&#x76D8;&#x91CC;&#x5171;&#x4EAB;&#x4E86;&#xFF0C;&#x8BE6;&#x7EC6;&#x64CD;&#x4F5C;&#x53EF;&#x4EE5;&#x548C;&#x6211;&#x6C9F;&#x901A;&#x3002;<br>&#x94FE;&#x63A5;&#xFF1A;<a href="http://pan.baidu.com/s/1miSIC1U" target="_blank" rel="external">http://pan.baidu.com/s/1miSIC1U</a> &#x5BC6;&#x7801;&#xFF1A;ynqv</p>
+
       
     </div>
 
@@ -421,7 +448,7 @@
 		   <p>&nbsp &nbsp      文章作者 &nbsp : &nbsp <a href="/" title="访问 火柴 的个人博客">火柴</a></p>
            <p>&nbsp &nbsp      发布时间 &nbsp : &nbsp </span>2017年6月5日 - 15时06分</p>
 		   <p>&nbsp &nbsp      本文链接 &nbsp : &nbsp <a href="/ansible部署脚本.html" title="ansible部署脚本">http://www.chen-hao.com.cn/ansible部署脚本.html</a></p>
-           <p>&nbsp &nbsp      本文字数 &nbsp : &nbsp <span class="page-count">本文一共有0字</span></script></a></p>
+           <p>&nbsp &nbsp      本文字数 &nbsp : &nbsp <span class="page-count">本文一共有292字</span></script></a></p>
 		   <p>&nbsp &nbsp      许可协议 &nbsp : &nbsp <i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" title="Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)">Attribution-NonCommercial 4.0</a></p>
 		   <p> &nbsp &nbsp  &copy 转载请保留以上信息，谢谢合作。</p>
 		</div>
@@ -431,6 +458,12 @@
 	  </div>
 	
 	    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ansible/" rel="tag">#ansible</a>
+          
+        </div>
       
 	  
 
@@ -536,7 +569,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -858,7 +891,7 @@
 	</script>
 	
   <div class="powered-by"></div>
-  <span class="post-count">共75.6k字</span>
+  <span class="post-count">共75.9k字</span>
 </div>
 
         

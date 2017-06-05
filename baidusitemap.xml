@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://www.chen-hao.com.cn/ansible%E9%83%A8%E7%BD%B2%E8%84%9A%E6%9C%AC.html</loc>
+    <lastmod>2017-06-05T08:46:28.080Z</lastmod>
+    <data>
+        <display>
+        <title>ansible部署脚本</title>
+        <pubTime>2017-06-05T07:49:23.000Z</pubTime>
+        
+        <tag>ansible</tag>
+         
+         
+           
+             
+              <breadCrumb title="自动化" url="http://www.chen-hao.com.cn/categories/%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.chen-hao.com.cn/jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2.html</loc>
     <lastmod>2017-06-05T08:32:39.942Z</lastmod>
     <data>
@@ -18,21 +38,6 @@
              
               <breadCrumb title="自动化" url="http://www.chen-hao.com.cn/categories/%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.chen-hao.com.cn/ansible%E9%83%A8%E7%BD%B2%E8%84%9A%E6%9C%AC.html</loc>
-    <lastmod>2017-06-05T07:49:23.505Z</lastmod>
-    <data>
-        <display>
-        <title>ansible部署脚本</title>
-        <pubTime>2017-06-05T07:49:23.000Z</pubTime>
-        
-         
-           
         </display>
     </data>
     </url>
