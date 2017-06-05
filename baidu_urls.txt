@@ -1,3 +1,4 @@
+http://www.chen-hao.com.cn/ansible部署脚本.html
 http://www.chen-hao.com.cn/字符串及其操作02.html
 http://www.chen-hao.com.cn/常量变量-运算符-程序结构01.html
 http://www.chen-hao.com.cn/jenkins部署及构建方式.html
@@ -7,4 +8,3 @@ http://www.chen-hao.com.cn/自动化部署.html
 http://www.chen-hao.com.cn/解决故障的处理思路.html
 http://www.chen-hao.com.cn/Tomcat-集群方案.html
 http://www.chen-hao.com.cn/mongodb3-x-权限配置.html
-http://www.chen-hao.com.cn/MongoDB3-x-配置文件.html
