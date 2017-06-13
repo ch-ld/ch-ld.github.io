@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.chen-hao.com.cn/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%8A%E5%85%B6%E6%93%8D%E4%BD%9C02.html</loc>
+    
+    <lastmod>2017-06-06T02:52:57.036Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.chen-hao.com.cn/%E5%B8%B8%E9%87%8F%E5%8F%98%E9%87%8F-%E8%BF%90%E7%AE%97%E7%AC%A6-%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%8401.html</loc>
+    
+    <lastmod>2017-06-06T02:52:55.229Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.chen-hao.com.cn/ansible%E9%83%A8%E7%BD%B2%E8%84%9A%E6%9C%AC.html</loc>
     
     <lastmod>2017-06-05T08:46:28.080Z</lastmod>
@@ -12,20 +26,6 @@
     <loc>http://www.chen-hao.com.cn/jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2.html</loc>
     
     <lastmod>2017-06-05T08:32:39.942Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.chen-hao.com.cn/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%8A%E5%85%B6%E6%93%8D%E4%BD%9C02.html</loc>
-    
-    <lastmod>2017-06-05T06:52:13.825Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.chen-hao.com.cn/%E5%B8%B8%E9%87%8F%E5%8F%98%E9%87%8F-%E8%BF%90%E7%AE%97%E7%AC%A6-%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%8401.html</loc>
-    
-    <lastmod>2017-06-05T03:07:23.326Z</lastmod>
     
   </url>
   
@@ -250,13 +250,6 @@
     <loc>http://www.chen-hao.com.cn/Expect%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3.html</loc>
     
     <lastmod>2016-11-29T03:08:45.190Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.chen-hao.com.cn/guestbook/index.html</loc>
-    
-    <lastmod>2016-11-29T01:08:47.445Z</lastmod>
     
   </url>
   
