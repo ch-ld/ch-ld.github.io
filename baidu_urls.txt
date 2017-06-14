@@ -1,3 +1,4 @@
+http://www.chen-hao.com.cn/别的程序员是怎么读你的简历的（转）.html
 http://www.chen-hao.com.cn/ansible部署脚本.html
 http://www.chen-hao.com.cn/字符串及其操作02.html
 http://www.chen-hao.com.cn/常量变量-运算符-程序结构01.html
@@ -7,4 +8,3 @@ http://www.chen-hao.com.cn/搭建内网gitlab仓库.html
 http://www.chen-hao.com.cn/jenkins自动化部署.html
 http://www.chen-hao.com.cn/解决故障的处理思路.html
 http://www.chen-hao.com.cn/Tomcat-集群方案.html
-http://www.chen-hao.com.cn/mongodb3-x-权限配置.html
