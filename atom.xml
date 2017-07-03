@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.chen-hao.com.cn/"/>
-  <updated>2017-06-14T09:10:58.622Z</updated>
+  <updated>2017-07-03T03:28:09.053Z</updated>
   <id>http://www.chen-hao.com.cn/</id>
   
   <author>
@@ -14,6 +14,39 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>supervisor进程管理工具</title>
+    <link href="http://www.chen-hao.com.cn/supervisor%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7.html"/>
+    <id>http://www.chen-hao.com.cn/supervisor进程管理工具.html</id>
+    <published>2017-07-03T03:15:34.000Z</published>
+    <updated>2017-07-03T03:28:09.053Z</updated>
+    
+    <content type="html"><![CDATA[<p><code>supervisor</code>&#x662F;&#x7528;python&#x5199;&#x7684;&#x4E00;&#x4E2A;&#x8FDB;&#x7A0B;&#x7BA1;&#x7406;&#x5DE5;&#x5177;&#xFF0C;&#x7528;&#x6765;&#x542F;&#x52A8;&#xFF0C;&#x91CD;&#x542F;&#xFF0C;&#x5173;&#x95ED;&#x8FDB;&#x7A0B;&#x3002;<br> <a id="more"></a></p>
+<p></p><h4 id="&#x4EA7;&#x751F;&#x80CC;&#x666F;">&#x4EA7;&#x751F;&#x80CC;&#x666F;</h4><br>&#x5728;&#x4E00;&#x4E2A;&#x5206;&#x5E03;&#x5F0F;&#x73AF;&#x5883;&#x4E2D;&#xFF0C;&#x6BCF;&#x53F0;&#x673A;&#x5668;&#x4E0A;&#x53EF;&#x80FD;&#x9700;&#x8981;&#x542F;&#x52A8;&#x548C;&#x505C;&#x6B62;&#x591A;&#x4E2A;&#x8FDB;&#x7A0B;&#xFF0C;&#x4F7F;&#x7528;&#x547D;&#x4EE4;&#x884C;&#x65B9;&#x5F0F;&#x4E00;&#x4E2A;&#x4E00;&#x4E2A;&#x624B;&#x52A8;&#x542F;&#x52A8;&#x548C;&#x505C;&#x6B62;&#x975E;&#x5E38;&#x9EBB;&#x70E6;&#xFF0C;&#x800C;&#x4E14;&#x67E5;&#x770B;&#x6BCF;&#x4E2A;&#x8FDB;&#x7A0B;&#x7684;&#x72B6;&#x6001;&#x4E5F;&#x5F88;&#x4E0D;&#x65B9;&#x4FBF;&#x3002;&#x5982;&#x679C;&#x6709;&#x4E00;&#x4E2A;&#x5DE5;&#x5177;&#x80FD;&#x591F;&#x5B9E;&#x73B0;&#x6BCF;&#x53F0;&#x673A;&#x5668;&#x4E0A;&#x591A;&#x4E2A;&#x8FDB;&#x7A0B;&#x7684;&#x7B80;&#x5355;&#x9AD8;&#x6548;&#x4E2D;&#x5FC3;&#x5316;&#x7BA1;&#x7406;&#x5C06;&#x662F;&#x975E;&#x5E38;&#x65B9;&#x4FBF;&#x7684;&#x3002;&#x4E8E;&#x662F;Supervisord&#x5DE5;&#x5177;&#x5E94;&#x8FD0;&#x800C;&#x751F;&#x3002;&#x4E0E;Supervisord&#x7C7B;&#x4F3C;&#x7684;&#x5DE5;&#x5177;&#x5305;&#x62EC;monit, daemontools&#x548C;runit&#x3002;<p></p>
+<p></p><h4 id="&#x5B89;&#x88C5;">&#x5B89;&#x88C5;</h4><br>Supervisord&#x662F;&#x8FD0;&#x884C;&#x5728;Python&#x73AF;&#x5883;&#x4E0B;&#x7684;&#x670D;&#x52A1;&#x76D1;&#x63A7;&#x7A0B;&#x5E8F;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x5B89;&#x88C5;supervisord&#x4E4B;&#x524D;&#x5FC5;&#x987B;&#x6709;python&#x73AF;&#x5883;&#x3002;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yum install python-setuptools</div><div class="line">easy_install supervisor</div></pre></td></tr></table></figure><p></p>
+<p>&#x5982;&#x679C;&#x5B89;&#x88C5;&#x6210;&#x529F;&#xFF0C;&#x952E;&#x5165;: echo_supervisord_conf&#xFF0C;&#x4F1A;&#x663E;&#x793A;&#x4E00;&#x4E2A;superviscord_conf &#x7684;&#x914D;&#x7F6E;&#x6A21;&#x677F;&#x3002;<br>&#x8FD9;&#x91CC;&#x4F7F;&#x7528;&#x91CD;&#x5B9A;&#x5411;&#x8FD0;&#x7B97;&#x7B26;&#x5C06;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x5B9A;&#x5411;&#x5230;/etc&#x8DEF;&#x5F84;&#x4E0B;&#xFF08;&#x65B9;&#x4FBF;&#x7BA1;&#x7406;&#xFF09;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">echo</span>_supervisord_conf&gt;/etc/supervisord.conf</div></pre></td></tr></table></figure></p>
+<p></p><h4 id="&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x8BE6;&#x89E3;">&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x8BE6;&#x89E3;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">[unix_http_server]</div><div class="line">file=/tmp/supervisor.sock ; UNIX socket &#x6587;&#x4EF6;&#xFF0C;supervisorctl &#x4F1A;&#x4F7F;&#x7528;</div><div class="line">;chmod=0700 ; socket &#x6587;&#x4EF6;&#x7684; mode&#xFF0C;&#x9ED8;&#x8BA4;&#x662F; 0700</div><div class="line">;chown=nobody:nogroup ; socket &#x6587;&#x4EF6;&#x7684; owner&#xFF0C;&#x683C;&#x5F0F;&#xFF1A; uid:gid</div><div class="line"></div><div class="line">;[inet_http_server] ; HTTP &#x670D;&#x52A1;&#x5668;&#xFF0C;&#x63D0;&#x4F9B; web &#x7BA1;&#x7406;&#x754C;&#x9762;</div><div class="line">;port=127.0.0.1:9001 ; Web &#x7BA1;&#x7406;&#x540E;&#x53F0;&#x8FD0;&#x884C;&#x7684; IP &#x548C;&#x7AEF;&#x53E3;&#xFF0C;&#x5982;&#x679C;&#x5F00;&#x653E;&#x5230;&#x516C;&#x7F51;&#xFF0C;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x5B89;&#x5168;&#x6027;</div><div class="line">;username=user ; &#x767B;&#x5F55;&#x7BA1;&#x7406;&#x540E;&#x53F0;&#x7684;&#x7528;&#x6237;&#x540D;</div><div class="line">;password=123 ; &#x767B;&#x5F55;&#x7BA1;&#x7406;&#x540E;&#x53F0;&#x7684;&#x5BC6;&#x7801;</div><div class="line"></div><div class="line">[supervisord]</div><div class="line">logfile=/tmp/supervisord.log ; &#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F; <span class="variable">$CWD</span>/supervisord.log</div><div class="line">logfile_maxbytes=50MB ; &#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x5927;&#x5C0F;&#xFF0C;&#x8D85;&#x51FA;&#x4F1A; rotate&#xFF0C;&#x9ED8;&#x8BA4; 50MB</div><div class="line">logfile_backups=10 ; &#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x4FDD;&#x7559;&#x5907;&#x4EFD;&#x6570;&#x91CF;&#x9ED8;&#x8BA4; 10</div><div class="line">loglevel=info ; &#x65E5;&#x5FD7;&#x7EA7;&#x522B;&#xFF0C;&#x9ED8;&#x8BA4; info&#xFF0C;&#x5176;&#x5B83;: debug,warn,trace</div><div class="line">pidfile=/tmp/supervisord.pid ; pid &#x6587;&#x4EF6;</div><div class="line">nodaemon=<span class="literal">false</span> ; &#x662F;&#x5426;&#x5728;&#x524D;&#x53F0;&#x542F;&#x52A8;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F; <span class="literal">false</span>&#xFF0C;&#x5373;&#x4EE5; daemon &#x7684;&#x65B9;&#x5F0F;&#x542F;&#x52A8;</div><div class="line">minfds=1024 ; &#x53EF;&#x4EE5;&#x6253;&#x5F00;&#x7684;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x7684;&#x6700;&#x5C0F;&#x503C;&#xFF0C;&#x9ED8;&#x8BA4; 1024</div><div class="line">minprocs=200 ; &#x53EF;&#x4EE5;&#x6253;&#x5F00;&#x7684;&#x8FDB;&#x7A0B;&#x6570;&#x7684;&#x6700;&#x5C0F;&#x503C;&#xFF0C;&#x9ED8;&#x8BA4; 200</div><div class="line"></div><div class="line">; the below section must remain <span class="keyword">in</span> the config file <span class="keyword">for</span> RPC</div><div class="line">; (supervisorctl/web interface) to work, additional interfaces may be</div><div class="line">; added by defining them <span class="keyword">in</span> separate rpcinterface: sections</div><div class="line">[rpcinterface:supervisor]</div><div class="line">supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface</div><div class="line"></div><div class="line">[supervisorctl]</div><div class="line">serverurl=unix:///tmp/supervisor.sock ; &#x901A;&#x8FC7; UNIX socket &#x8FDE;&#x63A5; supervisord&#xFF0C;&#x8DEF;&#x5F84;&#x4E0E; unix_http_server &#x90E8;&#x5206;&#x7684; file &#x4E00;&#x81F4;</div><div class="line">;serverurl=http://127.0.0.1:9001 ; &#x901A;&#x8FC7; HTTP &#x7684;&#x65B9;&#x5F0F;&#x8FDE;&#x63A5; supervisord</div><div class="line"></div><div class="line">; &#x5305;&#x542B;&#x5176;&#x4ED6;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;</div><div class="line">[include]</div><div class="line">files = relative/directory/*.ini ; &#x53EF;&#x4EE5;&#x662F; *.conf &#x6216; *.ini</div></pre></td></tr></table></figure><p></p>
+<p></p><h4 id="&#x8FDB;&#x7A0B;program&#x914D;&#x7F6E;">&#x8FDB;&#x7A0B;Program&#x914D;&#x7F6E;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">[program:usercenter]</div><div class="line">directory = /home/leon/projects/usercenter ; &#x7A0B;&#x5E8F;&#x7684;&#x542F;&#x52A8;&#x76EE;&#x5F55;</div><div class="line"><span class="built_in">command</span> = gunicorn -c gunicorn.py wsgi:app ; &#x542F;&#x52A8;&#x547D;&#x4EE4;&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#x4E0E;&#x624B;&#x52A8;&#x5728;&#x547D;&#x4EE4;&#x884C;&#x542F;&#x52A8;&#x7684;&#x547D;&#x4EE4;&#x662F;&#x4E00;&#x6837;&#x7684;</div><div class="line">autostart = <span class="literal">true</span> ; &#x5728; supervisord &#x542F;&#x52A8;&#x7684;&#x65F6;&#x5019;&#x4E5F;&#x81EA;&#x52A8;&#x542F;&#x52A8;</div><div class="line">startsecs = 5 ; &#x542F;&#x52A8; 5 &#x79D2;&#x540E;&#x6CA1;&#x6709;&#x5F02;&#x5E38;&#x9000;&#x51FA;&#xFF0C;&#x5C31;&#x5F53;&#x4F5C;&#x5DF2;&#x7ECF;&#x6B63;&#x5E38;&#x542F;&#x52A8;&#x4E86;</div><div class="line">autorestart = <span class="literal">true</span> ; &#x7A0B;&#x5E8F;&#x5F02;&#x5E38;&#x9000;&#x51FA;&#x540E;&#x81EA;&#x52A8;&#x91CD;&#x542F;</div><div class="line">startretries = 3 ; &#x542F;&#x52A8;&#x5931;&#x8D25;&#x81EA;&#x52A8;&#x91CD;&#x8BD5;&#x6B21;&#x6570;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F; 3</div><div class="line">user = leon ; &#x7528;&#x54EA;&#x4E2A;&#x7528;&#x6237;&#x542F;&#x52A8;</div><div class="line">redirect_stderr = <span class="literal">true</span> ; &#x628A; stderr &#x91CD;&#x5B9A;&#x5411;&#x5230; stdout&#xFF0C;&#x9ED8;&#x8BA4; <span class="literal">false</span></div><div class="line">stdout_logfile_maxbytes = 20MB ; stdout &#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x5927;&#x5C0F;&#xFF0C;&#x9ED8;&#x8BA4; 50MB</div><div class="line">stdout_logfile_backups = 20 ; stdout &#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x5907;&#x4EFD;&#x6570;</div><div class="line">; stdout &#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#xFF0C;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x5F53;&#x6307;&#x5B9A;&#x76EE;&#x5F55;&#x4E0D;&#x5B58;&#x5728;&#x65F6;&#x65E0;&#x6CD5;&#x6B63;&#x5E38;&#x542F;&#x52A8;&#xFF0C;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x624B;&#x52A8;&#x521B;&#x5EFA;&#x76EE;&#x5F55;&#xFF08;supervisord &#x4F1A;&#x81EA;&#x52A8;&#x521B;&#x5EFA;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#xFF09;</div><div class="line">stdout_logfile = /data/logs/usercenter_stdout.log</div><div class="line"></div><div class="line">; &#x53EF;&#x4EE5;&#x901A;&#x8FC7; environment &#x6765;&#x6DFB;&#x52A0;&#x9700;&#x8981;&#x7684;&#x73AF;&#x5883;&#x53D8;&#x91CF;&#xFF0C;&#x4E00;&#x79CD;&#x5E38;&#x89C1;&#x7684;&#x7528;&#x6CD5;&#x662F;&#x4FEE;&#x6539; PYTHONPATH</div><div class="line">; environment=PYTHONPATH=<span class="variable">$PYTHONPATH</span>:/path/to/somewhere</div></pre></td></tr></table></figure><p></p>
+<p>&#x5C06;&#x8FDB;&#x7A0B;&#x914D;&#x7F6E;&#x6DFB;&#x52A0;&#x5230;supervisord.conf&#x6587;&#x4EF6;&#x4E2D;<br><strong>&#x63A8;&#x8350;&#x5C06;&#x5404;&#x4E2A;&#x8FDB;&#x7A0B;&#x914D;&#x7F6E;&#x653E;&#x5230;&#x5355;&#x72EC;&#x7684;&#x6587;&#x4EF6;&#x4E2D;&#xFF0C;&#x7136;&#x540E;&#x901A;&#x8FC7;[include]&#x914D;&#x7F6E;&#x9879;&#x5F15;&#x7528;</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[include]</div><div class="line">files = /etc/supervisor/*.conf</div></pre></td></tr></table></figure></p>
+<p></p><h4 id="supervisor&#x670D;&#x52A1;&#x542F;&#x52A8;">supervisor&#x670D;&#x52A1;&#x542F;&#x52A8;</h4><br>&#x8FD0;&#x884C;&#x547D;&#x4EE4;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">supervisord -c /etc/supervisord.conf</div></pre></td></tr></table></figure><p></p>
+<p></p><h4 id="supervisor&#x670D;&#x52A1;&#x5BA2;&#x6237;&#x7AEF;&#x7BA1;&#x7406;">supervisor&#x670D;&#x52A1;&#x5BA2;&#x6237;&#x7AEF;&#x7BA1;&#x7406;</h4><br>&#x53EF;&#x4EE5;&#x4F7F;&#x7528;supervisord&#x7684;&#x547D;&#x4EE4;&#x884C;&#x5BA2;&#x6237;&#x7AEF;&#x7BA1;&#x7406;&#x5DE5;&#x5177;supervisorctl&#xFF0C;&#x6765;&#x7BA1;&#x7406;&#x8FDB;&#x7A0B;&#x3002;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">supervisorctl status</div><div class="line">supervisorctl stop usercenter</div><div class="line">supervisorctl start usercenter</div><div class="line">supervisorctl restart usercenter</div><div class="line">supervisorctl reread</div><div class="line">supervisorctl update</div></pre></td></tr></table></figure><p></p>
+<p></p><h4 id="supervisor-web&#x7BA1;&#x7406;&#x754C;&#x9762;">supervisor web&#x7BA1;&#x7406;&#x754C;&#x9762;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">;[inet_http_server] ; HTTP &#x670D;&#x52A1;&#x5668;&#xFF0C;&#x63D0;&#x4F9B; web &#x7BA1;&#x7406;&#x754C;&#x9762;</div><div class="line">;port=127.0.0.1:9001 ; Web &#x7BA1;&#x7406;&#x540E;&#x53F0;&#x8FD0;&#x884C;&#x7684; IP &#x548C;&#x7AEF;&#x53E3;&#xFF0C;&#x5982;&#x679C;&#x5F00;&#x653E;&#x5230;&#x516C;&#x7F51;&#xFF0C;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x5B89;&#x5168;&#x6027;</div><div class="line">;username=user ; &#x767B;&#x5F55;&#x7BA1;&#x7406;&#x540E;&#x53F0;&#x7684;&#x7528;&#x6237;&#x540D;</div><div class="line">;password=123 ; &#x767B;&#x5F55;&#x7BA1;&#x7406;&#x540E;&#x53F0;&#x7684;&#x5BC6;&#x7801;</div></pre></td></tr></table></figure><p></p>
+<p>&#x5728;&#x6D4F;&#x89C8;&#x5668;&#x4E2D;&#x8F93;&#x5165;<a href="http://127.0.0.1:9001&#xFF0C;&#x5373;&#x53EF;&#x8FDB;&#x5165;web&#x7BA1;&#x7406;&#x754C;&#x9762;" target="_blank" rel="external">http://127.0.0.1:9001&#xFF0C;&#x5373;&#x53EF;&#x8FDB;&#x5165;web&#x7BA1;&#x7406;&#x754C;&#x9762;</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;code&gt;supervisor&lt;/code&gt;是用python写的一个进程管理工具，用来启动，重启，关闭进程。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="工具" scheme="http://www.chen-hao.com.cn/categories/%E5%B7%A5%E5%85%B7/"/>
+    
+    
+      <category term="supervisor" scheme="http://www.chen-hao.com.cn/tags/supervisor/"/>
+    
+  </entry>
   
   <entry>
     <title>别的程序员是怎么读你的简历的（转）</title>
@@ -1399,286 +1432,6 @@
     
     
       <category term="日志切割" scheme="http://www.chen-hao.com.cn/tags/%E6%97%A5%E5%BF%97%E5%88%87%E5%89%B2/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Shell中set和shopt命令选项含义</title>
-    <link href="http://www.chen-hao.com.cn/Shell%E4%B8%ADset%E5%92%8Cshopt%E5%91%BD%E4%BB%A4%E9%80%89%E9%A1%B9%E5%90%AB%E4%B9%89.html"/>
-    <id>http://www.chen-hao.com.cn/Shell中set和shopt命令选项含义.html</id>
-    <published>2016-12-01T02:58:40.000Z</published>
-    <updated>2016-12-01T03:35:23.332Z</updated>
-    
-    <content type="html"><![CDATA[<p></p><h3 id="set&#x547D;&#x4EE4;&#x9009;&#x9879;">set&#x547D;&#x4EE4;&#x9009;&#x9879;</h3><br>set&#x547D;&#x4EE4;&#x4F5C;&#x7528;&#x4E3B;&#x8981;&#x662F;&#x663E;&#x793A;&#x7CFB;&#x7EDF;&#x4E2D;&#x5DF2;&#x7ECF;&#x5B58;&#x5728;&#x7684;shell&#x53D8;&#x91CF;&#xFF0C;&#x4EE5;&#x53CA;&#x8BBE;&#x7F6E;shell&#x53D8;&#x91CF;&#x7684;&#x65B0;&#x53D8;&#x91CF;&#x503C;&#x3002;&#x4F7F;&#x7528;set&#x66F4;&#x6539;shell&#x7279;&#x6027;&#x65F6;&#xFF0C;&#x7B26;&#x53F7;<code>&quot;+&quot;</code>&#x548C;<code>&quot;-&quot;</code>&#x7684;&#x4F5C;&#x7528;&#x5206;&#x522B;&#x662F;&#x6253;&#x5F00;&#x548C;&#x5173;&#x95ED;&#x6307;&#x5B9A;&#x7684;&#x6A21;&#x5F0F;&#x3002;set&#x547D;&#x4EE4;&#x4E0D;&#x80FD;&#x591F;&#x5B9A;&#x4E49;&#x65B0;&#x7684;shell&#x53D8;&#x91CF;&#x3002;&#x5982;&#x679C;&#x8981;&#x5B9A;&#x4E49;&#x65B0;&#x7684;&#x53D8;&#x91CF;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;declare&#x547D;&#x4EE4;&#x4EE5;&#x53D8;&#x91CF;&#x540D;=&#x503C;&#x7684;&#x683C;&#x5F0F;&#x8FDB;&#x884C;&#x5B9A;&#x4E49;&#x5373;&#x53EF;&#x3002;<br> <a id="more"></a><p></p>
-<blockquote>
-<p><code>&#x5185;&#x7F6E;set&#x547D;&#x4EE4;&#x9009;&#x9879;</code></p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>&#x9009;&#x9879;&#x540D;</th>
-<th>&#x5FEB;&#x6377;&#x5F00;&#x5173;</th>
-<th>&#x542B;&#x4E49;</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>allexport</td>
-<td>-a</td>
-<td>&#x4ECE;&#x8FD9;&#x4E2A;&#x9009;&#x9879;&#x4E2D;&#x88AB;&#x8BBE;&#x7F6E;&#x5F00;&#x59CB;&#x5C31;&#x81EA;&#x52A8;&#x6807;&#x660E;&#x8981;&#x8F93;&#x51FA;&#x7684;&#x65B0;&#x53D8;&#x91CF;&#x6216;&#x4FEE;&#x6539;&#x8FC7;&#x7684;&#x53D8;&#x91CF;&#xFF0C;&#x76F4;&#x81F3;&#x9009;&#x9879;&#x88AB;&#x590D;&#x4F4D;</td>
-</tr>
-<tr>
-<td>braceexpand</td>
-<td>-B</td>
-<td>&#x6253;&#x5F00;&#x82B1;&#x62EC;&#x53F7;&#x6269;&#x5C55;&#xFF0C;&#x5B83;&#x662F;&#x4E00;&#x4E2A;&#x9ED8;&#x8BA4;&#x8BBE;&#x7F6E;</td>
-</tr>
-<tr>
-<td>emacs</td>
-<td></td>
-<td>&#x4F7F;&#x7528;emacs&#x5185;&#x7F6E;&#x7F16;&#x8F91;&#x5668;&#x8FDB;&#x884C;&#x547D;&#x4EE4;&#x884C;&#x7F16;&#x8F91;&#xFF0C;&#x662F;&#x4E00;&#x4E2A;&#x9ED8;&#x8BA4;&#x8BBE;&#x7F6E;</td>
-</tr>
-<tr>
-<td>errexit</td>
-<td>-e</td>
-<td>&#x5F53;&#x547D;&#x4EE4;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x975E;&#x96F6;&#x9000;&#x51FA;&#x72B6;&#x6001;&#xFF08;&#x5931;&#x8D25;&#xFF09;&#x65F6;&#x9000;&#x51FA;&#x3002;&#x8BFB;&#x53D6;&#x521D;&#x59CB;&#x5316;&#x6587;&#x4EF6;&#x65F6;&#x4E0D;&#x8BBE;&#x7F6E;</td>
-</tr>
-<tr>
-<td>histexpand</td>
-<td>-H</td>
-<td>&#x6267;&#x884C;&#x5386;&#x53F2;&#x66FF;&#x6362;&#x65F6;&#x6253;&#x5F00;!&#x548C;!!&#x6269;&#x5C55;&#xFF0C;&#x662F;&#x4E00;&#x4E2A;&#x9ED8;&#x8BA4;&#x8BBE;&#x7F6E;</td>
-</tr>
-<tr>
-<td>history</td>
-<td></td>
-<td>&#x6253;&#x5F00;&#x547D;&#x4EE4;&#x884C;&#x5386;&#x53F2;&#x3001;&#x9ED8;&#x8BA4;&#x4E3A;&#x6253;&#x5F00;</td>
-</tr>
-<tr>
-<td>ignoreeof</td>
-<td></td>
-<td>&#x7981;&#x6B62;&#x7528;EOF(Ctrl+D)&#x952E;&#x9000;&#x51FA;shell&#x3002;&#x5FC5;&#x987B;&#x952E;&#x5165;exit&#x624D;&#x80FD;&#x9000;&#x51FA;&#x3002;&#x7B49;&#x4EF7;&#x4E8E;&#x8BBE;&#x7F6E;shell&#x53D8;&#x91CF;IGNOREEOF=10</td>
-</tr>
-<tr>
-<td>keyword</td>
-<td>-k</td>
-<td>&#x5C06;&#x5173;&#x952E;&#x5B57;&#x53C2;&#x6570;&#x653E;&#x5230;&#x547D;&#x4EE4;&#x7684;&#x73AF;&#x5883;&#x4E2D;</td>
-</tr>
-<tr>
-<td>interactive-comments</td>
-<td></td>
-<td>&#x5BF9;&#x4E8E;&#x4EA4;&#x4E92;&#x5F0F;shell&#xFF0C;&#x628A;#&#x7B26;&#x540E;&#x9762;&#x7684;&#x6587;&#x672C;&#x4F5C;&#x4E3A;&#x6CE8;&#x91CA;</td>
-</tr>
-<tr>
-<td>monitor</td>
-<td>-m</td>
-<td>&#x8BBE;&#x7F6E;&#x4F5C;&#x4E1A;&#x63A7;&#x5236;</td>
-</tr>
-<tr>
-<td>noclobber</td>
-<td>-C</td>
-<td>&#x9632;&#x6B62;&#x6587;&#x4EF6;&#x5728;&#x91CD;&#x5B9A;&#x5411;&#x65F6;&#x88AB;&#x91CD;&#x5199;</td>
-</tr>
-<tr>
-<td>noexec</td>
-<td>-n</td>
-<td>&#x8BFB;&#x547D;&#x4EE4;&#xFF0C;&#x4F46;&#x4E0D;&#x6267;&#x884C;&#x3002;&#x7528;&#x6765;&#x68C0;&#x67E5;&#x811A;&#x672C;&#x7684;&#x8BED;&#x6CD5;&#x3002;&#x4EA4;&#x4E92;&#x5F0F;&#x8FD0;&#x884C;&#x65F6;&#x4E0D;&#x5F00;&#x542F;</td>
-</tr>
-<tr>
-<td>noglob</td>
-<td>-d</td>
-<td>&#x7981;&#x6B62;&#x7528;&#x8DEF;&#x5F84;&#x540D;&#x6269;&#x5C55;&#x3002;&#x5373;&#x5173;&#x95ED;&#x901A;&#x914D;&#x7B26;</td>
-</tr>
-<tr>
-<td>notify</td>
-<td>-b</td>
-<td>&#x540E;&#x53F0;&#x4F5C;&#x4E1A;&#x5B8C;&#x6210;&#x65F6;&#x901A;&#x77E5;&#x7528;&#x6237;</td>
-</tr>
-<tr>
-<td>nounset</td>
-<td>-u</td>
-<td>&#x6269;&#x5C55;&#x4E00;&#x4E2A;&#x672A;&#x8BBE;&#x7F6E;&#x7684;&#x53D8;&#x91CF;&#x65F6;&#x663E;&#x793A;&#x4E00;&#x4E2A;&#x9519;&#x8BEF;&#x4FE1;&#x606F;</td>
-</tr>
-<tr>
-<td>onecmd</td>
-<td>-t</td>
-<td>&#x5728;&#x8BFB;&#x53D6;&#x548C;&#x6267;&#x884C;&#x547D;&#x4EE4;&#x540E;&#x9000;&#x51FA;</td>
-</tr>
-<tr>
-<td>physical</td>
-<td>-P</td>
-<td>&#x8BBE;&#x7F6E;&#x65F6;&#xFF0C;&#x5728;&#x952E;&#x5165;cd&#x6216;pwd&#x7981;&#x6B62;&#x7B26;&#x53F7;&#x94FE;&#x63A5;&#x3002;&#x7528;&#x7269;&#x7406;&#x76EE;&#x5F55;&#x4EE3;&#x66FF;</td>
-</tr>
-<tr>
-<td>privileged</td>
-<td>-p</td>
-<td>&#x8BBE;&#x7F6E;&#x540E;&#xFF0C;shell&#x4E0D;&#x8BFB;&#x53D6;.profile&#x6216;ENV&#x6587;&#x4EF6;&#xFF0C;&#x4E14;&#x4E0D;&#x4ECE;&#x73AF;&#x5883;&#x7EE7;&#x627F;shell&#x51FD;&#x6570;&#xFF0C;&#x5C06;&#x81EA;&#x52A8;&#x4E3A;setuid&#x811A;&#x672C;&#x5F00;&#x542F;&#x7279;&#x6743;</td>
-</tr>
-<tr>
-<td>verbose</td>
-<td>-v</td>
-<td>&#x4E3A;&#x8C03;&#x8BD5;&#x6253;&#x5F00;verbose&#x6A21;&#x5F0F;</td>
-</tr>
-<tr>
-<td>vi</td>
-<td></td>
-<td>&#x4F7F;&#x7528;vi&#x5185;&#x7F6E;&#x7F16;&#x8F91;&#x5668;&#x8FDB;&#x884C;&#x547D;&#x4EE4;&#x884C;&#x7F16;&#x8F91;</td>
-</tr>
-<tr>
-<td>xtrace</td>
-<td>-x</td>
-<td>&#x4E3A;&#x8C03;&#x8BD5;&#x6253;&#x5F00;echo&#x6A21;&#x5F0F;</td>
-</tr>
-</tbody>
-</table>
-<p></p><h3 id="shopt&#x547D;&#x4EE4;&#x9009;&#x9879;">shopt&#x547D;&#x4EE4;&#x9009;&#x9879;</h3><br>shopt&#x547D;&#x4EE4;&#x662F;set&#x547D;&#x4EE4;&#x7684;&#x4E00;&#x79CD;&#x66FF;&#x4EE3;&#xFF0C;&#x5F88;&#x591A;&#x65B9;&#x9762;&#x90FD;&#x548C;set&#x547D;&#x4EE4;&#x4E00;&#x6837;&#xFF0C;&#x4F46;&#x5B83;&#x589E;&#x52A0;&#x4E86;&#x5F88;&#x591A;&#x9009;&#x9879;&#x3002;&#x53EF;&#x6709;&#x4F7F;&#x7528;<code>&#x201C;-p&#x201D;</code>&#x9009;&#x9879;&#x6765;&#x67E5;&#x770B;shopt&#x9009;&#x9879;&#x7684;&#x8BBE;&#x7F6E;&#x3002;<code>&#x201C;-u&#x201D;</code>&#x5F00;&#x5173;&#x8868;&#x793A;&#x4E00;&#x4E2A;&#x590D;&#x4F4D;&#x7684;&#x9009;&#x9879;&#xFF0C;<code>&#x201C;-s&#x201D;</code>&#x8868;&#x793A;&#x9009;&#x9879;&#x5F53;&#x524D;&#x88AB;&#x8BBE;&#x7F6E;&#x3002;<p></p>
-<blockquote>
-<p><code>shopt&#x547D;&#x4EE4;&#x53C2;&#x6570;&#x7528;&#x6CD5;</code></p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>&#x9009;&#x9879;</th>
-<th>&#x542B;&#x4E49;</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>cdable_vars</td>
-<td>&#x5982;&#x679C;&#x7ED9;cd&#x5185;&#x7F6E;&#x547D;&#x4EE4;&#x7684;&#x53C2;&#x6570;&#x4E0D;&#x662F;&#x4E00;&#x4E2A;&#x76EE;&#x5F55;,&#x5C31;&#x5047;&#x8BBE;&#x5B83;&#x662F;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;&#x540D;,&#x53D8;&#x91CF;&#x7684;&#x503C;&#x662F;&#x5C06;&#x8981;&#x8F6C;&#x6362;&#x5230;&#x7684;&#x76EE;&#x5F55;</td>
-</tr>
-<tr>
-<td>cdspell</td>
-<td>&#x7EA0;&#x6B63;cd&#x547D;&#x4EE4;&#x4E2D;&#x76EE;&#x5F55;&#x540D;&#x7684;&#x8F83;&#x5C0F;&#x62FC;&#x5199;&#x9519;&#x8BEF;.&#x68C0;&#x67E5;&#x7684;&#x9519;&#x8BEF;&#x5305;&#x62EC;&#x98A0;&#x5012;&#x987A;&#x5E8F;&#x7684;&#x5B57;&#x7B26;,&#x9057;&#x6F0F;&#x7684;&#x5B57;&#x7B26;&#x4EE5;&#x53CA;&#x91CD;&#x590D;&#x7684;&#x5B57;&#x7B26;.&#x5982;&#x679C;&#x627E;&#x5230;&#x4E00;&#x5904;&#x9700;&#x4FEE;&#x6539;&#x4E4B;&#x5904;,&#x6B63;&#x786E;&#x7684;&#x8DEF;&#x5F84;&#x5C06;&#x6253;&#x5370;&#x51FA;,&#x547D;&#x4EE4;&#x5C06;&#x7EE7;&#x7EED;.&#x53EA;&#x7528;&#x4E8E;&#x4EA4;&#x4E92;&#x5F0F;shell</td>
-</tr>
-<tr>
-<td>checkhash</td>
-<td>bash&#x5728;&#x8BD5;&#x56FE;&#x6267;&#x884C;&#x4E00;&#x4E2A;&#x547D;&#x4EE4;&#x524D;,&#x5148;&#x5728;&#x54C8;&#x5E0C;&#x8868;&#x4E2D;&#x5BFB;&#x627E;,&#x4EE5;&#x786E;&#x5B9A;&#x547D;&#x4EE4;&#x662F;&#x5426;&#x5B58;&#x5728;.&#x5982;&#x679C;&#x547D;&#x4EE4;&#x4E0D;&#x5B58;&#x5728;,&#x5C31;&#x6267;&#x884C;&#x6B63;&#x5E38;&#x7684;&#x8DEF;&#x5F84;&#x641C;&#x7D22;</td>
-</tr>
-<tr>
-<td>checkwinsize</td>
-<td>bash&#x5728;&#x6BCF;&#x4E2A;&#x547D;&#x4EE4;&#x540E;&#x68C0;&#x67E5;&#x7A97;&#x53E3;&#x5927;&#x5C0F;,&#x5982;&#x679C;&#x6709;&#x5FC5;&#x8981;,&#x5C31;&#x66F4;&#x65B0;LINES&#x548C;COLUMNS&#x7684;&#x503C;</td>
-</tr>
-<tr>
-<td>cmdhist</td>
-<td>bash&#x8BD5;&#x56FE;&#x5C06;&#x4E00;&#x4E2A;&#x591A;&#x884C;&#x547D;&#x4EE4;&#x7684;&#x6240;&#x6709;&#x884C;&#x4FDD;&#x5B58;&#x5728;&#x540C;&#x4E00;&#x4E2A;&#x5386;&#x53F2;&#x9879;&#x4E2D;.&#x8FD9;&#x662F;&#x7684;&#x591A;&#x884C;&#x547D;&#x4EE4;&#x7684;&#x91CD;&#x65B0;&#x7F16;&#x8F91;&#x66F4;&#x65B9;&#x4FBF;</td>
-</tr>
-<tr>
-<td>dotglob</td>
-<td>Bash&#x5728;&#x6587;&#x4EF6;&#x540D;&#x6269;&#x5C55;&#x7684;&#x7ED3;&#x679C;&#x4E2D;&#x5305;&#x62EC;&#x4EE5;&#x70B9;(.)&#x5F00;&#x5934;&#x7684;&#x6587;&#x4EF6;&#x540D;</td>
-</tr>
-<tr>
-<td>execfail</td>
-<td>&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x975E;&#x4EA4;&#x4E92;&#x5F0F;shell&#x4E0D;&#x80FD;&#x6267;&#x884C;&#x6307;&#x5B9A;&#x7ED9;exec&#x5185;&#x7F6E;&#x547D;&#x4EE4;&#x4F5C;&#x4E3A;&#x53C2;&#x6570;&#x7684;&#x6587;&#x4EF6;,&#x5B83;&#x4E0D;&#x4F1A;&#x9000;&#x51FA;.&#x5982;&#x679C;exec&#x5931;&#x8D25;,&#x4E00;&#x4E2A;&#x4EA4;&#x4E92;&#x5F0F;shell&#x4E0D;&#x4F1A;&#x9000;&#x51FA;</td>
-</tr>
-<tr>
-<td>expand_aliases</td>
-<td>&#x522B;&#x540D;&#x88AB;&#x6269;&#x5C55;.&#x7F3A;&#x7701;&#x4E3A;&#x6253;&#x5F00;</td>
-</tr>
-<tr>
-<td>extglob</td>
-<td>&#x6253;&#x5F00;&#x6269;&#x5C55;&#x7684;&#x6A21;&#x5F0F;&#x5339;&#x914D;&#x7279;&#x6027;(&#x6B63;&#x5E38;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x5143;&#x5B57;&#x7B26;&#x6765;&#x81EA;Korn shell&#x7684;&#x6587;&#x4EF6;&#x540D;&#x6269;&#x5C55;)</td>
-</tr>
-<tr>
-<td>histappend</td>
-<td>&#x5982;&#x679C;readline&#x6B63;&#x88AB;&#x4F7F;&#x7528;,&#x7528;&#x6237;&#x6709;&#x673A;&#x4F1A;&#x91CD;&#x65B0;&#x7F16;&#x8F91;&#x4E00;&#x4E2A;&#x5931;&#x8D25;&#x7684;&#x5386;&#x53F2;&#x66FF;&#x6362;</td>
-</tr>
-<tr>
-<td>histverify</td>
-<td>&#x5982;&#x679C;&#x8BBE;&#x7F6E;,&#x4E14;readline&#x6B63;&#x88AB;&#x4F7F;&#x7528;,&#x5386;&#x53F2;&#x66FF;&#x6362;&#x7684;&#x7ED3;&#x679C;&#x4E0D;&#x4F1A;&#x7ACB;&#x5373;&#x4F20;&#x9012;&#x7ED9;shell&#x89E3;&#x91CA;&#x5668;.&#x800C;&#x662F;&#x5C06;&#x7ED3;&#x679C;&#x884C;&#x88C5;&#x5165;readline&#x7F16;&#x8F91;&#x7F13;&#x51B2;&#x533A;&#x4E2D;,&#x5141;&#x8BB8;&#x8FDB;&#x4E00;&#x6B65;&#x4FEE;&#x6539;</td>
-</tr>
-<tr>
-<td>hostcomplete</td>
-<td>&#x5982;&#x679C;&#x8BBE;&#x7F6E;,&#x4E14;readline&#x6B63;&#x88AB;&#x4F7F;&#x7528;,&#x5F53;&#x6B63;&#x5728;&#x5B8C;&#x6210;&#x4E00;&#x4E2A;&#x5305;&#x542B;@&#x7684;&#x8BCD;&#x65F6;bash&#x5C06;&#x8BD5;&#x56FE;&#x6267;&#x884C;&#x4E3B;&#x673A;&#x540D;&#x8865;&#x5168;.&#x7F3A;&#x7701;&#x4E3A;&#x6253;&#x5F00;</td>
-</tr>
-<tr>
-<td>huponexit</td>
-<td>&#x5982;&#x679C;&#x8BBE;&#x7F6E;,&#x5F53;&#x4E00;&#x4E2A;&#x4EA4;&#x4E92;&#x5F0F;&#x767B;&#x5F55;shell&#x9000;&#x51FA;&#x65F6;,bash&#x5C06;&#x53D1;&#x9001;&#x4E00;&#x4E2A;SIGHUP(&#x6302;&#x8D77;&#x4FE1;&#x53F7;)&#x7ED9;&#x6240;&#x6709;&#x7684;&#x4F5C;&#x4E1A;</td>
-</tr>
-<tr>
-<td>interactive_comments</td>
-<td>&#x5728;&#x4E00;&#x4E2A;&#x4EA4;&#x4E92;&#x5F0F;shell&#x4E2D;.&#x5141;&#x8BB8;&#x4EE5;#&#x5F00;&#x5934;&#x7684;&#x8BCD;&#x4EE5;&#x53CA;&#x540C;&#x4E00;&#x884C;&#x4E2D;&#x5176;&#x4ED6;&#x7684;&#x5B57;&#x7B26;&#x88AB;&#x5FFD;&#x7565;.&#x7F3A;&#x7701;&#x4E3A;&#x6253;&#x5F00;</td>
-</tr>
-<tr>
-<td>lithist</td>
-<td>&#x5982;&#x679C;&#x6253;&#x5F00;,&#x4E14;cmdhist&#x9009;&#x9879;&#x4E5F;&#x6253;&#x5F00;,&#x591A;&#x884C;&#x547D;&#x4EE4;&#x8BB2;&#x7528;&#x5D4C;&#x5165;&#x7684;&#x6362;&#x884C;&#x7B26;&#x4FDD;&#x5B58;&#x5230;&#x5386;&#x53F2;&#x4E2D;,&#x800C;&#x65E0;&#x9700;&#x5728;&#x53EF;&#x80FD;&#x7684;&#x5730;&#x65B9;&#x7528;&#x5206;&#x53F7;&#x6765;&#x5206;&#x9694;</td>
-</tr>
-<tr>
-<td>mailwarn</td>
-<td>&#x5982;&#x679C;&#x8BBE;&#x7F6E;,&#x4E14;bash&#x7528;&#x6765;&#x68C0;&#x67E5;&#x90AE;&#x4EF6;&#x7684;&#x6587;&#x4EF6;&#x81EA;&#x4ECE;&#x4E0A;&#x6B21;&#x68C0;&#x67E5;&#x540E;&#x5DF2;&#x7ECF;&#x88AB;&#x8BBF;&#x95EE;,&#x5C06;&#x663E;&#x793A;&#x6D88;&#x606F;&#x201D;The mail in mailfile has been read&#x201D;</td>
-</tr>
-<tr>
-<td>nocaseglob</td>
-<td>&#x5982;&#x679C;&#x8BBE;&#x7F6E;,&#x5F53;&#x6267;&#x884C;&#x6587;&#x4EF6;&#x540D;&#x6269;&#x5C55;&#x65F6;,bash&#x5728;&#x4E0D;&#x533A;&#x5206;&#x5927;&#x5C0F;&#x5199;&#x7684;&#x65B9;&#x5F0F;&#x4E0B;&#x5339;&#x914D;&#x6587;&#x4EF6;&#x540D;</td>
-</tr>
-<tr>
-<td>nullglob</td>
-<td>&#x5982;&#x679C;&#x8BBE;&#x7F6E;,bash&#x5141;&#x8BB8;&#x6CA1;&#x6709;&#x5339;&#x914D;&#x4EFB;&#x4F55;&#x6587;&#x4EF6;&#x7684;&#x6587;&#x4EF6;&#x540D;&#x6A21;&#x5F0F;&#x6269;&#x5C55;&#x6210;&#x4E00;&#x4E2A;&#x7A7A;&#x4E32;,&#x800C;&#x4E0D;&#x662F;&#x4ED6;&#x4EEC;&#x672C;&#x8EAB;</td>
-</tr>
-<tr>
-<td>promptvars</td>
-<td>&#x5982;&#x679C;&#x8BBE;&#x7F6E;,&#x63D0;&#x793A;&#x4E32;&#x5728;&#x88AB;&#x6269;&#x5C55;&#x540E;&#x518D;&#x8FDB;&#x884C;&#x53D8;&#x91CF;&#x548C;&#x53C2;&#x91CF;&#x6269;&#x5C55;.&#x7F3A;&#x7701;&#x4E3A;&#x6253;&#x5F00;</td>
-</tr>
-<tr>
-<td>restricted_shell</td>
-<td>&#x5982;&#x679C;shell&#x5728;&#x53D7;&#x9650;&#x6A21;&#x5F0F;&#x4E0B;&#x542F;&#x52A8;&#x5C31;&#x8BBE;&#x7F6E;&#x8FD9;&#x4E2A;&#x9009;&#x9879;.&#x8BE5;&#x503C;&#x4E0D;&#x80FD;&#x88AB;&#x6539;&#x53D8;.&#x5F53;&#x6267;&#x884C;&#x542F;&#x52A8;&#x6587;&#x4EF6;&#x65F6;&#x4E0D;&#x80FD;&#x590D;&#x4F4D;&#x8BE5;&#x9009;&#x9879;,&#x5141;&#x8BB8;&#x542F;&#x52A8;&#x6587;&#x4EF6;&#x53D1;&#x73B0;shell&#x662F;&#x5426;&#x53D7;&#x9650;</td>
-</tr>
-<tr>
-<td>shift_verbose</td>
-<td>&#x5982;&#x679C;&#x8BE5;&#x9009;&#x9879;&#x8BBE;&#x7F6E;,&#x5F53;&#x79FB;&#x52A8;&#x8BA1;&#x6570;&#x8D85;&#x51FA;&#x4F4D;&#x7F6E;&#x53C2;&#x91CF;&#x4E2A;&#x6570;&#x65F6;,shift&#x5185;&#x7F6E;&#x547D;&#x4EE4;&#x5C06;&#x6253;&#x5370;&#x4E00;&#x4E2A;&#x9519;&#x8BEF;&#x6D88;&#x606F;</td>
-</tr>
-<tr>
-<td>sourcepath</td>
-<td>&#x5982;&#x679C;&#x8BBE;&#x7F6E;,source&#x5185;&#x7F6E;&#x547D;&#x4EE4;&#x4F7F;&#x7528;PATH&#x7684;&#x503C;&#x6765;&#x5BFB;&#x627E;&#x4F5C;&#x4E3A;&#x53C2;&#x6570;&#x63D0;&#x4F9B;&#x7684;&#x6587;&#x4EF6;&#x7684;&#x76EE;&#x5F55;.&#x7F3A;&#x7701;&#x4E3A;&#x6253;&#x5F00;</td>
-</tr>
-<tr>
-<td>source</td>
-<td>&#x70B9;(.)&#x7684;&#x540C;&#x4E49;&#x8BCD;</td>
-</tr>
-</tbody>
-</table>
-<p></p><h3 id="&#x5220;&#x9664;&#x76EE;&#x5F55;&#x4E0B;&#x9664;&#x4E86;filename&#x4E4B;&#x5916;&#x7684;&#x6240;&#x6709;&#x6587;&#x4EF6;">&#x5220;&#x9664;&#x76EE;&#x5F55;&#x4E0B;&#x9664;&#x4E86;filename&#x4E4B;&#x5916;&#x7684;&#x6240;&#x6709;&#x6587;&#x4EF6;</h3><br>&#x4E0B;&#x6765;&#x5217;&#x51FA;&#x4E86;&#x4E0D;&#x540C;&#x7684;&#x6269;&#x5C55;&#x6A21;&#x5F0F;&#x5339;&#x914D;&#x64CD;&#x4F5C;&#x7B26;&#xFF0C;&#x8FD9;&#x4E9B;&#x6A21;&#x5F0F;&#x5217;&#x8868;&#x662F;&#x4E00;&#x4E2A;&#x7528; <code>|</code> &#x5206;&#x5272;&#x5305;&#x542B;&#x4E00;&#x4E2A;&#x6216;&#x8005;&#x591A;&#x4E2A;&#x6587;&#x4EF6;&#x540D;&#x7684;&#x5217;&#x8868;&#xFF1A;<p></p>
-<table>
-<thead>
-<tr>
-<th>&#x901A;&#x914D;&#x7B26;</th>
-<th>&#x542B;&#x4E49;</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>*(&#x6A21;&#x5F0F;&#x5217;&#x8868;)</td>
-<td>&#x5339;&#x914D; 0 &#x4E2A;&#x6216;&#x8005;&#x591A;&#x4E2A;&#x51FA;&#x73B0;&#x7684;&#x6307;&#x5B9A;&#x6A21;&#x5F0F;</td>
-</tr>
-<tr>
-<td>?(&#x6A21;&#x5F0F;&#x5217;&#x8868;)</td>
-<td>&#x5339;&#x914D; 0 &#x4E2A;&#x6216;&#x8005; 1 &#x4E2A;&#x51FA;&#x73B0;&#x7684;&#x6307;&#x5B9A;&#x6A21;&#x5F0F;</td>
-</tr>
-<tr>
-<td>@(&#x6A21;&#x5F0F;&#x5217;&#x8868;)</td>
-<td>&#x5339;&#x914D; 1 &#x4E2A;&#x6216;&#x8005;&#x591A;&#x4E2A;&#x51FA;&#x73B0;&#x7684;&#x6307;&#x5B9A;&#x6A21;&#x5F0F;</td>
-</tr>
-<tr>
-<td>!(&#x6A21;&#x5F0F;&#x5217;&#x8868;)</td>
-<td>&#x5339;&#x914D;&#x9664;&#x4E86;&#x4E00;&#x4E2A;&#x6307;&#x5B9A;&#x6A21;&#x5F0F;&#x4E4B;&#x5916;&#x7684;&#x4EFB;&#x4F55;&#x5185;&#x5BB9;</td>
-</tr>
-</tbody>
-</table>
-<p></p><h4 id="&#x6253;&#x5F00;extglob-shell&#x9009;&#x9879;">&#x6253;&#x5F00;extglob shell&#x9009;&#x9879;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">shopt</span> <span class="_">-s</span> extglob</div></pre></td></tr></table></figure><p></p>
-<p></p><h4 id="&#x5220;&#x9664;&#x76EE;&#x5F55;&#x4E0B;&#x9664;&#x4E86;filename&#x4E4B;&#x5916;&#x7684;&#x6240;&#x6709;&#x6587;&#x4EF6;">&#x5220;&#x9664;&#x76EE;&#x5F55;&#x4E0B;&#x9664;&#x4E86;filename&#x4E4B;&#x5916;&#x7684;&#x6240;&#x6709;&#x6587;&#x4EF6;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rm -v !(<span class="string">&quot;filename&quot;</span>)</div></pre></td></tr></table></figure><p></p>
-<p></p><h4 id="&#x5220;&#x9664;&#x9664;&#x4E86;filename1&#x548C;filename2&#x4E4B;&#x5916;&#x7684;&#x6240;&#x6709;&#x6587;&#x4EF6;">&#x5220;&#x9664;&#x9664;&#x4E86;filename1&#x548C;filename2&#x4E4B;&#x5916;&#x7684;&#x6240;&#x6709;&#x6587;&#x4EF6;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rm -v !(<span class="string">&quot;filename1&quot;</span>|<span class="string">&quot;filename2&quot;</span>)</div></pre></td></tr></table></figure><p></p>
-<p></p><h4 id="&#x5220;&#x9664;&#x9664;&#x4E86;-zip-&#x4E4B;&#x5916;&#x7684;&#x6240;&#x6709;&#x6587;&#x4EF6;">&#x5220;&#x9664;&#x9664;&#x4E86; .zip &#x4E4B;&#x5916;&#x7684;&#x6240;&#x6709;&#x6587;&#x4EF6;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rm -i !(*.zip)</div></pre></td></tr></table></figure><p></p>
-<p></p><h4 id="&#x5173;&#x95ED;extglob-shell&#x9009;&#x9879;">&#x5173;&#x95ED;extglob shell&#x9009;&#x9879;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">shopt</span> -u extglob</div></pre></td></tr></table></figure><p></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;h3&gt;set命令选项&lt;/h3&gt;&lt;br&gt;set命令作用主要是显示系统中已经存在的shell变量，以及设置shell变量的新变量值。使用set更改shell特性时，符号&lt;code&gt;&amp;quot;+&amp;quot;&lt;/code&gt;和&lt;code&gt;&amp;quot;-&amp;quot;&lt;/code&gt;的作用分别是打开和关闭指定的模式。set命令不能够定义新的shell变量。如果要定义新的变量，可以使用declare命令以变量名=值的格式进行定义即可。&lt;br&gt;
-    
-    </summary>
-    
-      <category term="基础" scheme="http://www.chen-hao.com.cn/categories/%E5%9F%BA%E7%A1%80/"/>
-    
-    
-      <category term="shell" scheme="http://www.chen-hao.com.cn/tags/shell/"/>
     
   </entry>
   

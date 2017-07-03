@@ -86,7 +86,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="speedtest-cli," />
+  <meta name="keywords" content="supervisor," />
 
 
 
@@ -104,18 +104,16 @@
 
 
 
-<meta name="description" content="最近老感觉服务器特别卡，但是光凭感觉可不行啊，要怎么去量化这个呢，例如上行带宽多少，下行带宽多少。于是在github上找到了一个Linux上测试网络带宽的工具了（其实就是一个Python脚本），Speedtest.net的工作原理：它在你的浏览器中加载JavaScript代码并自动检测离你最近的Speedtest.net服务器，然后向服务器发送HTTP GET and POST请求来测试上行/下">
+<meta name="description" content="supervisor是用python写的一个进程管理工具，用来启动，重启，关闭进程。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="在Linux中测试网络带宽">
-<meta property="og:url" content="http://www.chen-hao.com.cn/在Linux中测试网络带宽.html">
+<meta property="og:title" content="supervisor进程管理工具">
+<meta property="og:url" content="http://www.chen-hao.com.cn/supervisor进程管理工具.html">
 <meta property="og:site_name" content="火柴的博客">
-<meta property="og:description" content="最近老感觉服务器特别卡，但是光凭感觉可不行啊，要怎么去量化这个呢，例如上行带宽多少，下行带宽多少。于是在github上找到了一个Linux上测试网络带宽的工具了（其实就是一个Python脚本），Speedtest.net的工作原理：它在你的浏览器中加载JavaScript代码并自动检测离你最近的Speedtest.net服务器，然后向服务器发送HTTP GET and POST请求来测试上行/下">
-<meta property="og:image" content="http://www.chen-hao.com.cn/uploads/speedtest.gif">
-<meta property="og:updated_time" content="2016-09-02T02:21:11.999Z">
+<meta property="og:description" content="supervisor是用python写的一个进程管理工具，用来启动，重启，关闭进程。">
+<meta property="og:updated_time" content="2017-07-03T03:28:09.053Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在Linux中测试网络带宽">
-<meta name="twitter:description" content="最近老感觉服务器特别卡，但是光凭感觉可不行啊，要怎么去量化这个呢，例如上行带宽多少，下行带宽多少。于是在github上找到了一个Linux上测试网络带宽的工具了（其实就是一个Python脚本），Speedtest.net的工作原理：它在你的浏览器中加载JavaScript代码并自动检测离你最近的Speedtest.net服务器，然后向服务器发送HTTP GET and POST请求来测试上行/下">
-<meta name="twitter:image" content="http://www.chen-hao.com.cn/uploads/speedtest.gif">
+<meta name="twitter:title" content="supervisor进程管理工具">
+<meta name="twitter:description" content="supervisor是用python写的一个进程管理工具，用来启动，重启，关闭进程。">
 
 
 
@@ -151,11 +149,11 @@
 
 
 
-  <link rel="canonical" href="http://www.chen-hao.com.cn/在Linux中测试网络带宽.html"/>
+  <link rel="canonical" href="http://www.chen-hao.com.cn/supervisor进程管理工具.html"/>
 
 
 
-  <title> 在Linux中测试网络带宽 | 火柴的博客 </title>
+  <title> supervisor进程管理工具 | 火柴的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -312,7 +310,7 @@
             
             
               
-                在Linux中测试网络带宽
+                supervisor进程管理工具
               
             
           </h1>
@@ -323,9 +321,9 @@
 			
 			  <span class="post-letters-count">
 				&nbsp; | &nbsp;
-				<span>389 字</span>
+				<span>993 字</span>
 				&nbsp; | &nbsp;
-				<span>2 min</span>
+				<span>4 min</span>
 			  </span>
 			
 			
@@ -334,8 +332,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-02T09:29:55+08:00" content="2016-09-02">
-              2016-09-02
+            <time itemprop="dateCreated" datetime="2017-07-03T11:15:34+08:00" content="2017-07-03">
+              2017-07-03
             </time>
           </span>
 
@@ -364,8 +362,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/在Linux中测试网络带宽.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="在Linux中测试网络带宽.html" itemprop="commentsCount"></span>
+                <a href="/supervisor进程管理工具.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="supervisor进程管理工具.html" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -375,7 +373,7 @@
 
           
           
-             <span id="/在Linux中测试网络带宽.html" class="leancloud_visitors" data-flag-title="在Linux中测试网络带宽">
+             <span id="/supervisor进程管理工具.html" class="leancloud_visitors" data-flag-title="supervisor进程管理工具">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -397,24 +395,17 @@
       
 
       
-        <blockquote>
-<p>&#x6700;&#x8FD1;&#x8001;&#x611F;&#x89C9;&#x670D;&#x52A1;&#x5668;&#x7279;&#x522B;&#x5361;&#xFF0C;&#x4F46;&#x662F;&#x5149;&#x51ED;&#x611F;&#x89C9;&#x53EF;&#x4E0D;&#x884C;&#x554A;&#xFF0C;&#x8981;&#x600E;&#x4E48;&#x53BB;&#x91CF;&#x5316;&#x8FD9;&#x4E2A;&#x5462;&#xFF0C;&#x4F8B;&#x5982;&#x4E0A;&#x884C;&#x5E26;&#x5BBD;&#x591A;&#x5C11;&#xFF0C;&#x4E0B;&#x884C;&#x5E26;&#x5BBD;&#x591A;&#x5C11;&#x3002;&#x4E8E;&#x662F;&#x5728;github&#x4E0A;&#x627E;&#x5230;&#x4E86;&#x4E00;&#x4E2A;Linux&#x4E0A;&#x6D4B;&#x8BD5;&#x7F51;&#x7EDC;&#x5E26;&#x5BBD;&#x7684;&#x5DE5;&#x5177;&#x4E86;&#xFF08;&#x5176;&#x5B9E;&#x5C31;&#x662F;&#x4E00;&#x4E2A;Python&#x811A;&#x672C;&#xFF09;&#xFF0C;Speedtest.net&#x7684;&#x5DE5;&#x4F5C;&#x539F;&#x7406;&#xFF1A;&#x5B83;&#x5728;&#x4F60;&#x7684;&#x6D4F;&#x89C8;&#x5668;&#x4E2D;&#x52A0;&#x8F7D;JavaScript&#x4EE3;&#x7801;&#x5E76;&#x81EA;&#x52A8;&#x68C0;&#x6D4B;&#x79BB;&#x4F60;&#x6700;&#x8FD1;&#x7684;Speedtest.net&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x7136;&#x540E;&#x5411;&#x670D;&#x52A1;&#x5668;&#x53D1;&#x9001;HTTP GET and POST&#x8BF7;&#x6C42;&#x6765;&#x6D4B;&#x8BD5;&#x4E0A;&#x884C;/&#x4E0B;&#x884C;&#x7F51;&#x901F;&#x3002;<br> <a id="more"></a></p>
-</blockquote>
-<p></p><h2 id="&#x5B89;&#x88C5;speedtest-cli">&#x5B89;&#x88C5;speedtest-cli</h2><p></p>
-<ul>
-<li>&#x4EE5;&#x4E0B;&#x4EFB;&#x4F55;&#x4E00;&#x79CD;&#x65B9;&#x5F0F;&#x5B89;&#x88C5;&#x5373;&#x53EF;&#xFF08;&#x603B;&#x6709;&#x4E00;&#x6B3E;&#x9002;&#x5408;&#x4F60;&#xFF09;</li>
-</ul>
-<p></p><h3 id="pip-easy_install">pip / easy_install</h3><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install speedtest-cli</div></pre></td></tr></table></figure><p></p>
-<p>or<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">easy_install speedtest-cli</div></pre></td></tr></table></figure></p>
-<p></p><h3 id="github">github</h3><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install git+https://github.com/sivel/speedtest-cli.git</div></pre></td></tr></table></figure><p></p>
-<p>or<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> https://github.com/sivel/speedtest-cli.git</div><div class="line">python speedtest-cli/setup.py install</div></pre></td></tr></table></figure></p>
-<p></p><h3 id="download">download</h3><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wget -O speedtest-cli https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest_cli.py</div><div class="line">chmod +x speedtest-cli</div></pre></td></tr></table></figure><p></p>
-<p>or<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">curl -Lo speedtest-cli https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest_cli.py</div><div class="line">chmod +x speedtest-cli</div></pre></td></tr></table></figure></p>
-<p></p><h2 id="&#x4F7F;&#x7528;&#x65B9;&#x6CD5;">&#x4F7F;&#x7528;&#x65B9;&#x6CD5;</h2><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">$ speedtest-cli -h</div><div class="line">usage: speedtest-cli [-h] [--bytes] [--share] [--simple] [--list]</div><div class="line">                     [--server SERVER] [--mini MINI] [--source SOURCE]</div><div class="line">                     [--timeout TIMEOUT] [--secure] [--version]</div><div class="line"></div><div class="line">Command line interface <span class="keyword">for</span> testing internet bandwidth using speedtest.net.</div><div class="line">--------------------------------------------------------------------------</div><div class="line">https://github.com/sivel/speedtest-cli</div><div class="line"></div><div class="line">optional arguments:</div><div class="line">  -h, --help         &#x663E;&#x793A;&#x5E2E;&#x52A9;</div><div class="line">  --bytes            &#x4EE5;&#x5B57;&#x8282;&#x7684;&#x65B9;&#x5F0F;&#x663E;&#x793A;&#xFF0C;&#x4F46;&#x5206;&#x4EAB;&#x7684;&#x65F6;&#x5019;&#x4E0D;&#x53D7;&#x5F71;&#x54CD;</div><div class="line">  --share            &#x5206;&#x4EAB;</div><div class="line">  --simple           &#x53EA;&#x663E;&#x793A;&#x7B80;&#x5355;&#x4FE1;&#x606F;</div><div class="line">  --list             &#x663E;&#x793A;speedtest.net&#x670D;&#x52A1;&#x5668;&#x5217;&#x8868;</div><div class="line">  --server SERVER    &#x6307;&#x5B9A;speedtest.net&#x670D;&#x52A1;&#x5668;ID</div><div class="line">  --source SOURCE    &#x6307;&#x5B9A;&#x6E90;IP&#x5730;&#x5740;</div><div class="line">  --timeout TIMEOUT  &#x6307;&#x5B9A;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#xFF0C;&#x9ED8;&#x8BA4;10&#x79D2;</div><div class="line">  --secure           &#x4F7F;&#x7528;HTTPS&#x534F;&#x8BAE;&#x8FDB;&#x884C;&#x901A;&#x4FE1;</div><div class="line">  --version          &#x663E;&#x793A;&#x5F53;&#x524D;&#x7248;&#x672C;</div></pre></td></tr></table></figure><p></p>
-<p></p><h2 id="&#x4F7F;&#x7528;&#x793A;&#x4F8B;">&#x4F7F;&#x7528;&#x793A;&#x4F8B;</h2><br><img src="/uploads/speedtest.gif" class="blockquote-center"><p></p>
-<ul>
-<li>&#x5230;&#x6700;&#x540E;&#xFF0C;&#x8D34;&#x51FA;&#x8FD9;&#x4E2A;&#x811A;&#x672C;&#x7684;github&#x5730;&#x5740;&#x5427;&#x3002;  <a href="https://github.com/sivel/speedtest-cli" target="_blank" rel="external">speedtest-cli github&#x5730;&#x5740;</a></li>
-</ul>
+        <p><code>supervisor</code>&#x662F;&#x7528;python&#x5199;&#x7684;&#x4E00;&#x4E2A;&#x8FDB;&#x7A0B;&#x7BA1;&#x7406;&#x5DE5;&#x5177;&#xFF0C;&#x7528;&#x6765;&#x542F;&#x52A8;&#xFF0C;&#x91CD;&#x542F;&#xFF0C;&#x5173;&#x95ED;&#x8FDB;&#x7A0B;&#x3002;<br> <a id="more"></a></p>
+<p></p><h4 id="&#x4EA7;&#x751F;&#x80CC;&#x666F;">&#x4EA7;&#x751F;&#x80CC;&#x666F;</h4><br>&#x5728;&#x4E00;&#x4E2A;&#x5206;&#x5E03;&#x5F0F;&#x73AF;&#x5883;&#x4E2D;&#xFF0C;&#x6BCF;&#x53F0;&#x673A;&#x5668;&#x4E0A;&#x53EF;&#x80FD;&#x9700;&#x8981;&#x542F;&#x52A8;&#x548C;&#x505C;&#x6B62;&#x591A;&#x4E2A;&#x8FDB;&#x7A0B;&#xFF0C;&#x4F7F;&#x7528;&#x547D;&#x4EE4;&#x884C;&#x65B9;&#x5F0F;&#x4E00;&#x4E2A;&#x4E00;&#x4E2A;&#x624B;&#x52A8;&#x542F;&#x52A8;&#x548C;&#x505C;&#x6B62;&#x975E;&#x5E38;&#x9EBB;&#x70E6;&#xFF0C;&#x800C;&#x4E14;&#x67E5;&#x770B;&#x6BCF;&#x4E2A;&#x8FDB;&#x7A0B;&#x7684;&#x72B6;&#x6001;&#x4E5F;&#x5F88;&#x4E0D;&#x65B9;&#x4FBF;&#x3002;&#x5982;&#x679C;&#x6709;&#x4E00;&#x4E2A;&#x5DE5;&#x5177;&#x80FD;&#x591F;&#x5B9E;&#x73B0;&#x6BCF;&#x53F0;&#x673A;&#x5668;&#x4E0A;&#x591A;&#x4E2A;&#x8FDB;&#x7A0B;&#x7684;&#x7B80;&#x5355;&#x9AD8;&#x6548;&#x4E2D;&#x5FC3;&#x5316;&#x7BA1;&#x7406;&#x5C06;&#x662F;&#x975E;&#x5E38;&#x65B9;&#x4FBF;&#x7684;&#x3002;&#x4E8E;&#x662F;Supervisord&#x5DE5;&#x5177;&#x5E94;&#x8FD0;&#x800C;&#x751F;&#x3002;&#x4E0E;Supervisord&#x7C7B;&#x4F3C;&#x7684;&#x5DE5;&#x5177;&#x5305;&#x62EC;monit, daemontools&#x548C;runit&#x3002;<p></p>
+<p></p><h4 id="&#x5B89;&#x88C5;">&#x5B89;&#x88C5;</h4><br>Supervisord&#x662F;&#x8FD0;&#x884C;&#x5728;Python&#x73AF;&#x5883;&#x4E0B;&#x7684;&#x670D;&#x52A1;&#x76D1;&#x63A7;&#x7A0B;&#x5E8F;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x5B89;&#x88C5;supervisord&#x4E4B;&#x524D;&#x5FC5;&#x987B;&#x6709;python&#x73AF;&#x5883;&#x3002;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yum install python-setuptools</div><div class="line">easy_install supervisor</div></pre></td></tr></table></figure><p></p>
+<p>&#x5982;&#x679C;&#x5B89;&#x88C5;&#x6210;&#x529F;&#xFF0C;&#x952E;&#x5165;: echo_supervisord_conf&#xFF0C;&#x4F1A;&#x663E;&#x793A;&#x4E00;&#x4E2A;superviscord_conf &#x7684;&#x914D;&#x7F6E;&#x6A21;&#x677F;&#x3002;<br>&#x8FD9;&#x91CC;&#x4F7F;&#x7528;&#x91CD;&#x5B9A;&#x5411;&#x8FD0;&#x7B97;&#x7B26;&#x5C06;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x5B9A;&#x5411;&#x5230;/etc&#x8DEF;&#x5F84;&#x4E0B;&#xFF08;&#x65B9;&#x4FBF;&#x7BA1;&#x7406;&#xFF09;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">echo</span>_supervisord_conf&gt;/etc/supervisord.conf</div></pre></td></tr></table></figure></p>
+<p></p><h4 id="&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x8BE6;&#x89E3;">&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x8BE6;&#x89E3;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">[unix_http_server]</div><div class="line">file=/tmp/supervisor.sock ; UNIX socket &#x6587;&#x4EF6;&#xFF0C;supervisorctl &#x4F1A;&#x4F7F;&#x7528;</div><div class="line">;chmod=0700 ; socket &#x6587;&#x4EF6;&#x7684; mode&#xFF0C;&#x9ED8;&#x8BA4;&#x662F; 0700</div><div class="line">;chown=nobody:nogroup ; socket &#x6587;&#x4EF6;&#x7684; owner&#xFF0C;&#x683C;&#x5F0F;&#xFF1A; uid:gid</div><div class="line"></div><div class="line">;[inet_http_server] ; HTTP &#x670D;&#x52A1;&#x5668;&#xFF0C;&#x63D0;&#x4F9B; web &#x7BA1;&#x7406;&#x754C;&#x9762;</div><div class="line">;port=127.0.0.1:9001 ; Web &#x7BA1;&#x7406;&#x540E;&#x53F0;&#x8FD0;&#x884C;&#x7684; IP &#x548C;&#x7AEF;&#x53E3;&#xFF0C;&#x5982;&#x679C;&#x5F00;&#x653E;&#x5230;&#x516C;&#x7F51;&#xFF0C;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x5B89;&#x5168;&#x6027;</div><div class="line">;username=user ; &#x767B;&#x5F55;&#x7BA1;&#x7406;&#x540E;&#x53F0;&#x7684;&#x7528;&#x6237;&#x540D;</div><div class="line">;password=123 ; &#x767B;&#x5F55;&#x7BA1;&#x7406;&#x540E;&#x53F0;&#x7684;&#x5BC6;&#x7801;</div><div class="line"></div><div class="line">[supervisord]</div><div class="line">logfile=/tmp/supervisord.log ; &#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F; <span class="variable">$CWD</span>/supervisord.log</div><div class="line">logfile_maxbytes=50MB ; &#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x5927;&#x5C0F;&#xFF0C;&#x8D85;&#x51FA;&#x4F1A; rotate&#xFF0C;&#x9ED8;&#x8BA4; 50MB</div><div class="line">logfile_backups=10 ; &#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x4FDD;&#x7559;&#x5907;&#x4EFD;&#x6570;&#x91CF;&#x9ED8;&#x8BA4; 10</div><div class="line">loglevel=info ; &#x65E5;&#x5FD7;&#x7EA7;&#x522B;&#xFF0C;&#x9ED8;&#x8BA4; info&#xFF0C;&#x5176;&#x5B83;: debug,warn,trace</div><div class="line">pidfile=/tmp/supervisord.pid ; pid &#x6587;&#x4EF6;</div><div class="line">nodaemon=<span class="literal">false</span> ; &#x662F;&#x5426;&#x5728;&#x524D;&#x53F0;&#x542F;&#x52A8;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F; <span class="literal">false</span>&#xFF0C;&#x5373;&#x4EE5; daemon &#x7684;&#x65B9;&#x5F0F;&#x542F;&#x52A8;</div><div class="line">minfds=1024 ; &#x53EF;&#x4EE5;&#x6253;&#x5F00;&#x7684;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x7684;&#x6700;&#x5C0F;&#x503C;&#xFF0C;&#x9ED8;&#x8BA4; 1024</div><div class="line">minprocs=200 ; &#x53EF;&#x4EE5;&#x6253;&#x5F00;&#x7684;&#x8FDB;&#x7A0B;&#x6570;&#x7684;&#x6700;&#x5C0F;&#x503C;&#xFF0C;&#x9ED8;&#x8BA4; 200</div><div class="line"></div><div class="line">; the below section must remain <span class="keyword">in</span> the config file <span class="keyword">for</span> RPC</div><div class="line">; (supervisorctl/web interface) to work, additional interfaces may be</div><div class="line">; added by defining them <span class="keyword">in</span> separate rpcinterface: sections</div><div class="line">[rpcinterface:supervisor]</div><div class="line">supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface</div><div class="line"></div><div class="line">[supervisorctl]</div><div class="line">serverurl=unix:///tmp/supervisor.sock ; &#x901A;&#x8FC7; UNIX socket &#x8FDE;&#x63A5; supervisord&#xFF0C;&#x8DEF;&#x5F84;&#x4E0E; unix_http_server &#x90E8;&#x5206;&#x7684; file &#x4E00;&#x81F4;</div><div class="line">;serverurl=http://127.0.0.1:9001 ; &#x901A;&#x8FC7; HTTP &#x7684;&#x65B9;&#x5F0F;&#x8FDE;&#x63A5; supervisord</div><div class="line"></div><div class="line">; &#x5305;&#x542B;&#x5176;&#x4ED6;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;</div><div class="line">[include]</div><div class="line">files = relative/directory/*.ini ; &#x53EF;&#x4EE5;&#x662F; *.conf &#x6216; *.ini</div></pre></td></tr></table></figure><p></p>
+<p></p><h4 id="&#x8FDB;&#x7A0B;program&#x914D;&#x7F6E;">&#x8FDB;&#x7A0B;Program&#x914D;&#x7F6E;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">[program:usercenter]</div><div class="line">directory = /home/leon/projects/usercenter ; &#x7A0B;&#x5E8F;&#x7684;&#x542F;&#x52A8;&#x76EE;&#x5F55;</div><div class="line"><span class="built_in">command</span> = gunicorn -c gunicorn.py wsgi:app ; &#x542F;&#x52A8;&#x547D;&#x4EE4;&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#x4E0E;&#x624B;&#x52A8;&#x5728;&#x547D;&#x4EE4;&#x884C;&#x542F;&#x52A8;&#x7684;&#x547D;&#x4EE4;&#x662F;&#x4E00;&#x6837;&#x7684;</div><div class="line">autostart = <span class="literal">true</span> ; &#x5728; supervisord &#x542F;&#x52A8;&#x7684;&#x65F6;&#x5019;&#x4E5F;&#x81EA;&#x52A8;&#x542F;&#x52A8;</div><div class="line">startsecs = 5 ; &#x542F;&#x52A8; 5 &#x79D2;&#x540E;&#x6CA1;&#x6709;&#x5F02;&#x5E38;&#x9000;&#x51FA;&#xFF0C;&#x5C31;&#x5F53;&#x4F5C;&#x5DF2;&#x7ECF;&#x6B63;&#x5E38;&#x542F;&#x52A8;&#x4E86;</div><div class="line">autorestart = <span class="literal">true</span> ; &#x7A0B;&#x5E8F;&#x5F02;&#x5E38;&#x9000;&#x51FA;&#x540E;&#x81EA;&#x52A8;&#x91CD;&#x542F;</div><div class="line">startretries = 3 ; &#x542F;&#x52A8;&#x5931;&#x8D25;&#x81EA;&#x52A8;&#x91CD;&#x8BD5;&#x6B21;&#x6570;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F; 3</div><div class="line">user = leon ; &#x7528;&#x54EA;&#x4E2A;&#x7528;&#x6237;&#x542F;&#x52A8;</div><div class="line">redirect_stderr = <span class="literal">true</span> ; &#x628A; stderr &#x91CD;&#x5B9A;&#x5411;&#x5230; stdout&#xFF0C;&#x9ED8;&#x8BA4; <span class="literal">false</span></div><div class="line">stdout_logfile_maxbytes = 20MB ; stdout &#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x5927;&#x5C0F;&#xFF0C;&#x9ED8;&#x8BA4; 50MB</div><div class="line">stdout_logfile_backups = 20 ; stdout &#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x5907;&#x4EFD;&#x6570;</div><div class="line">; stdout &#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#xFF0C;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x5F53;&#x6307;&#x5B9A;&#x76EE;&#x5F55;&#x4E0D;&#x5B58;&#x5728;&#x65F6;&#x65E0;&#x6CD5;&#x6B63;&#x5E38;&#x542F;&#x52A8;&#xFF0C;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x624B;&#x52A8;&#x521B;&#x5EFA;&#x76EE;&#x5F55;&#xFF08;supervisord &#x4F1A;&#x81EA;&#x52A8;&#x521B;&#x5EFA;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#xFF09;</div><div class="line">stdout_logfile = /data/logs/usercenter_stdout.log</div><div class="line"></div><div class="line">; &#x53EF;&#x4EE5;&#x901A;&#x8FC7; environment &#x6765;&#x6DFB;&#x52A0;&#x9700;&#x8981;&#x7684;&#x73AF;&#x5883;&#x53D8;&#x91CF;&#xFF0C;&#x4E00;&#x79CD;&#x5E38;&#x89C1;&#x7684;&#x7528;&#x6CD5;&#x662F;&#x4FEE;&#x6539; PYTHONPATH</div><div class="line">; environment=PYTHONPATH=<span class="variable">$PYTHONPATH</span>:/path/to/somewhere</div></pre></td></tr></table></figure><p></p>
+<p>&#x5C06;&#x8FDB;&#x7A0B;&#x914D;&#x7F6E;&#x6DFB;&#x52A0;&#x5230;supervisord.conf&#x6587;&#x4EF6;&#x4E2D;<br><strong>&#x63A8;&#x8350;&#x5C06;&#x5404;&#x4E2A;&#x8FDB;&#x7A0B;&#x914D;&#x7F6E;&#x653E;&#x5230;&#x5355;&#x72EC;&#x7684;&#x6587;&#x4EF6;&#x4E2D;&#xFF0C;&#x7136;&#x540E;&#x901A;&#x8FC7;[include]&#x914D;&#x7F6E;&#x9879;&#x5F15;&#x7528;</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[include]</div><div class="line">files = /etc/supervisor/*.conf</div></pre></td></tr></table></figure></p>
+<p></p><h4 id="supervisor&#x670D;&#x52A1;&#x542F;&#x52A8;">supervisor&#x670D;&#x52A1;&#x542F;&#x52A8;</h4><br>&#x8FD0;&#x884C;&#x547D;&#x4EE4;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">supervisord -c /etc/supervisord.conf</div></pre></td></tr></table></figure><p></p>
+<p></p><h4 id="supervisor&#x670D;&#x52A1;&#x5BA2;&#x6237;&#x7AEF;&#x7BA1;&#x7406;">supervisor&#x670D;&#x52A1;&#x5BA2;&#x6237;&#x7AEF;&#x7BA1;&#x7406;</h4><br>&#x53EF;&#x4EE5;&#x4F7F;&#x7528;supervisord&#x7684;&#x547D;&#x4EE4;&#x884C;&#x5BA2;&#x6237;&#x7AEF;&#x7BA1;&#x7406;&#x5DE5;&#x5177;supervisorctl&#xFF0C;&#x6765;&#x7BA1;&#x7406;&#x8FDB;&#x7A0B;&#x3002;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">supervisorctl status</div><div class="line">supervisorctl stop usercenter</div><div class="line">supervisorctl start usercenter</div><div class="line">supervisorctl restart usercenter</div><div class="line">supervisorctl reread</div><div class="line">supervisorctl update</div></pre></td></tr></table></figure><p></p>
+<p></p><h4 id="supervisor-web&#x7BA1;&#x7406;&#x754C;&#x9762;">supervisor web&#x7BA1;&#x7406;&#x754C;&#x9762;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">;[inet_http_server] ; HTTP &#x670D;&#x52A1;&#x5668;&#xFF0C;&#x63D0;&#x4F9B; web &#x7BA1;&#x7406;&#x754C;&#x9762;</div><div class="line">;port=127.0.0.1:9001 ; Web &#x7BA1;&#x7406;&#x540E;&#x53F0;&#x8FD0;&#x884C;&#x7684; IP &#x548C;&#x7AEF;&#x53E3;&#xFF0C;&#x5982;&#x679C;&#x5F00;&#x653E;&#x5230;&#x516C;&#x7F51;&#xFF0C;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x5B89;&#x5168;&#x6027;</div><div class="line">;username=user ; &#x767B;&#x5F55;&#x7BA1;&#x7406;&#x540E;&#x53F0;&#x7684;&#x7528;&#x6237;&#x540D;</div><div class="line">;password=123 ; &#x767B;&#x5F55;&#x7BA1;&#x7406;&#x540E;&#x53F0;&#x7684;&#x5BC6;&#x7801;</div></pre></td></tr></table></figure><p></p>
+<p>&#x5728;&#x6D4F;&#x89C8;&#x5668;&#x4E2D;&#x8F93;&#x5165;<a href="http://127.0.0.1:9001&#xFF0C;&#x5373;&#x53EF;&#x8FDB;&#x5165;web&#x7BA1;&#x7406;&#x754C;&#x9762;" target="_blank" rel="external">http://127.0.0.1:9001&#xFF0C;&#x5373;&#x53EF;&#x8FDB;&#x5165;web&#x7BA1;&#x7406;&#x754C;&#x9762;</a></p>
 
       
     </div>
@@ -446,11 +437,11 @@
 			<!-- 版权声明开始 -->
 		<b:if cond='data:blog.pageType == &quot;item&quot;'>
 		<div style='background-color: #F2F2F2; padding: 4px; margin: 6px; border:1px solid #000000;'>		           
-           <p>&nbsp &nbsp  本文标题 &nbsp : &nbsp <a href="/在Linux中测试网络带宽.html">在Linux中测试网络带宽</a></p>
+           <p>&nbsp &nbsp  本文标题 &nbsp : &nbsp <a href="/supervisor进程管理工具.html">supervisor进程管理工具</a></p>
 		   <p>&nbsp &nbsp      文章作者 &nbsp : &nbsp <a href="/" title="访问 火柴 的个人博客">火柴</a></p>
-           <p>&nbsp &nbsp      发布时间 &nbsp : &nbsp </span>2016年9月2日 - 09时09分</p>
-		   <p>&nbsp &nbsp      本文链接 &nbsp : &nbsp <a href="/在Linux中测试网络带宽.html" title="在Linux中测试网络带宽">http://www.chen-hao.com.cn/在Linux中测试网络带宽.html</a></p>
-           <p>&nbsp &nbsp      本文字数 &nbsp : &nbsp <span class="page-count">本文一共有389字</span></script></a></p>
+           <p>&nbsp &nbsp      发布时间 &nbsp : &nbsp </span>2017年7月3日 - 11时07分</p>
+		   <p>&nbsp &nbsp      本文链接 &nbsp : &nbsp <a href="/supervisor进程管理工具.html" title="supervisor进程管理工具">http://www.chen-hao.com.cn/supervisor进程管理工具.html</a></p>
+           <p>&nbsp &nbsp      本文字数 &nbsp : &nbsp <span class="page-count">本文一共有993字</span></script></a></p>
 		   <p>&nbsp &nbsp      许可协议 &nbsp : &nbsp <i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" title="Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)">Attribution-NonCommercial 4.0</a></p>
 		   <p> &nbsp &nbsp  &copy 转载请保留以上信息，谢谢合作。</p>
 		</div>
@@ -463,7 +454,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/speedtest-cli/" rel="tag">#speedtest-cli</a>
+            <a href="/tags/supervisor/" rel="tag">#supervisor</a>
           
         </div>
       
@@ -474,17 +465,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/mysqldump全量和增量备份脚本.html" rel="next" title="mysqldump全量和增量备份脚本">
-                <i class="fa fa-chevron-left"></i> mysqldump全量和增量备份脚本
+              <a href="/别的程序员是怎么读你的简历的（转）.html" rel="next" title="别的程序员是怎么读你的简历的（转）">
+                <i class="fa fa-chevron-left"></i> 别的程序员是怎么读你的简历的（转）
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/dubbo-monitor-simple-监控中心安装.html" rel="prev" title="dubbo-monitor-simple 监控中心安装">
-                dubbo-monitor-simple 监控中心安装 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -512,8 +499,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="在Linux中测试网络带宽.html"
-           data-title="在Linux中测试网络带宽" data-url="http://www.chen-hao.com.cn/在Linux中测试网络带宽.html">
+      <div class="ds-thread" data-thread-key="supervisor进程管理工具.html"
+           data-title="supervisor进程管理工具" data-url="http://www.chen-hao.com.cn/supervisor进程管理工具.html">
       </div>
     
   </div>
@@ -828,7 +815,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装speedtest-cli"><span class="nav-number">1.</span> <span class="nav-text">安装speedtest-cli</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pip-easy_install"><span class="nav-number">1.1.</span> <span class="nav-text">pip / easy_install</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#github"><span class="nav-number">1.2.</span> <span class="nav-text">github</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#download"><span class="nav-number">1.3.</span> <span class="nav-text">download</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用方法"><span class="nav-number">2.</span> <span class="nav-text">使用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用示例"><span class="nav-number">3.</span> <span class="nav-text">使用示例</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#产生背景"><span class="nav-number">1.</span> <span class="nav-text">产生背景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置文件详解"><span class="nav-number">3.</span> <span class="nav-text">配置文件详解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程program配置"><span class="nav-number">4.</span> <span class="nav-text">进程Program配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#supervisor服务启动"><span class="nav-number">5.</span> <span class="nav-text">supervisor服务启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#supervisor服务客户端管理"><span class="nav-number">6.</span> <span class="nav-text">supervisor服务客户端管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#supervisor-web管理界面"><span class="nav-number">7.</span> <span class="nav-text">supervisor web管理界面</span></a></li></ol></div>
             
           </div>
         </section>
