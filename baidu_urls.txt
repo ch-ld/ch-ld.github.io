@@ -1,3 +1,4 @@
+http://www.chen-hao.com.cn/Cachecloud-搜狐Redis云平台.html
 http://www.chen-hao.com.cn/ELK-Stack常用架构及使用场景.html
 http://www.chen-hao.com.cn/supervisor进程管理工具.html
 http://www.chen-hao.com.cn/别的程序员是怎么读你的简历的（转）.html
@@ -7,4 +8,3 @@ http://www.chen-hao.com.cn/常量变量-运算符-程序结构01.html
 http://www.chen-hao.com.cn/jenkins部署及构建方式.html
 http://www.chen-hao.com.cn/jenkins-sonar-代码质量分析.html
 http://www.chen-hao.com.cn/搭建内网gitlab仓库.html
-http://www.chen-hao.com.cn/jenkins自动化部署.html
