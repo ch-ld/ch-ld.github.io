@@ -2,9 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.chen-hao.com.cn/categories/index.html</loc>
+    
+    <lastmod>2017-07-20T01:01:11.336Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.chen-hao.com.cn/tags/index.html</loc>
+    
+    <lastmod>2017-07-20T00:57:41.021Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.chen-hao.com.cn/cywz/index.html</loc>
     
-    <lastmod>2017-07-19T04:51:19.416Z</lastmod>
+    <lastmod>2017-07-20T00:57:11.108Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.chen-hao.com.cn/about/index.html</loc>
+    
+    <lastmod>2017-07-20T00:56:33.112Z</lastmod>
     
   </url>
   
@@ -26,13 +47,6 @@
     <loc>http://www.chen-hao.com.cn/ELK-Stack%E5%B8%B8%E7%94%A8%E6%9E%B6%E6%9E%84%E5%8F%8A%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF.html</loc>
     
     <lastmod>2017-07-19T02:31:57.853Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.chen-hao.com.cn/resume/index.html</loc>
-    
-    <lastmod>2017-07-18T09:15:57.102Z</lastmod>
     
   </url>
   
@@ -289,13 +303,6 @@
   </url>
   
   <url>
-    <loc>http://www.chen-hao.com.cn/about/index.html</loc>
-    
-    <lastmod>2016-11-29T00:54:11.082Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.chen-hao.com.cn/dubbo-monitor-simple-%E7%9B%91%E6%8E%A7%E4%B8%AD%E5%BF%83%E5%AE%89%E8%A3%85.html</loc>
     
     <lastmod>2016-11-28T08:27:19.292Z</lastmod>
@@ -411,20 +418,6 @@
     <loc>http://www.chen-hao.com.cn/SSH%E5%8E%9F%E7%90%86%E5%92%8C%E5%BA%94%E7%94%A8.html</loc>
     
     <lastmod>2016-08-24T07:00:21.387Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.chen-hao.com.cn/categories/index.html</loc>
-    
-    <lastmod>2016-08-05T03:44:53.659Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.chen-hao.com.cn/tags/index.html</loc>
-    
-    <lastmod>2016-08-05T03:44:39.354Z</lastmod>
     
   </url>
   
