@@ -99,7 +99,7 @@
 <meta property="og:image" content="http://www.chen-hao.com.cn/uploads/ELK_Log.png">
 <meta property="og:image" content="http://www.chen-hao.com.cn/uploads/ELK_beats.png">
 <meta property="og:image" content="http://www.chen-hao.com.cn/uploads/ELK_xx.png">
-<meta property="og:updated_time" content="2017-07-19T02:31:57.853Z">
+<meta property="og:updated_time" content="2017-07-20T09:05:22.305Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ELK Stack 常用架构及使用场景">
 <meta name="twitter:description" content="ELK Stack 是软件集合 Elasticsearch、 Logstash、 Kibana 的简称，由这三个软件及其相关的组件可以打造大规模日志实时处理系统。">
@@ -112,7 +112,7 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":true},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -277,22 +277,22 @@
         </li>
       
         
-        <li class="menu-item menu-item-cywz">
-          <a href="/cywz" rel="section">
+        <li class="menu-item menu-item-resume">
+          <a href="http://resume.chen-hao.com.cn" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-globe"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-send"></i> <br />
             
-            常用网站
+            简历
           </a>
         </li>
       
         
-        <li class="menu-item menu-item-commonweal">
-          <a href="/404.html" rel="section">
+        <li class="menu-item menu-item-love">
+          <a href="https://love.chen-hao.com.cn/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
             
-            公益404
+            纪念日
           </a>
         </li>
       
@@ -510,7 +510,7 @@
   <p><span>本文标题:</span><a href="/ELK-Stack常用架构及使用场景.html">ELK Stack 常用架构及使用场景</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 火柴 的个人博客">火柴</a></p>
   <p><span>发布时间:</span>2017年07月04日 - 10:07</p>
-  <p><span>最后更新:</span>2017年07月19日 - 10:07</p>
+  <p><span>最后更新:</span>2017年07月20日 - 17:07</p>
   <p><span>原始链接:</span><a href="/ELK-Stack常用架构及使用场景.html" title="ELK Stack 常用架构及使用场景">http://www.chen-hao.com.cn/ELK-Stack常用架构及使用场景.html</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.chen-hao.com.cn/ELK-Stack常用架构及使用场景.html"  aria-label="复制成功！"></i></span>
   </p>
@@ -892,11 +892,11 @@
               </span>
             
               <span class="links-of-author-item">
-                <a href="http://resume.chen-hao.com.cn" target="_blank" title="简历">
+                <a href="https://www.chen-hao.com.cn/cywz" target="_blank" title="常用网站">
                   
-                    <i class="fa fa-fw fa-send"></i>
+                    <i class="fa fa-fw fa-globe"></i>
                   
-                  简历
+                  常用网站
                 </a>
               </span>
             
@@ -1069,6 +1069,8 @@
     
       <div class="back-to-top">
         <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
         
       </div>
     
@@ -1439,12 +1441,13 @@
 <!-- 点击爱心效果 -->
 <script src="/js/love.js"></script>
 <!-- 背景动画 -->
-<!-- <script src="/js/particle.js"></script> -->
+<!-- <script src="/js/particle2.js"></script>  -->
 
 <!--崩溃欺骗-->
 <!-- <script src="/js/qipian.js"></script> -->
 
-
+<script type="text/javascript" src="/lib/zclip/clipboard.min.js"></script>	
+<script type="text/javascript" src="/js/src/custom.js"></script>
   
 </body>
 </html>

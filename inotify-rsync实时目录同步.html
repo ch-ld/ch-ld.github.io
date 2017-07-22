@@ -99,7 +99,7 @@ Linux内核从2.6.13开始，引入了inotify机制。通过intofity机制，能
 <meta property="og:description" content="inotify
 
 Linux内核从2.6.13开始，引入了inotify机制。通过intofity机制，能够对文件系统的变化进行监控，如对文件进行创建、删除、修改等操作，可以及时通知应用程序进行相关事件的处理。这种响应处理机制，避免了频繁的文件轮询任务，提高了任务的处理效率。">
-<meta property="og:updated_time" content="2017-01-09T07:30:05.542Z">
+<meta property="og:updated_time" content="2017-07-20T09:05:22.359Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="inotify+rsync实时目录同步">
 <meta name="twitter:description" content="inotify
@@ -113,7 +113,7 @@ Linux内核从2.6.13开始，引入了inotify机制。通过intofity机制，能
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":true},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -278,22 +278,22 @@ Linux内核从2.6.13开始，引入了inotify机制。通过intofity机制，能
         </li>
       
         
-        <li class="menu-item menu-item-cywz">
-          <a href="/cywz" rel="section">
+        <li class="menu-item menu-item-resume">
+          <a href="http://resume.chen-hao.com.cn" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-globe"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-send"></i> <br />
             
-            常用网站
+            简历
           </a>
         </li>
       
         
-        <li class="menu-item menu-item-commonweal">
-          <a href="/404.html" rel="section">
+        <li class="menu-item menu-item-love">
+          <a href="https://love.chen-hao.com.cn/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
             
-            公益404
+            纪念日
           </a>
         </li>
       
@@ -861,11 +861,11 @@ Linux内核从2.6.13开始，引入了inotify机制。通过intofity机制，能
               </span>
             
               <span class="links-of-author-item">
-                <a href="http://resume.chen-hao.com.cn" target="_blank" title="简历">
+                <a href="https://www.chen-hao.com.cn/cywz" target="_blank" title="常用网站">
                   
-                    <i class="fa fa-fw fa-send"></i>
+                    <i class="fa fa-fw fa-globe"></i>
                   
-                  简历
+                  常用网站
                 </a>
               </span>
             
@@ -1038,6 +1038,8 @@ Linux内核从2.6.13开始，引入了inotify机制。通过intofity机制，能
     
       <div class="back-to-top">
         <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
         
       </div>
     
@@ -1408,12 +1410,13 @@ Linux内核从2.6.13开始，引入了inotify机制。通过intofity机制，能
 <!-- 点击爱心效果 -->
 <script src="/js/love.js"></script>
 <!-- 背景动画 -->
-<!-- <script src="/js/particle.js"></script> -->
+<!-- <script src="/js/particle2.js"></script>  -->
 
 <!--崩溃欺骗-->
 <!-- <script src="/js/qipian.js"></script> -->
 
-
+<script type="text/javascript" src="/lib/zclip/clipboard.min.js"></script>	
+<script type="text/javascript" src="/js/src/custom.js"></script>
   
 </body>
 </html>

@@ -95,7 +95,7 @@
 <meta property="og:url" content="http://www.chen-hao.com.cn/mongodb分片配置.html">
 <meta property="og:site_name" content="火柴的博客">
 <meta property="og:description" content="MongoDB 是由C++语言编写的，是一个基于分布式文件存储的开源数据库系统。在高负载的情况下，添加更多的节点，可以保证服务器性能。MongoDB 旨在为WEB应用提供可扩展的高性能数据存储解决方案。这里废话不多说，直接开始配置mongodb分片">
-<meta property="og:updated_time" content="2017-01-10T07:45:41.567Z">
+<meta property="og:updated_time" content="2017-07-20T09:05:22.370Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mongodb分片配置">
 <meta name="twitter:description" content="MongoDB 是由C++语言编写的，是一个基于分布式文件存储的开源数据库系统。在高负载的情况下，添加更多的节点，可以保证服务器性能。MongoDB 旨在为WEB应用提供可扩展的高性能数据存储解决方案。这里废话不多说，直接开始配置mongodb分片">
@@ -107,7 +107,7 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":true},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -272,22 +272,22 @@
         </li>
       
         
-        <li class="menu-item menu-item-cywz">
-          <a href="/cywz" rel="section">
+        <li class="menu-item menu-item-resume">
+          <a href="http://resume.chen-hao.com.cn" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-globe"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-send"></i> <br />
             
-            常用网站
+            简历
           </a>
         </li>
       
         
-        <li class="menu-item menu-item-commonweal">
-          <a href="/404.html" rel="section">
+        <li class="menu-item menu-item-love">
+          <a href="https://love.chen-hao.com.cn/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
             
-            公益404
+            纪念日
           </a>
         </li>
       
@@ -471,8 +471,8 @@
 <p></p><h4 id="&#x914D;&#x7F6E;shard2">&#x914D;&#x7F6E;shard2</h4><br>&#x767B;&#x5F55;91<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">mongo --port 27002</div><div class="line">shard1:SECONDARY&gt; use admin</div><div class="line">switched to db admin</div><div class="line">shard1:SECONDARY&gt; rs.initiate({</div><div class="line">... _id: <span class="string">&apos;shard2&apos;</span>,</div><div class="line">...  members: [</div><div class="line">... {_id: 90,host: <span class="string">&apos;192.168.16.90:27001&apos;</span>,arbiterOnly: <span class="literal">true</span>},</div><div class="line">... {_id: 91,host: <span class="string">&apos;192.169.16.91:27001&apos;</span>},</div><div class="line">... {_id: 92,host: <span class="string">&apos;192.168.16.92:27001&apos;</span>}</div><div class="line">... ]</div><div class="line">... });</div></pre></td></tr></table></figure><p></p>
 <p></p><h4 id="&#x914D;&#x7F6E;shard3">&#x914D;&#x7F6E;shard3</h4><br>&#x767B;&#x5F55;92<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mongo --port 27003</div><div class="line">shard1:SECONDARY&gt; use admin</div><div class="line">rs.initiate({ _id: <span class="string">&apos;shard3&apos;</span>,  members: [ {_id: 90,host: <span class="string">&apos;192.168.16.90:27003&apos;</span>}, {_id: 91,host: <span class="string">&apos;192.169.16.91:27003&apos;</span>,arbiterOnly: <span class="literal">true</span>}, {_id: 92,host: <span class="string">&apos;192.168.16.92:27003&apos;</span>} ] });</div></pre></td></tr></table></figure><p></p>
 <p></p><h4 id="&#x8BBE;&#x7F6E;&#x8DEF;&#x7531;&#x5230;&#x5206;&#x7247;&#x96C6;&#x7FA4;&#x914D;&#x7F6E;">&#x8BBE;&#x7F6E;&#x8DEF;&#x7531;&#x5230;&#x5206;&#x7247;&#x96C6;&#x7FA4;&#x914D;&#x7F6E;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">db.runCommand({addShard: <span class="string">&apos;shard2/192.168.16.90:27002,192.168.16.91:27002,192.168.16.92:27002&apos;</span>});</div><div class="line">{ <span class="string">&quot;shardAdded&quot;</span> : <span class="string">&quot;shard2&quot;</span>, <span class="string">&quot;ok&quot;</span> : 1 }</div><div class="line">mongos&gt; db.runCommand({addShard: <span class="string">&apos;shard3/192.168.16.90:27003,192.168.16.91:27003,192.168.16.92:27003&apos;</span>});</div><div class="line">{ <span class="string">&quot;shardAdded&quot;</span> : <span class="string">&quot;shard3&quot;</span>, <span class="string">&quot;ok&quot;</span> : 1 }</div><div class="line">mongos&gt; db.runCommand({addShard: <span class="string">&apos;shard1/192.168.16.90:27001,192.168.16.91:27001,192.168.16.92:27001&apos;</span>});</div></pre></td></tr></table></figure><p></p>
-<p></p><h4 id="&#x67E5;&#x770B;&#x914D;&#x7F6E;&#x597D;&#x7684;shard">&#x67E5;&#x770B;&#x914D;&#x7F6E;&#x597D;&#x7684;shard</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">mongos&gt; db.runCommand({listshards: 1});</div><div class="line">{</div><div class="line">true<span class="string">&quot;shards&quot;</span> : [</div><div class="line">truetrue{</div><div class="line">truetruetrue<span class="string">&quot;_id&quot;</span> : <span class="string">&quot;shard1&quot;</span>,</div><div class="line">truetruetrue<span class="string">&quot;host&quot;</span> : <span class="string">&quot;shard1/192.168.16.90:27001,192.168.16.91:27001&quot;</span></div><div class="line">truetrue},</div><div class="line">truetrue{</div><div class="line">truetruetrue<span class="string">&quot;_id&quot;</span> : <span class="string">&quot;shard2&quot;</span>,</div><div class="line">truetruetrue<span class="string">&quot;host&quot;</span> : <span class="string">&quot;shard2/192.168.16.91:27002,192.168.16.92:27002&quot;</span></div><div class="line">truetrue},</div><div class="line">truetrue{</div><div class="line">truetruetrue<span class="string">&quot;_id&quot;</span> : <span class="string">&quot;shard3&quot;</span>,</div><div class="line">truetruetrue<span class="string">&quot;host&quot;</span> : <span class="string">&quot;shard3/192.168.16.90:27003,192.168.16.92:27003&quot;</span></div><div class="line">truetrue}</div><div class="line">true],</div><div class="line">true<span class="string">&quot;ok&quot;</span> : 1</div><div class="line">}</div></pre></td></tr></table></figure><p></p>
-<p></p><h4 id="&#x6D4B;&#x8BD5;&#x5206;&#x7247;">&#x6D4B;&#x8BD5;&#x5206;&#x7247;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">mongos&gt; use admin</div><div class="line">mongos&gt; db.runCommand({enablesharding: <span class="string">&apos;dbtest&apos;</span>});</div><div class="line">mongos&gt; db.runCommand({shardcollection: <span class="string">&apos;dbtest.coll1&apos;</span>, key: {id: 1}});</div><div class="line">mongos&gt; use dbtest;</div><div class="line">mongos&gt; <span class="keyword">for</span>(var i=0; i&lt;10000; i++) db.coll1.insert({id: i, s: <span class="string">&apos;str_&apos;</span> + i});</div><div class="line">mongos&gt; db.coll1.stats()</div><div class="line">true<span class="string">&quot;shard1&quot;</span> : {</div><div class="line">true<span class="string">&quot;ns&quot;</span> : <span class="string">&quot;dbtest.coll1&quot;</span>,</div><div class="line">true<span class="string">&quot;count&quot;</span> : 1,</div><div class="line">true<span class="string">&quot;size&quot;</span> : 47,</div><div class="line">true<span class="string">&quot;avgObjSize&quot;</span> : 47,</div><div class="line">true<span class="string">&quot;storageSize&quot;</span> : 4096,</div><div class="line">true<span class="string">&quot;capped&quot;</span> : <span class="literal">false</span>,</div><div class="line">true<span class="string">&quot;wiredTiger&quot;</span> : {</div><div class="line"></div><div class="line">true<span class="string">&quot;shard2&quot;</span> : {</div><div class="line">true<span class="string">&quot;ns&quot;</span> : <span class="string">&quot;dbtest.coll1&quot;</span>,</div><div class="line">true<span class="string">&quot;count&quot;</span> : 9979,</div><div class="line">true<span class="string">&quot;size&quot;</span> : 497892,</div><div class="line">true<span class="string">&quot;avgObjSize&quot;</span> : 49,</div><div class="line">true<span class="string">&quot;storageSize&quot;</span> : 4096,</div><div class="line">true<span class="string">&quot;capped&quot;</span> : <span class="literal">false</span>,</div><div class="line">true<span class="string">&quot;wiredTiger&quot;</span> : {</div><div class="line">true</div><div class="line">true<span class="string">&quot;shard3&quot;</span> : {</div><div class="line">true<span class="string">&quot;ns&quot;</span> : <span class="string">&quot;dbtest.coll1&quot;</span>,</div><div class="line">true<span class="string">&quot;count&quot;</span> : 20,</div><div class="line">true<span class="string">&quot;size&quot;</span> : 951,</div><div class="line">true<span class="string">&quot;avgObjSize&quot;</span> : 47,</div><div class="line">true<span class="string">&quot;storageSize&quot;</span> : 16384,</div><div class="line">true<span class="string">&quot;capped&quot;</span> : <span class="literal">false</span>,</div><div class="line">true<span class="string">&quot;wiredTiger&quot;</span> : {</div></pre></td></tr></table></figure><p></p>
+<p></p><h4 id="&#x67E5;&#x770B;&#x914D;&#x7F6E;&#x597D;&#x7684;shard">&#x67E5;&#x770B;&#x914D;&#x7F6E;&#x597D;&#x7684;shard</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">mongos&gt; db.runCommand({listshards: 1});</div><div class="line">{</div><div class="line">	<span class="string">&quot;shards&quot;</span> : [</div><div class="line">		{</div><div class="line">			<span class="string">&quot;_id&quot;</span> : <span class="string">&quot;shard1&quot;</span>,</div><div class="line">			<span class="string">&quot;host&quot;</span> : <span class="string">&quot;shard1/192.168.16.90:27001,192.168.16.91:27001&quot;</span></div><div class="line">		},</div><div class="line">		{</div><div class="line">			<span class="string">&quot;_id&quot;</span> : <span class="string">&quot;shard2&quot;</span>,</div><div class="line">			<span class="string">&quot;host&quot;</span> : <span class="string">&quot;shard2/192.168.16.91:27002,192.168.16.92:27002&quot;</span></div><div class="line">		},</div><div class="line">		{</div><div class="line">			<span class="string">&quot;_id&quot;</span> : <span class="string">&quot;shard3&quot;</span>,</div><div class="line">			<span class="string">&quot;host&quot;</span> : <span class="string">&quot;shard3/192.168.16.90:27003,192.168.16.92:27003&quot;</span></div><div class="line">		}</div><div class="line">	],</div><div class="line">	<span class="string">&quot;ok&quot;</span> : 1</div><div class="line">}</div></pre></td></tr></table></figure><p></p>
+<p></p><h4 id="&#x6D4B;&#x8BD5;&#x5206;&#x7247;">&#x6D4B;&#x8BD5;&#x5206;&#x7247;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">mongos&gt; use admin</div><div class="line">mongos&gt; db.runCommand({enablesharding: <span class="string">&apos;dbtest&apos;</span>});</div><div class="line">mongos&gt; db.runCommand({shardcollection: <span class="string">&apos;dbtest.coll1&apos;</span>, key: {id: 1}});</div><div class="line">mongos&gt; use dbtest;</div><div class="line">mongos&gt; <span class="keyword">for</span>(var i=0; i&lt;10000; i++) db.coll1.insert({id: i, s: <span class="string">&apos;str_&apos;</span> + i});</div><div class="line">mongos&gt; db.coll1.stats()</div><div class="line">	<span class="string">&quot;shard1&quot;</span> : {</div><div class="line">	<span class="string">&quot;ns&quot;</span> : <span class="string">&quot;dbtest.coll1&quot;</span>,</div><div class="line">	<span class="string">&quot;count&quot;</span> : 1,</div><div class="line">	<span class="string">&quot;size&quot;</span> : 47,</div><div class="line">	<span class="string">&quot;avgObjSize&quot;</span> : 47,</div><div class="line">	<span class="string">&quot;storageSize&quot;</span> : 4096,</div><div class="line">	<span class="string">&quot;capped&quot;</span> : <span class="literal">false</span>,</div><div class="line">	<span class="string">&quot;wiredTiger&quot;</span> : {</div><div class="line"></div><div class="line">	<span class="string">&quot;shard2&quot;</span> : {</div><div class="line">	<span class="string">&quot;ns&quot;</span> : <span class="string">&quot;dbtest.coll1&quot;</span>,</div><div class="line">	<span class="string">&quot;count&quot;</span> : 9979,</div><div class="line">	<span class="string">&quot;size&quot;</span> : 497892,</div><div class="line">	<span class="string">&quot;avgObjSize&quot;</span> : 49,</div><div class="line">	<span class="string">&quot;storageSize&quot;</span> : 4096,</div><div class="line">	<span class="string">&quot;capped&quot;</span> : <span class="literal">false</span>,</div><div class="line">	<span class="string">&quot;wiredTiger&quot;</span> : {</div><div class="line">	</div><div class="line">	<span class="string">&quot;shard3&quot;</span> : {</div><div class="line">	<span class="string">&quot;ns&quot;</span> : <span class="string">&quot;dbtest.coll1&quot;</span>,</div><div class="line">	<span class="string">&quot;count&quot;</span> : 20,</div><div class="line">	<span class="string">&quot;size&quot;</span> : 951,</div><div class="line">	<span class="string">&quot;avgObjSize&quot;</span> : 47,</div><div class="line">	<span class="string">&quot;storageSize&quot;</span> : 16384,</div><div class="line">	<span class="string">&quot;capped&quot;</span> : <span class="literal">false</span>,</div><div class="line">	<span class="string">&quot;wiredTiger&quot;</span> : {</div></pre></td></tr></table></figure><p></p>
 <p>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;&#x8FD9;&#x91CC;&#x5206;&#x7247;&#x5DF2;&#x7ECF;&#x751F;&#x6548;&#xFF0C;&#x53EA;&#x662F;&#x5206;&#x914D;&#x4E0D;&#x5747;&#x5300;&#xFF0C;&#x6240;&#x6709;&#x7684;&#x6570;&#x636E;&#x90FD;&#x5B58;&#x5728;&#x4E86;shard2&#x4E2D;&#x4E86;</p>
 <p></p><h4 id="&#x4F7F;&#x7528;hashed-shard-key&#x7B97;&#x6CD5;&#x4FDD;&#x8BC1;&#x6587;&#x6863;&#x5747;&#x5300;&#x5206;&#x5E03;">&#x4F7F;&#x7528;hashed shard key&#x7B97;&#x6CD5;&#x4FDD;&#x8BC1;&#x6587;&#x6863;&#x5747;&#x5300;&#x5206;&#x5E03;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mongo --port 27000</div><div class="line">use admin</div><div class="line">sh.shardCollection(<span class="string">&apos;dbtest.coll1&apos;</span>, {id: <span class="string">&apos;hashed&apos;</span>});</div></pre></td></tr></table></figure><p></p>
 <p></p><h4 id="&#x5BA2;&#x6237;&#x7AEF;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8FDE;&#x63A5;&#x8DEF;&#x7531;&#x8282;&#x70B9;&#x6765;&#x5B9E;&#x73B0;&#x6570;&#x636E;&#x7684;&#x5206;&#x7247;">&#x5BA2;&#x6237;&#x7AEF;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8FDE;&#x63A5;&#x8DEF;&#x7531;&#x8282;&#x70B9;&#x6765;&#x5B9E;&#x73B0;&#x6570;&#x636E;&#x7684;&#x5206;&#x7247;</h4><br>    &#x8FD9;&#x91CC;&#x8FDE;&#x63A5;&#x4EFB;&#x4F55;&#x4E00;&#x53F0;&#x670D;&#x52A1;&#x5668;&#x7684;27000&#x7AEF;&#x53E3;&#x90FD;&#x884C;&#x3002;<p></p>
@@ -848,11 +848,11 @@
               </span>
             
               <span class="links-of-author-item">
-                <a href="http://resume.chen-hao.com.cn" target="_blank" title="简历">
+                <a href="https://www.chen-hao.com.cn/cywz" target="_blank" title="常用网站">
                   
-                    <i class="fa fa-fw fa-send"></i>
+                    <i class="fa fa-fw fa-globe"></i>
                   
-                  简历
+                  常用网站
                 </a>
               </span>
             
@@ -1025,6 +1025,8 @@
     
       <div class="back-to-top">
         <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
         
       </div>
     
@@ -1395,12 +1397,13 @@
 <!-- 点击爱心效果 -->
 <script src="/js/love.js"></script>
 <!-- 背景动画 -->
-<!-- <script src="/js/particle.js"></script> -->
+<!-- <script src="/js/particle2.js"></script>  -->
 
 <!--崩溃欺骗-->
 <!-- <script src="/js/qipian.js"></script> -->
 
-
+<script type="text/javascript" src="/lib/zclip/clipboard.min.js"></script>	
+<script type="text/javascript" src="/js/src/custom.js"></script>
   
 </body>
 </html>

@@ -95,7 +95,7 @@
 <meta property="og:url" content="http://www.chen-hao.com.cn/MongoDB3-x-配置文件.html">
 <meta property="og:site_name" content="火柴的博客">
 <meta property="og:description" content="mongodb 3.0 改变很多，3.0在数据存储引擎上更换成了wiredTiger，在数据压缩方面很有效，解决大数据量问题的情况下，磁盘不够用的问题。mongodb 3.0 配置文件采用的是YAML格式，只能使用空格，不支持tab键。">
-<meta property="og:updated_time" content="2017-01-10T07:17:28.526Z">
+<meta property="og:updated_time" content="2017-07-20T09:05:22.329Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MongoDB3.x-配置文件">
 <meta name="twitter:description" content="mongodb 3.0 改变很多，3.0在数据存储引擎上更换成了wiredTiger，在数据压缩方面很有效，解决大数据量问题的情况下，磁盘不够用的问题。mongodb 3.0 配置文件采用的是YAML格式，只能使用空格，不支持tab键。">
@@ -107,7 +107,7 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":true},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -272,22 +272,22 @@
         </li>
       
         
-        <li class="menu-item menu-item-cywz">
-          <a href="/cywz" rel="section">
+        <li class="menu-item menu-item-resume">
+          <a href="http://resume.chen-hao.com.cn" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-globe"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-send"></i> <br />
             
-            常用网站
+            简历
           </a>
         </li>
       
         
-        <li class="menu-item menu-item-commonweal">
-          <a href="/404.html" rel="section">
+        <li class="menu-item menu-item-love">
+          <a href="https://love.chen-hao.com.cn/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
             
-            公益404
+            纪念日
           </a>
         </li>
       
@@ -932,11 +932,11 @@
               </span>
             
               <span class="links-of-author-item">
-                <a href="http://resume.chen-hao.com.cn" target="_blank" title="简历">
+                <a href="https://www.chen-hao.com.cn/cywz" target="_blank" title="常用网站">
                   
-                    <i class="fa fa-fw fa-send"></i>
+                    <i class="fa fa-fw fa-globe"></i>
                   
-                  简历
+                  常用网站
                 </a>
               </span>
             
@@ -1109,6 +1109,8 @@
     
       <div class="back-to-top">
         <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
         
       </div>
     
@@ -1479,12 +1481,13 @@
 <!-- 点击爱心效果 -->
 <script src="/js/love.js"></script>
 <!-- 背景动画 -->
-<!-- <script src="/js/particle.js"></script> -->
+<!-- <script src="/js/particle2.js"></script>  -->
 
 <!--崩溃欺骗-->
 <!-- <script src="/js/qipian.js"></script> -->
 
-
+<script type="text/javascript" src="/lib/zclip/clipboard.min.js"></script>	
+<script type="text/javascript" src="/js/src/custom.js"></script>
   
 </body>
 </html>
