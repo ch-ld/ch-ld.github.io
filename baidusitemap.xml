@@ -5,7 +5,7 @@
     
   <url>
     <loc>http://www.chen-hao.com.cn/Linux%E6%95%85%E9%9A%9C%E8%AE%B0%E5%BD%95-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0.html</loc>
-    <lastmod>2017-07-24T05:03:17.964Z</lastmod>
+    <lastmod>2017-07-24T09:22:13.940Z</lastmod>
     <data>
         <display>
         <title>Linux故障记录(持续更新...)</title>
@@ -17,6 +17,26 @@
            
              
               <breadCrumb title="故障记录" url="http://www.chen-hao.com.cn/categories/%E6%95%85%E9%9A%9C%E8%AE%B0%E5%BD%95/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.chen-hao.com.cn/Redis%E7%9A%84RBD%E5%92%8CAOF%E6%8C%81%E4%B9%85%E5%8C%96%E5%AF%B9%E6%AF%94.html</loc>
+    <lastmod>2017-07-24T09:18:29.181Z</lastmod>
+    <data>
+        <display>
+        <title>Redis的RBD和AOF持久化对比</title>
+        <pubTime>2017-07-24T06:54:03.000Z</pubTime>
+        
+        <tag>Redis</tag>
+         
+         
+           
+             
+              <breadCrumb title="NoSQL" url="http://www.chen-hao.com.cn/categories/NoSQL/"/>
           
         </display>
     </data>
