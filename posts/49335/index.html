@@ -1,0 +1,1524 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Codis," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="火柴的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Codis 是一个分布式 Redis 解决方案, 对于上层的应用来说, 连接到 Codis Proxy 和连接原生的 Redis Server 没有显著区别, 上层应用可以像使用单机的 Redis 一样使用, Codis 底层会处理请求的转发, 不停机的数据迁移等工作, 所有后边的一切事情, 对于前面的客户端来说是透明的, 可以简单的认为后边连接的是一个内存无限大的 Redis 服务。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Codis3.1 集群安装部署">
+<meta property="og:url" content="http://www.chen-hao.com.cn/posts/49335/index.html">
+<meta property="og:site_name" content="火柴的博客">
+<meta property="og:description" content="Codis 是一个分布式 Redis 解决方案, 对于上层的应用来说, 连接到 Codis Proxy 和连接原生的 Redis Server 没有显著区别, 上层应用可以像使用单机的 Redis 一样使用, Codis 底层会处理请求的转发, 不停机的数据迁移等工作, 所有后边的一切事情, 对于前面的客户端来说是透明的, 可以简单的认为后边连接的是一个内存无限大的 Redis 服务。">
+<meta property="og:image" content="http://www.chen-hao.com.cn/uploads/codis1.png">
+<meta property="og:image" content="http://www.chen-hao.com.cn/uploads/codis2.png">
+<meta property="og:updated_time" content="2017-07-20T09:05:22.285Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Codis3.1 集群安装部署">
+<meta name="twitter:description" content="Codis 是一个分布式 Redis 解决方案, 对于上层的应用来说, 连接到 Codis Proxy 和连接原生的 Redis Server 没有显著区别, 上层应用可以像使用单机的 Redis 一样使用, Codis 底层会处理请求的转发, 不停机的数据迁移等工作, 所有后边的一切事情, 对于前面的客户端来说是透明的, 可以简单的认为后边连接的是一个内存无限大的 Redis 服务。">
+<meta name="twitter:image" content="http://www.chen-hao.com.cn/uploads/codis1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":true},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #000000; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #000000, 0 0 5px     #000000; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #000000;    /*上边框颜色*/
+        border-left-color: #000000;    /*左边框颜色*/
+    }
+  </style>
+
+  <script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('你可能输入了假的密码！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+
+  <link rel="canonical" href="http://www.chen-hao.com.cn/posts/49335/"/>
+
+
+
+
+
+  <title> Codis3.1 集群安装部署 | 火柴的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	
+	<a href="https://github.com/ch-ld/ch-ld.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">火柴的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resume">
+          <a href="http://resume.chen-hao.com.cn" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-send"></i> <br />
+            
+            简历
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-love">
+          <a href="https://love.chen-hao.com.cn/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            纪念日
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.chen-hao.com.cn/posts/49335/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="火柴">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/linux5.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火柴的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Codis3.1 集群安装部署
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-20T14:33:08+08:00">
+                2016-12-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NoSQL/" itemprop="url" rel="index">
+                    <span itemprop="name">NoSQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/posts/49335/" class="leancloud_visitors" data-flag-title="Codis3.1 集群安装部署">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p><code>Codis</code> &#x662F;&#x4E00;&#x4E2A;&#x5206;&#x5E03;&#x5F0F; Redis &#x89E3;&#x51B3;&#x65B9;&#x6848;, &#x5BF9;&#x4E8E;&#x4E0A;&#x5C42;&#x7684;&#x5E94;&#x7528;&#x6765;&#x8BF4;, &#x8FDE;&#x63A5;&#x5230; Codis Proxy &#x548C;&#x8FDE;&#x63A5;&#x539F;&#x751F;&#x7684; Redis Server &#x6CA1;&#x6709;&#x663E;&#x8457;&#x533A;&#x522B;, &#x4E0A;&#x5C42;&#x5E94;&#x7528;&#x53EF;&#x4EE5;&#x50CF;&#x4F7F;&#x7528;&#x5355;&#x673A;&#x7684; Redis &#x4E00;&#x6837;&#x4F7F;&#x7528;, Codis &#x5E95;&#x5C42;&#x4F1A;&#x5904;&#x7406;&#x8BF7;&#x6C42;&#x7684;&#x8F6C;&#x53D1;, &#x4E0D;&#x505C;&#x673A;&#x7684;&#x6570;&#x636E;&#x8FC1;&#x79FB;&#x7B49;&#x5DE5;&#x4F5C;, &#x6240;&#x6709;&#x540E;&#x8FB9;&#x7684;&#x4E00;&#x5207;&#x4E8B;&#x60C5;, &#x5BF9;&#x4E8E;&#x524D;&#x9762;&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#x6765;&#x8BF4;&#x662F;&#x900F;&#x660E;&#x7684;, &#x53EF;&#x4EE5;&#x7B80;&#x5355;&#x7684;&#x8BA4;&#x4E3A;&#x540E;&#x8FB9;&#x8FDE;&#x63A5;&#x7684;&#x662F;&#x4E00;&#x4E2A;&#x5185;&#x5B58;&#x65E0;&#x9650;&#x5927;&#x7684; Redis &#x670D;&#x52A1;&#x3002;<br> <a id="more"></a></p>
+</blockquote>
+<p></p><h3 id="&#x73AF;&#x5883;&#x8BF4;&#x660E;">&#x73AF;&#x5883;&#x8BF4;&#x660E;</h3><p></p>
+<h4 id="codis&#x67B6;&#x6784;&#x56FE;">codis&#x67B6;&#x6784;&#x56FE;</h4><br><img src="/uploads/codis1.png" class="blockquote-center"><br><br><h4 id="&#x5206;&#x914D;&#x89D2;&#x8272;">&#x5206;&#x914D;&#x89D2;&#x8272;</h4>
+
+<table>
+<thead>
+<tr>
+<th>&#x4E3B;&#x673A;&#x540D;</th>
+<th>IP&#x5730;&#x5740;</th>
+<th>&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;</th>
+<th>&#x7528;&#x9014;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>codis-1</td>
+<td>10.16.20.62</td>
+<td>CentOS 6.5</td>
+<td>codis-dashboard&#x3001;codis-fe&#x3001;codis-ha&#x3001;codis-proxy1&#x3001;codis_group1_M(6379)&#x3001;codis_group3_S(6380)</td>
+</tr>
+<tr>
+<td>codis-2</td>
+<td>10.16.20.63</td>
+<td>CentOS 6.5</td>
+<td>codis-proxy2&#x3001;codis_group2_M(6379)&#x3001;codis_group1_S(6380)</td>
+</tr>
+<tr>
+<td>codis-3</td>
+<td>10.16.20.64</td>
+<td>CentOS 6.5</td>
+<td>codis-proxy3&#x3001;codis_group3_M(6379)&#x3001;codis_group2_S(6380)</td>
+</tr>
+</tbody>
+</table>
+<p></p><h4 id="&#x8F6F;&#x4EF6;&#x7248;&#x672C;">&#x8F6F;&#x4EF6;&#x7248;&#x672C;</h4><p></p>
+<ul>
+<li><a href="https://github.com/CodisLabs/codis/releases" target="_blank" rel="external">Codis3.1</a></li>
+<li><a href="https://storage.googleapis.com/golang/go1.6.2.linux-amd64.tar.gz" target="_blank" rel="external">go1.6.2</a></li>
+<li><a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="external">jdk1.8</a></li>
+<li><a href="http://apache.fayea.com/zookeeper/zookeeper-3.4.8/zookeeper-3.4.8.tar.gz" target="_blank" rel="external">zookeeper3.4.8</a>
+</li>
+</ul>
+<p></p><h4 id="codis3x&#x7EC4;&#x4EF6;&#x8BF4;&#x660E;">codis3.x&#x7EC4;&#x4EF6;&#x8BF4;&#x660E;</h4><p></p>
+<ul>
+<li><p><strong><em>Codis Server</em></strong>&#xFF1A;&#x57FA;&#x4E8E; redis-2.8.21 &#x5206;&#x652F;&#x5F00;&#x53D1;&#x3002;&#x589E;&#x52A0;&#x4E86;&#x989D;&#x5916;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF0C;&#x4EE5;&#x652F;&#x6301; slot &#x6709;&#x5173;&#x7684;&#x64CD;&#x4F5C;&#x4EE5;&#x53CA;&#x6570;&#x636E;&#x8FC1;&#x79FB;&#x6307;&#x4EE4;&#xFF0C;&#x5177;&#x4F53;&#x7684;&#x4FEE;&#x6539;&#x53EF;&#x4EE5;&#x53C2;&#x8003;&#x6587;&#x6863; redis&#x7684;&#x4FEE;&#x6539;&#x3002; </p>
+</li>
+<li><p><strong><em>Codis Proxy</em></strong>&#xFF1A;&#x5BA2;&#x6237;&#x7AEF;&#x8FDE;&#x63A5;&#x7684; Redis &#x4EE3;&#x7406;&#x670D;&#x52A1;, &#x5B9E;&#x73B0;&#x4E86; Redis &#x534F;&#x8BAE;&#x3002;&#x9664;&#x90E8;&#x5206;&#x547D;&#x4EE4;&#x4E0D;&#x652F;&#x6301;&#x4EE5;&#x5916;&#xFF0C;&#x8868;&#x73B0;&#x7684;&#x548C;&#x539F;&#x751F;&#x7684; Redis &#x6CA1;&#x6709;&#x533A;&#x522B;&#xFF08;&#x5C31;&#x50CF; Twemproxy&#xFF09;&#x3002; &#x5BF9;&#x4E8E;&#x540C;&#x4E00;&#x4E2A;&#x4E1A;&#x52A1;&#x96C6;&#x7FA4;&#x800C;&#x8A00;&#xFF0C;&#x53EF;&#x4EE5;&#x540C;&#x65F6;&#x90E8;&#x7F72;&#x591A;&#x4E2A;codis-proxy&#x5B9E;&#x4F8B;&#xFF0C;&#x4E0D;&#x540C; codis-proxy &#x4E4B;&#x95F4;&#x7531; codis-dashboard &#x4FDD;&#x8BC1;&#x72B6;&#x6001;&#x540C;&#x6B65;&#x3002;</p>
+</li>
+<li><p><strong><em>Codis Dashboard</em></strong>&#xFF1A;&#x96C6;&#x7FA4;&#x7BA1;&#x7406;&#x5DE5;&#x5177;&#xFF0C;&#x652F;&#x6301; codis-proxy&#x3001;codis-server &#x7684;&#x6DFB;&#x52A0;&#x3001;&#x5220;&#x9664;&#x4EE5;&#x53CA;&#x6570;&#x636E;&#x8FC1;&#x79FB;&#x7B49;&#x64CD;&#x4F5C;&#x3002;&#x5728;&#x96C6;&#x7FA4;&#x72B6;&#x6001;&#x53D1;&#x751F;&#x6539;&#x53D8;&#x65F6;&#xFF0C;codis-dashboard &#x7EF4;&#x62A4;&#x96C6;&#x7FA4;&#x4E0B;&#x6240;&#x6709; codis-proxy &#x7684;&#x72B6;&#x6001;&#x4E00;&#x81F4;&#x6027;&#x3002; &#x5BF9;&#x4E8E;&#x540C;&#x4E00;&#x4E2A;&#x96C6;&#x7FA4;&#x800C;&#x8A00;&#xFF0C;&#x540C;&#x4E00;&#x4E2A;&#x65F6;&#x523B; codis-dashboard &#x53EA;&#x80FD;&#x6709; 0&#x4E2A;&#x6216;&#x8005;1&#x4E2A;&#xFF0C;&#x6240;&#x6709;&#x5BF9;&#x96C6;&#x7FA4;&#x7684;&#x4FEE;&#x6539;&#x90FD;&#x5FC5;&#x987B;&#x901A;&#x8FC7; codis-dashboard &#x5B8C;&#x6210;&#x3002;</p>
+</li>
+<li><p><strong><em>Codis Admin</em></strong>&#xFF1A;&#x96C6;&#x7FA4;&#x7BA1;&#x7406;&#x7684;&#x547D;&#x4EE4;&#x884C;&#x5DE5;&#x5177;&#xFF0C;&#x53EF;&#x7528;&#x4E8E;&#x63A7;&#x5236;codis-proxy&#x3001;codis-dashboard&#x72B6;&#x6001;&#x4EE5;&#x53CA;&#x8BBF;&#x95EE;&#x5916;&#x90E8;&#x5B58;&#x50A8;&#x3002;</p>
+</li>
+<li><p><strong><em>Codis FE</em></strong>&#xFF1A;&#x96C6;&#x7FA4;&#x7BA1;&#x7406;&#x754C;&#x9762;&#x3002;&#x591A;&#x4E2A;&#x96C6;&#x7FA4;&#x53EF;&#x4EE5;&#x5171;&#x4EAB;&#x540C;&#x4E00;&#x4E2A;&#x524D;&#x7AEF;&#x5C55;&#x793A;&#x9875;&#x9762;&#xFF0C;&#x901A;&#x8FC7;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x7BA1;&#x7406;&#x540E;&#x7AEF; codis-dashboard &#x5217;&#x8868;&#xFF0C;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x53EF;&#x81EA;&#x52A8;&#x66F4;&#x65B0;&#x3002;</p>
+</li>
+<li><p><strong><em>Codis HA</em></strong>&#xFF1A;&#x4E3A;&#x96C6;&#x7FA4;&#x63D0;&#x4F9B;&#x9AD8;&#x53EF;&#x7528;&#xFF0C;&#x4F9D;&#x8D56; codis-dashboard &#x5B9E;&#x4F8B;&#xFF0C;&#x81EA;&#x52A8;&#x6293;&#x53D6;&#x96C6;&#x7FA4;&#x5404;&#x4E2A;&#x7EC4;&#x4EF6;&#x7684;&#x72B6;&#x6001;&#xFF0C;&#x4F1A;&#x6839;&#x636E;&#x5F53;&#x524D;&#x96C6;&#x7FA4;&#x72B6;&#x6001;&#x81EA;&#x52A8;&#x751F;&#x6210;&#x4E3B;&#x4ECE;&#x5207;&#x6362;&#x7B56;&#x7565;&#xFF0C;&#x5E76;&#x5728;&#x9700;&#x8981;&#x65F6;&#x901A;&#x8FC7; codis-dashboard &#x5B8C;&#x6210;&#x4E3B;&#x4ECE;&#x5207;&#x6362;&#x3002;</p>
+</li>
+<li><p><strong><em>Storage</em></strong>&#xFF1A;&#x4E3A;&#x96C6;&#x7FA4;&#x72B6;&#x6001;&#x63D0;&#x4F9B;&#x5916;&#x90E8;&#x5B58;&#x50A8;&#xFF0C;&#x63D0;&#x4F9B;Namespace&#x6982;&#x5FF5;&#xFF0C;&#x4E0D;&#x540C;&#x96C6;&#x7FA4;&#x4F1A;&#x6309;&#x7167;&#x4E0D;&#x540C;product name&#x8FDB;&#x884C;&#x7EC4;&#x7EC7;&#xFF1B;&#x76EE;&#x524D;&#x4EC5;&#x63D0;&#x4F9B;&#x4E86;Zookeeper &#x548C;Etcd&#x4E24;&#x79CD;&#x5B9E;&#x73B0;&#xFF0C;&#x4F46;&#x662F;&#x63D0;&#x4F9B;&#x4E86;&#x62BD;&#x8C61;&#x7684;interface&#x53EF;&#x81EA;&#x884C;&#x6269;&#x5C55;&#x3002;</p>
+</li>
+</ul>
+<p></p><h3 id="&#x73AF;&#x5883;&#x51C6;&#x5907;">&#x73AF;&#x5883;&#x51C6;&#x5907;</h3><br>codis&#x96C6;&#x7FA4;&#x7684;&#x642D;&#x5EFA;&#xFF0C;&#x9700;&#x8981;&#x4F9D;&#x8D56;zookeeper&#x96C6;&#x7FA4;<p></p>
+<p></p><h4 id="zookeeper&#x96C6;&#x7FA4;">zookeeper&#x96C6;&#x7FA4;</h4><br>&#x800C;zookeeper&#x662F;&#x9700;&#x8981;&#x4F9D;&#x8D56;java jdk&#x7684;<p></p>
+<p></p><h5 id="jdk-18&#x5B89;&#x88C5;">jdk 1.8&#x5B89;&#x88C5;</h5><br>&#x8FD9;&#x91CC;&#x76F4;&#x63A5;&#x53BB;&#x5B98;&#x7F51;&#x4E0B;&#x8F7D;jdk 1.8&#x7684;rpm&#x5305;&#xFF0C;<a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="external">http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html</a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">yum -y install jdk-8u112-linux-x64.rpm</div><div class="line"><span class="comment"># &#x4E0B;&#x8F7D;&#x5B8C;&#x5B89;&#x88C5;jdk&#x5373;&#x53EF;</span></div><div class="line">vim /etc/profile.d/java.sh</div><div class="line"><span class="comment"># &#x4FEE;&#x6539;java&#x73AF;&#x5883;&#x53D8;&#x91CF;</span></div><div class="line"><span class="built_in">export</span> JAVA_HOME=/usr/java/jdk1.8.0_11</div><div class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></div><div class="line"></div><div class="line"><span class="built_in">source</span> /etc/profile.d/java.sh</div><div class="line"><span class="comment"># &#x91CD;&#x8F7D;&#x73AF;&#x5883;&#x53D8;&#x91CF;</span></div></pre></td></tr></table></figure><p></p>
+<p></p><h5 id="zookeeper&#x96C6;&#x7FA4;&#x5B89;&#x88C5;">zookeeper&#x96C6;&#x7FA4;&#x5B89;&#x88C5;</h5><br>&#x4E0B;&#x8F7D;&#x5B8C;zookeeper&#x4E4B;&#x540E;&#xFF0C;&#x89E3;&#x538B;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">tar -xvf zookeeper-3.4.8.tar.gz </div><div class="line">mv zookeeper-3.4.8 /usr/<span class="built_in">local</span>/</div><div class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/zookeeper-3.4.8/conf/</div><div class="line">mv zoo_sample.cfg{,.bak}</div><div class="line">vim zoo.cfg</div><div class="line">lientCnxns=50</div><div class="line">tickTime=2000</div><div class="line">initLimit=10</div><div class="line">syncLimit=5</div><div class="line">dataDir=/work/zookeeper/</div><div class="line">clientPort=2181</div><div class="line">server.1=10.16.20.63:2888:3888 </div><div class="line">server.2=10.16.20.64:2888:3888 </div><div class="line">server.3=10.16.20.62:2888:3888</div></pre></td></tr></table></figure><p></p>
+<p>&#x8BF4;&#x660E;&#xFF1A;server.A=B&#xFF1A;C&#xFF1A;D&#xFF1A;&#x5176;&#x4E2D; A &#x662F;&#x4E00;&#x4E2A;&#x6570;&#x5B57;&#xFF0C;&#x8868;&#x793A;&#x8FD9;&#x4E2A;&#x662F;&#x7B2C;&#x51E0;&#x53F7;&#x670D;&#x52A1;&#x5668;&#xFF1B;B &#x662F;&#x8FD9;&#x4E2A;&#x670D;&#x52A1;&#x5668;&#x7684; ip &#x5730;&#x5740;&#xFF1B;C &#x8868;&#x793A;&#x7684;&#x662F;&#x8FD9;&#x4E2A;&#x670D;&#x52A1;&#x5668;&#x4E0E;&#x96C6;&#x7FA4;&#x4E2D;&#x7684; Leader &#x670D;&#x52A1;&#x5668;&#x4EA4;&#x6362;&#x4FE1;&#x606F;&#x7684;&#x7AEF;&#x53E3;&#xFF1B;D &#x8868;&#x793A;&#x7684;&#x662F;&#x4E07;&#x4E00;&#x96C6;&#x7FA4;&#x4E2D;&#x7684; Leader &#x670D;&#x52A1;&#x5668;&#x6302;&#x4E86;&#xFF0C;&#x9700;&#x8981;&#x4E00;&#x4E2A;&#x7AEF;&#x53E3;&#x6765;&#x91CD;&#x65B0;&#x8FDB;&#x884C;&#x9009;&#x4E3E;&#xFF0C;&#x9009;&#x51FA;&#x4E00;&#x4E2A;&#x65B0;&#x7684; Leader&#xFF0C;&#x800C;&#x8FD9;&#x4E2A;&#x7AEF;&#x53E3;&#x5C31;&#x662F;&#x7528;&#x6765;&#x6267;&#x884C;&#x9009;&#x4E3E;&#x65F6;&#x670D;&#x52A1;&#x5668;&#x76F8;&#x4E92;&#x901A;&#x4FE1;&#x7684;&#x7AEF;&#x53E3;&#x3002;&#x5982;&#x679C;&#x662F;&#x4F2A;&#x96C6;&#x7FA4;&#x7684;&#x914D;&#x7F6E;&#x65B9;&#x5F0F;&#xFF0C;&#x7531;&#x4E8E; B &#x90FD;&#x662F;&#x4E00;&#x6837;&#xFF0C;&#x6240;&#x4EE5;&#x4E0D;&#x540C;&#x7684; Zookeeper &#x5B9E;&#x4F8B;&#x901A;&#x4FE1;&#x7AEF;&#x53E3;&#x53F7;&#x4E0D;&#x80FD;&#x4E00;&#x6837;&#xFF0C;&#x6240;&#x4EE5;&#x8981;&#x7ED9;&#x5B83;&#x4EEC;&#x5206;&#x914D;&#x4E0D;&#x540C;&#x7684;&#x7AEF;&#x53E3;&#x53F7;&#x3002;</p>
+<p>&#x521B;&#x5EFA;&#x6570;&#x636E;&#x5B58;&#x50A8;&#x76EE;&#x5F55;&#xFF0C;&#x5E76;&#x8BBE;&#x7F6E;&#x5F53;&#x524D;zk&#x7684;&#x7ED3;&#x70B9;ID<br>&#x670D;&#x52A1;&#x5668;1<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir -pv /work/zookeeper </div><div class="line"><span class="built_in">echo</span> <span class="string">&quot;1&quot;</span> &gt; /work/zookeeper/myid</div></pre></td></tr></table></figure></p>
+<p>&#x670D;&#x52A1;&#x5668;2<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir -pv /work/zookeeper </div><div class="line"><span class="built_in">echo</span> <span class="string">&quot;2&quot;</span> &gt; /work/zookeeper/myid</div></pre></td></tr></table></figure></p>
+<p>&#x670D;&#x52A1;&#x5668;3<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir -pv /work/zookeeper </div><div class="line"><span class="built_in">echo</span> <span class="string">&quot;3&quot;</span> &gt; /work/zookeeper/myid</div></pre></td></tr></table></figure></p>
+<p>&#x542F;&#x52A8;zookeeper,&#x5206;&#x522B;&#x5728;&#x4E09;&#x53F0;&#x673A;&#x5668;&#x4E0A;&#x542F;&#x52A8;zookeepe<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/usr/<span class="built_in">local</span>/zookeeper-3.4.8/bin/zkServer.sh start </div><div class="line">ZooKeeper JMX enabled by default</div><div class="line">Using config: /usr/<span class="built_in">local</span>/zookeeper-3.4.8/bin/../conf/zoo.cfg</div><div class="line">Starting zookeeper ... STARTED</div></pre></td></tr></table></figure></p>
+<p>&#x786E;&#x4FDD;zookeeper&#x96C6;&#x7FA4;&#x662F;&#x5426;&#x542F;&#x52A8;&#x6210;&#x529F;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/usr/<span class="built_in">local</span>/zookeeper-3.4.8/bin/zkServer.sh status</div><div class="line">JMX enabled by default</div><div class="line">Using config: /usr/<span class="built_in">local</span>/zookeeper-3.4.8/bin/../conf/zoo.cfg</div><div class="line">Mode: follower</div></pre></td></tr></table></figure></p>
+<p></p><h4 id="go&#x8BED;&#x8A00;&#x73AF;&#x5883;&#x642D;&#x5EFA;">go&#x8BED;&#x8A00;&#x73AF;&#x5883;&#x642D;&#x5EFA;</h4><br>&#x4E0B;&#x8F7D;go&#x8BED;&#x8A00;&#x5305;&#xFF0C;&#x7531;&#x4E8E;&#x56FD;&#x5185;&#x7684;&#x7279;&#x6B8A;&#x60C5;&#x51B5;&#xFF0C;&#x6709;&#x4E9B;&#x7F51;&#x7AD9;&#x662F;&#x8BBF;&#x95EE;&#x4E0D;&#x4E86;&#x7684;&#x3002;&#x6240;&#x4EE5;&#x8FD8;&#x662F;&#x8981;&#x81EA;&#x884C;&#x53BB;&#x7F51;&#x7AD9;&#x4E0B;&#x8F7D;&#xFF0C;&#x7F51;&#x5740;&#xFF1A;<a href="http://www.golangtc.com/download/" target="_blank" rel="external">http://www.golangtc.com/download/</a> &#xFF0C;  &#x4E0B;&#x8F7D;&#x5B8C;&#x6BD5;&#x540E;&#x89E3;&#x538B;&#x5230;/usr/local&#x5982;&#x4E0B;&#xFF1A;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">tar -zxf go1.6.2.linux-amd64.tar.gz -C /usr/<span class="built_in">local</span>/</div><div class="line">vim /etc/profile.d/go.sh</div><div class="line"><span class="comment"># &#x8BBE;&#x7F6E;go&#x8BED;&#x8A00;&#x73AF;&#x5883;&#x53D8;&#x91CF;</span></div><div class="line"><span class="built_in">export</span> GOROOT=/usr/<span class="built_in">local</span>/go</div><div class="line"><span class="built_in">export</span> GOPATH=/usr/<span class="built_in">local</span>/codis</div><div class="line"><span class="built_in">export</span> PATH=<span class="variable">$GOPATH</span>/bin:<span class="variable">$GOROOT</span>/bin:<span class="variable">$PATH</span></div><div class="line"><span class="built_in">source</span> /etc/profile.d/go.sh</div><div class="line"><span class="comment"># &#x91CD;&#x8F7D;&#x73AF;&#x5883;&#x53D8;&#x91CF;</span></div><div class="line">go version</div><div class="line">go version go1.6.2 linux/amd64</div></pre></td></tr></table></figure><p></p>
+<p></p><h3 id="codis&#x96C6;&#x7FA4;&#x5B89;&#x88C5;">codis&#x96C6;&#x7FA4;&#x5B89;&#x88C5;</h3><p></p>
+<p></p><h4 id="codis&#x5B89;&#x88C5;">codis&#x5B89;&#x88C5;</h4><p></p>
+<p></p><h5 id="&#x8BBE;&#x7F6E;&#x7F16;&#x8BD1;&#x73AF;&#x5883;">&#x8BBE;&#x7F6E;&#x7F16;&#x8BD1;&#x73AF;&#x5883;</h5><br>&#x6DFB;&#x52A0; <code>$GOPATH/bin</code> &#x5230; $PATH&#xFF0C;&#x5B89;&#x88C5; godep &#x5DE5;&#x5177;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">go get -u github.com/tools/godep &amp;&amp; <span class="built_in">which</span> godep</div><div class="line">/usr/<span class="built_in">local</span>/codis/bin/godep</div></pre></td></tr></table></figure><p></p>
+<p></p><h5 id="&#x4E0B;&#x8F7D;-codis-&#x6E90;&#x4EE3;&#x7801;">&#x4E0B;&#x8F7D; Codis &#x6E90;&#x4EE3;&#x7801;</h5><br>Codis &#x6E90;&#x4EE3;&#x7801;&#x9700;&#x8981;&#x4E0B;&#x8F7D;&#x5230; <code>$GOPATH/src/github.com/CodisLabs/codis</code><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir -p <span class="variable">$GOPATH</span>/src/github.com/CodisLabs</div><div class="line"><span class="built_in">cd</span> <span class="variable">$_</span> &amp;&amp; git <span class="built_in">clone</span> https://github.com/CodisLabs/codis.git -b release3.1</div></pre></td></tr></table></figure><p></p>
+<p></p><h5 id="&#x7F16;&#x8BD1;-codis-&#x6E90;&#x4EE3;&#x7801;">&#x7F16;&#x8BD1; Codis &#x6E90;&#x4EE3;&#x7801;</h5><br>Codis &#x7F16;&#x8BD1;&#x8FC7;&#x7A0B;&#x4F7F;&#x7528;&#x4E86; godep&#xFF0C;&#x8BF7;&#x786E;&#x5B9A;&#x7F16;&#x8BD1;&#x4E4B;&#x524D; godep &#x80FD;&#x6B63;&#x5E38;&#x5DE5;&#x4F5C;<br>&#x76F4;&#x63A5;&#x901A;&#x8FC7; make &#x8FDB;&#x884C;&#x7F16;&#x8BD1;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> <span class="variable">$GOPATH</span>/src/github.com/CodisLabs/codis</div><div class="line">make</div><div class="line">make -j -C extern/redis-2.8.21/</div><div class="line">... ...</div><div class="line">go build -i -o bin/codis-dashboard ./cmd/dashboard</div><div class="line">go build -i -o bin/codis-proxy ./cmd/proxy</div><div class="line">go build -i -o bin/codis-admin ./cmd/admin</div><div class="line">go build -i -o bin/codis-ha ./cmd/ha</div><div class="line">go build -i -o bin/codis-fe ./cmd/fe</div></pre></td></tr></table></figure><p></p>
+<p>&#x7F16;&#x8BD1;&#x6210;&#x529F;&#x540E;&#x5728;codis&#x4E0B;&#x9762;&#x7684;bin&#x76EE;&#x5F55;&#x4E0B;&#x4F1A;&#x6709;assets  codis-admin  codis-dashboard  codis-fe  codis-ha  codis-proxy  codis-server   redis-benchmark  redis-cli  version&#x7B49;&#x6587;&#x4EF6;&#xFF0C;assets&#x662F;codis-dashboard http&#x670D;&#x52A1;&#x9700;&#x8981;&#x7684;&#x524D;&#x7AEF;&#x8D44;&#x6E90;&#xFF0C;&#x9700;&#x8981;&#x548C;codis-dashboard&#x653E;&#x7F6E;&#x5728;&#x540C;&#x4E00;&#x76EE;&#x5F55;&#x4E0B;&#x3002;</p>
+<p></p><h4 id="&#x7F16;&#x8F91;redis&#x914D;&#x7F6E;&#x6587;&#x4EF6;">&#x7F16;&#x8F91;redis&#x914D;&#x7F6E;&#x6587;&#x4EF6;</h4><br>&#x6BCF;&#x53F0;codis&#x670D;&#x52A1;&#x5668;&#x4E0A;&#xFF0C;&#x8981;&#x542F;&#x52A8;&#x4E24;&#x4E2A;redis&#x5B9E;&#x4F8B;&#xFF08;&#x4E5F;&#x53EF;&#x4EE5;&#x542F;&#x52A8;&#x591A;&#x4E2A;redis&#x5B9E;&#x4F8B;&#xFF09;&#xFF0C;&#x5148;&#x914D;&#x7F6E;&#x4E24;&#x4E2A;&#x5B9E;&#x4F8B;&#xFF0C;&#x4ECE;redis&#x5B9E;&#x4F8B;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#x627E;&#x5230;&#x4E0B;&#x5217;&#x53C2;&#x6570;&#x9009;&#x9879;&#x5E76;&#x6309;&#x5982;&#x4E0B;&#x8FDB;&#x884C;&#x4FEE;&#x6539;&#xFF1A;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">mkdir -pv /work/codis</div><div class="line">mkdir -pv /var/<span class="built_in">log</span>/redis</div><div class="line">vim /usr/<span class="built_in">local</span>/codis/src/github.com/CodisLabs/codis/extern/redis-test/conf/6379.conf</div><div class="line">daemonize  yes</div><div class="line">pidfile  /var/run/redis6379.pid</div><div class="line">port  6379</div><div class="line">logfile  /var/<span class="built_in">log</span>/redis/6379.log</div><div class="line">dbfilename  dump6379.rdb</div><div class="line">dir /work/codis</div></pre></td></tr></table></figure><p></p>
+<p>&#x914D;&#x7F6E;&#x7B2C;&#x4E8C;&#x4E2A;redis&#x5B9E;&#x4F8B;6380.conf&#x540C;&#x4E0A;&#x8BBE;&#x7F6E;&#x3002;<br>&#x6BCF;&#x53F0;codis&#x670D;&#x52A1;&#x5668;&#x4E0A;redis&#x914D;&#x7F6E;&#x5B8C;&#x6BD5;&#x540E;&#xFF0C;&#x542F;&#x52A8;redis&#x5B9E;&#x4F8B;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/codis/src/github.com/CodisLabs/codis/bin/</div><div class="line">./codis-server ../extern/redis-test/conf/6379.conf &amp;</div><div class="line">./codis-server ../extern/redis-test/conf/6380.conf &amp;</div><div class="line">ps  -ef |grep  codis-server</div><div class="line"><span class="comment"># &#x786E;&#x8BA4;6379&#x548C;6380&#x4E24;&#x4E2A;&#x8FDB;&#x7A0B;&#x6B63;&#x5728;&#x8DD1;</span></div></pre></td></tr></table></figure></p>
+<p></p><h4 id="codis-dashboard">Codis Dashboard</h4><br>Coddis3.0&#x7684;dashboard&#x4E0E;codis 2.0&#x6709;&#x6240;&#x4E0D;&#x540C;&#xFF0C;&#x4F5C;&#x4E3A;&#x96C6;&#x7FA4;&#x7BA1;&#x7406;&#x5DE5;&#x5177;&#xFF0C;&#x5B83;&#x652F;&#x6301;codis-proxy,codis-server&#x7684;&#x6DFB;&#x52A0;&#x3001;&#x5220;&#x9664;&#x4EE5;&#x53CA;&#x6570;&#x636E;&#x8FC1;&#x79FB;&#x7B49;&#x64CD;&#x4F5C;&#x3002;&#x5728;&#x96C6;&#x7FA4;&#x72B6;&#x6001;&#x53D1;&#x751F;&#x6539;&#x53D8;&#x65F6;&#xFF0C;codis-dashboard &#x7EF4;&#x62A4;&#x96C6;&#x7FA4;&#x4E0B;&#x6240;&#x6709; codis-proxy &#x7684;&#x72B6;&#x6001;&#x4E00;&#x81F4;&#x6027;&#x3002;&#x6709;&#x4EE5;&#x4E0B;&#x4E24;&#x70B9;&#x6CE8;&#x610F;&#x4E8B;&#x9879;&#xFF1A;<p></p>
+<ol>
+<li>&#x5BF9;&#x4E8E;&#x540C;&#x4E00;&#x4E2A;&#x4E1A;&#x52A1;&#x96C6;&#x7FA4;&#x800C;&#x8A00;&#xFF0C;&#x540C;&#x4E00;&#x4E2A;&#x65F6;&#x523B;codis-dashboard&#x53EA;&#x80FD;&#x6709;0&#x4E2A;&#x6216;&#x8005;1&#x4E2A;&#xFF1B;</li>
+<li>&#x6240;&#x6709;&#x5BF9;&#x96C6;&#x7FA4;&#x7684;&#x4FEE;&#x6539;&#x90FD;&#x5FC5;&#x987B;&#x901A;&#x8FC7;codis-dashboard&#x5B8C;&#x6210;&#x3002;</li>
+</ol>
+<p>&#x9ED8;&#x8BA4;&#x914D;&#x7F6E;&#x6587;&#x4EF6;dashboard.toml&#x53EF;&#x7531;codis-dashboard&#x751F;&#x6210;&#x3002;</p>
+<p>#bin/codis-dashboard  &#x2013;default-config | tee  dashboard.toml&#xFF08;&#x5C31;&#x662F;dashboard.conf&#xFF09;<br> &#x751F;&#x6210;dashboard.toml&#x6587;&#x4EF6;&#xFF0C;&#x53EF;&#x81EA;&#x884C;&#x914D;&#x7F6E;&#x3002;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">vim dashboard.toml</div><div class="line">coordinator_name = &quot;zookeeper&quot;</div><div class="line">coordinator_addr = &quot;10.16.20.62:2181,10.16.20.63:2181,10.16.20.64:2181&quot;</div><div class="line"></div><div class="line"># Set Codis Product Name/Auth.</div><div class="line">product_name = &quot;codis-demo&quot;</div><div class="line">product_auth = &quot;&quot;</div><div class="line"></div><div class="line"># Set bind address for admin(rpc), tcp only.</div><div class="line">admin_addr = &quot;0.0.0.0:18080&quot;</div><div class="line"># coordinator_name              &#x5916;&#x90E8;&#x5B58;&#x50A8;&#x7C7B;&#x578B;&#xFF0C;&#x63A5;&#x53D7; zookeeper/etcd</div><div class="line"># coordinator_addr                &#x5916;&#x90E8;&#x5B58;&#x50A8;&#x5730;&#x5740;</div><div class="line"># product_name                    &#x96C6;&#x7FA4;&#x540D;&#x79F0;&#xFF0C;&#x6EE1;&#x8DB3;&#x6B63;&#x5219; \w[\w\.\-]*</div><div class="line"># product_auth                      &#x96C6;&#x7FA4;&#x5BC6;&#x7801;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;&#x7A7A;</div><div class="line"># admin_addr                        RESTful API &#x7AEF;&#x53E3;</div><div class="line">```bash</div><div class="line">&#x542F;&#x52A8;dashboard</div><div class="line">```bash</div><div class="line">nohup bin/codis-dashboard --ncpu=4 --config=dashboard.toml --log=dashboard.log --log-level=WARN &amp;</div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Usage:</div><div class="line">codis-dashboard [--ncpu=N][--config=CONF] [--log=FILE] [--log-level=LEVEL] [--host-admin=ADDR]</div><div class="line">codis-dashboard  --default-config</div><div class="line">codis-dashboard  --version</div><div class="line">&#x8BF4;&#x660E;&#xFF1A;</div><div class="line"> --ncpu=N                               &#x6700;&#x5927;&#x4F7F;&#x7528; CPU &#x4E2A;&#x6570;</div><div class="line"> -c  CONF, --config=CONF      &#x6307;&#x5B9A;&#x542F;&#x52A8;&#x914D;&#x7F6E;&#x6587;&#x4EF6;</div><div class="line"> <span class="_">-l</span>   FILE, --log=FILE                 &#x8BBE;&#x7F6E; <span class="built_in">log</span> &#x8F93;&#x51FA;&#x6587;&#x4EF6;</div><div class="line">--log-level=LEVEL             &#x8BBE;&#x7F6E;<span class="built_in">log</span>&#x8F93;&#x51FA;&#x7B49;&#x7EA7;&#xFF1A;INFO,WARN,DEBUG,ERROR&#xFF1B;&#x9ED8;&#x8BA4;INFO&#xFF0C;&#x63A8;&#x8350;WARN</div><div class="line">&#x6B63;&#x5E38;&#x5173;&#x95ED;dashboard&#x547D;&#x4EE4;&#xFF1A;     bin/codis-admin   --dashboard=192.168.33.6:18080   --shutdown</div></pre></td></tr></table></figure>
+<p></p><h4 id="codis-proxy">Codis Proxy</h4><br>&#x5BF9;&#x4E8E;&#x540C;&#x4E00;&#x4E2A;&#x4E1A;&#x52A1;&#x96C6;&#x7FA4;&#x800C;&#x8A00;&#xFF0C;&#x53EF;&#x4EE5;&#x540C;&#x65F6;&#x90E8;&#x7F72;&#x591A;&#x4E2A;codis-proxy &#x5B9E;&#x4F8B;;<br>&#x4E0D;&#x540C; codis-proxy &#x4E4B;&#x95F4;&#x7531; codis-dashboard &#x4FDD;&#x8BC1;&#x72B6;&#x6001;&#x540C;&#x6B65;&#x3002;<br>&#x9ED8;&#x8BA4;&#x914D;&#x7F6E;&#x6587;&#x4EF6; proxy.toml &#x53EF;&#x7531; codis-proxy &#x751F;&#x6210;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bin/codis-proxy --default-config | tee proxy.toml</div></pre></td></tr></table></figure><p></p>
+<p>&#x751F;&#x6210;proxy.toml&#x53EF;&#x81EA;&#x884C;&#x914D;&#x7F6E;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">vim proxy.toml</div><div class="line"># Set Codis Product {Name/Auth}.</div><div class="line">product_name = &quot;codis-demo&quot;</div><div class="line">product_auth = &quot;&quot;</div><div class="line"># Set bind address for admin(rpc), tcp only.</div><div class="line">admin_addr = &quot;0.0.0.0:11080&quot;</div><div class="line"># Set bind address for proxy, proto_type can be &quot;tcp&quot;,&quot;tcp4&quot;, &quot;tcp6&quot;, &quot;unix&quot; or &quot;unixpacket&quot;.</div><div class="line">proto_type = &quot;tcp4&quot;</div><div class="line">proxy_addr = &quot;0.0.0.0:19000&quot;</div><div class="line"> # Set jodis address &amp; session timeout.</div><div class="line">jodis_addr = &quot;&quot;</div><div class="line">jodis_timeout = 10</div><div class="line"># Proxy will ping-pong backend redis periodly to keep-alive</div><div class="line">backend_ping_period = 5</div><div class="line"># If there is no request from client for a long time, the connectionwill be droped. Set 0 to disable.</div><div class="line">session_max_timeout = 1800</div><div class="line"># Buffer size for each client connection.</div><div class="line">session_max_bufsize = 131072</div><div class="line"># Number of buffered requests for each client connection.</div><div class="line"># Make sure this is higher than the max number of requests for eachpipeline request, or your client may be blocked.</div><div class="line">session_max_pipeline = 1024</div><div class="line"># Set period between keep alives. Set 0 to disable.</div><div class="line">session_keepalive_period = 60</div><div class="line"></div><div class="line">#product_name                                 &#x96C6;&#x7FA4;&#x540D;&#x79F0;&#xFF0C;&#x53C2;&#x8003;dashboard&#x53C2;&#x6570;&#x8BF4;&#x660E;</div><div class="line">#product_auth                                   &#x96C6;&#x7FA4;&#x5BC6;&#x7801;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;&#x7A7A;</div><div class="line">#admin_addr                                     RESTfulAPI &#x7AEF;&#x53E3;</div><div class="line">#proto_type                                       Redis &#x7AEF;&#x53E3;&#x7C7B;&#x578B;&#xFF0C;&#x63A5;&#x53D7;tcp/tcp4/tcp6/unix/unixpacket</div><div class="line">#proxy_addr                                      Redis &#x7AEF;&#x53E3;&#x5730;&#x5740;&#x6216;&#x8005;&#x8DEF;&#x5F84;</div><div class="line">#jodis_addr                                       Jodis&#x6CE8;&#x518C;zookeeper&#x5730;&#x5740;</div><div class="line">#jodis_timeout                                  Jodis&#x6CE8;&#x518C;sessiontimeout&#x65F6;&#x95F4;&#xFF0C;&#x5355;&#x4F4D;second</div><div class="line">#jodis_compatible                             Jodis&#x6CE8;&#x518C; zookeeper &#x7684;&#x8DEF;&#x5F84;</div><div class="line">#backend_ping_period                     &#x4E0E;codis-server &#x63A2;&#x6D3B;&#x5468;&#x671F;&#xFF0C;&#x5355;&#x4F4D;second&#xFF0C;0&#x8868;&#x793A;&#x7981;&#x6B62;</div><div class="line">#session_max_timeout                     &#x4E0E;client &#x8FDE;&#x63A5;&#x6700;&#x5927;&#x8BFB;&#x8D85;&#x65F6;&#xFF0C;&#x5355;&#x4F4D;second&#xFF0C;0&#x8868;&#x793A;&#x7981;&#x6B62;</div><div class="line">#session_max_bufsize                      &#x4E0E;client &#x8FDE;&#x63A5;&#x8BFB;&#x5199;&#x7F13;&#x51B2;&#x533A;&#x5927;&#x5C0F;&#xFF0C;&#x5355;&#x4F4D;byte</div><div class="line">#session_max_pipeline                     &#x4E0E;client &#x8FDE;&#x63A5;&#x6700;&#x5927;&#x7684;pipeline&#x5927;&#x5C0F;</div><div class="line">#session_keepalive_period               &#x4E0E;client &#x7684; tcp keepalive&#x5468;&#x671F;&#xFF0C;&#x4EC5;tcp&#x6709;&#x6548;&#xFF0C;0&#x8868;&#x793A;&#x7981;&#x6B62;</div></pre></td></tr></table></figure></p>
+<p>&#x542F;&#x52A8;proxy<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nohup bin/codis-proxy --ncpu=4 --config=proxy.toml --log=proxy.log --log-level=WARN &amp;</div></pre></td></tr></table></figure></p>
+<p>codis-proxy&#x542F;&#x52A8;&#x540E;&#xFF0C;&#x5904;&#x4E8E; waiting &#x72B6;&#x6001;&#xFF0C;&#x76D1;&#x542C;proxy_addr &#x5730;&#x5740;&#xFF0C;&#x4F46;&#x662F;&#x4E0D;&#x4F1A;accept&#x8FDE;&#x63A5;&#x3002;&#x6DFB;&#x52A0;&#x5230;&#x96C6;&#x7FA4;&#x5E76;&#x5B8C;&#x6210;&#x96C6;&#x7FA4;&#x72B6;&#x6001;&#x7684;&#x540C;&#x6B65;&#xFF0C;&#x624D;&#x80FD;&#x6539;&#x53D8;&#x72B6;&#x6001;&#x4E3A;online&#x3002;&#x6DFB;&#x52A0;&#x7684;&#x65B9;&#x6CD5;&#x6709;&#x4EE5;&#x4E0B;&#x4E24;&#x79CD;&#xFF1A;<br>&#x901A;&#x8FC7;codis-fe&#x6DFB;&#x52A0;&#xFF1A;&#x901A;&#x8FC7;Add Proxy&#x6309;&#x94AE;&#xFF0C;&#x5C06;admin_addr&#x52A0;&#x5165;&#x5230;&#x96C6;&#x7FA4;&#x4E2D;&#xFF1B;(&#x8FD9;&#x4E2A;&#x6211;&#x4EEC;&#x7A0D;&#x540E;&#x518D;&#x8BF4;)<br>&#x901A;&#x8FC7;codis-admin&#x547D;&#x4EE4;&#x884C;&#x5DE5;&#x5177;&#x6DFB;&#x52A0;&#xFF0C;&#x65B9;&#x6CD5;&#x5982;&#x4E0B;&#xFF1A;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">bin/codis-admin --dashboard=10.16.20.62:18080 --create-proxy -x 10.16.20.62:11080</div><div class="line">bin/codis-admin --dashboard=10.16.20.62:18080 --create-proxy -x 10.16.20.63:11080</div><div class="line">bin/codis-admin --dashboard=10.16.20.62:18080 --create-proxy -x 10.16.20.64:11080</div></pre></td></tr></table></figure></p>
+<p>&#x5176;&#x4E2D;10.16.20.62:18080 &#x4EE5;&#x53CA;10.16.20.63:11080 &#x5206;&#x522B;&#x4E3A;dashboard&#x548C;proxy&#x7684;admin_addr &#x5730;&#x5740;&#x3002;<br>&#x6DFB;&#x52A0;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;dashboard&#x4F1A;&#x5B8C;&#x6210;&#x5982;&#x4E0B;&#x4E00;&#x7CFB;&#x5217;&#x52A8;&#x4F5C;&#xFF1A;</p>
+<ol>
+<li>&#x83B7;&#x53D6; proxy &#x4FE1;&#x606F;&#xFF0C;&#x5BF9;&#x96C6;&#x7FA4;name&#x4EE5;&#x53CA;auth&#x8FDB;&#x884C;&#x9A8C;&#x8BC1;&#xFF0C;&#x5E76;&#x5C06;&#x5176;&#x4FE1;&#x606F;&#x5199;&#x5165;&#x5230;&#x5916;&#x90E8;&#x5B58;&#x50A8;&#x4E2D;&#xFF1B;</li>
+<li>&#x540C;&#x6B65;slots&#x72B6;&#x6001;&#xFF1B;</li>
+<li>&#x6807;&#x8BB0;proxy&#x72B6;&#x6001;&#x4E3A;online&#xFF0C;&#x6B64;&#x540E;proxy&#x5F00;&#x59CB;accept&#x8FDE;&#x63A5;&#x5E76;&#x5F00;&#x59CB;&#x63D0;&#x4F9B;&#x670D;&#x52A1;&#x3002;</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#bin/codis-proxy   -h</span></div><div class="line">Usage:</div><div class="line">codis-proxy [--ncpu=N][--config=CONF] [--log=FILE] [--log-level=LEVEL] [--host-admin=ADDR]</div><div class="line">[--host-proxy=ADDR] [--ulimit=NLIMIT]</div><div class="line">codis-proxy   --default-config</div><div class="line">codis-proxy   --version</div><div class="line"> Options:</div><div class="line">    --ncpu=N                              &#x6700;&#x5927;&#x4F7F;&#x7528; CPU &#x4E2A;&#x6570;</div><div class="line">    -c CONF, --config=CONF      &#x6307;&#x5B9A;&#x542F;&#x52A8;&#x914D;&#x7F6E;&#x6587;&#x4EF6;</div><div class="line">    <span class="_">-l</span> FILE, --log=FILE                 &#x8BBE;&#x7F6E; <span class="built_in">log</span> &#x8F93;&#x51FA;&#x6587;&#x4EF6;</div><div class="line">    --log-level=LEVEL         &#x8BBE;&#x7F6E; <span class="built_in">log</span> &#x8F93;&#x51FA;&#x7B49;&#x7EA7;&#xFF1A;INFO,WARN,DEBUG,ERROR&#xFF1B;&#x9ED8;&#x8BA4;INFO&#xFF0C;&#x63A8;&#x8350;WARN</div><div class="line">    --ulimit=NLIMIT            &#x68C0;&#x67E5;<span class="built_in">ulimit</span> -n&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x786E;&#x4FDD;&#x8FD0;&#x884C;&#x65F6;&#x6700;&#x5927;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x4E0D;&#x5C11;&#x4E8E;NLIMIT</div></pre></td></tr></table></figure>
+<p></p><h4 id="codis-fe"> Codis FE</h4><br>&#x96C6;&#x7FA4;&#x7BA1;&#x7406;&#x754C;&#x9762;:<p></p>
+<ul>
+<li>&#x591A;&#x4E2A;&#x96C6;&#x7FA4;&#x5B9E;&#x4F8B;&#x53EF;&#x4EE5;&#x5171;&#x4EAB;&#x540C;&#x4E00;&#x4E2A;&#x524D;&#x7AEF;&#x5C55;&#x793A;&#x9875;&#x9762;</li>
+<li>&#x901A;&#x8FC7;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x7BA1;&#x7406;&#x540E;&#x7AEF;codis-dashboard&#x5217;&#x8868;&#xFF0C;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x53EF;&#x81EA;&#x52A8;&#x66F4;&#x65B0;</li>
+</ul>
+<p>&#x914D;&#x7F6E;codis-fe<br>&#x914D;&#x7F6E;&#x6587;&#x4EF6;codis.json&#xFF08;fe.conf&#xFF09;&#x53EF;&#x4EE5;&#x624B;&#x52A8;&#x7F16;&#x8F91;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;codis-admin&#x4ECE;&#x5916;&#x90E8;&#x5B58;&#x50A8;&#x4E2D;&#x62C9;&#x53D6;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">bin/codis-admin --dashboard-list   --zookeeper=10.16.20.62:2181 | tee codis.json</div><div class="line">2016/12/20 16:51:50 zkclient.go:23: [INFO] zookeeper - zkclient setup new connection to 10.16.20.62:2181</div><div class="line">2016/12/20 16:51:50 zkclient.go:23: [INFO] zookeeper - Connected to 10.16.20.62:2181</div><div class="line">2016/12/20 16:51:50 zkclient.go:23: [INFO] zookeeper - Authenticated: id=97138763315609600, timeout=40000</div><div class="line">[</div><div class="line">    {</div><div class="line">        <span class="string">&quot;name&quot;</span>: <span class="string">&quot;codis-demo&quot;</span>,</div><div class="line">        <span class="string">&quot;dashboard&quot;</span>: <span class="string">&quot;10.16.20.62:18080&quot;</span></div><div class="line">    }</div><div class="line">]</div><div class="line">2016/12/20 16:51:50 zkclient.go:23: [INFO] zookeeper - Recv loop terminated: err=EOF</div><div class="line">2016/12/20 16:51:50 zkclient.go:23: [INFO] zookeeper - Send loop terminated: err=&lt;nil&gt;</div></pre></td></tr></table></figure></p>
+<p>&#x542F;&#x52A8;codis-fe<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">nohup bin/codis-fe --ncpu=4 --log=fe.log --log-level=WARN --dashboard-list=codis.json   --listen=0.0.0.0:18090   &amp;</div><div class="line"><span class="comment"># &#x8FD9;&#x91CC;&#x6307;&#x5B9A;&#x7AEF;&#x53E3;&#x53F7;&#x4E3A;18090&#x662F;&#x4E3A;&#x4E86;&#x9632;&#x6B62;&#x548C;codis-dashboard&#x7684;&#x7AEF;&#x53E3;&#x53F7;18080&#x51B2;&#x7A81;</span></div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#bin/codis-fe  -h</span></div><div class="line">Usage:</div><div class="line">    codis-fe [--ncpu=N][--log=FILE] [--log-level=LEVEL] --dashboard-list=LIST --listen=ADDR</div><div class="line">    codis-fe  --version</div><div class="line">Options:</div><div class="line">--ncpu=N                                  &#x6700;&#x5927;&#x4F7F;&#x7528; CPU &#x4E2A;&#x6570;</div><div class="line"><span class="_">-d</span> LIST,--dashboard-list=LIST   &#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x80FD;&#x591F;&#x81EA;&#x52A8;&#x5237;&#x65B0;</div><div class="line"><span class="_">-l</span> FILE, --log=FILE                     &#x8BBE;&#x7F6E; <span class="built_in">log</span> &#x8F93;&#x51FA;&#x6587;&#x4EF6;</div><div class="line">--log-level=LEVEL        &#x8BBE;&#x7F6E; <span class="built_in">log</span> &#x8F93;&#x51FA;&#x7B49;&#x7EA7;&#xFF1A;INFO,WARN,DEBUG,ERROR&#xFF1B;&#x9ED8;&#x8BA4;INFO&#xFF0C;&#x63A8;&#x8350;WARN</div><div class="line">--listen=ADDR                         HTTP &#x670D;&#x52A1;&#x7AEF;&#x53E3;</div></pre></td></tr></table></figure>
+<p>&#x6253;&#x5F00;&#x6D4F;&#x89C8;&#x5668;&#xFF0C;&#x5728;&#x5730;&#x5740;&#x680F;&#x91CC;&#x8F93;&#x5165;<a href="http://192.168.4.157:18090/&#xFF0C;&#x901A;&#x8FC7;&#x7BA1;&#x7406;&#x754C;&#x9762;&#x64CD;&#x4F5C;Codis" target="_blank" rel="external">http://192.168.4.157:18090/&#xFF0C;&#x901A;&#x8FC7;&#x7BA1;&#x7406;&#x754C;&#x9762;&#x64CD;&#x4F5C;Codis</a><br><img src="/uploads/codis2.png" class="blockquote-center"> </p>
+<p>&#x9664;&#x4E86;&#x56FE;&#x5F62;&#x754C;&#x9762;&#x8FDB;&#x884C;&#x5982;&#x4E0A;&#x64CD;&#x4F5C;&#x5916;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x547D;&#x4EE4;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#x3002;<br>&#x521B;&#x5EFA;&#x7EC4;:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#bin/codis-admin   --dashboard=192.168.33.6:18080   --create-group    --gid=1</span></div><div class="line"><span class="comment">#bin/codis-admin   --dashboard=192.168.33.6:18080   --create-group    --gid=2</span></div></pre></td></tr></table></figure></p>
+<p>&#x7EC4;&#x6DFB;&#x52A0;&#x670D;&#x52A1;&#x5668;&#xFF1A;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#bin/codis-admin  --dashboard=192.168.33.6:18080  --group-add  --gid=1 --addr=192.168.33.6:6379</span></div><div class="line"><span class="comment">#bin/codis-admin   --dashboard=192.168.33.6:18080  --group-add  --gid=1 --addr=192.168.33.6:6380</span></div></pre></td></tr></table></figure></p>
+<p>&#x628A;&#x4ECE;&#x5E93;&#x8DDF;&#x4E3B;&#x5E93;&#x540C;&#x6B65;&#xFF08;&#x540C;&#x4E00;&#x7EC4;&#x7684;&#x4E24;&#x4E2A;&#x5B9E;&#x4F8B;&#x90FD;&#x8981;&#x6267;&#x884C;&#xFF09;&#xFF1A;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#bin/codis-admin  --dashboard=192.168.33.6:18080   --sync-action  --create --addr=192.168.33.6:6379</span></div><div class="line"><span class="comment">#bin/codis-admin  --dashboard=192.168.33.6:18080   --sync-action  --create --addr=192.168.33.6:6380</span></div></pre></td></tr></table></figure></p>
+<p>&#x82E5;&#x4ECE;&#x5E93;&#x9700;&#x8981;&#x63D0;&#x5347;&#x4E3A;master&#xFF0C;&#x64CD;&#x4F5C;&#x5982;&#x4E0B;:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#bin/codis-admin  --dashboard=192.168.33.6:18080   --promote-server  --gid=1 --addr=192.168.33.6:6380(&#x4ECE;&#x5E93;ip&#x548C;&#x7AEF;&#x53E3;)</span></div></pre></td></tr></table></figure></p>
+<p>&#x521D;&#x59CB;&#x5316; slots&#x5E76;&#x8BBE;&#x7F6E; server group&#x670D;&#x52A1;&#x7684;slot&#x8303;&#x56F4;((&#x53EA;&#x5728;&#x4E00;&#x8282;&#x70B9;&#x6267;&#x884C;&#x4E00;&#x6B21;)sid&#x662F;slot&#x7684;&#x7F16;&#x53F7;&#x3002;Codis&#x91C7;&#x7528;Pre-sharding&#x6280;&#x672F;&#x6765;&#x5B9E;&#x73B0;&#x6570;&#x636E;&#x7684;&#x5206;&#x7247;, &#x9ED8;&#x8BA4;&#x5206;&#x6210;1024&#x4E2A;slots (0-1023), &#x5BF9;&#x4E8E;&#x6BCF;&#x4E2A;key&#x6765;&#x8BF4;&#xFF0C;&#x901A;&#x8FC7;&#x4EE5;&#x4E0B;&#x516C;&#x5F0F;&#x786E;&#x5B9A;&#x6240;&#x5C5E;&#x7684;Slot Id : SlotId = crc32(key) % 1024&#x6BCF;&#x4E00;&#x4E2A;slot&#x90FD;&#x4F1A;&#x6709;&#x4E00;&#x4E2A;&#x4E14;&#x5FC5;&#x987B;&#x6709;&#x4E00;&#x4E2A;&#x7279;&#x5B9A;&#x7684;server group id&#x6765;&#x8868;&#x793A;&#x8FD9;&#x4E2A;slot&#x7684;&#x6570;&#x636E;&#x7531;&#x54EA;&#x4E2A;server group&#x6765;&#x63D0;&#x4F9B;&#x3002;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#bin/codis-admin   --dashboard=192.168.33.6:18080   --slot-action   --create-range   --beg=0  --end=300   --gid=1</span></div><div class="line"><span class="comment">#bin/codis-admin   --dashboard=192.168.33.6:18080   --slot-action   --create-range   --beg=301 --end=601   --gid=2</span></div></pre></td></tr></table></figure></p>
+<p></p><h4 id="codis-ha">Codis HA</h4><br>&#x6CE8;&#x610F;&#xFF1A;Codis HA&#x5DE5;&#x5177;&#x4EC5;&#x4EC5;&#x662F;Codis &#x96C6;&#x7FA4;HA &#x7684;&#x4E00;&#x90E8;&#x5206;&#xFF0C;&#x5355;&#x72EC;&#x5DE5;&#x4F5C;&#x80FD;&#x529B;&#x6709;&#x9650;&#x3002;<p></p>
+<ul>
+<li>&#x9ED8;&#x8BA4;&#x4EE5; 5s&#x4E3A;&#x5468;&#x671F;&#xFF0C;codis-ha&#x4F1A;&#x4ECE;codis-dashboard&#x4E2D;&#x62C9;&#x53D6;&#x96C6;&#x7FA4;&#x72B6;&#x6001;&#xFF0C;&#x5E76;&#x8FDB;&#x884C;&#x4E3B;&#x4ECE;&#x5207;&#x6362;&#xFF1B;</li>
+</ul>
+<p>codis-ha &#x5728;&#x4EE5;&#x4E0B;&#x72B6;&#x6001;&#x4E0B;&#x4F1A;&#x9000;&#x51FA;&#xFF1A;</p>
+<ul>
+<li>&#x4ECE; codis-dashboard &#x83B7;&#x53D6;&#x96C6;&#x7FA4;&#x72B6;&#x6001;&#x5931;&#x8D25;&#x65F6;&#xFF1B;</li>
+<li>&#x5411;codis-dashboard&#x53D1;&#x9001;&#x4E3B;&#x4ECE;&#x5207;&#x6362;&#x6307;&#x4EE4;&#x5931;&#x8D25;&#x65F6;&#x3002;</li>
+</ul>
+<p>odis-ha&#x5728;&#x4EE5;&#x4E0B;&#x72B6;&#x6001;&#x4E0B;&#x4E0D;&#x4F1A;&#x8FDB;&#x884C;&#x4E3B;&#x4ECE;&#x5207;&#x6362;&#xFF1A;</p>
+<ul>
+<li>&#x5B58;&#x5728;proxy&#x72B6;&#x6001;&#x5F02;&#x5E38;&#xFF1A;&#x56E0;&#x4E3A;&#x63D0;&#x5347;&#x4E3B;&#x4ECE;&#x9700;&#x8981;&#x5F97;&#x5230;&#x6240;&#x6709;proxy&#x7684;&#x786E;&#x8BA4;&#xFF0C;&#x56E0;&#x6B64;&#x5FC5;&#x987B;&#x786E;&#x4FDD;&#x64CD;&#x4F5C;&#x65F6;&#x6240;&#x6709;proxy&#x90FD;&#x80FD;&#x6B63;&#x5E38;&#x54CD;&#x5E94;&#x64CD;&#x4F5C;&#x6307;&#x4EE4;&#xFF1B;</li>
+<li>&#x7F51;&#x7EDC;&#x539F;&#x56E0;&#x9020;&#x6210;&#x7684;master&#x5F02;&#x5E38;&#xFF1A;&#x82E5;&#x5B58;&#x5728;slave&#x6EE1;&#x8DB3;slave.master_link_status == up&#xFF0C;&#x901A;&#x5E38;&#x53EF;&#x4EE5;&#x8BA4;&#x4E3A;master&#x5E76;&#x6CA1;&#x6709;&#x771F;&#x7684;&#x9000;&#x51FA;&#xFF0C;&#x800C;&#x662F;&#x7531;&#x4E8E;&#x7F51;&#x7EDC;&#x539F;&#x56E0;&#x6216;&#x8005;&#x54CD;&#x5E94;&#x5EF6;&#x8FDF;&#x9020;&#x6210;&#x7684;master&#x72B6;&#x6001;&#x83B7;&#x53D6;&#x5931;&#x8D25;&#xFF0C;&#x6B64;&#x65F6;codis-ha&#x4E0D;&#x4F1A;&#x5BF9;&#x8BE5;group&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#xFF1B;<br>n&#x6CA1;&#x6709;&#x6EE1;&#x8DB3;&#x6761;&#x4EF6;&#x7684;slave&#x65F6;&#x3002;&#x63D0;&#x5347;&#x8FC7;&#x7A0B;&#x4F1A;&#x9009;&#x62E9;&#x6EE1;&#x8DB3;slave.master_link_status == down&#xFF0C;&#x5E76;&#x4E14;slave.master_link_down_since_seconds&#x6700;&#x5C0F;&#x7684;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#x3002;&#x8FD9;&#x5C31;&#x8981;&#x6C42;&#x88AB;&#x9009;&#x62E9;&#x7684;slave&#x81F3;&#x5C11;&#x5728;&#x8FC7;&#x53BB;&#x4E00;&#x6BB5;&#x65F6;&#x95F4;&#x5185;&#x4E0E;master&#x662F;&#x6210;&#x529F;&#x540C;&#x6B65;&#x72B6;&#x6001;&#xFF0C;&#x8FD9;&#x4E2A;&#x65F6;&#x95F4;&#x95F4;&#x9694;&#x662F;2d+5&#xFF0C;&#x5176;&#x4E2D;d&#x662F;codis-ha&#x68C0;&#x67E5;&#x5468;&#x671F;&#x9ED8;&#x8BA4;5&#x79D2;&#x3002;</li>
+</ul>
+<p><strong><em>&#x6CE8;&#x610F;&#xFF1A;&#x5E94;&#x7528;codis-ha&#x65F6;&#x8FD8;&#x9700;&#x8981;&#x7ED3;&#x5408;&#x5BF9;codis-proxy&#x548C;codis-server&#x7684;&#x53EF;&#x7528;&#x6027;&#x76D1;&#x63A7;&#xFF0C;&#x5426;&#x5219;codis-ha&#x65E0;&#x6CD5;&#x4FDD;&#x8BC1;&#x53EF;&#x9760;&#x6027;&#x3002;</em></strong></p>
+<p>&#x9700;&#x8981;&#x6CE8;&#x610F;&#xFF1A;codis-ha&#x5C06;&#x5176;&#x4E2D;&#x4E00;&#x4E2A;slave&#x5347;&#x7EA7;&#x4E3A;master&#x65F6;&#xFF0C;&#x8BE5;&#x7EC4;&#x5185;&#x5176;&#x4ED6;slave&#x662F;&#x4E0D;&#x4F1A;&#x81EA;&#x52A8;&#x6539;&#x53D8;&#x72B6;&#x6001;&#x7684;&#xFF0C;&#x8FD9;&#x4E9B;slave&#x4ECD;&#x5C06;&#x8BD5;&#x56FE;&#x4ECE;&#x65E7;&#x7684;master&#x4E0A;&#x540C;&#x6B65;&#x6570;&#x636E;&#xFF0C;&#x56E0;&#x800C;&#x4F1A;&#x5BFC;&#x81F4;&#x7EC4;&#x5185;&#x65B0;&#x7684;master&#x548C;&#x5176;&#x4ED6;slave&#x4E4B;&#x95F4;&#x7684;&#x6570;&#x636E;&#x4E0D;&#x4E00;&#x81F4;&#x3002;&#x56E0;&#x4E3A;redis&#x7684;slaveof&#x547D;&#x4EE4;&#x5207;&#x6362;master&#x65F6;&#x4F1A;&#x4E22;&#x5F03;slave&#x4E0A;&#x7684;&#x5168;&#x90E8;&#x6570;&#x636E;&#xFF0C;&#x4ECE;&#x65B0;master&#x5B8C;&#x6574;&#x540C;&#x6B65;&#xFF0C;&#x4F1A;&#x6D88;&#x8017;&#x8D44;&#x6E90;&#x3002;&#x56E0;&#x6B64;&#xFF0C;&#x5F53;&#x51FA;&#x73B0;&#x4E3B;&#x4ECE;&#x5207;&#x6362;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x7BA1;&#x7406;&#x5458;&#x624B;&#x52A8;&#x521B;&#x5EFA;&#x65B0;&#x7684;sync action&#x6765;&#x5B8C;&#x6210;&#x65B0;master&#x4E0E;slave&#x4E4B;&#x95F4;&#x7684;&#x6570;&#x636E;&#x540C;&#x6B65;&#x3002;</p>
+<p>&#x542F;&#x52A8;codis-ha<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nohup   bin/codis-ha   --log=ha.log  --log-level=WARN   --dashboard=10.16.20.62:18080 &amp;</div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Usage:</div><div class="line">    codis-ha [--log=FILE][--log-level=LEVEL] --dashboard=ADDR</div><div class="line">    codis-ha  --version</div><div class="line"> Options:</div><div class="line"><span class="_">-l</span> FILE, --log=FILE          &#x8BBE;&#x7F6E; <span class="built_in">log</span> &#x8F93;&#x51FA;&#x6587;&#x4EF6;</div><div class="line">--log-level=LEVEL          &#x8BBE;&#x7F6E; <span class="built_in">log</span> &#x8F93;&#x51FA;&#x7B49;&#x7EA7;&#xFF1A;INFO,WARN,DEBUG,ERROR&#xFF1B;&#x9ED8;&#x8BA4;INFO&#xFF0C;&#x63A8;&#x8350;WARN</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+	<div>
+      
+        
+      
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Codis/" rel="tag"><i class="fa fa-tag"></i> Codis</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/15545/" rel="next" title="Linux系统初始化脚本">
+                <i class="fa fa-chevron-left"></i> Linux系统初始化脚本
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/40591/" rel="prev" title="网站架构演化">
+                网站架构演化 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ5NS82MDYz"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/linux5.gif"
+               alt="火柴" />
+          <p class="site-author-name" itemprop="name">火柴</p>
+           
+              <p class="site-description motion-element" itemprop="description">对自己要求高一点！！！</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+			﻿<a title="点击high一下哦^_^" rel="alternate" class="mw-harlem_shake_slow wobble shake" href='javascript:(function() {
+    function c() {
+        var e = document.createElement("link");
+        e.setAttribute("type", "text/css");
+        e.setAttribute("rel", "stylesheet");
+        e.setAttribute("href", f);
+        e.setAttribute("class", l);
+        document.body.appendChild(e)
+    }
+ 
+    function h() {
+        var e = document.getElementsByClassName(l);
+        for (var t = 0; t < e.length; t++) {
+            document.body.removeChild(e[t])
+        }
+    }
+ 
+    function p() {
+        var e = document.createElement("div");
+        e.setAttribute("class", a);
+        document.body.appendChild(e);
+        setTimeout(function() {
+            document.body.removeChild(e)
+        }, 100)
+    }
+ 
+    function d(e) {
+        return {
+            height : e.offsetHeight,
+            width : e.offsetWidth
+        }
+    }
+ 
+    function v(i) {
+        var s = d(i);
+        return s.height > e && s.height < n && s.width > t && s.width < r
+    }
+ 
+    function m(e) {
+        var t = e;
+        var n = 0;
+        while (!!t) {
+            n += t.offsetTop;
+            t = t.offsetParent
+        }
+        return n
+    }
+ 
+    function g() {
+        var e = document.documentElement;
+        if (!!window.innerWidth) {
+            return window.innerHeight
+        } else if (e && !isNaN(e.clientHeight)) {
+            return e.clientHeight
+        }
+        return 0
+    }
+ 
+    function y() {
+        if (window.pageYOffset) {
+            return window.pageYOffset
+        }
+        return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+    }
+ 
+    function E(e) {
+        var t = m(e);
+        return t >= w && t <= b + w
+    }
+ 
+    function S() {
+        var e = document.createElement("audio");
+        e.setAttribute("class", l);
+        e.src = i;
+        e.loop = false;
+        e.addEventListener("canplay", function() {
+            setTimeout(function() {
+                x(k)
+            }, 500);
+            setTimeout(function() {
+                N();
+                p();
+                for (var e = 0; e < O.length; e++) {
+                    T(O[e])
+                }
+            }, 15500)
+        }, true);
+        e.addEventListener("ended", function() {
+            N();
+            h()
+        }, true);
+        e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+        document.body.appendChild(e);
+        e.play()
+    }
+ 
+    function x(e) {
+        e.className += " " + s + " " + o
+    }
+ 
+    function T(e) {
+        e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+    }
+ 
+    function N() {
+        var e = document.getElementsByClassName(s);
+        var t = new RegExp("\\b" + s + "\\b");
+        for (var n = 0; n < e.length; ) {
+            e[n].className = e[n].className.replace(t, "")
+        }
+    }
+ 
+    var e = 30;
+    var t = 30;
+    var n = 350;
+    var r = 350;
+    var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+    var s = "mw-harlem_shake_me";
+    var o = "im_first";
+    var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+    var a = "mw-strobe_light";
+    var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+    var l = "mw_added_css";
+    var b = g();
+    var w = y();
+    var C = document.getElementsByTagName("*");
+    var k = null;
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            if (E(A)) {
+                k = A;
+                break
+            }
+        }
+    }
+    if (A === null) {
+        console.warn("Could not find a node of the right size. Please try a different page.");
+        return
+    }
+    c();
+    S();
+    var O = [];
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            O.push(A)
+        }
+    }
+})()'><i class="fa fa-music"></i> High</a>
+          </div>
+        
+		
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://wpa.qq.com/msgrd?V=1&uin=396303331&exe=qq&Site=qq&menu=yes" target="_blank" title="QQ">
+                  
+                    <i class="fa fa-fw fa-qq"></i>
+                  
+                  QQ
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:18201620971@163.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.chen-hao.com.cn/cywz" target="_blank" title="常用网站">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  常用网站
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.fblinux.com/" title="师兄-王君康" target="_blank">师兄-王君康</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.sctux.com/" title="师兄-郭茂秋" target="_blank">师兄-郭茂秋</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://linsj.blog.51cto.com/" title="同学-林水晶" target="_blank">同学-林水晶</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://mrchen.org/" title="同学-陈晨" target="_blank">同学-陈晨</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.systemd.cn/" title="同学-郎耀亮" target="_blank">同学-郎耀亮</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://zantony.top/" title="同学-赵鑫" target="_blank">同学-赵鑫</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://blog.whsir.com/" title="师弟-吴昊" target="_blank">师弟-吴昊</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.yuangg.com/" title="师弟-洋洋" target="_blank">师弟-洋洋</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+		
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境说明"><span class="nav-number">1.</span> <span class="nav-text">环境说明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#codis架构图"><span class="nav-number">1.1.</span> <span class="nav-text">codis架构图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分配角色"><span class="nav-number">1.2.</span> <span class="nav-text">分配角色</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#软件版本"><span class="nav-number">1.3.</span> <span class="nav-text">软件版本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#codis3x组件说明"><span class="nav-number">1.4.</span> <span class="nav-text">codis3.x组件说明</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#环境准备"><span class="nav-number">2.</span> <span class="nav-text">环境准备</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#zookeeper集群"><span class="nav-number">2.1.</span> <span class="nav-text">zookeeper集群</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#jdk-18安装"><span class="nav-number">2.1.1.</span> <span class="nav-text">jdk 1.8安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#zookeeper集群安装"><span class="nav-number">2.1.2.</span> <span class="nav-text">zookeeper集群安装</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#go语言环境搭建"><span class="nav-number">2.2.</span> <span class="nav-text">go语言环境搭建</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#codis集群安装"><span class="nav-number">3.</span> <span class="nav-text">codis集群安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#codis安装"><span class="nav-number">3.1.</span> <span class="nav-text">codis安装</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#设置编译环境"><span class="nav-number">3.1.1.</span> <span class="nav-text">设置编译环境</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#下载-codis-源代码"><span class="nav-number">3.1.2.</span> <span class="nav-text">下载 Codis 源代码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#编译-codis-源代码"><span class="nav-number">3.1.3.</span> <span class="nav-text">编译 Codis 源代码</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编辑redis配置文件"><span class="nav-number">3.2.</span> <span class="nav-text">编辑redis配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#codis-dashboard"><span class="nav-number">3.3.</span> <span class="nav-text">Codis Dashboard</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#codis-proxy"><span class="nav-number">3.4.</span> <span class="nav-text">Codis Proxy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#codis-fe"><span class="nav-number">3.5.</span> <span class="nav-text"> Codis FE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#codis-ha"><span class="nav-number">3.6.</span> <span class="nav-text">Codis HA</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">火柴</span>
+</div>
+
+<div class="theme-info">
+	<span id="sitetime"></span>
+	<script language=javascript>
+	function siteTime(){
+	window.setTimeout("siteTime()", 1000);
+	var seconds = 1000
+	var minutes = seconds * 60
+	var hours = minutes * 60
+	var days = hours * 24
+	var years = days * 365
+
+	var today = new Date()
+	var todayYear = today.getFullYear()
+	var todayMonth = today.getMonth()
+	var todayDate = today.getDate()
+	var todayHour = today.getHours()
+	var todayMinute = today.getMinutes()
+	var todaySecond = today.getSeconds()
+
+	/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳) 
+	year - 作为date对象的年份，为4位年份值
+	month - 0-11之间的整数，做为date对象的月份
+	day - 1-31之间的整数，做为date对象的天数
+	hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+	minutes - 0-59之间的整数，做为date对象的分钟数
+	seconds - 0-59之间的整数，做为date对象的秒数
+	microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+	var t1 = Date.UTC(2015,10,14,11,19,00)
+	var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond)
+	var diff = t2-t1
+
+	var diffYears = Math.floor(diff/years)
+	var diffDays = Math.floor((diff/days)-diffYears*365)
+	var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours)
+	var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes)
+	var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds)
+	document.getElementById("sitetime").innerHTML=" 本站已运行"+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒"
+	}
+	siteTime()
+	</script>
+	
+  <div class="powered-by"></div>
+  <span class="post-count">共83.4k字</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      您是第<i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      位访客
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总点击<i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("v8vPyVyJeoQ3FYzKp3y9KLMu-gzGzoHsz", "a0WXjkqByOHUcay9EHiwNkan");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+  
+
+
+  
+
+ 
+<!-- 点击爱心效果 -->
+<script src="/js/love.js"></script>
+<!-- 背景动画 -->
+<!-- <script src="/js/particle2.js"></script>  -->
+
+<!--崩溃欺骗-->
+<!-- <script src="/js/qipian.js"></script> -->
+
+<script type="text/javascript" src="/lib/zclip/clipboard.min.js"></script>	
+<script type="text/javascript" src="/js/src/custom.js"></script>
+  
+</body>
+</html>

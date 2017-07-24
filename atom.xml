@@ -17,8 +17,8 @@
   
   <entry>
     <title>Redis的RBD和AOF持久化对比</title>
-    <link href="http://www.chen-hao.com.cn/Redis%E7%9A%84RBD%E5%92%8CAOF%E6%8C%81%E4%B9%85%E5%8C%96%E5%AF%B9%E6%AF%94.html"/>
-    <id>http://www.chen-hao.com.cn/Redis的RBD和AOF持久化对比.html</id>
+    <link href="http://www.chen-hao.com.cn/posts/14105/"/>
+    <id>http://www.chen-hao.com.cn/posts/14105/</id>
     <published>2017-07-24T06:54:03.000Z</published>
     <updated>2017-07-24T09:18:29.181Z</updated>
     
@@ -84,8 +84,8 @@
   
   <entry>
     <title>Linux故障记录(持续更新...)</title>
-    <link href="http://www.chen-hao.com.cn/Linux%E6%95%85%E9%9A%9C%E8%AE%B0%E5%BD%95-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0.html"/>
-    <id>http://www.chen-hao.com.cn/Linux故障记录-持续更新.html</id>
+    <link href="http://www.chen-hao.com.cn/posts/4519/"/>
+    <id>http://www.chen-hao.com.cn/posts/4519/</id>
     <published>2017-07-24T03:00:57.000Z</published>
     <updated>2017-07-24T09:22:13.940Z</updated>
     
@@ -132,8 +132,8 @@
   
   <entry>
     <title>ELK Stack 常用架构及使用场景</title>
-    <link href="http://www.chen-hao.com.cn/ELK-Stack%E5%B8%B8%E7%94%A8%E6%9E%B6%E6%9E%84%E5%8F%8A%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF.html"/>
-    <id>http://www.chen-hao.com.cn/ELK-Stack常用架构及使用场景.html</id>
+    <link href="http://www.chen-hao.com.cn/posts/21004/"/>
+    <id>http://www.chen-hao.com.cn/posts/21004/</id>
     <published>2017-07-04T02:09:26.000Z</published>
     <updated>2017-07-20T09:05:22.305Z</updated>
     
@@ -183,8 +183,8 @@
   
   <entry>
     <title>supervisor进程管理工具</title>
-    <link href="http://www.chen-hao.com.cn/supervisor%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7.html"/>
-    <id>http://www.chen-hao.com.cn/supervisor进程管理工具.html</id>
+    <link href="http://www.chen-hao.com.cn/posts/6255/"/>
+    <id>http://www.chen-hao.com.cn/posts/6255/</id>
     <published>2017-07-03T03:15:34.000Z</published>
     <updated>2017-07-20T09:05:22.375Z</updated>
     
@@ -216,8 +216,8 @@
   
   <entry>
     <title>别的程序员是怎么读你的简历的（转）</title>
-    <link href="http://www.chen-hao.com.cn/%E5%88%AB%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%91%98%E6%98%AF%E6%80%8E%E4%B9%88%E8%AF%BB%E4%BD%A0%E7%9A%84%E7%AE%80%E5%8E%86%E7%9A%84%EF%BC%88%E8%BD%AC%EF%BC%89.html"/>
-    <id>http://www.chen-hao.com.cn/别的程序员是怎么读你的简历的（转）.html</id>
+    <link href="http://www.chen-hao.com.cn/posts/8699/"/>
+    <id>http://www.chen-hao.com.cn/posts/8699/</id>
     <published>2017-06-14T09:04:14.000Z</published>
     <updated>2017-07-20T09:05:22.402Z</updated>
     
@@ -290,8 +290,8 @@
   
   <entry>
     <title>ansible部署脚本</title>
-    <link href="http://www.chen-hao.com.cn/ansible%E9%83%A8%E7%BD%B2%E8%84%9A%E6%9C%AC.html"/>
-    <id>http://www.chen-hao.com.cn/ansible部署脚本.html</id>
+    <link href="http://www.chen-hao.com.cn/posts/52910/"/>
+    <id>http://www.chen-hao.com.cn/posts/52910/</id>
     <published>2017-06-05T07:49:23.000Z</published>
     <updated>2017-07-20T09:05:22.357Z</updated>
     
@@ -321,8 +321,8 @@
   
   <entry>
     <title>字符串及其操作02</title>
-    <link href="http://www.chen-hao.com.cn/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%8A%E5%85%B6%E6%93%8D%E4%BD%9C02.html"/>
-    <id>http://www.chen-hao.com.cn/字符串及其操作02.html</id>
+    <link href="http://www.chen-hao.com.cn/posts/7687/"/>
+    <id>http://www.chen-hao.com.cn/posts/7687/</id>
     <published>2017-06-05T03:11:38.000Z</published>
     <updated>2017-07-20T09:05:22.406Z</updated>
     
@@ -406,8 +406,8 @@
   
   <entry>
     <title>常量变量-运算符-程序结构01</title>
-    <link href="http://www.chen-hao.com.cn/%E5%B8%B8%E9%87%8F%E5%8F%98%E9%87%8F-%E8%BF%90%E7%AE%97%E7%AC%A6-%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%8401.html"/>
-    <id>http://www.chen-hao.com.cn/常量变量-运算符-程序结构01.html</id>
+    <link href="http://www.chen-hao.com.cn/posts/59170/"/>
+    <id>http://www.chen-hao.com.cn/posts/59170/</id>
     <published>2017-06-05T02:30:36.000Z</published>
     <updated>2017-07-20T09:05:22.408Z</updated>
     
@@ -515,8 +515,8 @@
   
   <entry>
     <title>jenkins部署及构建方式</title>
-    <link href="http://www.chen-hao.com.cn/jenkins%E9%83%A8%E7%BD%B2%E5%8F%8A%E6%9E%84%E5%BB%BA%E6%96%B9%E5%BC%8F.html"/>
-    <id>http://www.chen-hao.com.cn/jenkins部署及构建方式.html</id>
+    <link href="http://www.chen-hao.com.cn/posts/14557/"/>
+    <id>http://www.chen-hao.com.cn/posts/14557/</id>
     <published>2017-06-02T05:08:19.000Z</published>
     <updated>2017-07-20T09:05:22.366Z</updated>
     
@@ -558,8 +558,8 @@
   
   <entry>
     <title>jenkins+sonar 代码质量分析</title>
-    <link href="http://www.chen-hao.com.cn/jenkins-sonar-%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E5%88%86%E6%9E%90.html"/>
-    <id>http://www.chen-hao.com.cn/jenkins-sonar-代码质量分析.html</id>
+    <link href="http://www.chen-hao.com.cn/posts/2754/"/>
+    <id>http://www.chen-hao.com.cn/posts/2754/</id>
     <published>2017-06-02T02:08:44.000Z</published>
     <updated>2017-07-20T09:05:22.362Z</updated>
     
@@ -618,8 +618,8 @@
   
   <entry>
     <title>搭建内网gitlab仓库</title>
-    <link href="http://www.chen-hao.com.cn/%E6%90%AD%E5%BB%BA%E5%86%85%E7%BD%91gitlab%E4%BB%93%E5%BA%93.html"/>
-    <id>http://www.chen-hao.com.cn/搭建内网gitlab仓库.html</id>
+    <link href="http://www.chen-hao.com.cn/posts/60168/"/>
+    <id>http://www.chen-hao.com.cn/posts/60168/</id>
     <published>2017-06-01T07:22:55.000Z</published>
     <updated>2017-07-20T09:05:22.412Z</updated>
     
@@ -650,8 +650,8 @@
   
   <entry>
     <title>jenkins自动化部署</title>
-    <link href="http://www.chen-hao.com.cn/jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2.html"/>
-    <id>http://www.chen-hao.com.cn/jenkins自动化部署.html</id>
+    <link href="http://www.chen-hao.com.cn/posts/65280/"/>
+    <id>http://www.chen-hao.com.cn/posts/65280/</id>
     <published>2017-06-01T07:06:47.000Z</published>
     <updated>2017-07-20T09:05:22.364Z</updated>
     
@@ -695,8 +695,8 @@
   
   <entry>
     <title>解决故障的处理思路</title>
-    <link href="http://www.chen-hao.com.cn/%E8%A7%A3%E5%86%B3%E6%95%85%E9%9A%9C%E7%9A%84%E5%A4%84%E7%90%86%E6%80%9D%E8%B7%AF.html"/>
-    <id>http://www.chen-hao.com.cn/解决故障的处理思路.html</id>
+    <link href="http://www.chen-hao.com.cn/posts/37696/"/>
+    <id>http://www.chen-hao.com.cn/posts/37696/</id>
     <published>2017-01-17T03:45:15.000Z</published>
     <updated>2017-07-20T09:05:22.424Z</updated>
     
@@ -798,8 +798,8 @@
   
   <entry>
     <title>Tomcat-集群方案</title>
-    <link href="http://www.chen-hao.com.cn/Tomcat-%E9%9B%86%E7%BE%A4%E6%96%B9%E6%A1%88.html"/>
-    <id>http://www.chen-hao.com.cn/Tomcat-集群方案.html</id>
+    <link href="http://www.chen-hao.com.cn/posts/41890/"/>
+    <id>http://www.chen-hao.com.cn/posts/41890/</id>
     <published>2017-01-13T05:50:03.000Z</published>
     <updated>2017-07-20T09:05:22.346Z</updated>
     
@@ -957,8 +957,8 @@
   
   <entry>
     <title>MongoDB3-x-权限配置</title>
-    <link href="http://www.chen-hao.com.cn/mongodb3-x-%E6%9D%83%E9%99%90%E9%85%8D%E7%BD%AE.html"/>
-    <id>http://www.chen-hao.com.cn/mongodb3-x-权限配置.html</id>
+    <link href="http://www.chen-hao.com.cn/posts/22174/"/>
+    <id>http://www.chen-hao.com.cn/posts/22174/</id>
     <published>2017-01-10T07:35:11.000Z</published>
     <updated>2017-07-20T09:05:22.368Z</updated>
     
@@ -997,8 +997,8 @@
   
   <entry>
     <title>MongoDB3.x-配置文件</title>
-    <link href="http://www.chen-hao.com.cn/MongoDB3-x-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.html"/>
-    <id>http://www.chen-hao.com.cn/MongoDB3-x-配置文件.html</id>
+    <link href="http://www.chen-hao.com.cn/posts/4147/"/>
+    <id>http://www.chen-hao.com.cn/posts/4147/</id>
     <published>2017-01-10T06:24:00.000Z</published>
     <updated>2017-07-20T09:05:22.329Z</updated>
     
@@ -1121,8 +1121,8 @@
   
   <entry>
     <title>优化内核参数提高服务器并发处理能力</title>
-    <link href="http://www.chen-hao.com.cn/%E4%BC%98%E5%8C%96%E5%86%85%E6%A0%B8%E5%8F%82%E6%95%B0%E6%8F%90%E9%AB%98%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%B9%B6%E5%8F%91%E5%A4%84%E7%90%86%E8%83%BD%E5%8A%9B.html"/>
-    <id>http://www.chen-hao.com.cn/优化内核参数提高服务器并发处理能力.html</id>
+    <link href="http://www.chen-hao.com.cn/posts/42280/"/>
+    <id>http://www.chen-hao.com.cn/posts/42280/</id>
     <published>2017-01-06T02:49:22.000Z</published>
     <updated>2017-07-20T09:05:22.389Z</updated>
     
@@ -1160,8 +1160,8 @@
   
   <entry>
     <title>网站架构演化</title>
-    <link href="http://www.chen-hao.com.cn/%E7%BD%91%E7%AB%99%E6%9E%B6%E6%9E%84%E6%BC%94%E5%8C%96.html"/>
-    <id>http://www.chen-hao.com.cn/网站架构演化.html</id>
+    <link href="http://www.chen-hao.com.cn/posts/40591/"/>
+    <id>http://www.chen-hao.com.cn/posts/40591/</id>
     <published>2017-01-04T08:19:56.000Z</published>
     <updated>2017-07-20T09:05:22.419Z</updated>
     
@@ -1207,8 +1207,8 @@
   
   <entry>
     <title>Codis3.1 集群安装部署</title>
-    <link href="http://www.chen-hao.com.cn/Codis3-1-%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2.html"/>
-    <id>http://www.chen-hao.com.cn/Codis3-1-集群安装部署.html</id>
+    <link href="http://www.chen-hao.com.cn/posts/49335/"/>
+    <id>http://www.chen-hao.com.cn/posts/49335/</id>
     <published>2016-12-20T06:33:08.000Z</published>
     <updated>2017-07-20T09:05:22.285Z</updated>
     
@@ -1361,8 +1361,8 @@
   
   <entry>
     <title>Linux系统初始化脚本</title>
-    <link href="http://www.chen-hao.com.cn/Linux%E7%B3%BB%E7%BB%9F%E5%88%9D%E5%A7%8B%E5%8C%96%E8%84%9A%E6%9C%AC.html"/>
-    <id>http://www.chen-hao.com.cn/Linux系统初始化脚本.html</id>
+    <link href="http://www.chen-hao.com.cn/posts/15545/"/>
+    <id>http://www.chen-hao.com.cn/posts/15545/</id>
     <published>2016-12-13T07:37:27.000Z</published>
     <updated>2017-07-20T09:05:22.326Z</updated>
     

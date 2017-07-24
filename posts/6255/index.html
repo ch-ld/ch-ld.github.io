@@ -1,0 +1,1401 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="supervisor," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="火柴的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="supervisor是用python写的一个进程管理工具，用来启动，重启，关闭进程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="supervisor进程管理工具">
+<meta property="og:url" content="http://www.chen-hao.com.cn/posts/6255/index.html">
+<meta property="og:site_name" content="火柴的博客">
+<meta property="og:description" content="supervisor是用python写的一个进程管理工具，用来启动，重启，关闭进程。">
+<meta property="og:updated_time" content="2017-07-20T09:05:22.375Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="supervisor进程管理工具">
+<meta name="twitter:description" content="supervisor是用python写的一个进程管理工具，用来启动，重启，关闭进程。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":true},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #000000; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #000000, 0 0 5px     #000000; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #000000;    /*上边框颜色*/
+        border-left-color: #000000;    /*左边框颜色*/
+    }
+  </style>
+
+  <script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('你可能输入了假的密码！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+
+  <link rel="canonical" href="http://www.chen-hao.com.cn/posts/6255/"/>
+
+
+
+
+
+  <title> supervisor进程管理工具 | 火柴的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	
+	<a href="https://github.com/ch-ld/ch-ld.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">火柴的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resume">
+          <a href="http://resume.chen-hao.com.cn" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-send"></i> <br />
+            
+            简历
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-love">
+          <a href="https://love.chen-hao.com.cn/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            纪念日
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.chen-hao.com.cn/posts/6255/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="火柴">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/linux5.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火柴的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                supervisor进程管理工具
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-03T11:15:34+08:00">
+                2017-07-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/工具/" itemprop="url" rel="index">
+                    <span itemprop="name">工具</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/posts/6255/" class="leancloud_visitors" data-flag-title="supervisor进程管理工具">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><code>supervisor</code>&#x662F;&#x7528;python&#x5199;&#x7684;&#x4E00;&#x4E2A;&#x8FDB;&#x7A0B;&#x7BA1;&#x7406;&#x5DE5;&#x5177;&#xFF0C;&#x7528;&#x6765;&#x542F;&#x52A8;&#xFF0C;&#x91CD;&#x542F;&#xFF0C;&#x5173;&#x95ED;&#x8FDB;&#x7A0B;&#x3002;<br> <a id="more"></a></p>
+<p></p><h4 id="&#x4EA7;&#x751F;&#x80CC;&#x666F;">&#x4EA7;&#x751F;&#x80CC;&#x666F;</h4><br>&#x5728;&#x4E00;&#x4E2A;&#x5206;&#x5E03;&#x5F0F;&#x73AF;&#x5883;&#x4E2D;&#xFF0C;&#x6BCF;&#x53F0;&#x673A;&#x5668;&#x4E0A;&#x53EF;&#x80FD;&#x9700;&#x8981;&#x542F;&#x52A8;&#x548C;&#x505C;&#x6B62;&#x591A;&#x4E2A;&#x8FDB;&#x7A0B;&#xFF0C;&#x4F7F;&#x7528;&#x547D;&#x4EE4;&#x884C;&#x65B9;&#x5F0F;&#x4E00;&#x4E2A;&#x4E00;&#x4E2A;&#x624B;&#x52A8;&#x542F;&#x52A8;&#x548C;&#x505C;&#x6B62;&#x975E;&#x5E38;&#x9EBB;&#x70E6;&#xFF0C;&#x800C;&#x4E14;&#x67E5;&#x770B;&#x6BCF;&#x4E2A;&#x8FDB;&#x7A0B;&#x7684;&#x72B6;&#x6001;&#x4E5F;&#x5F88;&#x4E0D;&#x65B9;&#x4FBF;&#x3002;&#x5982;&#x679C;&#x6709;&#x4E00;&#x4E2A;&#x5DE5;&#x5177;&#x80FD;&#x591F;&#x5B9E;&#x73B0;&#x6BCF;&#x53F0;&#x673A;&#x5668;&#x4E0A;&#x591A;&#x4E2A;&#x8FDB;&#x7A0B;&#x7684;&#x7B80;&#x5355;&#x9AD8;&#x6548;&#x4E2D;&#x5FC3;&#x5316;&#x7BA1;&#x7406;&#x5C06;&#x662F;&#x975E;&#x5E38;&#x65B9;&#x4FBF;&#x7684;&#x3002;&#x4E8E;&#x662F;Supervisord&#x5DE5;&#x5177;&#x5E94;&#x8FD0;&#x800C;&#x751F;&#x3002;&#x4E0E;Supervisord&#x7C7B;&#x4F3C;&#x7684;&#x5DE5;&#x5177;&#x5305;&#x62EC;monit, daemontools&#x548C;runit&#x3002;<p></p>
+<p></p><h4 id="&#x5B89;&#x88C5;">&#x5B89;&#x88C5;</h4><br>Supervisord&#x662F;&#x8FD0;&#x884C;&#x5728;Python&#x73AF;&#x5883;&#x4E0B;&#x7684;&#x670D;&#x52A1;&#x76D1;&#x63A7;&#x7A0B;&#x5E8F;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x5B89;&#x88C5;supervisord&#x4E4B;&#x524D;&#x5FC5;&#x987B;&#x6709;python&#x73AF;&#x5883;&#x3002;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yum install python-setuptools</div><div class="line">easy_install supervisor</div></pre></td></tr></table></figure><p></p>
+<p>&#x5982;&#x679C;&#x5B89;&#x88C5;&#x6210;&#x529F;&#xFF0C;&#x952E;&#x5165;: echo_supervisord_conf&#xFF0C;&#x4F1A;&#x663E;&#x793A;&#x4E00;&#x4E2A;superviscord_conf &#x7684;&#x914D;&#x7F6E;&#x6A21;&#x677F;&#x3002;<br>&#x8FD9;&#x91CC;&#x4F7F;&#x7528;&#x91CD;&#x5B9A;&#x5411;&#x8FD0;&#x7B97;&#x7B26;&#x5C06;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x5B9A;&#x5411;&#x5230;/etc&#x8DEF;&#x5F84;&#x4E0B;&#xFF08;&#x65B9;&#x4FBF;&#x7BA1;&#x7406;&#xFF09;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">echo</span>_supervisord_conf&gt;/etc/supervisord.conf</div></pre></td></tr></table></figure></p>
+<p></p><h4 id="&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x8BE6;&#x89E3;">&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x8BE6;&#x89E3;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">[unix_http_server]</div><div class="line">file=/tmp/supervisor.sock ; UNIX socket &#x6587;&#x4EF6;&#xFF0C;supervisorctl &#x4F1A;&#x4F7F;&#x7528;</div><div class="line">;chmod=0700 ; socket &#x6587;&#x4EF6;&#x7684; mode&#xFF0C;&#x9ED8;&#x8BA4;&#x662F; 0700</div><div class="line">;chown=nobody:nogroup ; socket &#x6587;&#x4EF6;&#x7684; owner&#xFF0C;&#x683C;&#x5F0F;&#xFF1A; uid:gid</div><div class="line"></div><div class="line">;[inet_http_server] ; HTTP &#x670D;&#x52A1;&#x5668;&#xFF0C;&#x63D0;&#x4F9B; web &#x7BA1;&#x7406;&#x754C;&#x9762;</div><div class="line">;port=127.0.0.1:9001 ; Web &#x7BA1;&#x7406;&#x540E;&#x53F0;&#x8FD0;&#x884C;&#x7684; IP &#x548C;&#x7AEF;&#x53E3;&#xFF0C;&#x5982;&#x679C;&#x5F00;&#x653E;&#x5230;&#x516C;&#x7F51;&#xFF0C;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x5B89;&#x5168;&#x6027;</div><div class="line">;username=user ; &#x767B;&#x5F55;&#x7BA1;&#x7406;&#x540E;&#x53F0;&#x7684;&#x7528;&#x6237;&#x540D;</div><div class="line">;password=123 ; &#x767B;&#x5F55;&#x7BA1;&#x7406;&#x540E;&#x53F0;&#x7684;&#x5BC6;&#x7801;</div><div class="line"></div><div class="line">[supervisord]</div><div class="line">logfile=/tmp/supervisord.log ; &#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F; <span class="variable">$CWD</span>/supervisord.log</div><div class="line">logfile_maxbytes=50MB ; &#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x5927;&#x5C0F;&#xFF0C;&#x8D85;&#x51FA;&#x4F1A; rotate&#xFF0C;&#x9ED8;&#x8BA4; 50MB</div><div class="line">logfile_backups=10 ; &#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x4FDD;&#x7559;&#x5907;&#x4EFD;&#x6570;&#x91CF;&#x9ED8;&#x8BA4; 10</div><div class="line">loglevel=info ; &#x65E5;&#x5FD7;&#x7EA7;&#x522B;&#xFF0C;&#x9ED8;&#x8BA4; info&#xFF0C;&#x5176;&#x5B83;: debug,warn,trace</div><div class="line">pidfile=/tmp/supervisord.pid ; pid &#x6587;&#x4EF6;</div><div class="line">nodaemon=<span class="literal">false</span> ; &#x662F;&#x5426;&#x5728;&#x524D;&#x53F0;&#x542F;&#x52A8;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F; <span class="literal">false</span>&#xFF0C;&#x5373;&#x4EE5; daemon &#x7684;&#x65B9;&#x5F0F;&#x542F;&#x52A8;</div><div class="line">minfds=1024 ; &#x53EF;&#x4EE5;&#x6253;&#x5F00;&#x7684;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x7684;&#x6700;&#x5C0F;&#x503C;&#xFF0C;&#x9ED8;&#x8BA4; 1024</div><div class="line">minprocs=200 ; &#x53EF;&#x4EE5;&#x6253;&#x5F00;&#x7684;&#x8FDB;&#x7A0B;&#x6570;&#x7684;&#x6700;&#x5C0F;&#x503C;&#xFF0C;&#x9ED8;&#x8BA4; 200</div><div class="line"></div><div class="line">; the below section must remain <span class="keyword">in</span> the config file <span class="keyword">for</span> RPC</div><div class="line">; (supervisorctl/web interface) to work, additional interfaces may be</div><div class="line">; added by defining them <span class="keyword">in</span> separate rpcinterface: sections</div><div class="line">[rpcinterface:supervisor]</div><div class="line">supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface</div><div class="line"></div><div class="line">[supervisorctl]</div><div class="line">serverurl=unix:///tmp/supervisor.sock ; &#x901A;&#x8FC7; UNIX socket &#x8FDE;&#x63A5; supervisord&#xFF0C;&#x8DEF;&#x5F84;&#x4E0E; unix_http_server &#x90E8;&#x5206;&#x7684; file &#x4E00;&#x81F4;</div><div class="line">;serverurl=http://127.0.0.1:9001 ; &#x901A;&#x8FC7; HTTP &#x7684;&#x65B9;&#x5F0F;&#x8FDE;&#x63A5; supervisord</div><div class="line"></div><div class="line">; &#x5305;&#x542B;&#x5176;&#x4ED6;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;</div><div class="line">[include]</div><div class="line">files = relative/directory/*.ini ; &#x53EF;&#x4EE5;&#x662F; *.conf &#x6216; *.ini</div></pre></td></tr></table></figure><p></p>
+<p></p><h4 id="&#x8FDB;&#x7A0B;program&#x914D;&#x7F6E;">&#x8FDB;&#x7A0B;Program&#x914D;&#x7F6E;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">[program:usercenter]</div><div class="line">directory = /home/leon/projects/usercenter ; &#x7A0B;&#x5E8F;&#x7684;&#x542F;&#x52A8;&#x76EE;&#x5F55;</div><div class="line"><span class="built_in">command</span> = gunicorn -c gunicorn.py wsgi:app ; &#x542F;&#x52A8;&#x547D;&#x4EE4;&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#x4E0E;&#x624B;&#x52A8;&#x5728;&#x547D;&#x4EE4;&#x884C;&#x542F;&#x52A8;&#x7684;&#x547D;&#x4EE4;&#x662F;&#x4E00;&#x6837;&#x7684;</div><div class="line">autostart = <span class="literal">true</span> ; &#x5728; supervisord &#x542F;&#x52A8;&#x7684;&#x65F6;&#x5019;&#x4E5F;&#x81EA;&#x52A8;&#x542F;&#x52A8;</div><div class="line">startsecs = 5 ; &#x542F;&#x52A8; 5 &#x79D2;&#x540E;&#x6CA1;&#x6709;&#x5F02;&#x5E38;&#x9000;&#x51FA;&#xFF0C;&#x5C31;&#x5F53;&#x4F5C;&#x5DF2;&#x7ECF;&#x6B63;&#x5E38;&#x542F;&#x52A8;&#x4E86;</div><div class="line">autorestart = <span class="literal">true</span> ; &#x7A0B;&#x5E8F;&#x5F02;&#x5E38;&#x9000;&#x51FA;&#x540E;&#x81EA;&#x52A8;&#x91CD;&#x542F;</div><div class="line">startretries = 3 ; &#x542F;&#x52A8;&#x5931;&#x8D25;&#x81EA;&#x52A8;&#x91CD;&#x8BD5;&#x6B21;&#x6570;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F; 3</div><div class="line">user = leon ; &#x7528;&#x54EA;&#x4E2A;&#x7528;&#x6237;&#x542F;&#x52A8;</div><div class="line">redirect_stderr = <span class="literal">true</span> ; &#x628A; stderr &#x91CD;&#x5B9A;&#x5411;&#x5230; stdout&#xFF0C;&#x9ED8;&#x8BA4; <span class="literal">false</span></div><div class="line">stdout_logfile_maxbytes = 20MB ; stdout &#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x5927;&#x5C0F;&#xFF0C;&#x9ED8;&#x8BA4; 50MB</div><div class="line">stdout_logfile_backups = 20 ; stdout &#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x5907;&#x4EFD;&#x6570;</div><div class="line">; stdout &#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#xFF0C;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x5F53;&#x6307;&#x5B9A;&#x76EE;&#x5F55;&#x4E0D;&#x5B58;&#x5728;&#x65F6;&#x65E0;&#x6CD5;&#x6B63;&#x5E38;&#x542F;&#x52A8;&#xFF0C;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x624B;&#x52A8;&#x521B;&#x5EFA;&#x76EE;&#x5F55;&#xFF08;supervisord &#x4F1A;&#x81EA;&#x52A8;&#x521B;&#x5EFA;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#xFF09;</div><div class="line">stdout_logfile = /data/logs/usercenter_stdout.log</div><div class="line"></div><div class="line">; &#x53EF;&#x4EE5;&#x901A;&#x8FC7; environment &#x6765;&#x6DFB;&#x52A0;&#x9700;&#x8981;&#x7684;&#x73AF;&#x5883;&#x53D8;&#x91CF;&#xFF0C;&#x4E00;&#x79CD;&#x5E38;&#x89C1;&#x7684;&#x7528;&#x6CD5;&#x662F;&#x4FEE;&#x6539; PYTHONPATH</div><div class="line">; environment=PYTHONPATH=<span class="variable">$PYTHONPATH</span>:/path/to/somewhere</div></pre></td></tr></table></figure><p></p>
+<p>&#x5C06;&#x8FDB;&#x7A0B;&#x914D;&#x7F6E;&#x6DFB;&#x52A0;&#x5230;supervisord.conf&#x6587;&#x4EF6;&#x4E2D;<br><strong>&#x63A8;&#x8350;&#x5C06;&#x5404;&#x4E2A;&#x8FDB;&#x7A0B;&#x914D;&#x7F6E;&#x653E;&#x5230;&#x5355;&#x72EC;&#x7684;&#x6587;&#x4EF6;&#x4E2D;&#xFF0C;&#x7136;&#x540E;&#x901A;&#x8FC7;[include]&#x914D;&#x7F6E;&#x9879;&#x5F15;&#x7528;</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[include]</div><div class="line">files = /etc/supervisor/*.conf</div></pre></td></tr></table></figure></p>
+<p></p><h4 id="supervisor&#x670D;&#x52A1;&#x542F;&#x52A8;">supervisor&#x670D;&#x52A1;&#x542F;&#x52A8;</h4><br>&#x8FD0;&#x884C;&#x547D;&#x4EE4;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">supervisord -c /etc/supervisord.conf</div></pre></td></tr></table></figure><p></p>
+<p></p><h4 id="supervisor&#x670D;&#x52A1;&#x5BA2;&#x6237;&#x7AEF;&#x7BA1;&#x7406;">supervisor&#x670D;&#x52A1;&#x5BA2;&#x6237;&#x7AEF;&#x7BA1;&#x7406;</h4><br>&#x53EF;&#x4EE5;&#x4F7F;&#x7528;supervisord&#x7684;&#x547D;&#x4EE4;&#x884C;&#x5BA2;&#x6237;&#x7AEF;&#x7BA1;&#x7406;&#x5DE5;&#x5177;supervisorctl&#xFF0C;&#x6765;&#x7BA1;&#x7406;&#x8FDB;&#x7A0B;&#x3002;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">supervisorctl status</div><div class="line">supervisorctl stop usercenter</div><div class="line">supervisorctl start usercenter</div><div class="line">supervisorctl restart usercenter</div><div class="line">supervisorctl reread</div><div class="line">supervisorctl update</div></pre></td></tr></table></figure><p></p>
+<p></p><h4 id="supervisor-web&#x7BA1;&#x7406;&#x754C;&#x9762;">supervisor web&#x7BA1;&#x7406;&#x754C;&#x9762;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">;[inet_http_server] ; HTTP &#x670D;&#x52A1;&#x5668;&#xFF0C;&#x63D0;&#x4F9B; web &#x7BA1;&#x7406;&#x754C;&#x9762;</div><div class="line">;port=127.0.0.1:9001 ; Web &#x7BA1;&#x7406;&#x540E;&#x53F0;&#x8FD0;&#x884C;&#x7684; IP &#x548C;&#x7AEF;&#x53E3;&#xFF0C;&#x5982;&#x679C;&#x5F00;&#x653E;&#x5230;&#x516C;&#x7F51;&#xFF0C;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x5B89;&#x5168;&#x6027;</div><div class="line">;username=user ; &#x767B;&#x5F55;&#x7BA1;&#x7406;&#x540E;&#x53F0;&#x7684;&#x7528;&#x6237;&#x540D;</div><div class="line">;password=123 ; &#x767B;&#x5F55;&#x7BA1;&#x7406;&#x540E;&#x53F0;&#x7684;&#x5BC6;&#x7801;</div></pre></td></tr></table></figure><p></p>
+<p>&#x5728;&#x6D4F;&#x89C8;&#x5668;&#x4E2D;&#x8F93;&#x5165;<a href="http://127.0.0.1:9001&#xFF0C;&#x5373;&#x53EF;&#x8FDB;&#x5165;web&#x7BA1;&#x7406;&#x754C;&#x9762;" target="_blank" rel="external">http://127.0.0.1:9001&#xFF0C;&#x5373;&#x53EF;&#x8FDB;&#x5165;web&#x7BA1;&#x7406;&#x754C;&#x9762;</a></p>
+
+      
+    </div>
+
+	<div>
+      
+        
+      
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/supervisor/" rel="tag"><i class="fa fa-tag"></i> supervisor</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/8699/" rel="next" title="别的程序员是怎么读你的简历的（转）">
+                <i class="fa fa-chevron-left"></i> 别的程序员是怎么读你的简历的（转）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/21004/" rel="prev" title="ELK Stack 常用架构及使用场景">
+                ELK Stack 常用架构及使用场景 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ5NS82MDYz"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/linux5.gif"
+               alt="火柴" />
+          <p class="site-author-name" itemprop="name">火柴</p>
+           
+              <p class="site-description motion-element" itemprop="description">对自己要求高一点！！！</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+			﻿<a title="点击high一下哦^_^" rel="alternate" class="mw-harlem_shake_slow wobble shake" href='javascript:(function() {
+    function c() {
+        var e = document.createElement("link");
+        e.setAttribute("type", "text/css");
+        e.setAttribute("rel", "stylesheet");
+        e.setAttribute("href", f);
+        e.setAttribute("class", l);
+        document.body.appendChild(e)
+    }
+ 
+    function h() {
+        var e = document.getElementsByClassName(l);
+        for (var t = 0; t < e.length; t++) {
+            document.body.removeChild(e[t])
+        }
+    }
+ 
+    function p() {
+        var e = document.createElement("div");
+        e.setAttribute("class", a);
+        document.body.appendChild(e);
+        setTimeout(function() {
+            document.body.removeChild(e)
+        }, 100)
+    }
+ 
+    function d(e) {
+        return {
+            height : e.offsetHeight,
+            width : e.offsetWidth
+        }
+    }
+ 
+    function v(i) {
+        var s = d(i);
+        return s.height > e && s.height < n && s.width > t && s.width < r
+    }
+ 
+    function m(e) {
+        var t = e;
+        var n = 0;
+        while (!!t) {
+            n += t.offsetTop;
+            t = t.offsetParent
+        }
+        return n
+    }
+ 
+    function g() {
+        var e = document.documentElement;
+        if (!!window.innerWidth) {
+            return window.innerHeight
+        } else if (e && !isNaN(e.clientHeight)) {
+            return e.clientHeight
+        }
+        return 0
+    }
+ 
+    function y() {
+        if (window.pageYOffset) {
+            return window.pageYOffset
+        }
+        return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+    }
+ 
+    function E(e) {
+        var t = m(e);
+        return t >= w && t <= b + w
+    }
+ 
+    function S() {
+        var e = document.createElement("audio");
+        e.setAttribute("class", l);
+        e.src = i;
+        e.loop = false;
+        e.addEventListener("canplay", function() {
+            setTimeout(function() {
+                x(k)
+            }, 500);
+            setTimeout(function() {
+                N();
+                p();
+                for (var e = 0; e < O.length; e++) {
+                    T(O[e])
+                }
+            }, 15500)
+        }, true);
+        e.addEventListener("ended", function() {
+            N();
+            h()
+        }, true);
+        e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+        document.body.appendChild(e);
+        e.play()
+    }
+ 
+    function x(e) {
+        e.className += " " + s + " " + o
+    }
+ 
+    function T(e) {
+        e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+    }
+ 
+    function N() {
+        var e = document.getElementsByClassName(s);
+        var t = new RegExp("\\b" + s + "\\b");
+        for (var n = 0; n < e.length; ) {
+            e[n].className = e[n].className.replace(t, "")
+        }
+    }
+ 
+    var e = 30;
+    var t = 30;
+    var n = 350;
+    var r = 350;
+    var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+    var s = "mw-harlem_shake_me";
+    var o = "im_first";
+    var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+    var a = "mw-strobe_light";
+    var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+    var l = "mw_added_css";
+    var b = g();
+    var w = y();
+    var C = document.getElementsByTagName("*");
+    var k = null;
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            if (E(A)) {
+                k = A;
+                break
+            }
+        }
+    }
+    if (A === null) {
+        console.warn("Could not find a node of the right size. Please try a different page.");
+        return
+    }
+    c();
+    S();
+    var O = [];
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            O.push(A)
+        }
+    }
+})()'><i class="fa fa-music"></i> High</a>
+          </div>
+        
+		
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://wpa.qq.com/msgrd?V=1&uin=396303331&exe=qq&Site=qq&menu=yes" target="_blank" title="QQ">
+                  
+                    <i class="fa fa-fw fa-qq"></i>
+                  
+                  QQ
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:18201620971@163.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.chen-hao.com.cn/cywz" target="_blank" title="常用网站">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  常用网站
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.fblinux.com/" title="师兄-王君康" target="_blank">师兄-王君康</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.sctux.com/" title="师兄-郭茂秋" target="_blank">师兄-郭茂秋</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://linsj.blog.51cto.com/" title="同学-林水晶" target="_blank">同学-林水晶</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://mrchen.org/" title="同学-陈晨" target="_blank">同学-陈晨</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.systemd.cn/" title="同学-郎耀亮" target="_blank">同学-郎耀亮</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://zantony.top/" title="同学-赵鑫" target="_blank">同学-赵鑫</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://blog.whsir.com/" title="师弟-吴昊" target="_blank">师弟-吴昊</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.yuangg.com/" title="师弟-洋洋" target="_blank">师弟-洋洋</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+		
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#产生背景"><span class="nav-number">1.</span> <span class="nav-text">产生背景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置文件详解"><span class="nav-number">3.</span> <span class="nav-text">配置文件详解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程program配置"><span class="nav-number">4.</span> <span class="nav-text">进程Program配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#supervisor服务启动"><span class="nav-number">5.</span> <span class="nav-text">supervisor服务启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#supervisor服务客户端管理"><span class="nav-number">6.</span> <span class="nav-text">supervisor服务客户端管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#supervisor-web管理界面"><span class="nav-number">7.</span> <span class="nav-text">supervisor web管理界面</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">火柴</span>
+</div>
+
+<div class="theme-info">
+	<span id="sitetime"></span>
+	<script language=javascript>
+	function siteTime(){
+	window.setTimeout("siteTime()", 1000);
+	var seconds = 1000
+	var minutes = seconds * 60
+	var hours = minutes * 60
+	var days = hours * 24
+	var years = days * 365
+
+	var today = new Date()
+	var todayYear = today.getFullYear()
+	var todayMonth = today.getMonth()
+	var todayDate = today.getDate()
+	var todayHour = today.getHours()
+	var todayMinute = today.getMinutes()
+	var todaySecond = today.getSeconds()
+
+	/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳) 
+	year - 作为date对象的年份，为4位年份值
+	month - 0-11之间的整数，做为date对象的月份
+	day - 1-31之间的整数，做为date对象的天数
+	hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+	minutes - 0-59之间的整数，做为date对象的分钟数
+	seconds - 0-59之间的整数，做为date对象的秒数
+	microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+	var t1 = Date.UTC(2015,10,14,11,19,00)
+	var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond)
+	var diff = t2-t1
+
+	var diffYears = Math.floor(diff/years)
+	var diffDays = Math.floor((diff/days)-diffYears*365)
+	var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours)
+	var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes)
+	var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds)
+	document.getElementById("sitetime").innerHTML=" 本站已运行"+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒"
+	}
+	siteTime()
+	</script>
+	
+  <div class="powered-by"></div>
+  <span class="post-count">共83.4k字</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      您是第<i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      位访客
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总点击<i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("v8vPyVyJeoQ3FYzKp3y9KLMu-gzGzoHsz", "a0WXjkqByOHUcay9EHiwNkan");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+  
+
+
+  
+
+ 
+<!-- 点击爱心效果 -->
+<script src="/js/love.js"></script>
+<!-- 背景动画 -->
+<!-- <script src="/js/particle2.js"></script>  -->
+
+<!--崩溃欺骗-->
+<!-- <script src="/js/qipian.js"></script> -->
+
+<script type="text/javascript" src="/lib/zclip/clipboard.min.js"></script>	
+<script type="text/javascript" src="/js/src/custom.js"></script>
+  
+</body>
+</html>

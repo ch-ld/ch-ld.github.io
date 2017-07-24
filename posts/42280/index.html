@@ -1,0 +1,1406 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="内核," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="火柴的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="在服务器硬件资源额定有限的情况下，最大的压榨服务器的性能，提高服务器的并发处理能力，是很多运维技术人员思考的问题。在考虑节省成本的情况下，可以修改Linux的内核相关TCP参数，来最大的提高服务器性能。当然，最基础的提高负载问题，还是升级服务器硬件了，这是最根本的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="优化内核参数提高服务器并发处理能力">
+<meta property="og:url" content="http://www.chen-hao.com.cn/posts/42280/index.html">
+<meta property="og:site_name" content="火柴的博客">
+<meta property="og:description" content="在服务器硬件资源额定有限的情况下，最大的压榨服务器的性能，提高服务器的并发处理能力，是很多运维技术人员思考的问题。在考虑节省成本的情况下，可以修改Linux的内核相关TCP参数，来最大的提高服务器性能。当然，最基础的提高负载问题，还是升级服务器硬件了，这是最根本的。">
+<meta property="og:updated_time" content="2017-07-20T09:05:22.389Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="优化内核参数提高服务器并发处理能力">
+<meta name="twitter:description" content="在服务器硬件资源额定有限的情况下，最大的压榨服务器的性能，提高服务器的并发处理能力，是很多运维技术人员思考的问题。在考虑节省成本的情况下，可以修改Linux的内核相关TCP参数，来最大的提高服务器性能。当然，最基础的提高负载问题，还是升级服务器硬件了，这是最根本的。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":true},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #000000; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #000000, 0 0 5px     #000000; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #000000;    /*上边框颜色*/
+        border-left-color: #000000;    /*左边框颜色*/
+    }
+  </style>
+
+  <script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('你可能输入了假的密码！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+
+  <link rel="canonical" href="http://www.chen-hao.com.cn/posts/42280/"/>
+
+
+
+
+
+  <title> 优化内核参数提高服务器并发处理能力 | 火柴的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	
+	<a href="https://github.com/ch-ld/ch-ld.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">火柴的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resume">
+          <a href="http://resume.chen-hao.com.cn" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-send"></i> <br />
+            
+            简历
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-love">
+          <a href="https://love.chen-hao.com.cn/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            纪念日
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.chen-hao.com.cn/posts/42280/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="火柴">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/linux5.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火柴的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                优化内核参数提高服务器并发处理能力
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-06T10:49:22+08:00">
+                2017-01-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/性能优化/" itemprop="url" rel="index">
+                    <span itemprop="name">性能优化</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/posts/42280/" class="leancloud_visitors" data-flag-title="优化内核参数提高服务器并发处理能力">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>&#x5728;&#x670D;&#x52A1;&#x5668;&#x786C;&#x4EF6;&#x8D44;&#x6E90;&#x989D;&#x5B9A;&#x6709;&#x9650;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x6700;&#x5927;&#x7684;&#x538B;&#x69A8;&#x670D;&#x52A1;&#x5668;&#x7684;&#x6027;&#x80FD;&#xFF0C;&#x63D0;&#x9AD8;&#x670D;&#x52A1;&#x5668;&#x7684;&#x5E76;&#x53D1;&#x5904;&#x7406;&#x80FD;&#x529B;&#xFF0C;&#x662F;&#x5F88;&#x591A;&#x8FD0;&#x7EF4;&#x6280;&#x672F;&#x4EBA;&#x5458;&#x601D;&#x8003;&#x7684;&#x95EE;&#x9898;&#x3002;&#x5728;&#x8003;&#x8651;&#x8282;&#x7701;&#x6210;&#x672C;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x53EF;&#x4EE5;&#x4FEE;&#x6539;Linux&#x7684;&#x5185;&#x6838;&#x76F8;&#x5173;TCP&#x53C2;&#x6570;&#xFF0C;&#x6765;&#x6700;&#x5927;&#x7684;&#x63D0;&#x9AD8;&#x670D;&#x52A1;&#x5668;&#x6027;&#x80FD;&#x3002;&#x5F53;&#x7136;&#xFF0C;&#x6700;&#x57FA;&#x7840;&#x7684;&#x63D0;&#x9AD8;&#x8D1F;&#x8F7D;&#x95EE;&#x9898;&#xFF0C;&#x8FD8;&#x662F;&#x5347;&#x7EA7;&#x670D;&#x52A1;&#x5668;&#x786C;&#x4EF6;&#x4E86;&#xFF0C;&#x8FD9;&#x662F;&#x6700;&#x6839;&#x672C;&#x7684;&#x3002;<br><a id="more"></a></p>
+</blockquote>
+<p></p><h4 id="&#x4F18;&#x5316;time_wait&#x72B6;&#x6001;&#x8FDE;&#x63A5;">&#x4F18;&#x5316;TIME_WAIT&#x72B6;&#x6001;&#x8FDE;&#x63A5;</h4><br>Linux&#x7CFB;&#x7EDF;&#x4E0B;&#xFF0C;TCP&#x8FDE;&#x63A5;&#x65AD;&#x5F00;&#x540E;&#xFF0C;&#x4F1A;&#x4EE5;TIME_WAIT&#x72B6;&#x6001;&#x4FDD;&#x7559;&#x4E00;&#x5B9A;&#x7684;&#x65F6;&#x95F4;&#xFF0C;&#x7136;&#x540E;&#x624D;&#x4F1A;&#x91CA;&#x653E;&#x7AEF;&#x53E3;&#x3002;&#x5F53;&#x5E76;&#x53D1;&#x8BF7;&#x6C42;&#x8FC7;&#x591A;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x5C31;&#x4F1A;&#x4EA7;&#x751F;&#x5927;&#x91CF;&#x7684;TIME_WAIT&#x72B6;&#x6001;&#x7684;&#x8FDE;&#x63A5;&#xFF0C;&#x65E0;&#x6CD5;&#x53CA;&#x65F6;&#x65AD;&#x5F00;&#x7684;&#x8BDD;&#xFF0C;&#x4F1A;&#x5360;&#x7528;&#x5927;&#x91CF;&#x7684;&#x7AEF;&#x53E3;&#x8D44;&#x6E90;&#x548C;&#x670D;&#x52A1;&#x5668;&#x8D44;&#x6E90;&#x3002;&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4F18;&#x5316;TCP&#x7684;&#x5185;&#x6838;&#x53C2;&#x6570;&#xFF0C;&#x6765;&#x53CA;&#x65F6;&#x5C06;TIME_WAIT&#x72B6;&#x6001;&#x7684;&#x7AEF;&#x53E3;&#x6E05;&#x7406;&#x6389;&#x3002;<p></p>
+<p>&#x672C;&#x6587;&#x4ECB;&#x7ECD;&#x7684;&#x65B9;&#x6CD5;&#x53EA;&#x5BF9;&#x62E5;&#x6709;&#x5927;&#x91CF;TIME_WAIT&#x72B6;&#x6001;&#x7684;&#x8FDE;&#x63A5;&#x5BFC;&#x81F4;&#x7CFB;&#x7EDF;&#x8D44;&#x6E90;&#x6D88;&#x8017;&#x6709;&#x6548;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x662F;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x6548;&#x679C;&#x53EF;&#x80FD;&#x4E0D;&#x660E;&#x663E;&#x3002;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;netstat&#x547D;&#x4EE4;&#x53BB;&#x67E5;TIME_WAIT&#x72B6;&#x6001;&#x7684;&#x8FDE;&#x63A5;&#x72B6;&#x6001;&#xFF0C;&#x8F93;&#x5165;&#x4E0B;&#x9762;&#x7684;&#x7EC4;&#x5408;&#x547D;&#x4EE4;&#xFF0C;&#x67E5;&#x770B;&#x5F53;&#x524D;TCP&#x8FDE;&#x63A5;&#x7684;&#x72B6;&#x6001;&#x548C;&#x5BF9;&#x5E94;&#x7684;&#x8FDE;&#x63A5;&#x6570;&#x91CF;&#xFF1A;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">netstat -n | awk <span class="string">&apos;/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}&apos;</span></div></pre></td></tr></table></figure></p>
+<p>&#x8FD9;&#x4E2A;&#x547D;&#x4EE4;&#x4F1A;&#x8F93;&#x51FA;&#x7C7B;&#x4F3C;&#x4E0B;&#x9762;&#x7684;&#x7ED3;&#x679C;&#xFF1A;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">LAST_ACK 16</div><div class="line">SYN_RECV 348</div><div class="line">ESTABLISHED 70</div><div class="line">FIN_WAIT1 229</div><div class="line">FIN_WAIT2 30</div><div class="line">CLOSING 33</div><div class="line">TIME_WAIT 18098</div></pre></td></tr></table></figure></p>
+<p>&#x6211;&#x4EEC;&#x53EA;&#x7528;&#x5173;&#x5FC3;TIME_WAIT&#x7684;&#x4E2A;&#x6570;&#xFF0C;&#x5728;&#x8FD9;&#x91CC;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;&#x6709;18000&#x591A;&#x4E2A;TIME_WAIT&#xFF0C;&#x8FD9;&#x6837;&#x5C31;&#x5360;&#x7528;&#x4E86;18000&#x591A;&#x4E2A;&#x7AEF;&#x53E3;&#x3002;&#x8981;&#x77E5;&#x9053;&#x7AEF;&#x53E3;&#x7684;&#x6570;&#x91CF;&#x53EA;&#x6709;65535&#x4E2A;&#xFF0C;&#x5360;&#x7528;&#x4E00;&#x4E2A;&#x5C11;&#x4E00;&#x4E2A;&#xFF0C;&#x4F1A;&#x4E25;&#x91CD;&#x7684;&#x5F71;&#x54CD;&#x5230;&#x540E;&#x7EE7;&#x7684;&#x65B0;&#x8FDE;&#x63A5;&#x3002;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x6709;&#x5FC5;&#x8981;&#x8C03;&#x6574;&#x4E0B;Linux&#x7684;TCP&#x5185;&#x6838;&#x53C2;&#x6570;&#xFF0C;&#x8BA9;&#x7CFB;&#x7EDF;&#x66F4;&#x5FEB;&#x7684;&#x91CA;&#x653E;TIME_WAIT&#x8FDE;&#x63A5;&#x3002;</p>
+<p>&#x7528;vim&#x6253;&#x5F00;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF1A;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/sysctl.conf</div></pre></td></tr></table></figure></p>
+<p>&#x5728;&#x8FD9;&#x4E2A;&#x6587;&#x4EF6;&#x4E2D;&#xFF0C;&#x52A0;&#x5165;&#x4E0B;&#x9762;&#x7684;&#x51E0;&#x884C;&#x5185;&#x5BB9;&#xFF1A;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">net.ipv4.tcp_syncookies = 1</div><div class="line">net.ipv4.tcp_tw_reuse = 1</div><div class="line">net.ipv4.tcp_tw_recycle = 1</div><div class="line">net.ipv4.tcp_fin_timeout = 30</div></pre></td></tr></table></figure></p>
+<p>&#x8F93;&#x5165;&#x4E0B;&#x9762;&#x7684;&#x547D;&#x4EE4;&#xFF0C;&#x8BA9;&#x5185;&#x6838;&#x53C2;&#x6570;&#x751F;&#x6548;&#xFF1A;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sysctl -p</div></pre></td></tr></table></figure></p>
+<p>&#x7B80;&#x5355;&#x7684;&#x8BF4;&#x660E;&#x4E0A;&#x9762;&#x7684;&#x53C2;&#x6570;&#x7684;&#x542B;&#x4E49;&#xFF1A;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">net.ipv4.tcp_syncookies = 1</div><div class="line"><span class="comment">#&#x8868;&#x793A;&#x5F00;&#x542F;SYN Cookies&#x3002;&#x5F53;&#x51FA;&#x73B0;SYN&#x7B49;&#x5F85;&#x961F;&#x5217;&#x6EA2;&#x51FA;&#x65F6;&#xFF0C;&#x542F;&#x7528;cookies&#x6765;&#x5904;&#x7406;&#xFF0C;&#x53EF;&#x9632;&#x8303;&#x5C11;&#x91CF;SYN&#x653B;&#x51FB;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;0&#xFF0C;&#x8868;&#x793A;&#x5173;&#x95ED;&#xFF1B;</span></div><div class="line">net.ipv4.tcp_tw_reuse = 1</div><div class="line"><span class="comment">#&#x8868;&#x793A;&#x5F00;&#x542F;&#x91CD;&#x7528;&#x3002;&#x5141;&#x8BB8;&#x5C06;TIME-WAIT sockets&#x91CD;&#x65B0;&#x7528;&#x4E8E;&#x65B0;&#x7684;TCP&#x8FDE;&#x63A5;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;0&#xFF0C;&#x8868;&#x793A;&#x5173;&#x95ED;&#xFF1B;</span></div><div class="line">net.ipv4.tcp_tw_recycle = 1</div><div class="line"><span class="comment">#&#x8868;&#x793A;&#x5F00;&#x542F;TCP&#x8FDE;&#x63A5;&#x4E2D;TIME-WAIT sockets&#x7684;&#x5FEB;&#x901F;&#x56DE;&#x6536;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;0&#xFF0C;&#x8868;&#x793A;&#x5173;&#x95ED;&#xFF1B;</span></div><div class="line">net.ipv4.tcp_fin_timeout</div><div class="line"><span class="comment">#&#x4FEE;&#x6539;&#x7CFB;&#x7D71;&#x9ED8;&#x8BA4;&#x7684; TIMEOUT &#x65F6;&#x95F4;&#x3002;</span></div></pre></td></tr></table></figure></p>
+<p>&#x5728;&#x7ECF;&#x8FC7;&#x8FD9;&#x6837;&#x7684;&#x8C03;&#x6574;&#x4E4B;&#x540E;&#xFF0C;&#x9664;&#x4E86;&#x4F1A;&#x8FDB;&#x4E00;&#x6B65;&#x63D0;&#x5347;&#x670D;&#x52A1;&#x5668;&#x7684;&#x8D1F;&#x8F7D;&#x80FD;&#x529B;&#x4E4B;&#x5916;&#xFF0C;&#x8FD8;&#x80FD;&#x591F;&#x9632;&#x5FA1;&#x5C0F;&#x6D41;&#x91CF;&#x7A0B;&#x5EA6;&#x7684;DoS&#x3001;CC&#x548C;SYN&#x653B;&#x51FB;&#x3002;</p>
+<p>&#x6B64;&#x5916;&#xFF0C;&#x5982;&#x679C;&#x4F60;&#x7684;&#x8FDE;&#x63A5;&#x6570;&#x672C;&#x8EAB;&#x5C31;&#x5F88;&#x591A;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x518D;&#x4F18;&#x5316;&#x4E00;&#x4E0B;TCP&#x7684;&#x53EF;&#x4F7F;&#x7528;&#x7AEF;&#x53E3;&#x8303;&#x56F4;&#xFF0C;&#x8FDB;&#x4E00;&#x6B65;&#x63D0;&#x5347;&#x670D;&#x52A1;&#x5668;&#x7684;&#x5E76;&#x53D1;&#x80FD;&#x529B;&#x3002;&#x4F9D;&#x7136;&#x662F;&#x5F80;&#x4E0A;&#x9762;&#x7684;&#x53C2;&#x6570;&#x6587;&#x4EF6;&#x4E2D;&#xFF0C;&#x52A0;&#x5165;&#x4E0B;&#x9762;&#x8FD9;&#x4E9B;&#x914D;&#x7F6E;&#xFF1A;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">net.ipv4.tcp_keepalive_time = 1200</div><div class="line">net.ipv4.ip_<span class="built_in">local</span>_port_range = 10000 65000</div><div class="line">net.ipv4.tcp_max_syn_backlog = 8192</div><div class="line">net.ipv4.tcp_max_tw_buckets = 5000</div><div class="line"><span class="comment">#&#x8FD9;&#x51E0;&#x4E2A;&#x53C2;&#x6570;&#xFF0C;&#x5EFA;&#x8BAE;&#x53EA;&#x5728;&#x6D41;&#x91CF;&#x975E;&#x5E38;&#x5927;&#x7684;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x5F00;&#x542F;&#xFF0C;&#x4F1A;&#x6709;&#x663E;&#x8457;&#x7684;&#x6548;&#x679C;&#x3002;&#x4E00;&#x822C;&#x7684;&#x6D41;&#x91CF;&#x5C0F;&#x7684;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#xFF0C;&#x6CA1;&#x6709;&#x5FC5;&#x8981;&#x53BB;&#x8BBE;&#x7F6E;&#x8FD9;&#x51E0;&#x4E2A;&#x53C2;&#x6570;&#x3002;</span></div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">net.ipv4.tcp_keepalive_time = 1200</div><div class="line"><span class="comment">#&#x8868;&#x793A;&#x5F53;keepalive&#x8D77;&#x7528;&#x7684;&#x65F6;&#x5019;&#xFF0C;TCP&#x53D1;&#x9001;keepalive&#x6D88;&#x606F;&#x7684;&#x9891;&#x5EA6;&#x3002;&#x7F3A;&#x7701;&#x662F;2&#x5C0F;&#x65F6;&#xFF0C;&#x6539;&#x4E3A;20&#x5206;&#x949F;&#x3002;</span></div><div class="line">net.ipv4.ip_<span class="built_in">local</span>_port_range = 10000 65000</div><div class="line"><span class="comment">#&#x8868;&#x793A;&#x7528;&#x4E8E;&#x5411;&#x5916;&#x8FDE;&#x63A5;&#x7684;&#x7AEF;&#x53E3;&#x8303;&#x56F4;&#x3002;&#x7F3A;&#x7701;&#x60C5;&#x51B5;&#x4E0B;&#x5F88;&#x5C0F;&#xFF1A;32768&#x5230;61000&#xFF0C;&#x6539;&#x4E3A;10000&#x5230;65000&#x3002;&#xFF08;&#x6CE8;&#x610F;&#xFF1A;&#x8FD9;&#x91CC;&#x4E0D;&#x8981;&#x5C06;&#x6700;&#x4F4E;&#x503C;&#x8BBE;&#x7684;&#x592A;&#x4F4E;&#xFF0C;&#x5426;&#x5219;&#x53EF;&#x80FD;&#x4F1A;&#x5360;&#x7528;&#x6389;&#x6B63;&#x5E38;&#x7684;&#x7AEF;&#x53E3;&#xFF01;&#xFF09;</span></div><div class="line">net.ipv4.tcp_max_syn_backlog = 8192</div><div class="line"><span class="comment">#&#x8868;&#x793A;SYN&#x961F;&#x5217;&#x7684;&#x957F;&#x5EA6;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;1024&#xFF0C;&#x52A0;&#x5927;&#x961F;&#x5217;&#x957F;&#x5EA6;&#x4E3A;8192&#xFF0C;&#x53EF;&#x4EE5;&#x5BB9;&#x7EB3;&#x66F4;&#x591A;&#x7B49;&#x5F85;&#x8FDE;&#x63A5;&#x7684;&#x7F51;&#x7EDC;&#x8FDE;&#x63A5;&#x6570;&#x3002;</span></div><div class="line">net.ipv4.tcp_max_tw_buckets = 6000</div><div class="line"><span class="comment">#&#x8868;&#x793A;&#x7CFB;&#x7EDF;&#x540C;&#x65F6;&#x4FDD;&#x6301;TIME_WAIT&#x7684;&#x6700;&#x5927;&#x6570;&#x91CF;&#xFF0C;&#x5982;&#x679C;&#x8D85;&#x8FC7;&#x8FD9;&#x4E2A;&#x6570;&#x5B57;&#xFF0C;TIME_WAIT&#x5C06;&#x7ACB;&#x523B;&#x88AB;&#x6E05;&#x9664;&#x5E76;&#x6253;&#x5370;&#x8B66;&#x544A;&#x4FE1;&#x606F;&#x3002;&#x9ED8; &#x8BA4;&#x4E3A;180000&#xFF0C;&#x6539;&#x4E3A;6000&#x3002;&#x5BF9;&#x4E8E;Apache&#x3001;Nginx&#x7B49;&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x4E0A;&#x51E0;&#x884C;&#x7684;&#x53C2;&#x6570;&#x53EF;&#x4EE5;&#x5F88;&#x597D;&#x5730;&#x51CF;&#x5C11;TIME_WAIT&#x5957;&#x63A5;&#x5B57;&#x6570;&#x91CF;&#xFF0C;&#x4F46;&#x662F;&#x5BF9;&#x4E8E; Squid&#xFF0C;&#x6548;&#x679C;&#x5374;&#x4E0D;&#x5927;&#x3002;&#x6B64;&#x9879;&#x53C2;&#x6570;&#x53EF;&#x4EE5;&#x63A7;&#x5236;TIME_WAIT&#x7684;&#x6700;&#x5927;&#x6570;&#x91CF;&#xFF0C;&#x907F;&#x514D;Squid&#x670D;&#x52A1;&#x5668;&#x88AB;&#x5927;&#x91CF;&#x7684;TIME_WAIT&#x62D6;&#x6B7B;&#x3002;</span></div></pre></td></tr></table></figure>
+<p></p><h4 id="&#x5185;&#x6838;&#x5176;&#x4ED6;tcp&#x53C2;&#x6570;&#x8BF4;&#x660E;">&#x5185;&#x6838;&#x5176;&#x4ED6;TCP&#x53C2;&#x6570;&#x8BF4;&#x660E;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">net.ipv4.tcp_max_syn_backlog = 65536</div><div class="line"><span class="comment">#&#x8BB0;&#x5F55;&#x7684;&#x90A3;&#x4E9B;&#x5C1A;&#x672A;&#x6536;&#x5230;&#x5BA2;&#x6237;&#x7AEF;&#x786E;&#x8BA4;&#x4FE1;&#x606F;&#x7684;&#x8FDE;&#x63A5;&#x8BF7;&#x6C42;&#x7684;&#x6700;&#x5927;&#x503C;&#x3002;&#x5BF9;&#x4E8E;&#x6709;128M&#x5185;&#x5B58;&#x7684;&#x7CFB;&#x7EDF;&#x800C;&#x8A00;&#xFF0C;&#x7F3A;&#x7701;&#x503C;&#x662F;1024&#xFF0C;&#x5C0F;&#x5185;&#x5B58;&#x7684;&#x7CFB;&#x7EDF;&#x5219;&#x662F;128&#x3002;</span></div><div class="line">net.core.netdev_max_backlog = 32768</div><div class="line"><span class="comment">#&#x6BCF;&#x4E2A;&#x7F51;&#x7EDC;&#x63A5;&#x53E3;&#x63A5;&#x6536;&#x6570;&#x636E;&#x5305;&#x7684;&#x901F;&#x7387;&#x6BD4;&#x5185;&#x6838;&#x5904;&#x7406;&#x8FD9;&#x4E9B;&#x5305;&#x7684;&#x901F;&#x7387;&#x5FEB;&#x65F6;&#xFF0C;&#x5141;&#x8BB8;&#x9001;&#x5230;&#x961F;&#x5217;&#x7684;&#x6570;&#x636E;&#x5305;&#x7684;&#x6700;&#x5927;&#x6570;&#x76EE;&#x3002;</span></div><div class="line">net.core.somaxconn = 32768</div><div class="line"><span class="comment">#web&#x5E94;&#x7528;&#x4E2D;listen&#x51FD;&#x6570;&#x7684;backlog&#x9ED8;&#x8BA4;&#x4F1A;&#x7ED9;&#x6211;&#x4EEC;&#x5185;&#x6838;&#x53C2;&#x6570;&#x7684;net.core.somaxconn&#x9650;&#x5236;&#x5230;128&#xFF0C;&#x800C;nginx&#x5B9A;&#x4E49;&#x7684;NGX_LISTEN_BACKLOG&#x9ED8;&#x8BA4;&#x4E3A;511&#xFF0C;&#x6240;&#x4EE5;&#x6709;&#x5FC5;&#x8981;&#x8C03;&#x6574;&#x8FD9;&#x4E2A;&#x503C;&#x3002;</span></div><div class="line"></div><div class="line"></div><div class="line">net.core.wmem_default = 8388608</div><div class="line">net.core.rmem_default = 8388608</div><div class="line">net.core.rmem_max = 16777216           </div><div class="line"><span class="comment">#&#x6700;&#x5927;socket&#x8BFB;buffer,&#x53EF;&#x53C2;&#x8003;&#x7684;&#x4F18;&#x5316;&#x503C;:873200</span></div><div class="line">net.core.wmem_max = 16777216           </div><div class="line"><span class="comment">#&#x6700;&#x5927;socket&#x5199;buffer,&#x53EF;&#x53C2;&#x8003;&#x7684;&#x4F18;&#x5316;&#x503C;:873200</span></div><div class="line">net.ipv4.tcp_timestsmps = 0</div><div class="line"><span class="comment">#&#x65F6;&#x95F4;&#x6233;&#x53EF;&#x4EE5;&#x907F;&#x514D;&#x5E8F;&#x5217;&#x53F7;&#x7684;&#x5377;&#x7ED5;&#x3002;&#x4E00;&#x4E2A;1Gbps&#x7684;&#x94FE;&#x8DEF;&#x80AF;&#x5B9A;&#x4F1A;&#x9047;&#x5230;&#x4EE5;&#x524D;&#x7528;&#x8FC7;&#x7684;&#x5E8F;&#x5217;&#x53F7;&#x3002;&#x65F6;&#x95F4;&#x6233;&#x80FD;&#x591F;&#x8BA9;&#x5185;&#x6838;&#x63A5;&#x53D7;&#x8FD9;&#x79CD;&#x201C;&#x5F02;&#x5E38;&#x201D;&#x7684;&#x6570;&#x636E;&#x5305;&#x3002;&#x8FD9;&#x91CC;&#x9700;&#x8981;&#x5C06;&#x5176;&#x5173;&#x6389;&#x3002;</span></div><div class="line">net.ipv4.tcp_synack_retries = 2</div><div class="line"><span class="comment">#&#x4E3A;&#x4E86;&#x6253;&#x5F00;&#x5BF9;&#x7AEF;&#x7684;&#x8FDE;&#x63A5;&#xFF0C;&#x5185;&#x6838;&#x9700;&#x8981;&#x53D1;&#x9001;&#x4E00;&#x4E2A;SYN&#x5E76;&#x9644;&#x5E26;&#x4E00;&#x4E2A;&#x56DE;&#x5E94;&#x524D;&#x9762;&#x4E00;&#x4E2A;SYN&#x7684;ACK&#x3002;&#x4E5F;&#x5C31;&#x662F;&#x6240;&#x8C13;&#x4E09;&#x6B21;&#x63E1;&#x624B;&#x4E2D;&#x7684;&#x7B2C;&#x4E8C;&#x6B21;&#x63E1;&#x624B;&#x3002;&#x8FD9;&#x4E2A;&#x8BBE;&#x7F6E;&#x51B3;&#x5B9A;&#x4E86;&#x5185;&#x6838;&#x653E;&#x5F03;&#x8FDE;&#x63A5;&#x4E4B;&#x524D;&#x53D1;&#x9001;SYN+ACK&#x5305;&#x7684;&#x6570;&#x91CF;&#x3002;</span></div><div class="line">net.ipv4.tcp_syn_retries = 2</div><div class="line"><span class="comment">#&#x5728;&#x5185;&#x6838;&#x653E;&#x5F03;&#x5EFA;&#x7ACB;&#x8FDE;&#x63A5;&#x4E4B;&#x524D;&#x53D1;&#x9001;SYN&#x5305;&#x7684;&#x6570;&#x91CF;&#x3002;</span></div><div class="line"><span class="comment">#net.ipv4.tcp_tw_len = 1</span></div><div class="line">net.ipv4.tcp_tw_reuse = 1</div><div class="line"><span class="comment"># &#x5F00;&#x542F;&#x91CD;&#x7528;&#x3002;&#x5141;&#x8BB8;&#x5C06;TIME-WAIT sockets&#x91CD;&#x65B0;&#x7528;&#x4E8E;&#x65B0;&#x7684;TCP&#x8FDE;&#x63A5;&#x3002;</span></div><div class="line"></div><div class="line"></div><div class="line">net.ipv4.tcp_wmem = 8192 436600 873200</div><div class="line"><span class="comment"># TCP&#x5199;buffer,&#x53EF;&#x53C2;&#x8003;&#x7684;&#x4F18;&#x5316;&#x503C;: 8192 436600 873200</span></div><div class="line">net.ipv4.tcp_rmem  = 32768 436600 873200</div><div class="line"><span class="comment"># TCP&#x8BFB;buffer,&#x53EF;&#x53C2;&#x8003;&#x7684;&#x4F18;&#x5316;&#x503C;: 32768 436600 873200</span></div><div class="line">net.ipv4.tcp_mem = 94500000 91500000 92700000</div><div class="line"><span class="comment"># &#x540C;&#x6837;&#x6709;3&#x4E2A;&#x503C;,&#x610F;&#x601D;&#x662F;:</span></div><div class="line">net.ipv4.tcp_mem[0]:&#x4F4E;&#x4E8E;&#x6B64;&#x503C;&#xFF0C;TCP&#x6CA1;&#x6709;&#x5185;&#x5B58;&#x538B;&#x529B;&#x3002;</div><div class="line">net.ipv4.tcp_mem[1]:&#x5728;&#x6B64;&#x503C;&#x4E0B;&#xFF0C;&#x8FDB;&#x5165;&#x5185;&#x5B58;&#x538B;&#x529B;&#x9636;&#x6BB5;&#x3002;</div><div class="line">net.ipv4.tcp_mem[2]:&#x9AD8;&#x4E8E;&#x6B64;&#x503C;&#xFF0C;TCP&#x62D2;&#x7EDD;&#x5206;&#x914D;socket&#x3002;</div><div class="line">&#x4E0A;&#x8FF0;&#x5185;&#x5B58;&#x5355;&#x4F4D;&#x662F;&#x9875;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x5B57;&#x8282;&#x3002;&#x53EF;&#x53C2;&#x8003;&#x7684;&#x4F18;&#x5316;&#x503C;&#x662F;:786432 1048576 1572864</div><div class="line"></div><div class="line"></div><div class="line">net.ipv4.tcp_max_orphans = 3276800</div><div class="line"><span class="comment">#&#x7CFB;&#x7EDF;&#x4E2D;&#x6700;&#x591A;&#x6709;&#x591A;&#x5C11;&#x4E2A;TCP&#x5957;&#x63A5;&#x5B57;&#x4E0D;&#x88AB;&#x5173;&#x8054;&#x5230;&#x4EFB;&#x4F55;&#x4E00;&#x4E2A;&#x7528;&#x6237;&#x6587;&#x4EF6;&#x53E5;&#x67C4;&#x4E0A;&#x3002;</span></div><div class="line">&#x5982;&#x679C;&#x8D85;&#x8FC7;&#x8FD9;&#x4E2A;&#x6570;&#x5B57;&#xFF0C;&#x8FDE;&#x63A5;&#x5C06;&#x5373;&#x523B;&#x88AB;&#x590D;&#x4F4D;&#x5E76;&#x6253;&#x5370;&#x51FA;&#x8B66;&#x544A;&#x4FE1;&#x606F;&#x3002;</div><div class="line">&#x8FD9;&#x4E2A;&#x9650;&#x5236;&#x4EC5;&#x4EC5;&#x662F;&#x4E3A;&#x4E86;&#x9632;&#x6B62;&#x7B80;&#x5355;&#x7684;DoS&#x653B;&#x51FB;&#xFF0C;&#x4E0D;&#x80FD;&#x8FC7;&#x5206;&#x4F9D;&#x9760;&#x5B83;&#x6216;&#x8005;&#x4EBA;&#x4E3A;&#x5730;&#x51CF;&#x5C0F;&#x8FD9;&#x4E2A;&#x503C;&#xFF0C;</div><div class="line">&#x66F4;&#x5E94;&#x8BE5;&#x589E;&#x52A0;&#x8FD9;&#x4E2A;&#x503C;(&#x5982;&#x679C;&#x589E;&#x52A0;&#x4E86;&#x5185;&#x5B58;&#x4E4B;&#x540E;)&#x3002;</div><div class="line">net.ipv4.tcp_fin_timeout = 30</div><div class="line"><span class="comment">#&#x5982;&#x679C;&#x5957;&#x63A5;&#x5B57;&#x7531;&#x672C;&#x7AEF;&#x8981;&#x6C42;&#x5173;&#x95ED;&#xFF0C;&#x8FD9;&#x4E2A;&#x53C2;&#x6570;&#x51B3;&#x5B9A;&#x4E86;&#x5B83;&#x4FDD;&#x6301;&#x5728;FIN-WAIT-2&#x72B6;&#x6001;&#x7684;&#x65F6;&#x95F4;&#x3002;&#x5BF9;&#x7AEF;&#x53EF;&#x4EE5;&#x51FA;&#x9519;&#x5E76;&#x6C38;&#x8FDC;&#x4E0D;&#x5173;&#x95ED;&#x8FDE;&#x63A5;&#xFF0C;&#x751A;&#x81F3;&#x610F;&#x5916;&#x5F53;&#x673A;&#x3002;&#x7F3A;&#x7701;&#x503C;&#x662F;60&#x79D2;&#x3002;2.2 &#x5185;&#x6838;&#x7684;&#x901A;&#x5E38;&#x503C;&#x662F;180&#x79D2;&#xFF0C;&#x4F60;&#x53EF;&#x4EE5;&#x6309;&#x8FD9;&#x4E2A;&#x8BBE;&#x7F6E;&#xFF0C;&#x4F46;&#x8981;&#x8BB0;&#x4F4F;&#x7684;&#x662F;&#xFF0C;&#x5373;&#x4F7F;&#x4F60;&#x7684;&#x673A;&#x5668;&#x662F;&#x4E00;&#x4E2A;&#x8F7B;&#x8F7D;&#x7684;WEB&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x4E5F;&#x6709;&#x56E0;&#x4E3A;&#x5927;&#x91CF;&#x7684;&#x6B7B;&#x5957;&#x63A5;&#x5B57;&#x800C;&#x5185;&#x5B58;&#x6EA2;&#x51FA;&#x7684;&#x98CE;&#x9669;&#xFF0C;FIN- WAIT-2&#x7684;&#x5371;&#x9669;&#x6027;&#x6BD4;FIN-WAIT-1&#x8981;&#x5C0F;&#xFF0C;&#x56E0;&#x4E3A;&#x5B83;&#x6700;&#x591A;&#x53EA;&#x80FD;&#x5403;&#x6389;1.5K&#x5185;&#x5B58;&#xFF0C;&#x4F46;&#x662F;&#x5B83;&#x4EEC;&#x7684;&#x751F;&#x5B58;&#x671F;&#x957F;&#x4E9B;&#x3002;</span></div></pre></td></tr></table></figure><p></p>
+<p>&#x7ECF;&#x8FC7;&#x8FD9;&#x6837;&#x7684;&#x4F18;&#x5316;&#x914D;&#x7F6E;&#x4E4B;&#x540E;&#xFF0C;&#x4F60;&#x7684;&#x670D;&#x52A1;&#x5668;&#x7684;TCP&#x5E76;&#x53D1;&#x5904;&#x7406;&#x80FD;&#x529B;&#x4F1A;&#x663E;&#x8457;&#x63D0;&#x9AD8;&#x3002;&#x4EE5;&#x4E0A;&#x914D;&#x7F6E;&#x4EC5;&#x4F9B;&#x53C2;&#x8003;&#xFF0C;&#x7528;&#x4E8E;&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x8BF7;&#x6839;&#x636E;&#x81EA;&#x8EAB;&#x670D;&#x52A1;&#x5668;&#x60C5;&#x51B5;&#x5408;&#x7406;&#x914D;&#x7F6E;&#x3002;</p>
+
+      
+    </div>
+
+	<div>
+      
+        
+      
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/内核/" rel="tag"><i class="fa fa-tag"></i> 内核</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/40591/" rel="next" title="网站架构演化">
+                <i class="fa fa-chevron-left"></i> 网站架构演化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/4147/" rel="prev" title="MongoDB3.x-配置文件">
+                MongoDB3.x-配置文件 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ5NS82MDYz"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/linux5.gif"
+               alt="火柴" />
+          <p class="site-author-name" itemprop="name">火柴</p>
+           
+              <p class="site-description motion-element" itemprop="description">对自己要求高一点！！！</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+			﻿<a title="点击high一下哦^_^" rel="alternate" class="mw-harlem_shake_slow wobble shake" href='javascript:(function() {
+    function c() {
+        var e = document.createElement("link");
+        e.setAttribute("type", "text/css");
+        e.setAttribute("rel", "stylesheet");
+        e.setAttribute("href", f);
+        e.setAttribute("class", l);
+        document.body.appendChild(e)
+    }
+ 
+    function h() {
+        var e = document.getElementsByClassName(l);
+        for (var t = 0; t < e.length; t++) {
+            document.body.removeChild(e[t])
+        }
+    }
+ 
+    function p() {
+        var e = document.createElement("div");
+        e.setAttribute("class", a);
+        document.body.appendChild(e);
+        setTimeout(function() {
+            document.body.removeChild(e)
+        }, 100)
+    }
+ 
+    function d(e) {
+        return {
+            height : e.offsetHeight,
+            width : e.offsetWidth
+        }
+    }
+ 
+    function v(i) {
+        var s = d(i);
+        return s.height > e && s.height < n && s.width > t && s.width < r
+    }
+ 
+    function m(e) {
+        var t = e;
+        var n = 0;
+        while (!!t) {
+            n += t.offsetTop;
+            t = t.offsetParent
+        }
+        return n
+    }
+ 
+    function g() {
+        var e = document.documentElement;
+        if (!!window.innerWidth) {
+            return window.innerHeight
+        } else if (e && !isNaN(e.clientHeight)) {
+            return e.clientHeight
+        }
+        return 0
+    }
+ 
+    function y() {
+        if (window.pageYOffset) {
+            return window.pageYOffset
+        }
+        return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+    }
+ 
+    function E(e) {
+        var t = m(e);
+        return t >= w && t <= b + w
+    }
+ 
+    function S() {
+        var e = document.createElement("audio");
+        e.setAttribute("class", l);
+        e.src = i;
+        e.loop = false;
+        e.addEventListener("canplay", function() {
+            setTimeout(function() {
+                x(k)
+            }, 500);
+            setTimeout(function() {
+                N();
+                p();
+                for (var e = 0; e < O.length; e++) {
+                    T(O[e])
+                }
+            }, 15500)
+        }, true);
+        e.addEventListener("ended", function() {
+            N();
+            h()
+        }, true);
+        e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+        document.body.appendChild(e);
+        e.play()
+    }
+ 
+    function x(e) {
+        e.className += " " + s + " " + o
+    }
+ 
+    function T(e) {
+        e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+    }
+ 
+    function N() {
+        var e = document.getElementsByClassName(s);
+        var t = new RegExp("\\b" + s + "\\b");
+        for (var n = 0; n < e.length; ) {
+            e[n].className = e[n].className.replace(t, "")
+        }
+    }
+ 
+    var e = 30;
+    var t = 30;
+    var n = 350;
+    var r = 350;
+    var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+    var s = "mw-harlem_shake_me";
+    var o = "im_first";
+    var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+    var a = "mw-strobe_light";
+    var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+    var l = "mw_added_css";
+    var b = g();
+    var w = y();
+    var C = document.getElementsByTagName("*");
+    var k = null;
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            if (E(A)) {
+                k = A;
+                break
+            }
+        }
+    }
+    if (A === null) {
+        console.warn("Could not find a node of the right size. Please try a different page.");
+        return
+    }
+    c();
+    S();
+    var O = [];
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            O.push(A)
+        }
+    }
+})()'><i class="fa fa-music"></i> High</a>
+          </div>
+        
+		
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://wpa.qq.com/msgrd?V=1&uin=396303331&exe=qq&Site=qq&menu=yes" target="_blank" title="QQ">
+                  
+                    <i class="fa fa-fw fa-qq"></i>
+                  
+                  QQ
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:18201620971@163.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.chen-hao.com.cn/cywz" target="_blank" title="常用网站">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  常用网站
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.fblinux.com/" title="师兄-王君康" target="_blank">师兄-王君康</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.sctux.com/" title="师兄-郭茂秋" target="_blank">师兄-郭茂秋</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://linsj.blog.51cto.com/" title="同学-林水晶" target="_blank">同学-林水晶</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://mrchen.org/" title="同学-陈晨" target="_blank">同学-陈晨</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.systemd.cn/" title="同学-郎耀亮" target="_blank">同学-郎耀亮</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://zantony.top/" title="同学-赵鑫" target="_blank">同学-赵鑫</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://blog.whsir.com/" title="师弟-吴昊" target="_blank">师弟-吴昊</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.yuangg.com/" title="师弟-洋洋" target="_blank">师弟-洋洋</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+		
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#优化time_wait状态连接"><span class="nav-number">1.</span> <span class="nav-text">优化TIME_WAIT状态连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内核其他tcp参数说明"><span class="nav-number">2.</span> <span class="nav-text">内核其他TCP参数说明</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">火柴</span>
+</div>
+
+<div class="theme-info">
+	<span id="sitetime"></span>
+	<script language=javascript>
+	function siteTime(){
+	window.setTimeout("siteTime()", 1000);
+	var seconds = 1000
+	var minutes = seconds * 60
+	var hours = minutes * 60
+	var days = hours * 24
+	var years = days * 365
+
+	var today = new Date()
+	var todayYear = today.getFullYear()
+	var todayMonth = today.getMonth()
+	var todayDate = today.getDate()
+	var todayHour = today.getHours()
+	var todayMinute = today.getMinutes()
+	var todaySecond = today.getSeconds()
+
+	/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳) 
+	year - 作为date对象的年份，为4位年份值
+	month - 0-11之间的整数，做为date对象的月份
+	day - 1-31之间的整数，做为date对象的天数
+	hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+	minutes - 0-59之间的整数，做为date对象的分钟数
+	seconds - 0-59之间的整数，做为date对象的秒数
+	microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+	var t1 = Date.UTC(2015,10,14,11,19,00)
+	var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond)
+	var diff = t2-t1
+
+	var diffYears = Math.floor(diff/years)
+	var diffDays = Math.floor((diff/days)-diffYears*365)
+	var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours)
+	var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes)
+	var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds)
+	document.getElementById("sitetime").innerHTML=" 本站已运行"+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒"
+	}
+	siteTime()
+	</script>
+	
+  <div class="powered-by"></div>
+  <span class="post-count">共83.4k字</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      您是第<i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      位访客
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总点击<i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("v8vPyVyJeoQ3FYzKp3y9KLMu-gzGzoHsz", "a0WXjkqByOHUcay9EHiwNkan");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+  
+
+
+  
+
+ 
+<!-- 点击爱心效果 -->
+<script src="/js/love.js"></script>
+<!-- 背景动画 -->
+<!-- <script src="/js/particle2.js"></script>  -->
+
+<!--崩溃欺骗-->
+<!-- <script src="/js/qipian.js"></script> -->
+
+<script type="text/javascript" src="/lib/zclip/clipboard.min.js"></script>	
+<script type="text/javascript" src="/js/src/custom.js"></script>
+  
+</body>
+</html>

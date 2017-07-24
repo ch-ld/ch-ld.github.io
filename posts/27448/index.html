@@ -1,0 +1,1426 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="shell," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="火柴的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="介绍一个强大的分析网络的shell脚本
+
+此脚本包含的功能有：
+
+实时监控任意网卡的流量
+统计10秒内平均流量">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络分析shell脚本(实时流量+连接统计)">
+<meta property="og:url" content="http://www.chen-hao.com.cn/posts/27448/index.html">
+<meta property="og:site_name" content="火柴的博客">
+<meta property="og:description" content="介绍一个强大的分析网络的shell脚本
+
+此脚本包含的功能有：
+
+实时监控任意网卡的流量
+统计10秒内平均流量">
+<meta property="og:updated_time" content="2017-07-20T09:05:22.426Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="网络分析shell脚本(实时流量+连接统计)">
+<meta name="twitter:description" content="介绍一个强大的分析网络的shell脚本
+
+此脚本包含的功能有：
+
+实时监控任意网卡的流量
+统计10秒内平均流量">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":true},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #000000; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #000000, 0 0 5px     #000000; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #000000;    /*上边框颜色*/
+        border-left-color: #000000;    /*左边框颜色*/
+    }
+  </style>
+
+  <script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('你可能输入了假的密码！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+
+  <link rel="canonical" href="http://www.chen-hao.com.cn/posts/27448/"/>
+
+
+
+
+
+  <title> 网络分析shell脚本(实时流量+连接统计) | 火柴的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	
+	<a href="https://github.com/ch-ld/ch-ld.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">火柴的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resume">
+          <a href="http://resume.chen-hao.com.cn" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-send"></i> <br />
+            
+            简历
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-love">
+          <a href="https://love.chen-hao.com.cn/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            纪念日
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.chen-hao.com.cn/posts/27448/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="火柴">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/linux5.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火柴的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                网络分析shell脚本(实时流量+连接统计)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-23T11:14:10+08:00">
+                2016-08-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Shell/" itemprop="url" rel="index">
+                    <span itemprop="name">Shell</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/posts/27448/" class="leancloud_visitors" data-flag-title="网络分析shell脚本(实时流量+连接统计)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>&#x4ECB;&#x7ECD;&#x4E00;&#x4E2A;&#x5F3A;&#x5927;&#x7684;&#x5206;&#x6790;&#x7F51;&#x7EDC;&#x7684;shell&#x811A;&#x672C;</p>
+</blockquote>
+<p></p><h3 id="&#x6B64;&#x811A;&#x672C;&#x5305;&#x542B;&#x7684;&#x529F;&#x80FD;&#x6709;">&#x6B64;&#x811A;&#x672C;&#x5305;&#x542B;&#x7684;&#x529F;&#x80FD;&#x6709;&#xFF1A;</h3><p></p>
+<ul>
+<li>&#x5B9E;&#x65F6;&#x76D1;&#x63A7;&#x4EFB;&#x610F;&#x7F51;&#x5361;&#x7684;&#x6D41;&#x91CF;</li>
+<li>&#x7EDF;&#x8BA1;10&#x79D2;&#x5185;&#x5E73;&#x5747;&#x6D41;&#x91CF;<a id="more"></a></li>
+<li>&#x7EDF;&#x8BA1;&#x6BCF;&#x4E2A;&#x7AEF;&#x53E3;&#x5728;10&#x79D2;&#x5185;&#x7684;&#x5E73;&#x5747;&#x6D41;&#x91CF;&#xFF0C;&#x57FA;&#x4E8E;&#x5BA2;&#x6237;&#x7AEF;&#x548C;&#x670D;&#x52A1;&#x7AEF;&#x7AEF;&#x53E3;&#x7EDF;&#x8BA1;&#x3002;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#x54EA;&#x4E9B;&#x7AEF;&#x53E3;&#x5360;&#x6D41;&#x91CF;&#x6BD4;&#x8F83;&#x5927;&#xFF0C;&#x5BF9;&#x4E8E;web&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x4E00;&#x822C;&#x662F;80&#x7AEF;&#x53E3;&#x3002;&#x5176;&#x5B83;&#x7AEF;&#x53E3;&#x53D7;&#x5230;&#x653B;&#x51FB;&#x65F6;&#xFF0C;&#x4E5F;&#x6709;&#x53EF;&#x80FD;&#x5176;&#x5B83;&#x7AEF;&#x53E3;&#x6D41;&#x91CF;&#x6BD4;&#x8F83;&#x5927;&#x3002;&#x6240;&#x4EE5;&#x6B64;&#x529F;&#x80FD;&#x53EF;&#x4EE5;&#x5E2E;&#x52A9;&#x6211;&#x4EEC;&#x7AEF;&#x53E3;&#x6D41;&#x91CF;&#x662F;&#x5426;&#x6B63;&#x5E38;&#x3002;</li>
+<li>&#x7EDF;&#x8BA1;&#x5728;10s&#x5185;&#x5360;&#x7528;&#x5E26;&#x5BBD;&#x6700;&#x5927;&#x7684;&#x524D;10&#x4E2A;ip&#x3002;&#x6B64;&#x9879;&#x529F;&#x80FD;&#x53EF;&#x4EE5;&#x5E2E;&#x52A9;&#x6211;&#x4EEC;&#x6765;&#x67E5;&#x51FA;&#x662F;&#x5426;&#x6709;&#x6076;&#x610F;&#x5360;&#x7528;&#x5E26;&#x5BBD;&#x7684;ip&#x3002;</li>
+<li>&#x7EDF;&#x8BA1;&#x8FDE;&#x63A5;&#x72B6;&#x6001;&#x3002;&#x6B64;&#x9879;&#x529F;&#x80FD;&#x53EF;&#x4EE5;&#x8BA9;&#x6211;&#x4EEC;&#x770B;&#x51FA;&#x54EA;&#x4E9B;&#x8FDE;&#x63A5;&#x72B6;&#x6001;&#x6BD4;&#x8F83;&#x5927;&#x3002;&#x5982;&#x679C;SYN-RECV&#x72B6;&#x6001;&#x6BD4;&#x8F83;&#x591A;&#x7684;&#x8BDD;&#xFF0C;&#x6709;&#x53EF;&#x4EE5;&#x53D7;&#x5230;&#x534A;&#x8FDE;&#x63A5;&#x653B;&#x51FB;&#x3002;&#x5982;&#x679C;ESTABLISED&#x975E;&#x5E38;&#x5927;&#xFF0C;&#x4F46;&#x901A;&#x8FC7;&#x65E5;&#x5FD7;&#x53D1;&#x73B0;&#x6CA1;&#x6709;&#x90A3;&#x4E48;&#x591A;&#x8BF7;&#x6C42;&#xFF0C;&#x6216;&#x8005;&#x901A;&#x8FC7;tcpdump&#x53D1;&#x73B0;&#x5927;&#x91CF;ip&#x53EA;&#x5EFA;&#x7ACB;&#x8FDE;&#x63A5;&#x4E0D;&#x8BF7;&#x6C42;&#x6570;&#x636E;&#x7684;&#x8BDD;&#xFF0C;&#x53EF;&#x80FD;&#x662F;&#x53D7;&#x5230;&#x4E86;&#x5168;&#x8FDE;&#x63A5;&#x653B;&#x51FB;&#xFF0C;&#x8FD9;&#x65F6;&#x5019;&#x5982;&#x679C;&#x4F60;&#x4F7F;&#x7528;&#x7684;&#x662F;nginx&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x53EF;&#x4EE5;&#x5728;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x589E;&#x52A0;listen 80 deferred&#x6765;&#x9632;&#x6B62;&#x3002;</li>
+<li>&#x7EDF;&#x8BA1;&#x5404;&#x7AEF;&#x53E3;&#x8FDE;&#x63A5;&#x72B6;&#x6001;&#x3002;&#x5F53;&#x53EF;&#x80FD;&#x53D7;&#x5230;&#x653B;&#x51FB;&#x65F6;&#xFF0C;&#x6B64;&#x9879;&#x529F;&#x80FD;&#x53EF;&#x4EE5;&#x5E2E;&#x52A9;&#x6211;&#x4EEC;&#x53D1;&#x73B0;&#x662F;&#x54EA;&#x4E2A;&#x7AEF;&#x53E3;&#x53D7;&#x5230;&#x653B;&#x51FB;&#x3002;</li>
+<li>&#x7EDF;&#x8BA1;&#x7AEF;&#x53E3;&#x4E3A;80&#x4E14;&#x72B6;&#x6001;&#x4E3A;ESTAB&#x8FDE;&#x63A5;&#x6570;&#x6700;&#x591A;&#x7684;&#x524D;10&#x4E2A;IP&#x3002;&#x6B64;&#x9879;&#x529F;&#x80FD;&#x53EF;&#x4EE5;&#x5E2E;&#x52A9;&#x6211;&#x4EEC;&#x6765;&#x627E;&#x51FA;&#x521B;&#x5EFA;&#x8FDE;&#x63A5;&#x8FC7;&#x591A;&#x7684;Ip&#xFF0C;&#x8FDB;&#x800C;&#x5C4F;&#x853D;&#x3002;</li>
+<li>&#x7EDF;&#x8BA1;&#x7AEF;&#x53E3;&#x4E3A;80&#x4E14;&#x72B6;&#x6001;&#x4E3A;SYN-RECV&#x8FDE;&#x63A5;&#x6570;&#x6700;&#x591A;&#x7684;&#x524D;10&#x4E2A;IP&#x3002;&#x5F53;&#x53D7;&#x5230;&#x534A;&#x8FDE;&#x63A5;&#x653B;&#x51FB;&#x65F6;&#xFF0C;&#x6B64;&#x9879;&#x529F;&#x80FD;&#x53EF;&#x4EE5;&#x5E2E;&#x52A9;&#x6211;&#x4EEC;&#x627E;&#x5230;&#x6076;&#x610F;ip&#x3002;</li>
+</ul>
+<p></p><h3 id="&#x7528;&#x5230;&#x7684;&#x7F51;&#x7EDC;&#x5206;&#x6790;&#x5DE5;&#x5177;">&#x7528;&#x5230;&#x7684;&#x7F51;&#x7EDC;&#x5206;&#x6790;&#x5DE5;&#x5177;&#xFF1A;</h3><p></p>
+<ul>
+<li>tcpdump:&#x6B64;&#x811A;&#x672C;&#x7528;tcpdump&#x6765;&#x7EDF;&#x8BA1;&#x57FA;&#x4E8E;ip&#x6216;&#x57FA;&#x4E8E;&#x7AEF;&#x53E3;&#x7684;&#x6D41;&#x91CF;&#x3002;</li>
+<li>ss&#xFF1A; &#x6B64;&#x811A;&#x672C;&#x7528;ss&#x547D;&#x4EE4;&#x6765;&#x7EDF;&#x8BA1;&#x8FDE;&#x63A5;&#x72B6;&#x6001;&#xFF0C;&#x5B9E;&#x9645;&#x4F7F;&#x7528;&#x53D1;&#x73B0;ss&#x6BD4;netstat&#x9AD8;&#x6548;&#x5F97;&#x591A;&#x3002;</li>
+<li>/proc/net/dev&#xFF0C;&#x7528;&#x6765;&#x7EDF;&#x8BA1;&#x6307;&#x5B9A;&#x7F51;&#x5361;&#x7684;&#x6D41;&#x91CF;&#x3002;</li>
+</ul>
+<p></p><h3 id="&#x4E0B;&#x9762;&#x8D34;&#x51FA;&#x5B8C;&#x6574;&#x4EE3;&#x7801;">&#x4E0B;&#x9762;&#x8D34;&#x51FA;&#x5B8C;&#x6574;&#x4EE3;&#x7801;</h3><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"> </div><div class="line"><span class="comment">#write by zhumaohai(admin#centos.bz)</span></div><div class="line"><span class="comment">#author blog: www.centos.bz</span></div><div class="line"> </div><div class="line"> </div><div class="line"><span class="comment">#&#x663E;&#x793A;&#x83DC;&#x5355;(&#x5355;&#x9009;)</span></div><div class="line"><span class="function"><span class="title">display_menu</span></span>(){</div><div class="line"><span class="built_in">local</span> soft=<span class="variable">$1</span></div><div class="line"><span class="built_in">local</span> prompt=<span class="string">&quot;which <span class="variable">${soft}</span> you&apos;d select: &quot;</span></div><div class="line"><span class="built_in">eval</span> <span class="built_in">local</span> arr=(\<span class="variable">${${soft}</span>_arr[@]})</div><div class="line"><span class="keyword">while</span> <span class="literal">true</span></div><div class="line"><span class="keyword">do</span></div><div class="line">    <span class="built_in">echo</span> <span class="_">-e</span> <span class="string">&quot;#################### <span class="variable">${soft}</span> setting ####################\n\n&quot;</span></div><div class="line">    <span class="keyword">for</span> ((i=1;i&lt;=<span class="variable">${#arr[@]}</span>;i++ )); <span class="keyword">do</span> <span class="built_in">echo</span> <span class="_">-e</span> <span class="string">&quot;<span class="variable">$i</span>) <span class="variable">${arr[$i-1]}</span>&quot;</span>; <span class="keyword">done</span></div><div class="line">    <span class="built_in">echo</span></div><div class="line">    <span class="built_in">read</span> -p <span class="string">&quot;<span class="variable">${prompt}</span>&quot;</span> <span class="variable">$soft</span></div><div class="line">    <span class="built_in">eval</span> <span class="built_in">local</span> select=\$<span class="variable">$soft</span></div><div class="line">    <span class="keyword">if</span> [ <span class="string">&quot;<span class="variable">$select</span>&quot;</span> == <span class="string">&quot;&quot;</span> ] || [ <span class="string">&quot;<span class="variable">${arr[$soft-1]}</span>&quot;</span> == <span class="string">&quot;&quot;</span>  ];<span class="keyword">then</span></div><div class="line">        prompt=<span class="string">&quot;input errors,please input a number: &quot;</span></div><div class="line">    <span class="keyword">else</span></div><div class="line">        <span class="built_in">eval</span> <span class="variable">$soft</span>=<span class="variable">${arr[$soft-1]}</span></div><div class="line">        <span class="built_in">eval</span> <span class="built_in">echo</span> <span class="string">&quot;your selection: \$<span class="variable">$soft</span>&quot;</span>             </div><div class="line">        <span class="built_in">break</span></div><div class="line">    <span class="keyword">fi</span></div><div class="line"><span class="keyword">done</span></div><div class="line">}</div><div class="line"> </div><div class="line"><span class="comment">#&#x628A;&#x5E26;&#x5BBD;bit&#x5355;&#x4F4D;&#x8F6C;&#x6362;&#x4E3A;&#x4EBA;&#x7C7B;&#x53EF;&#x8BFB;&#x5355;&#x4F4D;</span></div><div class="line"><span class="function"><span class="title">bit_to_human_readable</span></span>(){</div><div class="line">    <span class="comment">#input bit value</span></div><div class="line">    <span class="built_in">local</span> trafficValue=<span class="variable">$1</span></div><div class="line"> </div><div class="line">    <span class="keyword">if</span> [[ <span class="variable">${trafficValue%.*}</span> <span class="_">-gt</span> 922 ]];<span class="keyword">then</span></div><div class="line">        <span class="comment">#conv to Kb</span></div><div class="line">        trafficValue=`awk -v value=<span class="variable">$trafficValue</span> <span class="string">&apos;BEGIN{printf &quot;%0.1f&quot;,value/1024}&apos;</span>`</div><div class="line">        <span class="keyword">if</span> [[ <span class="variable">${trafficValue%.*}</span> <span class="_">-gt</span> 922 ]];<span class="keyword">then</span></div><div class="line">            <span class="comment">#conv to Mb</span></div><div class="line">            trafficValue=`awk -v value=<span class="variable">$trafficValue</span> <span class="string">&apos;BEGIN{printf &quot;%0.1f&quot;,value/1024}&apos;</span>`</div><div class="line">            <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">${trafficValue}</span>Mb&quot;</span></div><div class="line">        <span class="keyword">else</span></div><div class="line">            <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">${trafficValue}</span>Kb&quot;</span></div><div class="line">        <span class="keyword">fi</span></div><div class="line">    <span class="keyword">else</span></div><div class="line">        <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">${trafficValue}</span>b&quot;</span></div><div class="line">    <span class="keyword">fi</span></div><div class="line">}</div><div class="line"> </div><div class="line"><span class="comment">#&#x5224;&#x65AD;&#x5305;&#x7BA1;&#x7406;&#x5DE5;&#x5177;</span></div><div class="line"><span class="function"><span class="title">check_package_manager</span></span>(){</div><div class="line">    <span class="built_in">local</span> manager=<span class="variable">$1</span></div><div class="line">    <span class="built_in">local</span> systemPackage=<span class="string">&apos;&apos;</span></div><div class="line">    <span class="keyword">if</span> cat /etc/issue | grep -q -E -i <span class="string">&quot;ubuntu|debian&quot;</span>;<span class="keyword">then</span></div><div class="line">        systemPackage=<span class="string">&apos;apt&apos;</span></div><div class="line">    <span class="keyword">elif</span> cat /etc/issue | grep -q -E -i <span class="string">&quot;centos|red hat|redhat&quot;</span>;<span class="keyword">then</span></div><div class="line">        systemPackage=<span class="string">&apos;yum&apos;</span></div><div class="line">    <span class="keyword">elif</span> cat /proc/version | grep -q -E -i <span class="string">&quot;ubuntu|debian&quot;</span>;<span class="keyword">then</span></div><div class="line">        systemPackage=<span class="string">&apos;apt&apos;</span></div><div class="line">    <span class="keyword">elif</span> cat /proc/version | grep -q -E -i <span class="string">&quot;centos|red hat|redhat&quot;</span>;<span class="keyword">then</span></div><div class="line">        systemPackage=<span class="string">&apos;yum&apos;</span></div><div class="line">    <span class="keyword">else</span></div><div class="line">        <span class="built_in">echo</span> <span class="string">&quot;unkonw&quot;</span></div><div class="line">    <span class="keyword">fi</span></div><div class="line"> </div><div class="line">    <span class="keyword">if</span> [ <span class="string">&quot;<span class="variable">$manager</span>&quot;</span> == <span class="string">&quot;<span class="variable">$systemPackage</span>&quot;</span> ];<span class="keyword">then</span></div><div class="line">        <span class="built_in">return</span> 0</div><div class="line">    <span class="keyword">else</span></div><div class="line">        <span class="built_in">return</span> 1</div><div class="line">    <span class="keyword">fi</span>   </div><div class="line">}</div><div class="line"> </div><div class="line"> </div><div class="line"><span class="comment">#&#x5B9E;&#x65F6;&#x6D41;&#x91CF;</span></div><div class="line"><span class="function"><span class="title">realTimeTraffic</span></span>(){</div><div class="line">    <span class="built_in">local</span> eth=<span class="string">&quot;&quot;</span></div><div class="line">    <span class="built_in">local</span> nic_arr=(`ifconfig | grep -E -o <span class="string">&quot;^[a-z0-9]+&quot;</span> | grep -v <span class="string">&quot;lo&quot;</span> | uniq`)</div><div class="line">    <span class="built_in">local</span> nicLen=<span class="variable">${#nic_arr[@]}</span></div><div class="line">    <span class="keyword">if</span> [[ <span class="variable">$nicLen</span> <span class="_">-eq</span> 0 ]]; <span class="keyword">then</span></div><div class="line">        <span class="built_in">echo</span> <span class="string">&quot;sorry,I can not detect any network device,please report this issue to author.&quot;</span></div><div class="line">        <span class="built_in">exit</span> 1</div><div class="line">    <span class="keyword">elif</span> [[ <span class="variable">$nicLen</span> <span class="_">-eq</span> 1 ]]; <span class="keyword">then</span></div><div class="line">        eth=<span class="variable">$nic_arr</span></div><div class="line">    <span class="keyword">else</span></div><div class="line">        display_menu nic</div><div class="line">        eth=<span class="variable">$nic</span></div><div class="line">    <span class="keyword">fi</span>   </div><div class="line"> </div><div class="line">    <span class="built_in">local</span> clear=<span class="literal">true</span></div><div class="line">    <span class="built_in">local</span> eth_<span class="keyword">in</span>_peak=0</div><div class="line">    <span class="built_in">local</span> eth_out_peak=0</div><div class="line">    <span class="built_in">local</span> eth_<span class="keyword">in</span>=0</div><div class="line">    <span class="built_in">local</span> eth_out=0</div><div class="line"> </div><div class="line">    <span class="keyword">while</span> <span class="literal">true</span>;<span class="keyword">do</span></div><div class="line">        <span class="comment">#&#x79FB;&#x52A8;&#x5149;&#x6807;&#x5230;0:0&#x4F4D;&#x7F6E;</span></div><div class="line">        <span class="built_in">printf</span> <span class="string">&quot;\033[0;0H&quot;</span></div><div class="line">        <span class="comment">#&#x6E05;&#x5C4F;&#x5E76;&#x6253;&#x5370;Now Peak</span></div><div class="line">        [[ <span class="variable">$clear</span> == <span class="literal">true</span> ]] &amp;&amp; <span class="built_in">printf</span> <span class="string">&quot;\033[2J&quot;</span> &amp;&amp; <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$eth</span>--------Now--------Peak-----------&quot;</span></div><div class="line">        traffic_be=(`awk -v eth=<span class="variable">$eth</span> -F<span class="string">&apos;[: ]+&apos;</span> <span class="string">&apos;{if ($0 ~eth){print $3,$11}}&apos;</span> /proc/net/dev`)</div><div class="line">        sleep 2</div><div class="line">        traffic_af=(`awk -v eth=<span class="variable">$eth</span> -F<span class="string">&apos;[: ]+&apos;</span> <span class="string">&apos;{if ($0 ~eth){print $3,$11}}&apos;</span> /proc/net/dev`)</div><div class="line">        <span class="comment">#&#x8BA1;&#x7B97;&#x901F;&#x7387;</span></div><div class="line">        eth_<span class="keyword">in</span>=$(( (<span class="variable">${traffic_af[0]}</span>-<span class="variable">${traffic_be[0]}</span>)*8/2 ))</div><div class="line">        eth_out=$(( (<span class="variable">${traffic_af[1]}</span>-<span class="variable">${traffic_be[1]}</span>)*8/2 ))</div><div class="line">        <span class="comment">#&#x8BA1;&#x7B97;&#x6D41;&#x91CF;&#x5CF0;&#x503C;</span></div><div class="line">        [[ <span class="variable">$eth_in</span> <span class="_">-gt</span> <span class="variable">$eth_in_peak</span> ]] &amp;&amp; eth_<span class="keyword">in</span>_peak=<span class="variable">$eth_in</span></div><div class="line">        [[ <span class="variable">$eth_out</span> <span class="_">-gt</span> <span class="variable">$eth_out_peak</span> ]] &amp;&amp; eth_out_peak=<span class="variable">$eth_out</span></div><div class="line">        <span class="comment">#&#x79FB;&#x52A8;&#x5149;&#x6807;&#x5230;2:1</span></div><div class="line">        <span class="built_in">printf</span> <span class="string">&quot;\033[2;1H&quot;</span></div><div class="line">        <span class="comment">#&#x6E05;&#x9664;&#x5F53;&#x524D;&#x884C;</span></div><div class="line">        <span class="built_in">printf</span> <span class="string">&quot;\033[K&quot;</span>   </div><div class="line">        <span class="built_in">printf</span> <span class="string">&quot;%-20s %-20s\n&quot;</span> <span class="string">&quot;Receive:  <span class="variable">$(bit_to_human_readable $eth_in)</span>&quot;</span> <span class="string">&quot;<span class="variable">$(bit_to_human_readable $eth_in_peak)</span>&quot;</span></div><div class="line">        <span class="comment">#&#x6E05;&#x9664;&#x5F53;&#x524D;&#x884C;</span></div><div class="line">        <span class="built_in">printf</span> <span class="string">&quot;\033[K&quot;</span></div><div class="line">        <span class="built_in">printf</span> <span class="string">&quot;%-20s %-20s\n&quot;</span> <span class="string">&quot;Transmit: <span class="variable">$(bit_to_human_readable $eth_out)</span>&quot;</span> <span class="string">&quot;<span class="variable">$(bit_to_human_readable $eth_out_peak)</span>&quot;</span></div><div class="line">        [[ <span class="variable">$clear</span> == <span class="literal">true</span> ]] &amp;&amp; clear=<span class="literal">false</span></div><div class="line">    <span class="keyword">done</span></div><div class="line">}</div><div class="line"> </div><div class="line"><span class="comment">#&#x6D41;&#x91CF;&#x548C;&#x8FDE;&#x63A5;&#x6982;&#x89C8;</span></div><div class="line"><span class="function"><span class="title">trafficAndConnectionOverview</span></span>(){</div><div class="line">    <span class="keyword">if</span> ! <span class="built_in">which</span> tcpdump &gt; /dev/null;<span class="keyword">then</span></div><div class="line">        <span class="built_in">echo</span> <span class="string">&quot;tcpdump not found,going to install it.&quot;</span></div><div class="line">        <span class="keyword">if</span> check_package_manager apt;<span class="keyword">then</span></div><div class="line">            apt-get -y install tcpdump</div><div class="line">        <span class="keyword">elif</span> check_package_manager yum;<span class="keyword">then</span></div><div class="line">            yum -y install tcpdump</div><div class="line">        <span class="keyword">fi</span></div><div class="line">    <span class="keyword">fi</span></div><div class="line"> </div><div class="line">    <span class="built_in">local</span> reg=<span class="string">&quot;&quot;</span></div><div class="line">    <span class="built_in">local</span> eth=<span class="string">&quot;&quot;</span></div><div class="line">    <span class="built_in">local</span> nic_arr=(`ifconfig | grep -E -o <span class="string">&quot;^[a-z0-9]+&quot;</span> | grep -v <span class="string">&quot;lo&quot;</span> | uniq`)</div><div class="line">    <span class="built_in">local</span> nicLen=<span class="variable">${#nic_arr[@]}</span></div><div class="line">    <span class="keyword">if</span> [[ <span class="variable">$nicLen</span> <span class="_">-eq</span> 0 ]]; <span class="keyword">then</span></div><div class="line">        <span class="built_in">echo</span> <span class="string">&quot;sorry,I can not detect any network device,please report this issue to author.&quot;</span></div><div class="line">        <span class="built_in">exit</span> 1</div><div class="line">    <span class="keyword">elif</span> [[ <span class="variable">$nicLen</span> <span class="_">-eq</span> 1 ]]; <span class="keyword">then</span></div><div class="line">        eth=<span class="variable">$nic_arr</span></div><div class="line">    <span class="keyword">else</span></div><div class="line">        display_menu nic</div><div class="line">        eth=<span class="variable">$nic</span></div><div class="line">    <span class="keyword">fi</span></div><div class="line"> </div><div class="line">    <span class="built_in">echo</span> <span class="string">&quot;please wait for 10s to generate network data...&quot;</span></div><div class="line">    <span class="built_in">echo</span></div><div class="line">    <span class="comment">#&#x5F53;&#x524D;&#x6D41;&#x91CF;&#x503C;</span></div><div class="line">    <span class="built_in">local</span> traffic_be=(`awk -v eth=<span class="variable">$eth</span> -F<span class="string">&apos;[: ]+&apos;</span> <span class="string">&apos;{if ($0 ~eth){print $3,$11}}&apos;</span> /proc/net/dev`)</div><div class="line">    <span class="comment">#tcpdump&#x76D1;&#x542C;&#x7F51;&#x7EDC;</span></div><div class="line">    tcpdump -v -i <span class="variable">$eth</span> -tnn &gt; /tmp/tcpdump_temp 2&gt;&amp;1 &amp;</div><div class="line">    sleep 10</div><div class="line">    clear</div><div class="line">    <span class="built_in">kill</span> `ps aux | grep tcpdump | grep -v grep | awk <span class="string">&apos;{print $2}&apos;</span>`</div><div class="line"></div><div class="line">    <span class="comment">#10s&#x540E;&#x6D41;&#x91CF;&#x503C;</span></div><div class="line">    <span class="built_in">local</span> traffic_af=(`awk -v eth=<span class="variable">$eth</span> -F<span class="string">&apos;[: ]+&apos;</span> <span class="string">&apos;{if ($0 ~eth){print $3,$11}}&apos;</span> /proc/net/dev`)</div><div class="line">    <span class="comment">#&#x6253;&#x5370;10s&#x5E73;&#x5747;&#x901F;&#x7387;</span></div><div class="line">    <span class="built_in">local</span> eth_<span class="keyword">in</span>=$(( (<span class="variable">${traffic_af[0]}</span>-<span class="variable">${traffic_be[0]}</span>)*8/10 ))</div><div class="line">    <span class="built_in">local</span> eth_out=$(( (<span class="variable">${traffic_af[1]}</span>-<span class="variable">${traffic_be[1]}</span>)*8/10 ))</div><div class="line">    <span class="built_in">echo</span> <span class="_">-e</span> <span class="string">&quot;\033[32mnetwork device <span class="variable">$eth</span> average traffic in 10s: \033[0m&quot;</span></div><div class="line">    <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$eth</span> Receive: <span class="variable">$(bit_to_human_readable $eth_in)</span>/s&quot;</span></div><div class="line">    <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$eth</span> Transmit: <span class="variable">$(bit_to_human_readable $eth_out)</span>/s&quot;</span></div><div class="line">    <span class="built_in">echo</span></div><div class="line"></div><div class="line">    <span class="built_in">local</span> regTcpdump=$(ifconfig | grep -A 1 <span class="variable">$eth</span> | awk -F<span class="string">&apos;[: ]+&apos;</span> <span class="string">&apos;$0~/inet addr:/{printf $4&quot;|&quot;}&apos;</span> | sed <span class="_">-e</span> <span class="string">&apos;s/|$//&apos;</span> <span class="_">-e</span> <span class="string">&apos;s/^/(/&apos;</span> <span class="_">-e</span> <span class="string">&apos;s/$/)\\\\\.[0-9]+:/&apos;</span>)</div><div class="line">  </div><div class="line">    <span class="comment">#&#x65B0;&#x65E7;&#x7248;&#x672C;tcpdump&#x8F93;&#x51FA;&#x683C;&#x5F0F;&#x4E0D;&#x4E00;&#x6837;,&#x5206;&#x522B;&#x5904;&#x7406;</span></div><div class="line">    <span class="keyword">if</span> awk <span class="string">&apos;/^IP/{print;exit}&apos;</span> /tmp/tcpdump_temp | grep -q <span class="string">&quot;)$&quot;</span>;<span class="keyword">then</span></div><div class="line">        <span class="comment">#&#x5904;&#x7406;tcpdump&#x6587;&#x4EF6;</span></div><div class="line">        awk <span class="string">&apos;/^IP/{print;getline;print}&apos;</span> /tmp/tcpdump_temp &gt; /tmp/tcpdump_temp2</div><div class="line">    <span class="keyword">else</span></div><div class="line">        <span class="comment">#&#x5904;&#x7406;tcpdump&#x6587;&#x4EF6;</span></div><div class="line">        awk <span class="string">&apos;/^IP/{print}&apos;</span> /tmp/tcpdump_temp &gt; /tmp/tcpdump_temp2</div><div class="line">        sed -i -r <span class="string">&apos;s#(.*: [0-9]+\))(.*)#\1\n    \2#&apos;</span> /tmp/tcpdump_temp2</div><div class="line">    <span class="keyword">fi</span></div><div class="line">    </div><div class="line">    awk <span class="string">&apos;{len=$NF;sub(/\)/,&quot;&quot;,len);getline;print $0,len}&apos;</span> /tmp/tcpdump_temp2 &gt; /tmp/tcpdump</div><div class="line"></div><div class="line">    <span class="comment">#&#x7EDF;&#x8BA1;&#x6BCF;&#x4E2A;&#x7AEF;&#x53E3;&#x5728;10s&#x5185;&#x7684;&#x5E73;&#x5747;&#x6D41;&#x91CF;</span></div><div class="line">    <span class="built_in">echo</span> <span class="_">-e</span> <span class="string">&quot;\033[32maverage traffic in 10s base on server port: \033[0m&quot;</span></div><div class="line">    awk -F<span class="string">&apos;[ .:]+&apos;</span> -v regTcpdump=<span class="variable">$regTcpdump</span> <span class="string">&apos;{if ($0 ~ regTcpdump){line=&quot;clients &gt; &quot;$8&quot;.&quot;$9&quot;.&quot;$10&quot;.&quot;$11&quot;:&quot;$12}else{line=$2&quot;.&quot;$3&quot;.&quot;$4&quot;.&quot;$5&quot;:&quot;$6&quot; &gt; clients&quot;};sum[line]+=$NF*8/10}END{for (line in sum){printf &quot;%s %d\n&quot;,line,sum[line]}}&apos;</span> /tmp/tcpdump | \</div><div class="line">    sort -k 4 -nr | head -n 10 | <span class="keyword">while</span> <span class="built_in">read</span> a b c d;<span class="keyword">do</span></div><div class="line">        <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$a</span> <span class="variable">$b</span> <span class="variable">$c</span> <span class="variable">$(bit_to_human_readable $d)</span>/s&quot;</span></div><div class="line">    <span class="keyword">done</span></div><div class="line">    <span class="built_in">echo</span> <span class="_">-ne</span> <span class="string">&quot;\033[11A&quot;</span></div><div class="line">    <span class="built_in">echo</span> <span class="_">-ne</span> <span class="string">&quot;\033[50C&quot;</span></div><div class="line">    <span class="built_in">echo</span> <span class="_">-e</span> <span class="string">&quot;\033[32maverage traffic in 10s base on client port: \033[0m&quot;</span></div><div class="line">    awk -F<span class="string">&apos;[ .:]+&apos;</span> -v regTcpdump=<span class="variable">$regTcpdump</span> <span class="string">&apos;{if ($0 ~ regTcpdump){line=$2&quot;.&quot;$3&quot;.&quot;$4&quot;.&quot;$5&quot;:&quot;$6&quot; &gt; server&quot;}else{line=&quot;server &gt; &quot;$8&quot;.&quot;$9&quot;.&quot;$10&quot;.&quot;$11&quot;:&quot;$12};sum[line]+=$NF*8/10}END{for (line in sum){printf &quot;%s %d\n&quot;,line,sum[line]}}&apos;</span> /tmp/tcpdump | \</div><div class="line">    sort -k 4 -nr | head -n 10 | <span class="keyword">while</span> <span class="built_in">read</span> a b c d;<span class="keyword">do</span></div><div class="line">            <span class="built_in">echo</span> <span class="_">-ne</span> <span class="string">&quot;\033[50C&quot;</span></div><div class="line">            <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$a</span> <span class="variable">$b</span> <span class="variable">$c</span> <span class="variable">$(bit_to_human_readable $d)</span>/s&quot;</span></div><div class="line">    <span class="keyword">done</span>   </div><div class="line">        </div><div class="line">    <span class="built_in">echo</span></div><div class="line"></div><div class="line">    <span class="comment">#&#x7EDF;&#x8BA1;&#x5728;10s&#x5185;&#x5360;&#x7528;&#x5E26;&#x5BBD;&#x6700;&#x5927;&#x7684;&#x524D;10&#x4E2A;ip</span></div><div class="line">    <span class="built_in">echo</span> <span class="_">-e</span> <span class="string">&quot;\033[32mtop 10 ip average traffic in 10s base on server: \033[0m&quot;</span></div><div class="line">    awk -F<span class="string">&apos;[ .:]+&apos;</span> -v regTcpdump=<span class="variable">$regTcpdump</span> <span class="string">&apos;{if ($0 ~ regTcpdump){line=$2&quot;.&quot;$3&quot;.&quot;$4&quot;.&quot;$5&quot; &gt; &quot;$8&quot;.&quot;$9&quot;.&quot;$10&quot;.&quot;$11&quot;:&quot;$12}else{line=$2&quot;.&quot;$3&quot;.&quot;$4&quot;.&quot;$5&quot;:&quot;$6&quot; &gt; &quot;$8&quot;.&quot;$9&quot;.&quot;$10&quot;.&quot;$11};sum[line]+=$NF*8/10}END{for (line in sum){printf &quot;%s %d\n&quot;,line,sum[line]}}&apos;</span> /tmp/tcpdump | \</div><div class="line">    sort -k 4 -nr | head -n 10 | <span class="keyword">while</span> <span class="built_in">read</span> a b c d;<span class="keyword">do</span></div><div class="line">        <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$a</span> <span class="variable">$b</span> <span class="variable">$c</span> <span class="variable">$(bit_to_human_readable $d)</span>/s&quot;</span></div><div class="line">    <span class="keyword">done</span></div><div class="line">    <span class="built_in">echo</span> <span class="_">-ne</span> <span class="string">&quot;\033[11A&quot;</span></div><div class="line">    <span class="built_in">echo</span> <span class="_">-ne</span> <span class="string">&quot;\033[50C&quot;</span></div><div class="line">    <span class="built_in">echo</span> <span class="_">-e</span> <span class="string">&quot;\033[32mtop 10 ip average traffic in 10s base on client: \033[0m&quot;</span></div><div class="line">    awk -F<span class="string">&apos;[ .:]+&apos;</span> -v regTcpdump=<span class="variable">$regTcpdump</span> <span class="string">&apos;{if ($0 ~ regTcpdump){line=$2&quot;.&quot;$3&quot;.&quot;$4&quot;.&quot;$5&quot;:&quot;$6&quot; &gt; &quot;$8&quot;.&quot;$9&quot;.&quot;$10&quot;.&quot;$11}else{line=$2&quot;.&quot;$3&quot;.&quot;$4&quot;.&quot;$5&quot; &gt; &quot;$8&quot;.&quot;$9&quot;.&quot;$10&quot;.&quot;$11&quot;:&quot;$12};sum[line]+=$NF*8/10}END{for (line in sum){printf &quot;%s %d\n&quot;,line,sum[line]}}&apos;</span> /tmp/tcpdump | \</div><div class="line">    sort -k 4 -nr | head -n 10 | <span class="keyword">while</span> <span class="built_in">read</span> a b c d;<span class="keyword">do</span></div><div class="line">        <span class="built_in">echo</span> <span class="_">-ne</span> <span class="string">&quot;\033[50C&quot;</span></div><div class="line">        <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$a</span> <span class="variable">$b</span> <span class="variable">$c</span> <span class="variable">$(bit_to_human_readable $d)</span>/s&quot;</span></div><div class="line">    <span class="keyword">done</span> </div><div class="line"></div><div class="line">    <span class="built_in">echo</span></div><div class="line">    <span class="comment">#&#x7EDF;&#x8BA1;&#x8FDE;&#x63A5;&#x72B6;&#x6001;</span></div><div class="line">    <span class="built_in">local</span> regSS=$(ifconfig | grep -A 1 <span class="variable">$eth</span> | awk -F<span class="string">&apos;[: ]+&apos;</span> <span class="string">&apos;$0~/inet addr:/{printf $4&quot;|&quot;}&apos;</span> | sed <span class="_">-e</span> <span class="string">&apos;s/|$//&apos;</span>)</div><div class="line">    ss -an | grep -v -E <span class="string">&quot;LISTEN|UNCONN&quot;</span> | grep -E <span class="string">&quot;<span class="variable">$regSS</span>&quot;</span> &gt; /tmp/ss</div><div class="line">    <span class="built_in">echo</span> <span class="_">-e</span> <span class="string">&quot;\033[32mconnection state count: \033[0m&quot;</span></div><div class="line">    awk <span class="string">&apos;NR&gt;1{sum[$(NF-4)]+=1}END{for (state in sum){print state,sum[state]}}&apos;</span> /tmp/ss | sort -k 2 -nr</div><div class="line">    <span class="built_in">echo</span></div><div class="line">    <span class="comment">#&#x7EDF;&#x8BA1;&#x5404;&#x7AEF;&#x53E3;&#x8FDE;&#x63A5;&#x72B6;&#x6001;</span></div><div class="line">    <span class="built_in">echo</span> <span class="_">-e</span> <span class="string">&quot;\033[32mconnection state count by port base on server: \033[0m&quot;</span></div><div class="line">    awk <span class="string">&apos;NR&gt;1{sum[$(NF-4),$(NF-1)]+=1}END{for (key in sum){split(key,subkey,SUBSEP);print subkey[1],subkey[2],sum[subkey[1],subkey[2]]}}&apos;</span> /tmp/ss | sort -k 3 -nr | head -n 10   </div><div class="line">    <span class="built_in">echo</span> <span class="_">-ne</span> <span class="string">&quot;\033[11A&quot;</span></div><div class="line">    <span class="built_in">echo</span> <span class="_">-ne</span> <span class="string">&quot;\033[50C&quot;</span></div><div class="line">    <span class="built_in">echo</span> <span class="_">-e</span> <span class="string">&quot;\033[32mconnection state count by port base on client: \033[0m&quot;</span></div><div class="line">    awk <span class="string">&apos;NR&gt;1{sum[$(NF-4),$(NF)]+=1}END{for (key in sum){split(key,subkey,SUBSEP);print subkey[1],subkey[2],sum[subkey[1],subkey[2]]}}&apos;</span> /tmp/ss | sort -k 3 -nr | head -n 10 | awk <span class="string">&apos;{print &quot;\033[50C&quot;$0}&apos;</span>   </div><div class="line">    <span class="built_in">echo</span>   </div><div class="line">    <span class="comment">#&#x7EDF;&#x8BA1;&#x7AEF;&#x53E3;&#x4E3A;80&#x4E14;&#x72B6;&#x6001;&#x4E3A;ESTAB&#x8FDE;&#x63A5;&#x6570;&#x6700;&#x591A;&#x7684;&#x524D;10&#x4E2A;IP</span></div><div class="line">    <span class="built_in">echo</span> <span class="_">-e</span> <span class="string">&quot;\033[32mtop 10 ip ESTAB state count at port 80: \033[0m&quot;</span></div><div class="line">    cat /tmp/ss | grep ESTAB | awk -F<span class="string">&apos;[: ]+&apos;</span> <span class="string">&apos;{sum[$(NF-2)]+=1}END{for (ip in sum){print ip,sum[ip]}}&apos;</span> | sort -k 2 -nr | head -n 10</div><div class="line">    <span class="built_in">echo</span></div><div class="line">    <span class="comment">#&#x7EDF;&#x8BA1;&#x7AEF;&#x53E3;&#x4E3A;80&#x4E14;&#x72B6;&#x6001;&#x4E3A;SYN-RECV&#x8FDE;&#x63A5;&#x6570;&#x6700;&#x591A;&#x7684;&#x524D;10&#x4E2A;IP</span></div><div class="line">    <span class="built_in">echo</span> <span class="_">-e</span> <span class="string">&quot;\033[32mtop 10 ip SYN-RECV state count at port 80: \033[0m&quot;</span></div><div class="line">    cat /tmp/ss | grep -E <span class="string">&quot;<span class="variable">$regSS</span>&quot;</span> | grep SYN-RECV | awk -F<span class="string">&apos;[: ]+&apos;</span> <span class="string">&apos;{sum[$(NF-2)]+=1}END{for (ip in sum){print ip,sum[ip]}}&apos;</span> | sort -k 2 -nr | head -n 10</div><div class="line">}</div><div class="line"> </div><div class="line"><span class="function"><span class="title">main</span></span>(){</div><div class="line">    <span class="keyword">while</span> <span class="literal">true</span>; <span class="keyword">do</span></div><div class="line">        <span class="built_in">echo</span> <span class="_">-e</span> <span class="string">&quot;1) real time traffic.\n2) traffic and connection overview.\n&quot;</span></div><div class="line">        <span class="built_in">read</span> -p <span class="string">&quot;please input your select(ie 1): &quot;</span> select</div><div class="line">        <span class="keyword">case</span>  <span class="variable">$select</span> <span class="keyword">in</span></div><div class="line">            1) realTimeTraffic;<span class="built_in">break</span>;;</div><div class="line">            2) trafficAndConnectionOverview;<span class="built_in">break</span>;;</div><div class="line">            *) <span class="built_in">echo</span> <span class="string">&quot;input error,please input a number.&quot;</span>;;</div><div class="line">        <span class="keyword">esac</span></div><div class="line">    <span class="keyword">done</span>   </div><div class="line">}</div><div class="line"> </div><div class="line">main</div></pre></td></tr></table></figure><p></p>
+
+      
+    </div>
+
+	<div>
+      
+        
+      
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/shell/" rel="tag"><i class="fa fa-tag"></i> shell</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/36633/" rel="next" title="科学上网工具shadowsocks">
+                <i class="fa fa-chevron-left"></i> 科学上网工具shadowsocks
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/4789/" rel="prev" title="DNS解析原理">
+                DNS解析原理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ5NS82MDYz"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/linux5.gif"
+               alt="火柴" />
+          <p class="site-author-name" itemprop="name">火柴</p>
+           
+              <p class="site-description motion-element" itemprop="description">对自己要求高一点！！！</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+			﻿<a title="点击high一下哦^_^" rel="alternate" class="mw-harlem_shake_slow wobble shake" href='javascript:(function() {
+    function c() {
+        var e = document.createElement("link");
+        e.setAttribute("type", "text/css");
+        e.setAttribute("rel", "stylesheet");
+        e.setAttribute("href", f);
+        e.setAttribute("class", l);
+        document.body.appendChild(e)
+    }
+ 
+    function h() {
+        var e = document.getElementsByClassName(l);
+        for (var t = 0; t < e.length; t++) {
+            document.body.removeChild(e[t])
+        }
+    }
+ 
+    function p() {
+        var e = document.createElement("div");
+        e.setAttribute("class", a);
+        document.body.appendChild(e);
+        setTimeout(function() {
+            document.body.removeChild(e)
+        }, 100)
+    }
+ 
+    function d(e) {
+        return {
+            height : e.offsetHeight,
+            width : e.offsetWidth
+        }
+    }
+ 
+    function v(i) {
+        var s = d(i);
+        return s.height > e && s.height < n && s.width > t && s.width < r
+    }
+ 
+    function m(e) {
+        var t = e;
+        var n = 0;
+        while (!!t) {
+            n += t.offsetTop;
+            t = t.offsetParent
+        }
+        return n
+    }
+ 
+    function g() {
+        var e = document.documentElement;
+        if (!!window.innerWidth) {
+            return window.innerHeight
+        } else if (e && !isNaN(e.clientHeight)) {
+            return e.clientHeight
+        }
+        return 0
+    }
+ 
+    function y() {
+        if (window.pageYOffset) {
+            return window.pageYOffset
+        }
+        return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+    }
+ 
+    function E(e) {
+        var t = m(e);
+        return t >= w && t <= b + w
+    }
+ 
+    function S() {
+        var e = document.createElement("audio");
+        e.setAttribute("class", l);
+        e.src = i;
+        e.loop = false;
+        e.addEventListener("canplay", function() {
+            setTimeout(function() {
+                x(k)
+            }, 500);
+            setTimeout(function() {
+                N();
+                p();
+                for (var e = 0; e < O.length; e++) {
+                    T(O[e])
+                }
+            }, 15500)
+        }, true);
+        e.addEventListener("ended", function() {
+            N();
+            h()
+        }, true);
+        e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+        document.body.appendChild(e);
+        e.play()
+    }
+ 
+    function x(e) {
+        e.className += " " + s + " " + o
+    }
+ 
+    function T(e) {
+        e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+    }
+ 
+    function N() {
+        var e = document.getElementsByClassName(s);
+        var t = new RegExp("\\b" + s + "\\b");
+        for (var n = 0; n < e.length; ) {
+            e[n].className = e[n].className.replace(t, "")
+        }
+    }
+ 
+    var e = 30;
+    var t = 30;
+    var n = 350;
+    var r = 350;
+    var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+    var s = "mw-harlem_shake_me";
+    var o = "im_first";
+    var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+    var a = "mw-strobe_light";
+    var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+    var l = "mw_added_css";
+    var b = g();
+    var w = y();
+    var C = document.getElementsByTagName("*");
+    var k = null;
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            if (E(A)) {
+                k = A;
+                break
+            }
+        }
+    }
+    if (A === null) {
+        console.warn("Could not find a node of the right size. Please try a different page.");
+        return
+    }
+    c();
+    S();
+    var O = [];
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            O.push(A)
+        }
+    }
+})()'><i class="fa fa-music"></i> High</a>
+          </div>
+        
+		
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://wpa.qq.com/msgrd?V=1&uin=396303331&exe=qq&Site=qq&menu=yes" target="_blank" title="QQ">
+                  
+                    <i class="fa fa-fw fa-qq"></i>
+                  
+                  QQ
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:18201620971@163.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.chen-hao.com.cn/cywz" target="_blank" title="常用网站">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  常用网站
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.fblinux.com/" title="师兄-王君康" target="_blank">师兄-王君康</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.sctux.com/" title="师兄-郭茂秋" target="_blank">师兄-郭茂秋</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://linsj.blog.51cto.com/" title="同学-林水晶" target="_blank">同学-林水晶</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://mrchen.org/" title="同学-陈晨" target="_blank">同学-陈晨</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.systemd.cn/" title="同学-郎耀亮" target="_blank">同学-郎耀亮</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://zantony.top/" title="同学-赵鑫" target="_blank">同学-赵鑫</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://blog.whsir.com/" title="师弟-吴昊" target="_blank">师弟-吴昊</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.yuangg.com/" title="师弟-洋洋" target="_blank">师弟-洋洋</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+		
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#此脚本包含的功能有"><span class="nav-number">1.</span> <span class="nav-text">此脚本包含的功能有：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用到的网络分析工具"><span class="nav-number">2.</span> <span class="nav-text">用到的网络分析工具：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下面贴出完整代码"><span class="nav-number">3.</span> <span class="nav-text">下面贴出完整代码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">火柴</span>
+</div>
+
+<div class="theme-info">
+	<span id="sitetime"></span>
+	<script language=javascript>
+	function siteTime(){
+	window.setTimeout("siteTime()", 1000);
+	var seconds = 1000
+	var minutes = seconds * 60
+	var hours = minutes * 60
+	var days = hours * 24
+	var years = days * 365
+
+	var today = new Date()
+	var todayYear = today.getFullYear()
+	var todayMonth = today.getMonth()
+	var todayDate = today.getDate()
+	var todayHour = today.getHours()
+	var todayMinute = today.getMinutes()
+	var todaySecond = today.getSeconds()
+
+	/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳) 
+	year - 作为date对象的年份，为4位年份值
+	month - 0-11之间的整数，做为date对象的月份
+	day - 1-31之间的整数，做为date对象的天数
+	hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+	minutes - 0-59之间的整数，做为date对象的分钟数
+	seconds - 0-59之间的整数，做为date对象的秒数
+	microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+	var t1 = Date.UTC(2015,10,14,11,19,00)
+	var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond)
+	var diff = t2-t1
+
+	var diffYears = Math.floor(diff/years)
+	var diffDays = Math.floor((diff/days)-diffYears*365)
+	var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours)
+	var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes)
+	var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds)
+	document.getElementById("sitetime").innerHTML=" 本站已运行"+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒"
+	}
+	siteTime()
+	</script>
+	
+  <div class="powered-by"></div>
+  <span class="post-count">共83.4k字</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      您是第<i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      位访客
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总点击<i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("v8vPyVyJeoQ3FYzKp3y9KLMu-gzGzoHsz", "a0WXjkqByOHUcay9EHiwNkan");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+  
+
+
+  
+
+ 
+<!-- 点击爱心效果 -->
+<script src="/js/love.js"></script>
+<!-- 背景动画 -->
+<!-- <script src="/js/particle2.js"></script>  -->
+
+<!--崩溃欺骗-->
+<!-- <script src="/js/qipian.js"></script> -->
+
+<script type="text/javascript" src="/lib/zclip/clipboard.min.js"></script>	
+<script type="text/javascript" src="/js/src/custom.js"></script>
+  
+</body>
+</html>

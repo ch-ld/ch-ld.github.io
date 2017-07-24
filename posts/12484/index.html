@@ -1,0 +1,1484 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="日志切割," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="火柴的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="logrotate 是一个日志管理程序，用来把旧的日志文件删除（备份），并创建新的日志文件，这个过程称为”转储”。我们可以根据日志的大小，或者根据其使用的天数来转储。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用logrotate服务切割日志">
+<meta property="og:url" content="http://www.chen-hao.com.cn/posts/12484/index.html">
+<meta property="og:site_name" content="火柴的博客">
+<meta property="og:description" content="logrotate 是一个日志管理程序，用来把旧的日志文件删除（备份），并创建新的日志文件，这个过程称为”转储”。我们可以根据日志的大小，或者根据其使用的天数来转储。">
+<meta property="og:updated_time" content="2017-07-20T09:05:22.397Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用logrotate服务切割日志">
+<meta name="twitter:description" content="logrotate 是一个日志管理程序，用来把旧的日志文件删除（备份），并创建新的日志文件，这个过程称为”转储”。我们可以根据日志的大小，或者根据其使用的天数来转储。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":true},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #000000; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #000000, 0 0 5px     #000000; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #000000;    /*上边框颜色*/
+        border-left-color: #000000;    /*左边框颜色*/
+    }
+  </style>
+
+  <script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('你可能输入了假的密码！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+
+  <link rel="canonical" href="http://www.chen-hao.com.cn/posts/12484/"/>
+
+
+
+
+
+  <title> 利用logrotate服务切割日志 | 火柴的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	
+	<a href="https://github.com/ch-ld/ch-ld.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">火柴的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resume">
+          <a href="http://resume.chen-hao.com.cn" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-send"></i> <br />
+            
+            简历
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-love">
+          <a href="https://love.chen-hao.com.cn/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            纪念日
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.chen-hao.com.cn/posts/12484/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="火柴">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/linux5.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火柴的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                利用logrotate服务切割日志
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-02T14:10:44+08:00">
+                2016-12-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/工具/" itemprop="url" rel="index">
+                    <span itemprop="name">工具</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/posts/12484/" class="leancloud_visitors" data-flag-title="利用logrotate服务切割日志">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p><code>logrotate</code> &#x662F;&#x4E00;&#x4E2A;&#x65E5;&#x5FD7;&#x7BA1;&#x7406;&#x7A0B;&#x5E8F;&#xFF0C;&#x7528;&#x6765;&#x628A;&#x65E7;&#x7684;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x5220;&#x9664;&#xFF08;&#x5907;&#x4EFD;&#xFF09;&#xFF0C;&#x5E76;&#x521B;&#x5EFA;&#x65B0;&#x7684;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#xFF0C;&#x8FD9;&#x4E2A;&#x8FC7;&#x7A0B;&#x79F0;&#x4E3A;&#x201D;&#x8F6C;&#x50A8;&#x201D;&#x3002;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x6839;&#x636E;&#x65E5;&#x5FD7;&#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x6216;&#x8005;&#x6839;&#x636E;&#x5176;&#x4F7F;&#x7528;&#x7684;&#x5929;&#x6570;&#x6765;&#x8F6C;&#x50A8;&#x3002;<br> <a id="more"></a></p>
+</blockquote>
+<p></p><h3 id="&#x542F;&#x52A8;&#x65B9;&#x5F0F;">&#x542F;&#x52A8;&#x65B9;&#x5F0F;</h3><br>logrotate &#x7684;&#x6267;&#x884C;&#x7531;crond&#x670D;&#x52A1;&#x5B9E;&#x73B0;&#x3002;&#x5728; <code>/etc/cron.daily</code> &#x76EE;&#x5F55;&#x4E2D;&#xFF0C;&#x6709;&#x4E2A;&#x6587;&#x4EF6;logrotate&#xFF0C;&#x5B83;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x4E2A;shell script&#xFF0C;&#x7528;&#x6765;&#x542F;&#x52A8;logrotate&#x3002;logrotate&#x7A0B;&#x5E8F;&#x6BCF;&#x5929;&#x7531;cron&#x5728;&#x6307;&#x5B9A;&#x7684;&#x65F6;&#x95F4; <code>&#xFF08;/etc/crontab&#xFF09;</code> &#x542F;&#x52A8;&#x3002;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># cat /etc/cron.daily/logrotate </span></div><div class="line"><span class="meta">#!/bin/sh</span></div><div class="line"></div><div class="line">/usr/sbin/logrotate /etc/logrotate.conf &gt;/dev/null 2&gt;&amp;1</div><div class="line">EXITVALUE=$?</div><div class="line"><span class="keyword">if</span> [ <span class="variable">$EXITVALUE</span> != 0 ]; <span class="keyword">then</span></div><div class="line">    /usr/bin/logger -t logrotate <span class="string">&quot;ALERT exited abnormally with [<span class="variable">$EXITVALUE</span>]&quot;</span></div><div class="line"><span class="keyword">fi</span></div><div class="line"><span class="built_in">exit</span> 0</div></pre></td></tr></table></figure><p></p>
+<p>&#x5728;&#x6267;&#x884C;logrotate&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x6307;&#x5B9A;&#x5176;&#x914D;&#x7F6E;&#x6587;&#x4EF6;/etc/logrotate.conf</p>
+<p>&#x8FD9;&#x4E2A;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x7684;&#x6CE8;&#x91CA;&#x5199;&#x5F97;&#x5F88;&#x6E05;&#x695A;&#xFF0C;&#x6CA1;&#x6709;&#x5FC5;&#x8981;&#x518D;&#x7F57;&#x55E6;&#x4E86;&#x3002;&#x53EA;&#x60F3;&#x5F3A;&#x8C03;&#x4E0B;&#x9762;&#x8FD9;&#x884C;&#xFF0C;&#x5B83;&#x7684;&#x4F5C;&#x7528;&#x5305;&#x542B;&#x5B58;&#x653E;&#x5728;/etc/logrotate.d&#x76EE;&#x5F55;&#x4E0B;&#x9762;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x4E0D;&#x53EF;&#x6216;&#x7F3A;&#x3002;&#x5982;&#x679C;&#x4F60;&#x5B89;&#x88C5;&#x4E86;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x670D;&#x52A1;&#xFF0C;&#x5B83;&#x7684;&#x65E5;&#x5FD7;&#x8F6C;&#x50A8;&#x7684;&#x89C4;&#x5219;&#x53EF;&#x4EE5;&#x5EFA;&#x7ACB;&#x4E00;&#x4E2A;&#x4E13;&#x95E8;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x653E;&#x5728;/etc/logrotate.d&#x4E0B;&#x9762;&#x3002;&#x5B83;&#x5176;&#x5B9E;&#x4E5F;&#x56E0;&#x4E3A;&#x4E0B;&#x9762;&#x7684;&#x8FD9;&#x53E5;&#x8BDD;&#xFF0C;&#x5728; logrotate&#x670D;&#x52A1;&#x542F;&#x52A8;&#x65F6;&#x88AB;&#x8BFB;&#x53D6;&#x3002;</p>
+<p>&#x6BCF;&#x4E2A;&#x5B58;&#x653E;&#x5728;/etc/logrotate.d&#x76EE;&#x5F55;&#x91CC;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x90FD;&#x6709;&#x4E0A;&#x9762;&#x683C;&#x5F0F;&#x7684;&#x914D;&#x7F6E;&#x4FE1;&#x606F;&#x3002;&#x5728;{}&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x89C4;&#x5219;&#xFF0C;&#x5982;&#x679C;&#x4E0E;logrotate.conf&#x4E2D;&#x7684;&#x51B2;&#x7A81;&#xFF0C;&#x4EE5;/etc/logrotatate.d/&#x4E2D;&#x7684;&#x6587;&#x4EF6;&#x5B9A;&#x4E49;&#x7684;&#x4E3A;&#x51C6;&#x3002;</p>
+<p></p><h3 id="&#x53C2;&#x6570;&#x8BF4;&#x660E;">&#x53C2;&#x6570;&#x8BF4;&#x660E;</h3><br>&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x5339;&#x914D;&#x89C4;&#x5219;&#x4E2D;&#xFF0C;&#x4E0D;&#x8981;&#x4F7F;&#x7528;/var/log/news/<em>&#xFF0C;&#x8FD9;&#x4F1A;&#x5339;&#x914D;&#x5DF2;&#x7ECF;&#x5207;&#x6362;&#x8FC7;&#x7684;&#x65E5;&#x5FD7;&#xFF0C;&#x5E94;&#x4F7F;&#x7528;/var/log/news/</em>.log<p></p>
+<table>
+<thead>
+<tr>
+<th>&#x9009;&#x9879;</th>
+<th>&#x7528;&#x9014;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nocompress/compress</td>
+<td>&#x4E0D;&#x538B;&#x7F29;/&#x538B;&#x7F29;</td>
+</tr>
+<tr>
+<td>delaycompress</td>
+<td>&#x4E0D;&#x538B;&#x7F29;&#x524D;&#x4E00;&#x4E2A;&#x622A;&#x65AD;&#x7684;&#x6587;&#x4EF6;&#xFF08;&#x9700;&#x8981;&#x4E0E;compress&#x4E00;&#x8D77;&#x7528;&#xFF09;</td>
+</tr>
+<tr>
+<td>daily/weekly/monthly</td>
+<td>&#x6BCF;&#x5929;/&#x5468;/&#x6708;&#x8F6E;&#x8F6C;&#x4E00;&#x6B21;</td>
+</tr>
+<tr>
+<td>copytruncate</td>
+<td>&#x6E05;&#x7A7A;&#x539F;&#x6709;&#x6587;&#x4EF6;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x65B0;&#x6587;&#x4EF6;</td>
+</tr>
+<tr>
+<td>create 0644 root utmp</td>
+<td>&#x65B0;&#x5EFA;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#xFF0C;&#x6743;&#x9650;&#x3001;&#x5C5E;&#x4E3B;&#x3001;&#x7EC4;</td>
+</tr>
+<tr>
+<td>ifempty</td>
+<td>&#x5373;&#x4F7F;&#x7528;&#x7A7A;&#x6587;&#x4EF6;&#x4E5F;&#x8F6C;&#x50A8;</td>
+</tr>
+<tr>
+<td>notifempty</td>
+<td>&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x4E3A;&#x7A7A;&#x4E0D;&#x8FDB;&#x884C;&#x8F6C;&#x50A8;</td>
+</tr>
+<tr>
+<td>olddir <dir></dir></td>
+<td>&#x8F6C;&#x50A8;&#x540E;&#x7684;&#x65E5;&#x5FD7;&#x5B58;&#x653E;&#x76EE;&#x5F55;&#xFF0C;&#x5FC5;&#x987B;&#x548C;&#x5F53;&#x524D;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x5728;&#x540C;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;</td>
+</tr>
+<tr>
+<td>rotate 5</td>
+<td>&#x4FDD;&#x7559;&#x6700;&#x8FD1;&#x7684;5&#x4E2A;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;</td>
+</tr>
+<tr>
+<td>minisize 1M</td>
+<td>&#x5FC5;&#x987B;&#x5927;&#x4E8E;1MB&#x624D;&#x4F1A;&#x8F6C;&#x50A8;</td>
+</tr>
+<tr>
+<td>size 50M</td>
+<td>&#x8D85;&#x8FC7;50MB&#x540E;&#x8F6E;&#x8F6C;&#x65E5;&#x5FD7;</td>
+</tr>
+<tr>
+<td>mail www@my.org</td>
+<td>&#x8F6E;&#x6362;&#x540E;&#x7684;&#x628A;&#x65E5;&#x5FD7;&#x53D1;&#x7ED9;&#x90AE;&#x7BB1;</td>
+</tr>
+<tr>
+<td>missingok</td>
+<td>&#x5982;&#x679C;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x4E0D;&#x5B58;&#x5728;&#xFF0C;&#x4E0D;&#x62A5;&#x9519;</td>
+</tr>
+<tr>
+<td>prerotate,endscript</td>
+<td>&#x5728;logrotate&#x4E4B;&#x524D;&#x6267;&#x884C;&#x7684;&#x547D;&#x4EE4;</td>
+</tr>
+<tr>
+<td>postrotate,endscript</td>
+<td>&#x5728;logrotate&#x4E4B;&#x540E;&#x6267;&#x884C;&#x7684;&#x547D;&#x4EE4;</td>
+</tr>
+<tr>
+<td>sharedscripts</td>
+<td>&#x5171;&#x4EAB;&#x811A;&#x672C;&#xFF0C;&#x8868;&#x793A;&#x5207;&#x6362;&#x65F6;&#x53EA;&#x6267;&#x884C;&#x4E00;&#x6B21;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td>dateext</td>
+<td>&#x589E;&#x52A0;&#x65E5;&#x671F;&#x4F5C;&#x4E3A;&#x540E;&#x7F00;&#xFF0C;&#x4E0D;&#x7136;&#x4F1A;&#x662F;&#x4E00;&#x4E32;&#x65E0;&#x610F;&#x4E49;&#x7684;&#x6570;&#x5B57;</td>
+</tr>
+<tr>
+<td>dateformat .%s</td>
+<td>&#x5207;&#x6362;&#x540E;&#x6587;&#x4EF6;&#x540D;&#xFF0C;&#x5FC5;&#x987B;&#x914D;&#x5408;dateext&#x4F7F;&#x7528;</td>
+</tr>
+</tbody>
+</table>
+<p></p><h4 id="logrotateconf&#x8303;&#x4F8B;">logrotate.conf&#x8303;&#x4F8B;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># sample logrotate configuration file</span></div><div class="line">compress     <span class="comment"># &#x5168;&#x5C40;&#x8BBE;&#x7F6E;, &#x538B;&#x7F29;</span></div><div class="line"> </div><div class="line">/var/<span class="built_in">log</span>/messages {</div><div class="line">    rotate 5     <span class="comment"># &#x4FDD;&#x7559;5&#x4EFD;&#x65E5;&#x5FD7;</span></div><div class="line">    weekly       <span class="comment"># &#x6BCF;&#x5468;&#x8F6E;&#x6362;&#x4E00;&#x6B21;</span></div><div class="line">    postrotate   <span class="comment"># &#x8F6E;&#x6362;&#x4E4B;&#x540E;&#x91CD;&#x542F;syslogd&#x670D;&#x52A1;</span></div><div class="line">    /usr/bin/killall -HUP syslogd</div><div class="line">    <span class="comment"># rhel6&#x4E2D;&#x4E3A;:/bin/kill -HUP `cat /var/run/syslogd.pid 2&gt; /dev/null` 2&gt; /dev/null || true</span></div><div class="line">    <span class="comment"># &#x53EF;&#x67E5;&#x770B;/etc/logrotate.d/&#x4E0B;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;</span></div><div class="line">    endscript</div><div class="line">}</div><div class="line"> </div><div class="line"><span class="string">&quot;/var/log/httpd/access.log&quot;</span> /var/<span class="built_in">log</span>/httpd/error.log {   <span class="comment">#  &#x6307;&#x5B9A;&#x591A;&#x4E2A;&#x6587;&#x4EF6;, &#x5982;&#x679C;&#x6709;&#x7279;&#x6B8A;&#x5B57;&#x7B26;&#x9700;&#x8981;&#x7528;&#x5355;&#x5F15;&#x53F7;</span></div><div class="line">    rotate 5</div><div class="line">    mail www@my.org</div><div class="line">    size 100k        <span class="comment"># &#x8D85;&#x8FC7;100k&#x540E;&#x5207;&#x6362;&#x65E5;&#x5FD7;, &#x5E76;&#x628A;&#x8001;&#x7684;&#x65E5;&#x5FD7;&#x53D1;&#x9001;&#x90AE;&#x4EF6;&#x7ED9;www@my.org</span></div><div class="line">    sharedscripts    <span class="comment"># &#x5171;&#x4EAB;&#x811A;&#x672C;.&#x4E0B;&#x9762;&#x7684;postrotate&#x811A;&#x672C;&#x53EA;&#x8FD0;&#x884C;&#x4E00;&#x6B21;.</span></div><div class="line">    postrotate</div><div class="line">    /usr/bin/killall -HUP httpd</div><div class="line">    endscript</div><div class="line">}</div><div class="line"> </div><div class="line">/var/<span class="built_in">log</span>/news/* {    <span class="comment"># &#x5C11;&#x7528;&#x901A;&#x914D;&#x7B26;, &#x56E0;&#x4F1A;&#x5B83;&#x4F1A;&#x5305;&#x62EC;&#x5DF2;&#x7ECF;&#x5207;&#x6362;&#x8FC7;&#x7684;&#x65E5;&#x5FD7;, &#x8981;&#x7528;&#x7684;&#x8BDD;&#x6700;&#x597D;&#x5728;*&#x53F7;&#x540E;&#x52A0;&#x4E0A;&#x6269;&#x5C55;&#x540D;, &#x5982;*.log</span></div><div class="line">    monthly</div><div class="line">    rotate 2</div><div class="line">    olddir /var/<span class="built_in">log</span>/news/old</div><div class="line">    missingok</div><div class="line">    postrotate</div><div class="line">    <span class="built_in">kill</span> -HUP <span class="string">&apos;cat /var/run/inn.pid&apos;</span></div><div class="line">    endscript</div><div class="line">    nocompress</div><div class="line">}</div><div class="line"> </div><div class="line">/var/<span class="built_in">log</span>/ipwall/messages.log {   <span class="comment">#&#x65E5;&#x5FD7;&#x8DEF;&#x5F84;&#x4E00;&#x5B9A;&#x8981;&#x548C;rsyslog&#x5B9A;&#x4E49;&#x7684;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x8DEF;&#x5F84;&#x4E00;&#x81F4;</span></div><div class="line">    rotate 65535             <span class="comment">#&#x6EDA;&#x52A8;65535&#x6B21;</span></div><div class="line">    create 0777 syslog adm   <span class="comment">#&#x8BBE;&#x7F6E;&#x6743;&#x9650;&#xFF0C;&#x65B9;&#x4FBF;windows&#x8FDE;&#x63A5;samba&#x670D;&#x52A1;&#x5668;</span></div><div class="line">    compress                 <span class="comment">#&#x91C7;&#x7528;&#x538B;&#x7F29;</span></div><div class="line">    size 50M                 <span class="comment">#&#x6587;&#x4EF6;&#x5927;&#x5C0F;50M&#x4EE5;&#x4E0A;&#x7684;&#x5206;&#x5272;&#x65E5;&#x5FD7;</span></div><div class="line">    dateext</div><div class="line">    dateformat .%s           <span class="comment">#&#x5B9A;&#x4E49;&#x6587;&#x4EF6;&#x5207;&#x5272;&#x540E;&#x7684;&#x6587;&#x4EF6;&#x540D;&#xFF0C;&#x5FC5;&#x987B;&#x914D;&#x5408;dateext&#x4F7F;&#x7528;</span></div><div class="line"> </div><div class="line">    <span class="comment">#posrotate/endscript&#x8FD9;&#x6BB5;&#x811A;&#x672C;&#x4F7F;rsyslog&#x7A0B;&#x5E8F;&#x91CD;&#x65B0;&#x8BFB;&#x53D6;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x7A0B;&#x5E8F;&#x91CA;&#x653E;&#x5BF9;messages.log&#x6587;&#x4EF6;&#x6301;&#x6709;&#x7684;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;</span></div><div class="line">    postrotate</div><div class="line">    /bin/<span class="built_in">kill</span> -HUP $(/bin/cat /var/run/rsyslogd.pid 2&gt;/dev/null) &amp;&gt;/dev/null</div><div class="line">    endscript</div><div class="line">}</div></pre></td></tr></table></figure><p></p>
+<p></p><h4 id="&#x5F3A;&#x5236;&#x8F6E;&#x8F6C;">&#x5F3A;&#x5236;&#x8F6E;&#x8F6C;</h4><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">logrotate <span class="_">-f</span> /etc/logrotate.conf     <span class="comment"># &#x2013;&#x5F3A;&#x5236;&#x8F6E;&#x8F6C;</span></div><div class="line">logrotate -vf /etc/logrotate.conf    <span class="comment"># &#x2013;&#x518D;&#x52A0;&#x4E00;&#x4E2A;-v&#x53C2;&#x6570;&#x67E5;&#x770B;&#x8F6E;&#x8F6C;&#x7684;&#x8FC7;&#x7A0B;</span></div><div class="line"> </div><div class="line">logger -t <span class="string">&apos;aaaa&apos;</span> <span class="string">&apos;bbbbbb&apos;</span>            <span class="comment">#&#x2013;&#x5728;&#x65E5;&#x5FD7;&#x91CC;&#x52A0;&#x4E00;&#x4E2A;&#x5185;&#x5BB9;tag&#x548C;&#x5185;&#x5BB9;</span></div><div class="line">tail /var/<span class="built_in">log</span>/messages</div><div class="line"><span class="comment"># Jun 12 20:34:22 kadefor aaaa: bbbbbb</span></div></pre></td></tr></table></figure><p></p>
+<p></p><h3 id="nginx&#x65E5;&#x5FD7;&#x5207;&#x5272;">Nginx&#x65E5;&#x5FD7;&#x5207;&#x5272;</h3><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">/var/<span class="built_in">log</span>/nginx/*<span class="built_in">log</span> {</div><div class="line">    daily</div><div class="line">    rotate 10</div><div class="line">    missingok</div><div class="line">    notifempty</div><div class="line">    compress</div><div class="line">    sharedscripts</div><div class="line">    su root</div><div class="line">    postrotate</div><div class="line">        /bin/<span class="built_in">kill</span> -USR1 $(cat /var/run/nginx.pid 2&gt;/dev/null) 2&gt;/dev/null || :</div><div class="line">    endscript</div><div class="line">}</div></pre></td></tr></table></figure><p></p>
+<p></p><h3 id="php&#x65E5;&#x5FD7;&#x5207;&#x5272;">PHP&#x65E5;&#x5FD7;&#x5207;&#x5272;</h3><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">/var/<span class="built_in">log</span>/php-fpm/*<span class="built_in">log</span> {</div><div class="line">    missingok</div><div class="line">    notifempty</div><div class="line">    sharedscripts</div><div class="line">    delaycompress</div><div class="line">    create 0664 www www</div><div class="line">    postrotate</div><div class="line">        /bin/<span class="built_in">kill</span> -SIGUSR1 `cat /var/run/php-fpm/php-fpm.pid 2&gt;/dev/null` 2&gt;/dev/null || <span class="literal">true</span></div><div class="line">    endscript</div><div class="line">}</div></pre></td></tr></table></figure><p></p>
+
+      
+    </div>
+
+	<div>
+      
+        
+      
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/日志切割/" rel="tag"><i class="fa fa-tag"></i> 日志切割</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/37671/" rel="next" title="Shell中set和shopt命令选项含义">
+                <i class="fa fa-chevron-left"></i> Shell中set和shopt命令选项含义
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/50722/" rel="prev" title="搭建公司wiki系统-confluence 汉化破解版">
+                搭建公司wiki系统-confluence 汉化破解版 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ5NS82MDYz"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/linux5.gif"
+               alt="火柴" />
+          <p class="site-author-name" itemprop="name">火柴</p>
+           
+              <p class="site-description motion-element" itemprop="description">对自己要求高一点！！！</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+			﻿<a title="点击high一下哦^_^" rel="alternate" class="mw-harlem_shake_slow wobble shake" href='javascript:(function() {
+    function c() {
+        var e = document.createElement("link");
+        e.setAttribute("type", "text/css");
+        e.setAttribute("rel", "stylesheet");
+        e.setAttribute("href", f);
+        e.setAttribute("class", l);
+        document.body.appendChild(e)
+    }
+ 
+    function h() {
+        var e = document.getElementsByClassName(l);
+        for (var t = 0; t < e.length; t++) {
+            document.body.removeChild(e[t])
+        }
+    }
+ 
+    function p() {
+        var e = document.createElement("div");
+        e.setAttribute("class", a);
+        document.body.appendChild(e);
+        setTimeout(function() {
+            document.body.removeChild(e)
+        }, 100)
+    }
+ 
+    function d(e) {
+        return {
+            height : e.offsetHeight,
+            width : e.offsetWidth
+        }
+    }
+ 
+    function v(i) {
+        var s = d(i);
+        return s.height > e && s.height < n && s.width > t && s.width < r
+    }
+ 
+    function m(e) {
+        var t = e;
+        var n = 0;
+        while (!!t) {
+            n += t.offsetTop;
+            t = t.offsetParent
+        }
+        return n
+    }
+ 
+    function g() {
+        var e = document.documentElement;
+        if (!!window.innerWidth) {
+            return window.innerHeight
+        } else if (e && !isNaN(e.clientHeight)) {
+            return e.clientHeight
+        }
+        return 0
+    }
+ 
+    function y() {
+        if (window.pageYOffset) {
+            return window.pageYOffset
+        }
+        return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+    }
+ 
+    function E(e) {
+        var t = m(e);
+        return t >= w && t <= b + w
+    }
+ 
+    function S() {
+        var e = document.createElement("audio");
+        e.setAttribute("class", l);
+        e.src = i;
+        e.loop = false;
+        e.addEventListener("canplay", function() {
+            setTimeout(function() {
+                x(k)
+            }, 500);
+            setTimeout(function() {
+                N();
+                p();
+                for (var e = 0; e < O.length; e++) {
+                    T(O[e])
+                }
+            }, 15500)
+        }, true);
+        e.addEventListener("ended", function() {
+            N();
+            h()
+        }, true);
+        e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+        document.body.appendChild(e);
+        e.play()
+    }
+ 
+    function x(e) {
+        e.className += " " + s + " " + o
+    }
+ 
+    function T(e) {
+        e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+    }
+ 
+    function N() {
+        var e = document.getElementsByClassName(s);
+        var t = new RegExp("\\b" + s + "\\b");
+        for (var n = 0; n < e.length; ) {
+            e[n].className = e[n].className.replace(t, "")
+        }
+    }
+ 
+    var e = 30;
+    var t = 30;
+    var n = 350;
+    var r = 350;
+    var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+    var s = "mw-harlem_shake_me";
+    var o = "im_first";
+    var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+    var a = "mw-strobe_light";
+    var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+    var l = "mw_added_css";
+    var b = g();
+    var w = y();
+    var C = document.getElementsByTagName("*");
+    var k = null;
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            if (E(A)) {
+                k = A;
+                break
+            }
+        }
+    }
+    if (A === null) {
+        console.warn("Could not find a node of the right size. Please try a different page.");
+        return
+    }
+    c();
+    S();
+    var O = [];
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            O.push(A)
+        }
+    }
+})()'><i class="fa fa-music"></i> High</a>
+          </div>
+        
+		
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://wpa.qq.com/msgrd?V=1&uin=396303331&exe=qq&Site=qq&menu=yes" target="_blank" title="QQ">
+                  
+                    <i class="fa fa-fw fa-qq"></i>
+                  
+                  QQ
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:18201620971@163.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.chen-hao.com.cn/cywz" target="_blank" title="常用网站">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  常用网站
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.fblinux.com/" title="师兄-王君康" target="_blank">师兄-王君康</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.sctux.com/" title="师兄-郭茂秋" target="_blank">师兄-郭茂秋</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://linsj.blog.51cto.com/" title="同学-林水晶" target="_blank">同学-林水晶</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://mrchen.org/" title="同学-陈晨" target="_blank">同学-陈晨</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.systemd.cn/" title="同学-郎耀亮" target="_blank">同学-郎耀亮</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://zantony.top/" title="同学-赵鑫" target="_blank">同学-赵鑫</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://blog.whsir.com/" title="师弟-吴昊" target="_blank">师弟-吴昊</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.yuangg.com/" title="师弟-洋洋" target="_blank">师弟-洋洋</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+		
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#启动方式"><span class="nav-number">1.</span> <span class="nav-text">启动方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数说明"><span class="nav-number">2.</span> <span class="nav-text">参数说明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#logrotateconf范例"><span class="nav-number">2.1.</span> <span class="nav-text">logrotate.conf范例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#强制轮转"><span class="nav-number">2.2.</span> <span class="nav-text">强制轮转</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx日志切割"><span class="nav-number">3.</span> <span class="nav-text">Nginx日志切割</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#php日志切割"><span class="nav-number">4.</span> <span class="nav-text">PHP日志切割</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">火柴</span>
+</div>
+
+<div class="theme-info">
+	<span id="sitetime"></span>
+	<script language=javascript>
+	function siteTime(){
+	window.setTimeout("siteTime()", 1000);
+	var seconds = 1000
+	var minutes = seconds * 60
+	var hours = minutes * 60
+	var days = hours * 24
+	var years = days * 365
+
+	var today = new Date()
+	var todayYear = today.getFullYear()
+	var todayMonth = today.getMonth()
+	var todayDate = today.getDate()
+	var todayHour = today.getHours()
+	var todayMinute = today.getMinutes()
+	var todaySecond = today.getSeconds()
+
+	/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳) 
+	year - 作为date对象的年份，为4位年份值
+	month - 0-11之间的整数，做为date对象的月份
+	day - 1-31之间的整数，做为date对象的天数
+	hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+	minutes - 0-59之间的整数，做为date对象的分钟数
+	seconds - 0-59之间的整数，做为date对象的秒数
+	microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+	var t1 = Date.UTC(2015,10,14,11,19,00)
+	var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond)
+	var diff = t2-t1
+
+	var diffYears = Math.floor(diff/years)
+	var diffDays = Math.floor((diff/days)-diffYears*365)
+	var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours)
+	var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes)
+	var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds)
+	document.getElementById("sitetime").innerHTML=" 本站已运行"+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒"
+	}
+	siteTime()
+	</script>
+	
+  <div class="powered-by"></div>
+  <span class="post-count">共83.4k字</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      您是第<i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      位访客
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总点击<i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("v8vPyVyJeoQ3FYzKp3y9KLMu-gzGzoHsz", "a0WXjkqByOHUcay9EHiwNkan");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+  
+
+
+  
+
+ 
+<!-- 点击爱心效果 -->
+<script src="/js/love.js"></script>
+<!-- 背景动画 -->
+<!-- <script src="/js/particle2.js"></script>  -->
+
+<!--崩溃欺骗-->
+<!-- <script src="/js/qipian.js"></script> -->
+
+<script type="text/javascript" src="/lib/zclip/clipboard.min.js"></script>	
+<script type="text/javascript" src="/js/src/custom.js"></script>
+  
+</body>
+</html>
