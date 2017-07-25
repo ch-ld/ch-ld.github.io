@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="lsof,故障记录," />
 
 
 
@@ -89,15 +89,16 @@
 
 
 
-<meta name="description" content="对自己要求高一点！！！">
-<meta property="og:type" content="website">
-<meta property="og:title" content="火柴的博客">
-<meta property="og:url" content="http://www.chen-hao.com.cn/tags/文件系统/index.html">
+<meta name="description" content="此方法只对正在运行中的进程所对应的文件被误删有效，其他的那种常规删除还请参考我的数据恢复文章https://www.chen-hao.com.cn/posts/49799/ （可能不见得很有效，重要数据还请专业人士恢复）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用lsof恢复误删日志或数据库文件">
+<meta property="og:url" content="http://www.chen-hao.com.cn/posts/14205/index.html">
 <meta property="og:site_name" content="火柴的博客">
-<meta property="og:description" content="对自己要求高一点！！！">
+<meta property="og:description" content="此方法只对正在运行中的进程所对应的文件被误删有效，其他的那种常规删除还请参考我的数据恢复文章https://www.chen-hao.com.cn/posts/49799/ （可能不见得很有效，重要数据还请专业人士恢复）">
+<meta property="og:updated_time" content="2017-07-25T05:58:02.257Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="火柴的博客">
-<meta name="twitter:description" content="对自己要求高一点！！！">
+<meta name="twitter:title" content="使用lsof恢复误删日志或数据库文件">
+<meta name="twitter:description" content="此方法只对正在运行中的进程所对应的文件被误删有效，其他的那种常规删除还请参考我的数据恢复文章https://www.chen-hao.com.cn/posts/49799/ （可能不见得很有效，重要数据还请专业人士恢复）">
 
 
 
@@ -152,13 +153,13 @@
 
 
 
-  <link rel="canonical" href="http://www.chen-hao.com.cn/tags/文件系统/"/>
+  <link rel="canonical" href="http://www.chen-hao.com.cn/posts/14205/"/>
 
 
 
 
 
-  <title> 标签: 文件系统 | 火柴的博客 </title>
+  <title> 使用lsof恢复误删日志或数据库文件 | 火柴的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -183,7 +184,7 @@
     
   
 
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 	
 	<a href="https://github.com/ch-ld/ch-ld.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
@@ -343,102 +344,268 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        文件系统
-        <small>标签</small>
-      </h2>
-    </div>
-
+  <div id="posts" class="posts-expand">
     
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/posts/41066/" itemprop="url">
-              
-                <span itemprop="name">Linux命令小技巧</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-11-14T16:00:59+08:00"
-              content="2016-11-14" >
-          11-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/posts/11042/" itemprop="url">
-              
-                <span itemprop="name">隐藏Linux系统常见软件版本号</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-11-08T13:43:19+08:00"
-              content="2016-11-08" >
-          11-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/posts/40117/" itemprop="url">
-              
-                <span itemprop="name">Linux常见配置文件汇总</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-10-08T15:29:48+08:00"
-              content="2016-10-08" >
-          10-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-  </div>
 
   
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.chen-hao.com.cn/posts/14205/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="火柴">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/linux5.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火柴的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                使用lsof恢复误删日志或数据库文件
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-25T13:32:45+08:00">
+                2017-07-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/故障记录/" itemprop="url" rel="index">
+                    <span itemprop="name">故障记录</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/posts/14205/" class="leancloud_visitors" data-flag-title="使用lsof恢复误删日志或数据库文件">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>&#x6B64;&#x65B9;&#x6CD5;&#x53EA;&#x5BF9;<code>&#x6B63;&#x5728;&#x8FD0;&#x884C;&#x4E2D;&#x7684;&#x8FDB;&#x7A0B;&#x6240;&#x5BF9;&#x5E94;&#x7684;&#x6587;&#x4EF6;</code>&#x88AB;&#x8BEF;&#x5220;&#x6709;&#x6548;&#xFF0C;&#x5176;&#x4ED6;&#x7684;&#x90A3;&#x79CD;&#x5E38;&#x89C4;&#x5220;&#x9664;&#x8FD8;&#x8BF7;&#x53C2;&#x8003;&#x6211;&#x7684;&#x6570;&#x636E;&#x6062;&#x590D;&#x6587;&#x7AE0;<a href="https://www.chen-hao.com.cn/posts/49799/">https://www.chen-hao.com.cn/posts/49799/</a> &#xFF08;&#x53EF;&#x80FD;&#x4E0D;&#x89C1;&#x5F97;&#x5F88;&#x6709;&#x6548;&#xFF0C;&#x91CD;&#x8981;&#x6570;&#x636E;&#x8FD8;&#x8BF7;&#x4E13;&#x4E1A;&#x4EBA;&#x58EB;&#x6062;&#x590D;&#xFF09;<br> <a id="more"></a></p>
+</blockquote>
+<p></p><h4 id="&#x539F;&#x7406;">&#x539F;&#x7406;</h4><br>&#x5F53;&#x8FDB;&#x7A0B;&#x6253;&#x5F00;&#x4E86;&#x67D0;&#x4E2A;&#x6587;&#x4EF6;&#x65F6;&#xFF0C;&#x53EA;&#x8981;&#x8BE5;&#x8FDB;&#x7A0B;&#x4FDD;&#x6301;&#x6253;&#x5F00;&#x8BE5;&#x6587;&#x4EF6;&#xFF0C;&#x5373;&#x4F7F;&#x5C06;&#x5176;&#x5220;&#x9664;&#xFF0C;&#x5B83;&#x4F9D;&#x7136;&#x5B58;&#x5728;&#x4E8E;&#x78C1;&#x76D8;&#x4E2D;&#x3002;&#x8FD9;&#x610F;&#x5473;&#x7740;&#xFF0C;&#x8FDB;&#x7A0B;&#x5E76;&#x4E0D;&#x77E5;&#x9053;&#x6587;&#x4EF6;&#x5DF2;&#x7ECF;&#x88AB;&#x5220;&#x9664;&#xFF0C;&#x5B83;&#x4ECD;&#x7136;&#x53EF;&#x4EE5;&#x5411;&#x6253;&#x5F00;&#x8BE5;&#x6587;&#x4EF6;&#x65F6;&#x63D0;&#x4F9B;&#x7ED9;&#x5B83;&#x7684;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x8FDB;&#x884C;&#x8BFB;&#x53D6;&#x548C;&#x5199;&#x5165;&#x3002;&#x9664;&#x4E86;&#x8BE5;&#x8FDB;&#x7A0B;&#x4E4B;&#x5916;&#xFF0C;&#x8FD9;&#x4E2A;&#x6587;&#x4EF6;&#x662F;&#x4E0D;&#x53EF;&#x89C1;&#x7684;&#xFF0C;&#x56E0;&#x4E3A;&#x5DF2;&#x7ECF;&#x5220;&#x9664;&#x4E86;&#x5176;&#x76F8;&#x5E94;&#x7684;&#x76EE;&#x5F55;&#x7D22;&#x5F15;&#x8282;&#x70B9;&#x3002;<p></p>
+<p>&#x5728;Linux&#x7CFB;&#x7EDF;&#x7684;/proc &#x5206;&#x533A;&#x4E0B;&#x4FDD;&#x5B58;&#x7740;&#x8FDB;&#x7A0B;&#x7684;&#x76EE;&#x5F55;&#x548C;&#x540D;&#x5B57;&#xFF0C;&#x5305;&#x542B;fd(&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;)&#x548C;&#x5176;&#x4E0B;&#x7684;&#x5B50;&#x76EE;&#x5F55;(&#x8FDB;&#x7A0B;&#x6253;&#x5F00;&#x6587;&#x4EF6;&#x7684;&#x94FE;&#x63A5;)&#xFF0C;&#x90A3;&#x4E48;&#x5982;&#x679C;&#x5220;&#x9664;&#x4E86;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#xFF0C;&#x8FD8;&#x5B58;&#x5728;&#x4E00;&#x4E2A; inode&#x7684;&#x5F15;&#x7528;&#xFF1A;/proc/&#x8FDB;&#x7A0B;&#x53F7;/fd/&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x3002;&#x6211;&#x4EEC;&#x53EA;&#x8981;&#x77E5;&#x9053;&#x5F53;&#x524D;&#x6253;&#x5F00;&#x6587;&#x4EF6;&#x7684;&#x8FDB;&#x7A0B;pid&#x548C;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;fd&#x5C31;&#x80FD;&#x5229;&#x7528;lsof&#x5DE5;&#x5177;&#x5217;&#x51FA;&#x8FDB;&#x7A0B;&#x6253;&#x5F00;&#x7684;&#x6587;&#x4EF6;&#x3002;&#x901A;&#x8FC7;lsof&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x8FDB;&#x884C;&#x7B80;&#x5355;&#x7684;&#x6587;&#x4EF6;&#x6062;&#x590D;&#x5DE5;&#x4F5C;&#xFF0C;&#x53EA;&#x8981;&#x662F;&#x5B58;&#x5728;&#x5F15;&#x7528;&#x7684;&#x6587;&#x4EF6;&#x88AB;&#x5220;&#x9664;&#xFF0C;&#x7406;&#x8BBA;&#x4E0A;&#x6211;&#x4EEC;&#x90FD;&#x80FD;&#x6062;&#x590D;&#x3002;</p>
+<p></p><h4 id="&#x6062;&#x590D;&#x7EC6;&#x8282;">&#x6062;&#x590D;&#x7EC6;&#x8282;</h4><p></p>
+<ol>
+<li>&#x9996;&#x5148;&#x968F;&#x4FBF;&#x4E00;&#x4E2A;&#x6B63;&#x5728;&#x8FD0;&#x884C;&#x7684;&#x8FDB;&#x7A0B;&#x7684;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#xFF0C;&#x4EE5;tomcat&#x4E3A;&#x4F8B;<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rm -rf catalina.out</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>2.&#x627E;&#x5230;&#x8FDB;&#x7A0B;&#x76F8;&#x5173;pid&#x548C;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">lsof | grep catalina.out</div><div class="line">&#x8FDB;&#x7A0B;&#x540D;     PID          &#x7528;&#x6237;&#x540D;   &#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;</div><div class="line">java      16247          root    1w      REG             253,17   3677364   16384009 /data/tomcat_client/logs/catalina.out (deleted)</div><div class="line">java      16247          root    2w      REG             253,17   3677364   16384009 /data/tomcat_client/logs/catalina.out (deleted)</div><div class="line">java      16247  6430    root    1w      REG             253,17   3677364   16384009 /data/tomcat_client/logs/catalina.out (deleted)</div><div class="line">java      16247  6430    root    2w      REG             253,17   3677364   16384009 /data/tomcat_client/logs/catalina.out (deleted)</div><div class="line">java      16247 16248    root    1w      REG             253,17   3677364   16384009 /data/tomcat_client/logs/catalina.out (deleted)</div><div class="line">java      16247 16248    root    2w      REG             253,17   3677364   16384009 /data/tomcat_client/logs/catalina.out (deleted)</div><div class="line">java      16247 16249    root    1w      REG             253,17   3677364   16384009 /data/tomcat_client/logs/catalina.out (deleted)</div><div class="line">java      16247 16249    root    2w      REG             253,17   3677364   16384009 /data/tomcat_client/logs/catalina.out (deleted)</div><div class="line">java      16247 16250    root    1w      REG             253,17   3677364   16384009 /data/tomcat_client/logs/catalina.out (deleted)</div><div class="line">java      16247 16250    root    2w      REG             253,17   3677364   16384009 /data/tomcat_client/logs/catalina.out (deleted)</div><div class="line">java      16247 16251    root    1w      REG             253,17   3677364   16384009 /data/tomcat_client/logs/catalina.out (deleted)</div><div class="line">java      16247 16251    root    2w      REG             253,17   3677364   16384009 /data/tomcat_client/logs/catalina.out (deleted)</div><div class="line">java      16247 16252    root    1w      REG             253,17   3677364   16384009 /data/tomcat_client/logs/catalina.out (deleted)</div></pre></td></tr></table></figure></p>
+<ol>
+<li><p>&#x627E;&#x5230;&#x88AB;&#x5220;&#x9664;&#x6587;&#x4EF6;&#x7684;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ls /proc/16247/fd/1</div><div class="line">/proc/16247/fd/1</div></pre></td></tr></table></figure>
+</li>
+<li><p>&#x627E;&#x56DE;&#x65E5;&#x5FD7;</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat /proc/16247/fd/1 &gt; catalina.out</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>&#x6240;&#x4EE5;&#x8BEF;&#x5220;&#x6587;&#x4EF6;&#x4E0D;&#x8981;&#x614C;&#xFF0C;&#x5982;&#x4F55;&#x505A;&#x51FA;&#x51B3;&#x5B9A;&#x624D;&#x662F;&#x6700;&#x91CD;&#x8981;&#x7684;&#xFF0C;&#x5C06;&#x635F;&#x5931;&#x964D;&#x5230;&#x6700;&#x4F4E;&#xFF0C;&#x4E00;&#x76F4;&#x90FD;&#x662F;&#x6211;&#x4EEC;&#x89E3;&#x51B3;&#x6545;&#x969C;&#x7684;&#x6807;&#x51C6;&#x3002;</p>
+
+      
+    </div>
+
+	<div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/posts/14205/">使用lsof恢复误删日志或数据库文件</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 火柴 的个人博客">火柴</a></p>
+  <p><span>发布时间:</span>2017年07月25日 - 13:07</p>
+  <p><span>最后更新:</span>2017年07月25日 - 13:07</p>
+  <p><span>原始链接:</span><a href="/posts/14205/" title="使用lsof恢复误删日志或数据库文件">http://www.chen-hao.com.cn/posts/14205/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.chen-hao.com.cn/posts/14205/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+	clipboard.on('success', $(function(){
+	  $(".fa-clipboard").click(function(){
+		swal({   
+		  title: "",   
+		  text: '复制成功',   
+		  html: false,
+		  timer: 500,   
+		  showConfirmButton: false
+	    });
+	  });
+    }));  
+</script>
+
+      
+	</div>
+	
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/lsof-故障记录/" rel="tag"><i class="fa fa-tag"></i> lsof,故障记录</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/14105/" rel="next" title="Redis的RBD和AOF持久化对比">
+                <i class="fa fa-chevron-left"></i> Redis的RBD和AOF持久化对比
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -446,6 +613,12 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ5NS82MDYz"></div>
+    
+  </div>
+
 
         </div>
         
@@ -465,8 +638,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/linux5.gif"
@@ -758,6 +940,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#原理"><span class="nav-number">1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#恢复细节"><span class="nav-number">2.</span> <span class="nav-text">恢复细节</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -917,6 +1115,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 
@@ -1213,26 +1415,6 @@
   
 
   
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 
