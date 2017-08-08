@@ -3,6 +3,66 @@
 
 
     
+  <url>
+    <loc>http://www.chen-hao.com.cn/posts/55902/</loc>
+    <lastmod>2017-08-08T02:40:27.544Z</lastmod>
+    <data>
+        <display>
+        <title>公众号已上线，欢迎关注</title>
+        <pubTime>2017-08-08T02:13:23.000Z</pubTime>
+        
+        <tag>其他</tag>
+         
+         
+           
+             
+              <breadCrumb title="其他" url="http://www.chen-hao.com.cn/categories/%E5%85%B6%E4%BB%96/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.chen-hao.com.cn/posts/8642/</loc>
+    <lastmod>2017-08-08T02:33:23.152Z</lastmod>
+    <data>
+        <display>
+        <title>ELK + Kafka日志收集平台部署</title>
+        <pubTime>2016-10-14T01:10:19.000Z</pubTime>
+        
+        <tag>ELK</tag>
+         
+         
+           
+             
+              <breadCrumb title="运维" url="http://www.chen-hao.com.cn/categories/%E8%BF%90%E7%BB%B4/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.chen-hao.com.cn/posts/8699/</loc>
+    <lastmod>2017-08-08T02:25:13.391Z</lastmod>
+    <data>
+        <display>
+        <title>别的程序员是怎么读你的简历的（转）</title>
+        <pubTime>2017-06-14T09:04:14.000Z</pubTime>
+        
+        <tag>其他</tag>
+         
+         
+           
+             
+              <breadCrumb title="其他" url="http://www.chen-hao.com.cn/categories/%E5%85%B6%E4%BB%96/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
     
   <url>
     <loc>http://www.chen-hao.com.cn/posts/49335/</loc>
@@ -158,26 +218,6 @@
            
              
               <breadCrumb title="python" url="http://www.chen-hao.com.cn/categories/python/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.chen-hao.com.cn/posts/8699/</loc>
-    <lastmod>2017-08-02T05:18:52.354Z</lastmod>
-    <data>
-        <display>
-        <title>别的程序员是怎么读你的简历的（转）</title>
-        <pubTime>2017-06-14T09:04:14.000Z</pubTime>
-        
-        <tag>面试</tag>
-         
-         
-           
-             
-              <breadCrumb title="面试" url="http://www.chen-hao.com.cn/categories/%E9%9D%A2%E8%AF%95/"/>
           
         </display>
     </data>
@@ -1098,26 +1138,6 @@
            
              
               <breadCrumb title="工具" url="http://www.chen-hao.com.cn/categories/%E5%B7%A5%E5%85%B7/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.chen-hao.com.cn/posts/8642/</loc>
-    <lastmod>2017-07-20T09:05:22.300Z</lastmod>
-    <data>
-        <display>
-        <title>ELK + Kafka日志收集平台部署</title>
-        <pubTime>2016-10-14T01:10:19.000Z</pubTime>
-        
-        <tag>ELK</tag>
-         
-         
-           
-             
-              <breadCrumb title="运维" url="http://www.chen-hao.com.cn/categories/%E8%BF%90%E7%BB%B4/"/>
           
         </display>
     </data>
