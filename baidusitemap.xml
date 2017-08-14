@@ -4,6 +4,127 @@
 
     
   <url>
+    <loc>http://www.chen-hao.com.cn/posts/62835/</loc>
+    <lastmod>2017-08-14T07:50:19.436Z</lastmod>
+    <data>
+        <display>
+        <title>MySQL5.7+MHA+MAXSCAL2.0部署</title>
+        <pubTime>2017-08-10T11:14:28.000Z</pubTime>
+        
+        <tag>MySQL</tag>
+         
+         
+           
+             
+              <breadCrumb title="集群" url="http://www.chen-hao.com.cn/categories/%E9%9B%86%E7%BE%A4/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.chen-hao.com.cn/posts/41890/</loc>
+    <lastmod>2017-08-10T11:18:04.368Z</lastmod>
+    <data>
+        <display>
+        <title>Tomcat-集群方案</title>
+        <pubTime>2017-01-13T05:50:03.000Z</pubTime>
+        
+        <tag>Tomcat</tag>
+         
+         
+           
+             
+              <breadCrumb title="集群" url="http://www.chen-hao.com.cn/categories/%E9%9B%86%E7%BE%A4/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.chen-hao.com.cn/posts/50397/</loc>
+    <lastmod>2017-08-10T11:17:32.077Z</lastmod>
+    <data>
+        <display>
+        <title>mysqldump全量和增量备份脚本</title>
+        <pubTime>2016-09-01T06:10:16.000Z</pubTime>
+        
+        <tag>mysqldump</tag>
+         
+         
+           
+             
+              <breadCrumb title="Shell" url="http://www.chen-hao.com.cn/categories/Shell/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.chen-hao.com.cn/posts/36339/</loc>
+    <lastmod>2017-08-10T11:17:26.068Z</lastmod>
+    <data>
+        <display>
+        <title>mysql使用xtrabackup的全量和增量脚本</title>
+        <pubTime>2016-08-30T05:16:27.000Z</pubTime>
+        
+        <tag>xtrabackup</tag>
+         
+         
+           
+             
+              <breadCrumb title="Shell" url="http://www.chen-hao.com.cn/categories/Shell/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.chen-hao.com.cn/posts/4147/</loc>
+    <lastmod>2017-08-10T11:15:53.088Z</lastmod>
+    <data>
+        <display>
+        <title>MongoDB3.x-配置文件</title>
+        <pubTime>2017-01-10T06:24:00.000Z</pubTime>
+        
+        <tag>mongodb</tag>
+         
+         
+           
+             
+              <breadCrumb title="NoSQL" url="http://www.chen-hao.com.cn/categories/NoSQL/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.chen-hao.com.cn/posts/22174/</loc>
+    <lastmod>2017-08-10T11:15:45.500Z</lastmod>
+    <data>
+        <display>
+        <title>MongoDB3-x-权限配置</title>
+        <pubTime>2017-01-10T07:35:11.000Z</pubTime>
+        
+        <tag>mongodb</tag>
+         
+         
+           
+             
+              <breadCrumb title="NoSQL" url="http://www.chen-hao.com.cn/categories/NoSQL/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+  <url>
     <loc>http://www.chen-hao.com.cn/posts/55902/</loc>
     <lastmod>2017-08-08T02:40:27.544Z</lastmod>
     <data>
@@ -62,7 +183,6 @@
     </data>
     </url>
 
-    
     
   <url>
     <loc>http://www.chen-hao.com.cn/posts/49335/</loc>
@@ -545,26 +665,6 @@
 
     
   <url>
-    <loc>http://www.chen-hao.com.cn/posts/36339/</loc>
-    <lastmod>2017-07-20T09:05:22.391Z</lastmod>
-    <data>
-        <display>
-        <title>mysql使用xtrabackup的全量和增量脚本</title>
-        <pubTime>2016-08-30T05:16:27.000Z</pubTime>
-        
-        <tag>xtrabackup</tag>
-         
-         
-           
-             
-              <breadCrumb title="Shell" url="http://www.chen-hao.com.cn/categories/Shell/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://www.chen-hao.com.cn/posts/42280/</loc>
     <lastmod>2017-07-20T09:05:22.389Z</lastmod>
     <data>
@@ -605,26 +705,6 @@
 
     
   <url>
-    <loc>http://www.chen-hao.com.cn/posts/10699/</loc>
-    <lastmod>2017-07-20T09:05:22.380Z</lastmod>
-    <data>
-        <display>
-        <title>xtrabackup自动恢复脚本</title>
-        <pubTime>2016-09-01T00:29:17.000Z</pubTime>
-        
-        <tag>xtrabackup</tag>
-         
-         
-           
-             
-              <breadCrumb title="Shell" url="http://www.chen-hao.com.cn/categories/Shell/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://www.chen-hao.com.cn/posts/6255/</loc>
     <lastmod>2017-07-20T09:05:22.375Z</lastmod>
     <data>
@@ -645,52 +725,12 @@
 
     
   <url>
-    <loc>http://www.chen-hao.com.cn/posts/50397/</loc>
-    <lastmod>2017-07-20T09:05:22.373Z</lastmod>
-    <data>
-        <display>
-        <title>mysqldump全量和增量备份脚本</title>
-        <pubTime>2016-09-01T06:10:16.000Z</pubTime>
-        
-        <tag>mysqldump</tag>
-         
-         
-           
-             
-              <breadCrumb title="Shell" url="http://www.chen-hao.com.cn/categories/Shell/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://www.chen-hao.com.cn/posts/24829/</loc>
     <lastmod>2017-07-20T09:05:22.370Z</lastmod>
     <data>
         <display>
         <title>mongodb分片配置</title>
         <pubTime>2016-08-05T03:10:23.000Z</pubTime>
-        
-        <tag>mongodb</tag>
-         
-         
-           
-             
-              <breadCrumb title="NoSQL" url="http://www.chen-hao.com.cn/categories/NoSQL/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.chen-hao.com.cn/posts/22174/</loc>
-    <lastmod>2017-07-20T09:05:22.368Z</lastmod>
-    <data>
-        <display>
-        <title>MongoDB3-x-权限配置</title>
-        <pubTime>2017-01-10T07:35:11.000Z</pubTime>
         
         <tag>mongodb</tag>
          
@@ -845,26 +885,6 @@
 
     
   <url>
-    <loc>http://www.chen-hao.com.cn/posts/41890/</loc>
-    <lastmod>2017-07-20T09:05:22.346Z</lastmod>
-    <data>
-        <display>
-        <title>Tomcat-集群方案</title>
-        <pubTime>2017-01-13T05:50:03.000Z</pubTime>
-        
-        <tag>Tomcat</tag>
-         
-         
-           
-             
-              <breadCrumb title="集群" url="http://www.chen-hao.com.cn/categories/%E9%9B%86%E7%BE%A4/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://www.chen-hao.com.cn/posts/34933/</loc>
     <lastmod>2017-07-20T09:05:22.343Z</lastmod>
     <data>
@@ -918,26 +938,6 @@
            
              
               <breadCrumb title="基础" url="http://www.chen-hao.com.cn/categories/%E5%9F%BA%E7%A1%80/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.chen-hao.com.cn/posts/4147/</loc>
-    <lastmod>2017-07-20T09:05:22.329Z</lastmod>
-    <data>
-        <display>
-        <title>MongoDB3.x-配置文件</title>
-        <pubTime>2017-01-10T06:24:00.000Z</pubTime>
-        
-        <tag>mongodb</tag>
-         
-         
-           
-             
-              <breadCrumb title="NoSQL" url="http://www.chen-hao.com.cn/categories/NoSQL/"/>
           
         </display>
     </data>
