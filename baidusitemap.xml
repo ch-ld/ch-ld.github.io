@@ -3,6 +3,26 @@
 
 
     
+  <url>
+    <loc>http://www.chen-hao.com.cn/posts/59732/</loc>
+    <lastmod>2017-09-04T07:56:12.464Z</lastmod>
+    <data>
+        <display>
+        <title>形象理解python中类相关概念(转)</title>
+        <pubTime>2017-08-02T03:55:37.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+         
+           
+             
+              <breadCrumb title="python学习" url="http://www.chen-hao.com.cn/categories/python%E5%AD%A6%E4%B9%A0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
     
   <url>
     <loc>http://www.chen-hao.com.cn/posts/940/</loc>
@@ -338,26 +358,6 @@
            
              
               <breadCrumb title="NoSQL" url="http://www.chen-hao.com.cn/categories/NoSQL/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.chen-hao.com.cn/posts/59732/</loc>
-    <lastmod>2017-08-02T05:28:22.474Z</lastmod>
-    <data>
-        <display>
-        <title>形象理解python中类相关概念(转)</title>
-        <pubTime>2017-08-02T03:55:37.000Z</pubTime>
-        
-        <tag>python</tag>
-         
-         
-           
-             
-              <breadCrumb title="python" url="http://www.chen-hao.com.cn/categories/python/"/>
           
         </display>
     </data>

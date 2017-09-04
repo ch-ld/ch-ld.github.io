@@ -178,7 +178,7 @@ slave&#x673A;&#x5668;&#x7684;relay log&#x4E2D; last_committed&#x76F8;&#x540C;&#x
     <link href="http://www.chen-hao.com.cn/posts/59732/"/>
     <id>http://www.chen-hao.com.cn/posts/59732/</id>
     <published>2017-08-02T03:55:37.000Z</published>
-    <updated>2017-08-02T05:28:22.474Z</updated>
+    <updated>2017-09-04T07:56:12.464Z</updated>
     
     <content type="html"><![CDATA[<p><code>@staticmethod</code>&#x3001;<code>@classmethod</code>&#x3001;<code>@property</code>&#x8FD9;&#x51E0;&#x4E2A;&#x5E26;@&#x7B26;&#x53F7;&#x7684;&#x8BED;&#x6CD5;&#x662F;Python&#x91CC;&#x7684;&#x300C;&#x8BED;&#x6CD5;&#x7CD6;&#x300D;&#x3002;&#x8FD9;&#x4E9B;&#x8BED;&#x6CD5;&#x4E2D;&#x6587;&#x5E38;&#x8BD1;&#x4F5C;&#x300C;&#x88C5;&#x9970;&#x5668;&#x300D;&#xFF0C;&#x5BF9;&#x4E8E;&#x6CA1;&#x6709;&#x4EFB;&#x4F55;&#x7F16;&#x7A0B;&#x7ECF;&#x9A8C;&#x7684;&#x65B0;&#x624B;&#xFF0C;&#x8FD9;&#x4E9B;&#x90FD;&#x662F;&#x7ECF;&#x5E38;&#x96BE;&#x4EE5;&#x7406;&#x89E3;&#x7684;&#x5730;&#x65B9;&#x3002;&#x518D;&#x6709;&#x5C31;&#x662F;&#x7C7B;&#x7684;self&#x53C2;&#x6570;&#xFF0C;&#x65B0;&#x624B;&#x901A;&#x5E38;&#x7559;&#x4E8E;&#x8868;&#x9762;&#x7684;&#x8BA4;&#x8BC6;&#x9020;&#x6210;&#x4E00;&#x4E9B;&#x8BEF;&#x4F1A;&#x3002;<br><a id="more"></a><br>&#x9700;&#x8981;&#x8BF4;&#x660E;&#x4E00;&#x4E0B;&#xFF0C;&#x672C;&#x6559;&#x7A0B;&#x9488;&#x5BF9;Python3&#x3002;</p>
 <p>&#x8981;&#x7406;&#x89E3;&#x8FD9;&#x51E0;&#x6837;&#xFF0C;&#x6211;&#x4EEC;&#x5148;&#x8981;&#x5BF9;Python&#x7C7B;&#x6709;&#x4E00;&#x4E2A;&#x8BA4;&#x8BC6;&#xFF0C;&#x8BA9;&#x6211;&#x4EEC;&#x5148;&#x7B80;&#x5355;&#x56DE;&#x987E;&#x4E00;&#x4E0B;&#x300C;&#x7C7B;&#x300D;&#x3002;</p>
@@ -271,7 +271,7 @@ slave&#x673A;&#x5668;&#x7684;relay log&#x4E2D; last_committed&#x76F8;&#x540C;&#x
     
     </summary>
     
-      <category term="python" scheme="http://www.chen-hao.com.cn/categories/python/"/>
+      <category term="python学习" scheme="http://www.chen-hao.com.cn/categories/python%E5%AD%A6%E4%B9%A0/"/>
     
     
       <category term="python" scheme="http://www.chen-hao.com.cn/tags/python/"/>
