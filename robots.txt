@@ -9,4 +9,4 @@ Disallow: /vendors/
 Disallow: /fancybox/
 
 Sitemap: http://chen-hao.com.cn/sitemap.xml
-Sitemap: http://chen-hao.com.cn/baidusitemap.xml
+Sitemap: http://www.chen-hao.com.cn/baidusitemap.xml
